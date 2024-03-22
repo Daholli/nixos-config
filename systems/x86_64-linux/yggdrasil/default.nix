@@ -40,6 +40,12 @@
     xkbVariant = "";
   };
 
+  wyrdgard = {
+    archetypes = {
+      gaming.enable = true;
+    };
+  };
+
   # Configure Home-Manager options from NixOS.
   snowfallorg.user.cholli.home.config = { };
 

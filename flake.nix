@@ -21,11 +21,22 @@
     };
   };
 
-  outputs = inputs:
-    inputs.snowfall-lib.mkFlake {
+  outputs = inputs: let 
+    lib = inputs.snowfall-lib.mkLib {
       inherit inputs;
       src = ./.;
 
+snowfall = {
+        meta = {
+          name = "wyrdgard";
+          title = "Wyrdgard";
+        };
+
+        namespace = "wyrdgard";
+      };
+      };
+      in lib.mkFlake {
+      			
       channels-config = { allowUnfree = true; };
 
       outputs-builder = channels: { formatter = channels.nixpkgs.nixpkgs-fmt; };

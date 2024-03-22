@@ -1,5 +1,5 @@
 {
-  description = "My NixOS / nix-darwin / nixos-generators systems";
+  description = "NixOs Config";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
@@ -26,13 +26,13 @@
       inherit inputs;
       src = ./.;
 
-      channels-config = {allowUnfree = true;};
+      channels-config = { allowUnfree = true; };
 
-      outputs-builder = channels: {formatter = channels.nixpkgs.alejandra;};
+      outputs-builder = channels: { formatter = channels.nixpkgs.nixpkgs-fmt; };
 
       overlays = with inputs; [
         # Use the overlay provided by this flake.
-        snowfall-flake.overlays."package/flake"
+        snowfall-flake.overlays.default
       ];
     };
 }

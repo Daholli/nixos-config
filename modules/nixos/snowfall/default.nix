@@ -1,15 +1,16 @@
-{
-  lib,
-  config,
-  ...
-}: let
+{ lib
+, config
+, ...
+}:
+let
   cfg = config.snowfallorg.example;
-in {
+in
+{
   options.snowfallorg.example = {
     enable = lib.mkEnableOption "Snowfall Example";
   };
 
   config = lib.mkIf cfg.enable {
-    environment.variables = {SNOWFALLORG_EXAMPLE = "enabled";};
+    environment.variables = { SNOWFALLORG_EXAMPLE = "enabled"; };
   };
 }

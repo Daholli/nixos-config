@@ -1,18 +1,17 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, ...
 }: {
-  imports = [./hardware.nix];
+  imports = [ ./hardware.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.blacklistedKernelModules = ["hyperv-fb"];
+  boot.blacklistedKernelModules = [ "hyperv-fb" ];
   virtualisation.hypervGuest.videoMode = "1920x1080";
 
   users.users.cholli = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -45,7 +44,7 @@
   };
 
   # Configure Home-Manager options from NixOS.
-  snowfallorg.user.cholli.home.config = {};
+  snowfallorg.user.cholli.home.config = { };
 
   system.stateVersion = "23.11";
 }

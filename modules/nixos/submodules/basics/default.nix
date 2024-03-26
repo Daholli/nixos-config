@@ -1,9 +1,4 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
-}:
+{ options, config, lib, pkgs, ... }:
 with lib;
 with lib.wyrdgard;
 let
@@ -16,7 +11,11 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
+      neofetch
 
+      fd
+      tree
+      ripgrep
     ];
 
     wyrdgard = {

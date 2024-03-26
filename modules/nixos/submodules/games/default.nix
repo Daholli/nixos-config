@@ -1,9 +1,8 @@
 { options, config, lib, pkgs, ... }:
-
 with lib;
 with lib.wyrdgard;
-
-let cfg = config.wyrdgard.submodules.games;
+let
+  cfg = config.wyrdgard.submodules.games;
 in
 {
   options.wyrdgard.submodules.games = with types; {
@@ -11,6 +10,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+    			prismlauncher
+    		];
+    
     wyrdgard = {
       apps = {
         steam = enabled;

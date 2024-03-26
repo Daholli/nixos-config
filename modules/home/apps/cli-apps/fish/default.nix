@@ -31,7 +31,7 @@ in {
             utc_time_offset = "+1";
           };
           username = {
-            style_user = "lightgreen";
+            style_user = "#00de00";
             style_root = "red";
             format = "[$user]($style) ";
             disabled = false;

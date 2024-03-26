@@ -5,7 +5,8 @@
 , ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.submodules.basics;
 in
 {
@@ -26,9 +27,7 @@ in
         nix-ld = enabled;
       };
 
-      hardware = {
-        audio = enabled;
-        bluetooth = enabled;
+      system.hardware = {
         networking = enabled;
       };
 

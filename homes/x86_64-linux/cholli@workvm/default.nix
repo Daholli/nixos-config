@@ -10,11 +10,13 @@ let
 in
 {
   home = {
-    packages = with pkgs; [ neovim firefox ];
+    packages = with pkgs; [ neovim ];
 
     sessionVariables = { EDITOR = "nvim"; };
 
-    shellAliases = { vimdiff = "nvim -d"; };
+    shellAliases = { 
+	vim = "nvim";
+    vimdiff = "nvim -d"; };
 
     stateVersion = "23.11";
   };

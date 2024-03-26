@@ -10,7 +10,6 @@ in
   };
 
   config = mkIf cfg.enable {
-
     sound.enable = true;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -18,7 +17,7 @@ in
     services.pipewire = {
       enable = true;
       alsa.enable = true;
-      alsa.support32bit = true;
+      alsa.support32Bit = true;
       pulse.enable = true;
     };
   };

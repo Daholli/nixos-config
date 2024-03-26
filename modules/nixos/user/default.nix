@@ -49,6 +49,9 @@ in {
 
   config = {
     environment.systemPackages = with pkgs; [
+      kitty
+      fish
+      starship
     ];
 
     programs.zsh = {

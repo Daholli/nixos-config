@@ -1,7 +1,7 @@
-{ pkgs
-, config
-, ...
-}: {
+{ pkgs , config , lib, ... }:
+with lib;
+with lib.wyrdgard;
+{
   imports = [ ./hardware.nix ];
 
   boot.loader.systemd-boot.enable = true;
@@ -21,7 +21,6 @@
     gitAndTools.gh
     kitty
     fish
-    vim
     vivaldi
 
     fd
@@ -46,8 +45,27 @@
     xkbVariant = "";
   };
 
+	environment.variables.EDITOR = "nvim";
+	environment.variables.SUDOEDITOR = "nvim";
+
   # Configure Home-Manager options from NixOS.
-  snowfallorg.user.cholli.home.config = { };
+  snowfallorg.user.cholli.home.config = {
+	programs.kitty= {
+		theme = "Tokyo Night";
+		shellIntegration.enableFishIntegration = true;
+	};
+};
+
+	wyrdgard = {
+		apps = {
+			discord = enabled;
+			vivaldi = enabled;
+		};
+
+		submodules = {
+			basics = enabled;
+		};
+	};
 
   system.stateVersion = "23.11";
 }

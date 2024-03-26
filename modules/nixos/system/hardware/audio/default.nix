@@ -10,6 +10,12 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      noisetorch
+    ];
+
+    programs.noisetorch.enable = true;
+
     sound.enable = true;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -20,5 +26,7 @@ in
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+
+
   };
 }

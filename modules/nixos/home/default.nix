@@ -28,7 +28,7 @@ in
       xdg.configFile = mkAliasDefinitions options.wyrdgard.home.configFile;
     };
 
-    snowfallorg.user.${config.wyrdgard.user.name}.home.config = config.plusultra.home.extraOptions;
+    snowfallorg.user.${config.wyrdgard.user.name}.home.config = config.wyrdgard.home.extraOptions;
 
     home-manager = {
       useUserPackages = true;

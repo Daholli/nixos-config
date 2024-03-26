@@ -32,7 +32,7 @@ with lib.wyrdgard; let
 in
 {
   options.wyrdgard.user = with types; {
-    name = mkOpt str "short" "The name to use for the user account.";
+    name = mkOpt str "cholli" "The name to use for the user account.";
     fullName = mkOpt str "Christoph Hollizeck" "The full name of the user.";
     email = mkOpt str "christoph.hollizeck@hey.com" "The email of the user.";
     initialPassword =

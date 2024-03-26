@@ -14,9 +14,10 @@ in
 
     sessionVariables = { EDITOR = "nvim"; };
 
-    shellAliases = { 
-	vim = "nvim";
-    vimdiff = "nvim -d"; };
+    shellAliases = {
+      vim = "nvim";
+      vimdiff = "nvim -d";
+    };
 
     stateVersion = "23.11";
   };

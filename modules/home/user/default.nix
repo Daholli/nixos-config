@@ -22,7 +22,7 @@
 in {
   options.wyrdgard.user = {
     enable = mkOpt types.bool true "Whether to configure the user account.";
-    name = mkOpt (types.nullOr types.str) (config.wyrdgard.user.name or "cholli") "The user account.";
+    name = mkOpt (types.nullOr types.str) "cholli" "The user account.";
 
     fullName = mkOpt types.str "Christoph Hollizeck" "The full name of the user.";
     email = mkOpt types.str "christoph.hollizeck@hey.com" "The email of the user.";

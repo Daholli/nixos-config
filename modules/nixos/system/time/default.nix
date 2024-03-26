@@ -1,14 +1,14 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
 with lib.wyrdgard; let
   cfg = config.wyrdgard.system.time;
-in
-{
+in {
   options.wyrdgard.system.time = with types; {
     enable =
       mkBoolOpt false "Whether or not to configure timezone information.";

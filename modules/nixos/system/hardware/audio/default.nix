@@ -1,10 +1,14 @@
-{ options, config, lib, pkgs, ... }:
-with lib;
-with lib.wyrdgard;
-let
-  cfg = config.wyrdgard.system.hardware.audio;
-in
 {
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+with lib.wyrdgard; let
+  cfg = config.wyrdgard.system.hardware.audio;
+in {
   options.wyrdgard.system.hardware.audio = with types; {
     enable = mkBoolOpt false "Whether or not to enable audio";
   };
@@ -26,7 +30,5 @@ in
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-
-
   };
 }

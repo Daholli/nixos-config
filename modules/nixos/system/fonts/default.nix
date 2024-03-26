@@ -1,17 +1,17 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
 with lib.wyrdgard; let
   cfg = config.wyrdgard.system.fonts;
-in
-{
+in {
   options.wyrdgard.system.fonts = with types; {
     enable = mkBoolOpt false "Whether or not to manage fonts.";
-    fonts = mkOpt (listOf package) [ ] "Custom font packages to install.";
+    fonts = mkOpt (listOf package) [] "Custom font packages to install.";
   };
 
   config = mkIf cfg.enable {
@@ -26,7 +26,7 @@ in
 
     fonts.packages = with pkgs;
       [
-        (nerdfonts.override { fonts = [ "Jetbrains Mono" "CodeNewRoman" "NerdFontsSymbolsOnly" ]; })
+        (nerdfonts.override {fonts = ["CodeNewRoman" "NerdFontsSymbolsOnly"];})
         font-awesome
         powerline-fonts
         powerline-symbols

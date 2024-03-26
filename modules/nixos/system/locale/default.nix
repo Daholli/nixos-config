@@ -1,10 +1,14 @@
-{ options, config, pkgs, lib, ... }:
-with lib;
-with lib.wyrdgard;
-let
-  cfg = config.wyrdgard.system.locale;
-in
 {
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with lib;
+with lib.wyrdgard; let
+  cfg = config.wyrdgard.system.locale;
+in {
   options.wyrdgard.system.locale = with types; {
     enable = mkBoolOpt false "Whether or not to manage locale settings.";
   };

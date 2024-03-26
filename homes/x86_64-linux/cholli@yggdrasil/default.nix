@@ -1,21 +1,21 @@
-{ lib
-, pkgs
-, config
-, ...
-}:
-# User information gathered by Snowfall Lib is available.
-let
-  name = config.snowfallorg.user.name;
-  home = config.snowfallorg.user.home.directory;
-in
 {
-  home = {
-    packages = with pkgs; [ neovim firefox ];
+  lib,
+  pkgs,
+  config,
+  osConfig ? {},
+  format ? "unknown",
+  ...
+}:
+with lib.wyrdgard; {
+  wyrdgard = {
+    apps.cli-apps = {
+      fish = enabled;
+      home-manager = enabled;
+    };
 
-    sessionVariables = { EDITOR = "nvim"; };
-
-    shellAliases = { vimdiff = "nvim -d"; };
-
-    stateVersion = "23.11";
+    tools = {
+      git = enabled;
+      direnv = enabled;
+    };
   };
 }

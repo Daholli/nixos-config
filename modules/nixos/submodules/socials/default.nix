@@ -7,8 +7,14 @@ let
 in
 {
   options.wyrdgard.submodules.socials = with types; {
-    enable = mkBoolOpt false "Whether to enable a social apps";
+    enable = mkBoolOpt false "Whether to enable social apps";
   };
 
-
+  config = mkIf cfg.enable {
+    wyrdgard = {
+      apps = {
+        discord = enabled;
+      };
+    };
+  };
 }

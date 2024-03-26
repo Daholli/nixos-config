@@ -5,8 +5,6 @@ with lib.wyrdgard;
   imports = [ ./hardware.nix ];
 
   environment.systemPackages = with pkgs; [
-    fish
-
     fd
     tree
     ripgrep
@@ -28,14 +26,9 @@ with lib.wyrdgard;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
-    layout = "us";
-    xkbVariant = "";
-  };
+  environment.pathsToLink = ["/libexec"];
+
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   wyrdgard = {
     archetypes = {
@@ -53,7 +46,7 @@ with lib.wyrdgard;
   };
 
   # Configure Home-Manager options from NixOS.
-    snowfallorg.user.cholli.home.config = {
+  snowfallorg.user.cholli.home.config = {
     programs.kitty = {
       theme = "Tokyo Night";
       shellIntegration.enableFishIntegration = true;

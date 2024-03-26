@@ -10,5 +10,15 @@ in
     enable = mkBoolOpt false "Whether to enable a graphical interface";
   };
 
+  config = mkIf cfg.enable {
+    services.xserver = {
+      enable = true;
+      displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+      desktopManager.plasma5.enable = true;
+    };
+  };
 
 }

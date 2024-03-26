@@ -1,18 +1,18 @@
-{ lib
-, pkgs
-, config
-, ...
+{
+  lib,
+  pkgs,
+  config,
+  ...
 }:
 # User information gathered by Snowfall Lib is available.
 let
   name = config.snowfallorg.user.name;
   home = config.snowfallorg.user.home.directory;
-in
-{
+in {
   home = {
-    packages = with pkgs; [ neovim ];
+    packages = with pkgs; [neovim];
 
-    sessionVariables = { EDITOR = "nvim"; };
+    sessionVariables = {EDITOR = "nvim";};
 
     shellAliases = {
       vim = "nvim";

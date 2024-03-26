@@ -36,27 +36,25 @@
     };
   };
 
-  outputs = inputs:
-    let
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
+  outputs = inputs: let
+    lib = inputs.snowfall-lib.mkLib {
+      inherit inputs;
+      src = ./.;
 
-        snowfall = {
-          meta = {
-            name = "wyrdgard";
-            title = "Wyrdgard";
-          };
-
-          namespace = "wyrdgard";
+      snowfall = {
+        meta = {
+          name = "wyrdgard";
+          title = "Wyrdgard";
         };
+
+        namespace = "wyrdgard";
       };
-    in
+    };
+  in
     lib.mkFlake {
+      channels-config = {allowUnfree = true;};
 
-      channels-config = { allowUnfree = true; };
-
-      outputs-builder = channels: { formatter = channels.nixpkgs.nixpkgs-fmt; };
+      outputs-builder = channels: {formatter = channels.nixpkgs.alejandra;};
 
       overlays = with inputs; [
         snowfall-flake.overlays.default

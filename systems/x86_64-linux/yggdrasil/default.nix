@@ -1,13 +1,15 @@
-{ pkgs, config, lib, ... }:
-with lib;
-with lib.wyrdgard;
 {
-  imports = [ ./hardware.nix ];
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib;
+with lib.wyrdgard; {
+  imports = [./hardware.nix];
 
   environment.systemPackages = with pkgs; [
-    fd
-    tree
-    ripgrep
+    filelight
   ];
 
   # nvidia
@@ -26,9 +28,7 @@ with lib.wyrdgard;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  environment.pathsToLink = [ "/libexec" ];
-
-  services.xserver.videoDrivers = [ "nvidia" ];
+  environment.pathsToLink = ["/libexec"];
 
   wyrdgard = {
     archetypes = {
@@ -44,6 +44,9 @@ with lib.wyrdgard;
       _1password = enabled;
     };
   };
+
+  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.displayManager.sddm.wayland.enable = lib.mkForce false;
 
   # Configure Home-Manager options from NixOS.
   snowfallorg.user.cholli.home.config = {

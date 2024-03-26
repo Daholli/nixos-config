@@ -1,8 +1,9 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
 with lib.wyrdgard; let
@@ -18,38 +19,36 @@ with lib.wyrdgard; let
       cp $src $out
     '';
 
-    passthru = { fileName = defaultIconFileName; };
+    passthru = {fileName = defaultIconFileName;};
   };
   propagatedIcon =
     pkgs.runCommandNoCC "propagated-icon"
-      { passthru = { fileName = cfg.icon.fileName; }; }
-      ''
-        local target="$out/share/wyrdgard-icons/user/${cfg.name}"
-        mkdir -p "$target"
+    {passthru = {fileName = cfg.icon.fileName;};}
+    ''
+      local target="$out/share/wyrdgard-icons/user/${cfg.name}"
+      mkdir -p "$target"
 
-        cp ${cfg.icon} "$target/${cfg.icon.fileName}"
-      '';
-in
-{
+      cp ${cfg.icon} "$target/${cfg.icon.fileName}"
+    '';
+in {
   options.wyrdgard.user = with types; {
     name = mkOpt str "cholli" "The name to use for the user account.";
     fullName = mkOpt str "Christoph Hollizeck" "The full name of the user.";
     email = mkOpt str "christoph.hollizeck@hey.com" "The email of the user.";
     initialPassword =
       mkOpt str "asdf"
-        "The initial password to use when the user is first created.";
+      "The initial password to use when the user is first created.";
     icon =
       mkOpt (nullOr package) defaultIcon
-        "The profile picture to use for the user.";
-    extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
+      "The profile picture to use for the user.";
+    extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
     extraOptions =
-      mkOpt attrs { }
-        (mdDoc "Extra options passed to `users.users.<name>`.");
+      mkOpt attrs {}
+      (mdDoc "Extra options passed to `users.users.<name>`.");
   };
 
   config = {
     environment.systemPackages = with pkgs; [
-
     ];
 
     programs.zsh = {
@@ -83,7 +82,6 @@ in
           lcu = "${pkgs.colorls}/bin/colorls -U";
           lclu = "${pkgs.colorls}/bin/colorls -U -1";
         };
-
       };
     };
 
@@ -105,7 +103,7 @@ in
         # system to select).
         uid = 1000;
 
-        extraGroups = [ "steamcmd" ] ++ cfg.extraGroups;
+        extraGroups = ["steamcmd"] ++ cfg.extraGroups;
       }
       // cfg.extraOptions;
   };

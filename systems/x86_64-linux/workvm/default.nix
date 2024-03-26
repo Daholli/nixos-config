@@ -17,14 +17,6 @@ with lib.wyrdgard; {
   environment.variables.EDITOR = "nvim";
   environment.variables.SUDOEDITOR = "nvim";
 
-  # Configure Home-Manager options from NixOS.
-  snowfallorg.user.cholli.home.config = {
-    programs.kitty = {
-      theme = "Tokyo Night";
-      shellIntegration.enableFishIntegration = true;
-    };
-  };
-
   wyrdgard = {
     apps = {
       vivaldi = enabled;

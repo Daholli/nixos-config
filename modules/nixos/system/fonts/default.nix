@@ -26,10 +26,10 @@ in
 
     fonts.packages = with pkgs;
       [
-            (nerdfonts.override {fonts = ["Jetbrains Mono" "CodeNewRoman" "NerdFontsSymbolsOnly"];})
-      font-awesome
-      powerline-fonts
-      powerline-symbols
+        (nerdfonts.override { fonts = [ "Jetbrains Mono" "CodeNewRoman" "NerdFontsSymbolsOnly" ]; })
+        font-awesome
+        powerline-fonts
+        powerline-symbols
       ]
       ++ cfg.fonts;
   };

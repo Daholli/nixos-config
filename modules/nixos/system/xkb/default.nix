@@ -1,6 +1,6 @@
-{ options , config , lib , ... }:
+{ options, config, lib, ... }:
 with lib;
-with lib.wyrdgard; 
+with lib.wyrdgard;
 let
   cfg = config.wyrdgard.system.xkb;
 in
@@ -13,7 +13,7 @@ in
     console.useXkbConfig = true;
     services.xserver = {
       xkb.layout = "us";
-      variant = "";
+      xkb.variant = "";
       xkbOptions = "caps:escape";
     };
   };

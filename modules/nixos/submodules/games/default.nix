@@ -11,9 +11,9 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-    			prismlauncher
-    		];
-    
+      prismlauncher
+    ];
+
     wyrdgard = {
       apps = {
         steam = enabled;

@@ -26,7 +26,7 @@ with lib.wyrdgard;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  environment.pathsToLink = ["/libexec"];
+  environment.pathsToLink = [ "/libexec" ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
 

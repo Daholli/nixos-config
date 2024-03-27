@@ -26,6 +26,7 @@ in {
           shellInit = "
 	zoxide init fish | source
 	starship init fish | source
+	source ~/.config/op/plugins.sh
 	";
           shellAliases = {
             vim = "nvim";

@@ -14,8 +14,18 @@ in {
   };
 
   config = mkIf cfg.enable {
+	home.packages = with pkgs.fishPlugins; [
+			autopair
+			colored-man-pages
+			forgit
+			sponge
+	];
+
     programs = {
-      fish = enabled;
+      fish = {
+	enable = true;
+	shellInit = "zoxide init fish | source";
+      };
 
       starship = {
         enable = true;
@@ -53,7 +63,10 @@ in {
       };
 
       zoxide = {
-	enable = true;
+        enable = true;
+        options = [
+          "--cmd cd"
+        ];
       };
     };
   };

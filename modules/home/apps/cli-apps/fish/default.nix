@@ -25,11 +25,11 @@ in {
         shellInit = "zoxide init fish | source";
         shellAliases = {
           vim = "nvim";
-          ls = "colorls";
-          l = "colorls -l";
-          la = "colorls -a";
-          lla = "colorls -la";
-          lt = "colorls --tree";
+          ls = "colorls --gs";
+          l = "ls -l";
+          la = "ls -a";
+          lla = "ls -la";
+          lt = "ls --tree";
         };
       };
 

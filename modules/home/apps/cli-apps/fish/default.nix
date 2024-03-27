@@ -29,7 +29,7 @@ in {
           l = "colorls -l";
           la = "colorls -a";
           lla = "colorls -la";
-          l = "colorls --tree";
+          lt = "colorls --tree";
         };
       };
 

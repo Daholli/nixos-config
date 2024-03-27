@@ -38,6 +38,7 @@ in {
       cfg.extra-substituters;
 
     environment.systemPackages = with pkgs; [
+      snowfallorg.flake
       nixfmt
       nix-prefetch-git
     ];

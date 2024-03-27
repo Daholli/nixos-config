@@ -80,20 +80,20 @@ in {
           };
         };
 
-	harpoon = {
-        enable = true;
-        enableTelescope = true;
-        keymaps = {
-          addFile = "<leader>a";
-          toggleQuickMenu = "<leader>ha";
-          navFile = {
-            "1" = "<C-1>";
-            "2" = "<C-2>";
-            "3" = "<C-3>";
-            "4" = "<C-4>";
+        harpoon = {
+          enable = true;
+          enableTelescope = true;
+          keymaps = {
+            addFile = "<leader>a";
+            toggleQuickMenu = "<leader>ha";
+            navFile = {
+              "1" = "<C-1>";
+              "2" = "<C-2>";
+              "3" = "<C-3>";
+              "4" = "<C-4>";
+            };
           };
         };
-      };
 
         treesitter = {
           enable = true;
@@ -160,28 +160,27 @@ in {
           };
         };
 
-
-	 rainbow-delimiters = {
-        enable = true;
-      };
-      nvim-colorizer.enable = true;
-
-      undotree.enable = true;
-
-      which-key = {
-        enable = true;
-        registrations = {
-          "<leader>K" = "Code hover";
-          "<leader>gf" = "Code references";
-          "<leader>gd" = "Code definitions";
-          "<leader>gi" = "Implementations";
-          "<leader>gt" = "Type definition";
+        rainbow-delimiters = {
+          enable = true;
         };
-      };
+        nvim-colorizer.enable = true;
 
-      trouble.enable = true;
+        undotree.enable = true;
 
-      markdown-preview.enable = true;
+        which-key = {
+          enable = true;
+          registrations = {
+            "<leader>K" = "Code hover";
+            "<leader>gf" = "Code references";
+            "<leader>gd" = "Code definitions";
+            "<leader>gi" = "Implementations";
+            "<leader>gt" = "Type definition";
+          };
+        };
+
+        trouble.enable = true;
+
+        markdown-preview.enable = true;
       };
     };
   };

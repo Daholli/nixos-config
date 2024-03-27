@@ -14,6 +14,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      libsForQt5.bluez-qt
+    ];
+
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
@@ -23,6 +27,12 @@ in {
           KernelExperimental = true;
         };
       };
+    };
+
+    fileSystems."/var/lib/bluetooth" = {
+      device = "/persist/var/lib/bluetooth";
+      options = ["bind" "noauto" "x-systemd.automount"];
+      noCheck = true;
     };
 
     # https://github.com/NixOS/nixpkgs/issues/170573

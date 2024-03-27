@@ -27,7 +27,7 @@ in {
       lfs.enable = true;
       config = {
         init = {defaultBranch = "main";};
-	pull = {rebase = true;};
+	pull = {rebase = false;};
         push = {autoSetupRemote = true;};
       };
     };

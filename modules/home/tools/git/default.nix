@@ -23,7 +23,7 @@ in {
       lfs = enabled;
       extraConfig = {
         init = {defaultBranch = "main";};
-	pull = {rebase = true;};
+	pull = {rebase = false;};
         push = {autoSetupRemote = true;};
       };
     };

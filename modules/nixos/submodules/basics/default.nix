@@ -22,6 +22,11 @@ in {
       ripgrep
       fzf
       colorls
+
+      #optional
+      pciutils
+      usbutils
+      htop
     ];
 
     wyrdgard = {

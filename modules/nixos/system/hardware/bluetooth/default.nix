@@ -17,12 +17,14 @@ in {
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
+      settings = {
+        General = {
+          Experimental = true;
+          KernelExperimental = true;
+        };
+      };
     };
 
-    fileSystems."/var/lib/bluetooth" = {
-      device = "/persist/var/lib/bluetooth";
-      options = ["bind" "noauto" "x-systemd.automount"];
-      noCheck = true;
-    };
+    # https://github.com/NixOS/nixpkgs/issues/170573
   };
 }

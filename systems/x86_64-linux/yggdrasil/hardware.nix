@@ -12,7 +12,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
@@ -25,6 +25,12 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/8310-585A";
     fsType = "vfat";
+  };
+
+  fileSystems."/var/lib/bluetooth" = {
+    device = "/persist/var/lib/bluetooth";
+    options = ["bind" "noauto" "x-systemd.automount"];
+    noCheck = true;
   };
 
   swapDevices = [];

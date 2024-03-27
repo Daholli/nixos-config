@@ -26,6 +26,8 @@ in {
         relativenumber = true;
         shiftwidth = 2;
       };
+      
+      
     };
   };
 }

@@ -41,6 +41,7 @@ in {
       snowfallorg.flake
       nixfmt
       nix-prefetch-git
+      nix-du
     ];
 
     nix = let

@@ -10,7 +10,7 @@ with lib.wyrdgard; let
   cfg = config.wyrdgard.apps.cli-apps.fish;
 in {
   options.wyrdgard.apps.cli-apps.fish = with types; {
-    enable = mkBoolOpt false "Whether or not to enable the fish shell";
+    enable = mkBoolOpt true "Whether or not to enable the fish shell";
   };
 
   config = mkIf cfg.enable {

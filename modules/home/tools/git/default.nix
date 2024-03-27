@@ -1,17 +1,17 @@
 {
+  options,
   lib,
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) types mkEnableOption mkIf;
-  inherit (lib.wyrdgard) mkOpt enabled;
-
+}: 
+with lib;
+with lib.wyrdgard; let
   cfg = config.wyrdgard.tools.git;
   user = config.wyrdgard.user;
 in {
   options.wyrdgard.tools.git = {
-    enable = mkEnableOption "Git";
+    enable = mkBoolOpt true "Enable Git (Default true)";
     userName = mkOpt types.str user.fullName "The name to configure git with.";
     userEmail = mkOpt types.str user.email "The email to configure git with.";
   };

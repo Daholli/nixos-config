@@ -10,7 +10,7 @@ with lib.wyrdgard; let
   cfg = config.wyrdgard.apps._1password;
 in {
   options.wyrdgard.apps._1password = with types; {
-    enable = mkBoolOpt false "Enable 1Password";
+    enable = mkBoolOpt true "Enable 1Password";
   };
 
   config = mkIf cfg.enable {

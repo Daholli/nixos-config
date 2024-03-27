@@ -2,11 +2,9 @@
   lib,
   config,
   ...
-}: 
+}:
 with lib;
-with lib.wyrdgard;
-let
-
+with lib.wyrdgard; let
   cfg = config.wyrdgard.apps.cli-apps.home-manager;
 in {
   options.wyrdgard.apps.cli-apps.home-manager = {

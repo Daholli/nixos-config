@@ -9,7 +9,6 @@ with lib.wyrdgard; {
   imports = [./hardware.nix];
 
   environment.systemPackages = with pkgs; [
-    filelight
   ];
 
   # nvidia
@@ -36,9 +35,6 @@ with lib.wyrdgard; {
     };
 
     apps = {
-      cli-apps = {
-        fish = enabled;
-      };
       vivaldi = enabled;
       discord = enabled;
       _1password = enabled;
@@ -47,14 +43,6 @@ with lib.wyrdgard; {
 
   services.xserver.videoDrivers = ["nvidia"];
   services.xserver.displayManager.sddm.wayland.enable = lib.mkForce false;
-
-  # Configure Home-Manager options from NixOS.
-  snowfallorg.user.cholli.home.config = {
-    programs.kitty = {
-      theme = "Tokyo Night";
-      shellIntegration.enableFishIntegration = true;
-    };
-  };
 
   system.stateVersion = "23.11";
 }

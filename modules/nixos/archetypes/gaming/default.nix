@@ -14,11 +14,17 @@ in {
   };
 
   config = mkIf cfg.enable {
-    wyrdgard.submodules = {
-      basics = enabled;
-      graphical-interface = enabled;
-      games = enabled;
-      socials = enabled;
+    wyrdgard = {
+      submodules = {
+        basics = enabled;
+        graphical-interface = enabled;
+        games = enabled;
+        socials = enabled;
+      };
+
+      apps = {
+        vivaldi = enabled;
+      };
     };
   };
 }

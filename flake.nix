@@ -22,7 +22,7 @@
 
     # The nix way of configuring vim
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/nixvim?ref=nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -63,6 +63,7 @@
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
         nix-ld.nixosModules.nix-ld
+	nixvim.nixosModules.nixvim
       ];
     };
 }

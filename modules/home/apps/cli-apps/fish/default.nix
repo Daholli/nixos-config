@@ -22,7 +22,10 @@ in {
     programs = {
       fish = {
         enable = true;
-        shellInit = "zoxide init fish | source";
+        shellInit = "
+	zoxide init fish | source
+	starship init fish | source
+	";
         shellAliases = {
           vim = "nvim";
           ls = "colorls --gs";

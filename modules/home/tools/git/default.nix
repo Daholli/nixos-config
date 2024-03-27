@@ -4,7 +4,7 @@
   config,
   pkgs,
   ...
-}: 
+}:
 with lib;
 with lib.wyrdgard; let
   cfg = config.wyrdgard.tools.git;

@@ -8,9 +8,8 @@
 }:
 with lib.wyrdgard; {
   wyrdgard = {
-    apps.cli-apps = {
+    apps = {
       kitty = enabled;
-      home-manager = enabled;
     };
 
     tools = {

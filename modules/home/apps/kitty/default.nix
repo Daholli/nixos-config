@@ -6,9 +6,9 @@
 }:
 with lib;
 with lib.wyrdgard; let
-  cfg = config.wyrdgard.apps.cli-apps.kitty;
+  cfg = config.wyrdgard.apps.kitty;
 in {
-  options.wyrdgard.apps.cli-apps.kitty = {
+  options.wyrdgard.apps.kitty = {
     enable = mkEnableOption "Kity";
   };
 

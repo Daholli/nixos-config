@@ -14,17 +14,23 @@ in {
   };
 
   config = mkIf cfg.enable {
-	home.packages = with pkgs.fishPlugins; [
-			autopair
-			colored-man-pages
-			forgit
-			sponge
-	];
+    home.packages = with pkgs.fishPlugins; [
+      forgit
+      sponge
+    ];
 
     programs = {
       fish = {
-	enable = true;
-	shellInit = "zoxide init fish | source";
+        enable = true;
+        shellInit = "zoxide init fish | source";
+        shellAliases = {
+          vim = "nvim";
+          ls = "colorls";
+          l = "colorls -l";
+          la = "colorls -a";
+          lla = "colorls -la";
+          l = "colorls --tree";
+        };
       };
 
       starship = {

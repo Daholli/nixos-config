@@ -21,6 +21,7 @@ in {
       tree
       ripgrep
       fzf
+      colorls
     ];
 
     wyrdgard = {

@@ -2,14 +2,15 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-  inherit (lib.wyrdgard) enabled;
+}: 
+with lib;
+with lib.wyrdgard;
+let
 
   cfg = config.wyrdgard.apps.cli-apps.home-manager;
 in {
   options.wyrdgard.apps.cli-apps.home-manager = {
-    enable = mkEnableOption "home-manager";
+    enable = mkBoolOpt true "Enable home-manager";
   };
 
   config = mkIf cfg.enable {

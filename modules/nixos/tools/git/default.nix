@@ -24,7 +24,6 @@ in {
 
     programs.git = {
       enable = true;
-      inherit(cfg) userName userEmail;
       lfs.enable = true;
       config = {
         init = {defaultBranch = "main";};

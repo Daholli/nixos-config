@@ -22,6 +22,10 @@ in {
         socials = enabled;
       };
 
+      system.hardware = {
+        audio = enabled;
+      };
+
       apps = {
         vivaldi = enabled;
       };

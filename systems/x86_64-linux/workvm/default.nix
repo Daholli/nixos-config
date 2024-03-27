@@ -12,7 +12,6 @@ with lib.wyrdgard; {
   virtualisation.hypervGuest.videoMode = "1920x1080";
 
   environment.systemPackages = with pkgs; [
-
   ];
 
   environment.variables.EDITOR = "nvim";

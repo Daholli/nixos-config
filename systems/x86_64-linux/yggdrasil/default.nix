@@ -39,6 +39,8 @@ with lib.wyrdgard; {
       discord = enabled;
       _1password = enabled;
     };
+
+    system.hardware.bluetooth = enabled;
   };
 
   services.xserver.videoDrivers = ["nvidia"];

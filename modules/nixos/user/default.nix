@@ -72,7 +72,7 @@ in {
         }".source =
           cfg.icon;
       };
-          };
+    };
 
     users.users.${cfg.name} =
       {

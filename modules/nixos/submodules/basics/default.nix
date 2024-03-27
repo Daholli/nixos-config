@@ -20,6 +20,7 @@ in {
       fd
       tree
       ripgrep
+      fzf
     ];
 
     wyrdgard = {

@@ -16,6 +16,7 @@ in {
   config = mkIf cfg.enable {
     programs = {
       fish = enabled;
+
       starship = {
         enable = true;
         enableTransience = true;
@@ -49,6 +50,10 @@ in {
             format = "at [$path]($style)[$read_only]($read_only_style) ";
           };
         };
+      };
+
+      zoxide = {
+	enable = true;
       };
     };
   };

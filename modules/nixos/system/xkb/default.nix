@@ -17,7 +17,7 @@ in {
     services.xserver = {
       xkb.layout = "us";
       xkb.variant = "";
-      xkbOptions = "caps:escape";
+      xkb.options = "caps:escape";
     };
   };
 }

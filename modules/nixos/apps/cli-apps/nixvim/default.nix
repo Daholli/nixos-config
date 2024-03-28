@@ -128,36 +128,10 @@ in {
           };
         };
 
-        nvim-cmp = {
+        cmp = {
           enable = true;
-          autoEnableSources = true;
-          sources = [
-            {
-              name = "nvim_lsp";
-            }
-            {
-              name = "luasnip";
-            }
-            {
-              name = "path";
-            }
-            {
-              name = "buffer";
-            }
-          ];
-          mapping = {
-            "<C-Space>" = "cmp.mapping.complete()";
-            "<C-e>" = "cmp.mapping.close()";
-            "<Tab>" = {
-              modes = ["i" "s"];
-              action = "cmp.mapping.select_next_item()";
-            };
-            "<S-Tab>" = {
-              modes = ["i" "s"];
-              action = "cmp.mapping.select_prev_item()";
-            };
-            "<CR>" = "cmp.mapping.confirm({ select = true })";
-          };
+	  settings = {
+          	  };
         };
 
         rainbow-delimiters = {

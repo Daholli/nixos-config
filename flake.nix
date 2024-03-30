@@ -23,7 +23,7 @@
 
     # The nix way of configuring vim
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:Daholli/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -59,12 +59,12 @@
 
       overlays = with inputs; [
         snowfall-flake.overlays.default
+        nixvim.overlays.default
       ];
 
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
         nix-ld.nixosModules.nix-ld
-        nixvim.nixosModules.nixvim
       ];
     };
 }

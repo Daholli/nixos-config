@@ -17,7 +17,6 @@ in {
     mkIf cfg.enable {
       programs = {
         fish.shellInit = "
-
 	starship init fish | source
       ";
 

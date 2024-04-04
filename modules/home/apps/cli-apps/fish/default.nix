@@ -44,9 +44,7 @@ in {
           enableTransience = true;
           settings = {
             character = {
-              success_symbol = "[➜](bold green)";
-              error_symbol = "[✗](bold red) ";
-              vicmd_symbol = "[](bold blue) ";
+              error_symbol = "[ ](bold red)";
             };
             time = {
               disabled = false;
@@ -70,6 +68,21 @@ in {
               read_only_style = "197";
               read_only = "  ";
               format = "at [$path]($style)[$read_only]($read_only_style) ";
+            };
+            git_metrics = {
+              disabled = false;
+              added_style = "bold blue";
+              format = "[+$added]($added_style)/[-$deleted]($deleted_style) ";
+            };
+            git_status = {
+              ahead = "↑$count(green)";
+              behind = "↓$count(red)";
+              diverged = "↕↓ahead_count(green)↑behind_count(red)";
+              deleted = "✘$count";
+              modified = "!$count";
+              staged = "✚$count";
+              renamed = "➜$count";
+              untracked = "?$count";
             };
           };
         };

@@ -5,14 +5,14 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; {
-  imports = [./hardware.nix];
+with lib.wyrdgard;
+{
+  imports = [ ./hardware.nix ];
 
-  boot.blacklistedKernelModules = ["hyperv-fb"];
+  boot.blacklistedKernelModules = [ "hyperv-fb" ];
   virtualisation.hypervGuest.videoMode = "1920x1080";
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages = with pkgs; [ ];
 
   environment.variables.EDITOR = "nvim";
   environment.variables.SUDOEDITOR = "nvim";

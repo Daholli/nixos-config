@@ -6,10 +6,12 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.tools.git;
   user = config.wyrdgard.user;
-in {
+in
+{
   options.wyrdgard.tools.git = with types; {
     enable = mkBoolOpt true "Wether or not to enable git (Default enabled)";
     userName = mkOpt types.str user.fullName "The name to use git with";
@@ -26,9 +28,15 @@ in {
       enable = true;
       lfs.enable = true;
       config = {
-        init = {defaultBranch = "main";};
-        pull = {rebase = false;};
-        push = {autoSetupRemote = true;};
+        init = {
+          defaultBranch = "main";
+        };
+        pull = {
+          rebase = false;
+        };
+        push = {
+          autoSetupRemote = true;
+        };
       };
     };
   };

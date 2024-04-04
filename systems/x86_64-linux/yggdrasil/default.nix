@@ -5,13 +5,13 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; {
-  imports = [./hardware.nix];
+with lib.wyrdgard;
+{
+  imports = [ ./hardware.nix ];
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages = with pkgs; [ ];
 
-  environment.pathsToLink = ["/libexec"];
+  environment.pathsToLink = [ "/libexec" ];
 
   wyrdgard = {
     archetypes = {

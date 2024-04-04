@@ -5,17 +5,17 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.apps.kitty;
-in {
+in
+{
   options.wyrdgard.apps.kitty = {
     enable = mkEnableOption "Kity";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      kitty
-    ];
+    home.packages = with pkgs; [ kitty ];
 
     programs.kitty = {
       enable = true;

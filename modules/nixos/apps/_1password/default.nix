@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.apps._1password;
-in {
+in
+{
   options.wyrdgard.apps._1password = with types; {
     enable = mkBoolOpt true "Enable 1Password";
   };
@@ -18,7 +20,7 @@ in {
       _1password.enable = true;
       _1password-gui = {
         enable = true;
-        polkitPolicyOwners = [config.wyrdgard.user.name];
+        polkitPolicyOwners = [ config.wyrdgard.user.name ];
       };
     };
   };

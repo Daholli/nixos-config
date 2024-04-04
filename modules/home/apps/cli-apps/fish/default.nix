@@ -25,7 +25,6 @@ in {
           enable = true;
           shellInit = "
 	zoxide init fish | source
-	starship init fish | source
 	direnv hook fish | source
 	source ~/.config/op/plugins.sh
 	";

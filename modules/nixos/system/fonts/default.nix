@@ -6,12 +6,14 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.system.fonts;
-in {
+in
+{
   options.wyrdgard.system.fonts = with types; {
     enable = mkBoolOpt false "Whether or not to manage fonts.";
-    fonts = mkOpt (listOf package) [] "Custom font packages to install.";
+    fonts = mkOpt (listOf package) [ ] "Custom font packages to install.";
   };
 
   config = mkIf cfg.enable {
@@ -20,13 +22,17 @@ in {
       LOG_ICONS = "true";
     };
 
-    environment.systemPackages = with pkgs; [
-      font-manager
-    ];
+    environment.systemPackages = with pkgs; [ font-manager ];
 
-    fonts.packages = with pkgs;
+    fonts.packages =
+      with pkgs;
       [
-        (nerdfonts.override {fonts = ["CodeNewRoman" "NerdFontsSymbolsOnly"];})
+        (nerdfonts.override {
+          fonts = [
+            "CodeNewRoman"
+            "NerdFontsSymbolsOnly"
+          ];
+        })
         font-awesome
         powerline-fonts
         powerline-symbols

@@ -2,10 +2,16 @@
   lib,
   config,
   pkgs,
-  osConfig ? {},
+  osConfig ? { },
   ...
-}: let
-  inherit (lib) types mkIf mkDefault mkMerge;
+}:
+let
+  inherit (lib)
+    types
+    mkIf
+    mkDefault
+    mkMerge
+    ;
   inherit (lib.wyrdgard) mkOpt;
 
   cfg = config.wyrdgard.user;
@@ -14,15 +20,18 @@
   is-darwin = pkgs.stdenv.isDarwin;
 
   home-directory =
-    if cfg.name == null
-    then null
-    else if is-darwin
-    then "/Users/${cfg.name}"
-    else "/home/${cfg.name}";
-in {
+    if cfg.name == null then
+      null
+    else if is-darwin then
+      "/Users/${cfg.name}"
+    else
+      "/home/${cfg.name}";
+in
+{
   options.wyrdgard.user = {
     enable = mkOpt types.bool true "Whether to configure the user account.";
-    name = mkOpt (types.nullOr types.str) (config.snowfallorg.user.name or "cholli") "The user account.";
+    name = mkOpt (types.nullOr types.str) (config.snowfallorg.user.name or "cholli"
+    ) "The user account.";
 
     fullName = mkOpt types.str "Christoph Hollizeck" "The full name of the user.";
     email = mkOpt types.str "christoph.hollizeck@hey.com" "The email of the user.";

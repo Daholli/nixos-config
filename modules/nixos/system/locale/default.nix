@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.system.locale;
-in {
+in
+{
   options.wyrdgard.system.locale = with types; {
     enable = mkBoolOpt false "Whether or not to manage locale settings.";
   };

@@ -50,14 +50,15 @@ in {
           format = "[+$added]($added_style)/[-$deleted]($deleted_style) ";
         };
         git_status = {
-          ahead = "[ ↑$count](bold green)";
+          format = "([$all_status$ahead_behind]($style) )";
+          ahead = "[↑$count](bold green)";
           behind = "[↓$count](bold red)";
           diverged = "[↕↓$ahead_count↑$behind_count](red)";
-          deleted = "[✘$count](red)";
-          modified = "[!$count](yellow)";
-          staged = "[+$count](green)";
-          renamed = "[➜$count](green)";
-          untracked = "[?$count](blue)";
+          deleted = "[✘$count](red) ";
+          modified = "[!$count](yellow) ";
+          staged = "[+$count](green) ";
+          renamed = "[➜$count](green) ";
+          untracked = "[?$count](blue) ";
         };
       };
     };

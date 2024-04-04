@@ -6,14 +6,19 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.apps.cli-apps.nixvim;
-in {
+in
+{
   options.wyrdgard.apps.cli-apps.nixvim = with types; {
     enable = mkBoolOpt true "Whether to enable nixvim or not (Default true)";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [less wyrdgard.neovim];
+    environment.systemPackages = with pkgs; [
+      less
+      wyrdgard.neovim
+    ];
   };
 }

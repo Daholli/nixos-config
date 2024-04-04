@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.submodules.socials;
-in {
+in
+{
   options.wyrdgard.submodules.socials = with types; {
     enable = mkBoolOpt false "Whether to enable social apps";
   };

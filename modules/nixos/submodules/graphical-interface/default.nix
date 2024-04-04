@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.submodules.graphical-interface;
-in {
+in
+{
   options.wyrdgard.submodules.graphical-interface = with types; {
     enable = mkBoolOpt false "Whether to enable a graphical interface";
   };

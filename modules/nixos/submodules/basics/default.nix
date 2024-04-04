@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.submodules.basics;
-in {
+in
+{
   options.wyrdgard.submodules.basics = with types; {
     enable = mkBoolOpt false "Whether or not to enable basic configuration.";
   };

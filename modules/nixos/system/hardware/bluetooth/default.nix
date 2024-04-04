@@ -6,17 +6,17 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.system.hardware.bluetooth;
-in {
+in
+{
   options.wyrdgard.system.hardware.bluetooth = with types; {
     enable = mkBoolOpt false "Whether or not to enable bluetooth";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      libsForQt5.bluez-qt
-    ];
+    environment.systemPackages = with pkgs; [ libsForQt5.bluez-qt ];
 
     hardware.bluetooth = {
       enable = true;
@@ -31,7 +31,11 @@ in {
 
     fileSystems."/var/lib/bluetooth" = {
       device = "/persist/var/lib/bluetooth";
-      options = ["bind" "noauto" "x-systemd.automount"];
+      options = [
+        "bind"
+        "noauto"
+        "x-systemd.automount"
+      ];
       noCheck = true;
     };
 

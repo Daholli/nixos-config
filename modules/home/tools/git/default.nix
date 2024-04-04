@@ -6,10 +6,12 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.tools.git;
   user = config.wyrdgard.user;
-in {
+in
+{
   options.wyrdgard.tools.git = {
     enable = mkBoolOpt true "Enable Git (Default true)";
     userName = mkOpt types.str user.fullName "The name to configure git with.";
@@ -22,9 +24,15 @@ in {
       inherit (cfg) userName userEmail;
       lfs = enabled;
       extraConfig = {
-        init = {defaultBranch = "main";};
-        pull = {rebase = false;};
-        push = {autoSetupRemote = true;};
+        init = {
+          defaultBranch = "main";
+        };
+        pull = {
+          rebase = false;
+        };
+        push = {
+          autoSetupRemote = true;
+        };
       };
     };
   };

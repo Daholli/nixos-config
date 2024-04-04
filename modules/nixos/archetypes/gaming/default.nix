@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.archetypes.gaming;
-in {
+in
+{
   options.wyrdgard.archetypes.gaming = with types; {
     enable = mkBoolOpt false "Whether or not to enable the gaming archetype.";
   };

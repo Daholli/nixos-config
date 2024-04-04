@@ -5,9 +5,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.system.xkb;
-in {
+in
+{
   options.wyrdgard.system.xkb = with types; {
     enable = mkBoolOpt false "Whether or not to configure xkb.";
   };

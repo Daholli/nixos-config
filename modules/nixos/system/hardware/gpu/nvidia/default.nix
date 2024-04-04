@@ -6,9 +6,11 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.system.hardware.gpu.nvidia;
-in {
+in
+{
   options.wyrdgard.system.hardware.gpu.nvidia = with types; {
     enable = mkEnableOption "Enable Nvidia GPU";
   };
@@ -29,7 +31,7 @@ in {
       package = config.boot.kernelPackages.nvidiaPackages.beta; # stable, beta
     };
 
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
     services.xserver.displayManager.sddm.wayland.enable = lib.mkForce false;
   };
 }

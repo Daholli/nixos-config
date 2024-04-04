@@ -6,17 +6,17 @@
   ...
 }:
 with lib;
-with lib.wyrdgard; let
+with lib.wyrdgard;
+let
   cfg = config.wyrdgard.system.hardware.audio;
-in {
+in
+{
   options.wyrdgard.system.hardware.audio = with types; {
     enable = mkBoolOpt false "Whether or not to enable audio";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      noisetorch
-    ];
+    environment.systemPackages = with pkgs; [ noisetorch ];
 
     programs.noisetorch.enable = true;
 

@@ -2,11 +2,12 @@
   lib,
   pkgs,
   config,
-  osConfig ? {},
+  osConfig ? { },
   format ? "unknown",
   ...
 }:
-with lib.wyrdgard; {
+with lib.wyrdgard;
+{
   wyrdgard = {
     apps = {
       kitty = enabled;

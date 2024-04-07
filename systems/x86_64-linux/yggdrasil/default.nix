@@ -24,9 +24,15 @@ with lib.wyrdgard;
       _1password = enabled;
     };
 
-    system.hardware = {
-      bluetooth = enabled;
-      gpu.nvidia = enabled;
+    system = {
+      autoUpgrade = {
+        enable = true;
+        time = "10:00";
+      };
+      hardware = {
+        bluetooth = enabled;
+        gpu.nvidia = enabled;
+      };
     };
   };
 

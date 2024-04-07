@@ -16,9 +16,22 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      less
-      wyrdgard.neovim
-    ];
+    environment = {
+      systemPackages = with pkgs; [
+        less
+        wyrdgard.neovim
+      ];
+      variables = {
+        EDITOR = "nvim";
+        SUDOEDITOR = "nvim";
+      };
+    };
+
+    wyrdgard.home = {
+      extraOptions = {
+        # Use Neovim for Git diffs.
+        programs.fish.shellAliases.vimdiff = "nvim -d";
+      };
+    };
   };
 }

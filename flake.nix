@@ -35,6 +35,12 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "unstable";
     };
+
+    # GPG default configuration
+    gpg-base-conf = {
+      url = "github:drduh/config";
+      flake = false;
+    };
   };
 
   outputs =

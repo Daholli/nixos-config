@@ -50,6 +50,10 @@ in
         time = enabled;
         xkb = enabled;
       };
+
+      security = {
+        gpg = enabled;
+      };
     };
   };
 }

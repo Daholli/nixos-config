@@ -24,10 +24,16 @@ with lib.wyrdgard;
       _1password = enabled;
     };
 
-    system.hardware = {
+    system = {
+      autoUpgrade = {
+        enable = true;
+        time = "10:00";
+      };
+      hardware = {
       bluetooth = enabled;
       gpu.nvidia = enabled;
     };
+  };
   };
 
   system.stateVersion = "23.11";

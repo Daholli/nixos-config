@@ -30,10 +30,10 @@ with lib.wyrdgard;
         time = "10:00";
       };
       hardware = {
-      bluetooth = enabled;
-      gpu.nvidia = enabled;
+        bluetooth = enabled;
+        gpu.nvidia = enabled;
+      };
     };
-  };
   };
 
   system.stateVersion = "23.11";

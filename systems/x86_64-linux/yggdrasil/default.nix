@@ -22,6 +22,7 @@ with lib.wyrdgard;
       vivaldi = enabled;
       discord = enabled;
       _1password = enabled;
+      onedrive = enabled;
     };
 
     system = {

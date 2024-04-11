@@ -51,9 +51,6 @@ in
         xkb = enabled;
       };
 
-      security = {
-        gpg = enabled;
-      };
     };
   };
 }

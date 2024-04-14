@@ -18,13 +18,15 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ ];
 
-    services.xserver = {
-      enable = true;
+    services = {
+      xserver = {
+        enable = true;
+      };
       displayManager.sddm = {
         enable = true;
         wayland.enable = true;
       };
+      desktopManager.plasma6 = enabled;
     };
-    services.desktopManager.plasma6 = enabled;
   };
 }

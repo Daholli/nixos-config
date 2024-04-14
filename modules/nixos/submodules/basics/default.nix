@@ -50,7 +50,6 @@ in
         time = enabled;
         xkb = enabled;
       };
-
     };
   };
 }

@@ -16,7 +16,9 @@ in
     enable = mkBoolOpt true "Enable Git (Default true)";
     userName = mkOpt types.str user.fullName "The name to configure git with.";
     userEmail = mkOpt types.str user.email "The email to configure git with.";
-    signingKey = mkOpt types.str "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN4iH29edivUi+k94apb6pasWq8qphfhYo0d6B2GhISf" "The pub key to sign commits with.";
+    signingKey =
+      mkOpt types.str "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN4iH29edivUi+k94apb6pasWq8qphfhYo0d6B2GhISf"
+        "The pub key to sign commits with.";
     signByDefault = mkOpt types.bool true "Whether to sign commits by default.";
   };
 

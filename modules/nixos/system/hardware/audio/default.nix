@@ -16,8 +16,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ noisetorch pavucontrol
-];
+    environment.systemPackages = with pkgs; [
+      noisetorch
+      pavucontrol
+    ];
 
     programs.noisetorch.enable = true;
 

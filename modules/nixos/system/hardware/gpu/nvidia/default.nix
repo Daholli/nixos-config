@@ -32,6 +32,6 @@ in
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
-    services.xserver.displayManager.sddm.wayland.enable = lib.mkForce false;
+    services.displayManager.sddm.wayland.enable = lib.mkForce false;
   };
 }

@@ -13,39 +13,37 @@
 
   boot = {
     initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  initrd.kernelModules = [ ];
-  kernelModules = [
-    "kvm-amd"
-    "btusb"
-  ];
-  extraModulePackages = [ ];
-};
-
-fileSystems = {
-  "/" = {
-    device = "/dev/disk/by-uuid/444a9216-59d1-46e0-9643-0b716a42ba0b";
-    fsType = "ext4";
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [
+      "kvm-amd"
+      "btusb"
+    ];
+    extraModulePackages = [ ];
   };
 
-  "/boot" = {
-    device = "/dev/disk/by-uuid/8310-585A";
-    fsType = "vfat";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/444a9216-59d1-46e0-9643-0b716a42ba0b";
+      fsType = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/8310-585A";
+      fsType = "vfat";
+    };
+
+    "/storage" = {
+      device = "/dev/disk/by-uuid/c3c1dec1-7716-4c37-a3f2-bb60f9af84fd";
+      fsType = "ext4";
+    };
   };
-
-  "/storage" = {
-    device = "/dev/disk/by-uuid/c3c1dec1-7716-4c37-a3f2-bb60f9af84fd";
-    fsType = "ext4";
-  };
-};
-
-
 
   swapDevices = [ ];
 

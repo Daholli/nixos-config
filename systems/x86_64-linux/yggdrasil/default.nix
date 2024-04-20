@@ -23,6 +23,7 @@ with lib.wyrdgard;
       discord = enabled;
       _1password = enabled;
       onedrive = enabled;
+      factorio-server = enabled;
     };
 
     system = {

@@ -24,7 +24,7 @@ in
     programs.noisetorch.enable = true;
 
     sound.enable = true;
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio = disabled;
     security.rtkit.enable = true;
 
     services.pipewire = {
@@ -32,6 +32,13 @@ in
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      extraConfig = {
+        "11-bluetooth-policy" = {
+          "bluetooth_policy.policy" = {
+            "media-role.use-headset-profile" = false;
+          };
+        };
+      };
     };
   };
 }

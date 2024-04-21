@@ -16,14 +16,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ factorio-headless-experimental ];
+    environment.systemPackages = with pkgs; [ factorio-headless ];
 
     services.factorio = {
       enable = true;
       openFirewall = true;
       public = true;
       lan = true;
-      bind = "[::]";
+      admins = [
+        "DaHolli"
+        "Galbrain"
+      ];
       nonBlockingSaving = true;
       autosave-interval = 5;
       loadLatestSave = true;
@@ -31,6 +34,8 @@ in
       token = "4d4624ca9a23396e1955c1b4b364ff";
       game-name = "Alles Nix!";
       game-password = "1234";
+      saveName = "Vanilla";
+      bind = "192.168.178.34";
     };
   };
 }

@@ -24,7 +24,7 @@ in
     programs.noisetorch.enable = true;
 
     sound.enable = true;
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio = disabled;
     security.rtkit.enable = true;
 
     services.pipewire = {
@@ -32,6 +32,16 @@ in
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.configPackages = [
+        (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/11-bluetooth-policy.conf" ''
+          wireplumber.settings = {	
+            bluetooth.autoswitch-to-headset-profile = false	
+          }
+        '')
+        (pkgs.writeTextDir "share/wireplumber/policy.lua.d/11-bluetooth-policy.conf" ''
+          bluetooth_policy.policy["media-role.use-headset-profile"] = false
+        '')
+      ];
     };
   };
 }

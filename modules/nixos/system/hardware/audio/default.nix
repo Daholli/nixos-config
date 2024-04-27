@@ -32,13 +32,16 @@ in
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      extraConfig = {
-        "11-bluetooth-policy" = {
-          "bluetooth_policy.policy" = {
-            "media-role.use-headset-profile" = false;
-          };
-        };
-      };
+      wireplumber.configPackages = [
+        (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/11-bluetooth-policy.conf" ''
+          wireplumber.settings = {	
+            bluetooth.autoswitch-to-headset-profile = false	
+          }
+        '')
+        (pkgs.writeTextDir "share/wireplumber/policy.lua.d/11-bluetooth-policy.conf" ''
+          bluetooth_policy.policy["media-role.use-headset-profile"] = false
+        '')
+      ];
     };
   };
 }

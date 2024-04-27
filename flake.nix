@@ -41,6 +41,8 @@
       url = "github:drduh/config";
       flake = false;
     };
+
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -75,6 +77,7 @@
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
         nix-ld.nixosModules.nix-ld
+        sops-nix.nixosModules.sops
       ];
     };
 }

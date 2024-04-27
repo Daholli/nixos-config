@@ -9,7 +9,7 @@ with lib.wyrdgard;
 {
   imports = [ ./hardware.nix ];
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ jetbrains.rust-rover ];
 
   environment.pathsToLink = [ "/libexec" ];
 
@@ -23,7 +23,7 @@ with lib.wyrdgard;
       discord = enabled;
       _1password = enabled;
       onedrive = enabled;
-      factorio-server = disabled;
+      factorio-server = enabled;
     };
 
     system = {
@@ -36,6 +36,8 @@ with lib.wyrdgard;
         gpu.nvidia = enabled;
       };
     };
+
+    security.syncthing = enabled;
   };
 
   system.stateVersion = "23.11";

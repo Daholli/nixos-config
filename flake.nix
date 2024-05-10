@@ -27,6 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    kickstartnvim = {
+      url = "github:Daholli/kickstart-nix-nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Hardware Configuration
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
@@ -71,7 +76,7 @@
 
       overlays = with inputs; [
         snowfall-flake.overlays.default
-        nixvim.overlays.default
+        kickstartnvim.overlays.default
       ];
 
       systems.modules.nixos = with inputs; [

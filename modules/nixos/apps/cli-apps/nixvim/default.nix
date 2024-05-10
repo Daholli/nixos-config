@@ -19,7 +19,7 @@ in
     environment = {
       systemPackages = with pkgs; [
         less
-        wyrdgard.neovim
+        nvim-pkg
       ];
       variables = {
         EDITOR = "nvim";

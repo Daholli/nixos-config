@@ -19,9 +19,15 @@ in
     environment.systemPackages = with pkgs; [ factorio-headless ];
     sops = {
       secrets = {
-        factorio_token = { restartUnits = ["factorio.service"]; };
-        factorio_username = { restartUnits = ["factorio.service"]; };
-        factorio_game_password = { restartUnits = ["factorio.service"]; };
+        factorio_token = {
+          restartUnits = [ "factorio.service" ];
+        };
+        factorio_username = {
+          restartUnits = [ "factorio.service" ];
+        };
+        factorio_game_password = {
+          restartUnits = [ "factorio.service" ];
+        };
       };
       templates."extraSettingsFile.json".content = ''
         {

@@ -20,7 +20,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       snowfallorg.flake
-      nixfmt
+      nixfmt-rfc-style
       nix-prefetch-git
       nix-du
     ];

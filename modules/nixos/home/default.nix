@@ -1,9 +1,7 @@
 {
   options,
   config,
-  pkgs,
   lib,
-  inputs,
   ...
 }:
 with lib;
@@ -28,7 +26,7 @@ in
       xdg.configFile = mkAliasDefinitions options.wyrdgard.home.configFile;
     };
 
-    snowfallorg.user.${config.wyrdgard.user.name}.home.config = config.wyrdgard.home.extraOptions;
+    snowfallorg.users.${config.wyrdgard.user.name}.home.config = config.wyrdgard.home.extraOptions;
 
     home-manager = {
       useUserPackages = true;

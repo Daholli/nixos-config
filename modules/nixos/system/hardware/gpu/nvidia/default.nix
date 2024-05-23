@@ -1,8 +1,6 @@
 {
   lib,
-  pkgs,
   config,
-  options,
   ...
 }:
 with lib;
@@ -32,6 +30,5 @@ in
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
-    services.displayManager.sddm.wayland.enable = lib.mkForce false;
   };
 }

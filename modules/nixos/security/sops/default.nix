@@ -1,9 +1,7 @@
 {
-  options,
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 with lib;
@@ -23,7 +21,7 @@ in
     ];
 
     sops = {
-      defaultSopsFile = ../../../../secrets/secrets.yaml;
+      defaultSopsFile = lib.snowfall.fs.get-file "secrets/secrets.yaml";
       defaultSopsFormat = "yaml";
 
       age.keyFile = "/home/cholli/.config/sops/age/keys.txt";

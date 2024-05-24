@@ -21,12 +21,6 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
-    # The nix way of configuring vim
-    nixvim = {
-      url = "github:Daholli/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     kickstartnvim = {
       url = "github:Daholli/kickstart-nix-nvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,6 +39,11 @@
     gpg-base-conf = {
       url = "github:drduh/config";
       flake = false;
+    };
+
+    pyfa = {
+      url = "github:Daholli/Pyfa/nixos-support";
+      inputs.nixpkgs.follows = "unstable";
     };
 
     sops-nix.url = "github:Mic92/sops-nix";

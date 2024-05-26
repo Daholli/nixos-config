@@ -1,6 +1,6 @@
 {
+  inputs,
   pkgs,
-  config,
   lib,
   ...
 }:
@@ -9,7 +9,7 @@ with lib.wyrdgard;
 {
   imports = [ ./hardware.nix ];
 
-  environment.systemPackages = with pkgs; [ jetbrains.rust-rover ];
+  environment.systemPackages = with pkgs; [ jetbrains.rust-rover inputs.pyfa ];
 
   environment.pathsToLink = [ "/libexec" ];
 
@@ -36,8 +36,6 @@ with lib.wyrdgard;
         gpu.nvidia = enabled;
       };
     };
-
-    security.syncthing = enabled;
   };
 
   system.stateVersion = "23.11";

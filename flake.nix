@@ -3,8 +3,8 @@
 
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs.url = "github:auxolotl/nixpkgs/nixos-unstable";
-    unstable.url = "github:auxolotl/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -21,9 +21,8 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
-    # The nix way of configuring vim
-    nixvim = {
-      url = "github:Daholli/nixvim";
+    kickstartnvim = {
+      url = "github:Daholli/kickstart-nix-nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -40,6 +39,11 @@
     gpg-base-conf = {
       url = "github:drduh/config";
       flake = false;
+    };
+
+    pyfa = {
+      url = "github:Daholli/Pyfa/nixos-support";
+      inputs.nixpkgs.follows = "unstable";
     };
 
     sops-nix.url = "github:Mic92/sops-nix";
@@ -71,7 +75,7 @@
 
       overlays = with inputs; [
         snowfall-flake.overlays.default
-        nixvim.overlays.default
+        kickstartnvim.overlays.default
       ];
 
       systems.modules.nixos = with inputs; [

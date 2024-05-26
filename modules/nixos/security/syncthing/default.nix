@@ -1,11 +1,4 @@
-{
-  options,
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}:
+{ config, lib, ... }:
 with lib;
 with lib.wyrdgard;
 let

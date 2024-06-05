@@ -19,6 +19,10 @@ let
     max-cache-ttl 120
     pinentry-program ${pkgs.pinentry-qt}/bin/pinentry-qt
   '';
+
+    reload-yubikey = pkgs.writeShellScriptBin "reload-yubikey" ''
+    ${pkgs.gnupg}/bin/gpg-connect-agent "scd serialno" "learn --force" /bye
+  '';
 in
 {
   options.wyrdgard.security.gpg = with types; {
@@ -27,11 +31,19 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.pcscd.enable = true;
+    services.udev.packages = with pkgs; [ yubikey-personalization ];
+
     environment.systemPackages = with pkgs; [
+      cryptsetup
       paperkey
       gnupg
       pinentry-curses
       pinentry-qt
+
+      yubikey-manager
+      yubikey-manager-qt
+      reload-yubikey
     ];
 
     programs = {
@@ -50,6 +62,8 @@ in
 
         ".gnupg/gpg.conf".source = gpgConf;
         ".gnupg/gpg-agent.conf".text = gpgAgentConf;
+        ".gnupg/scdeamon.conf".text = "disable-ccid";
+        # YUBIKEYCERTIFYPASSWORD
       };
     };
   };

@@ -36,6 +36,8 @@ with lib.wyrdgard;
         gpu.nvidia = enabled;
       };
     };
+
+    security.gpg = enabled;
   };
 
   system.stateVersion = "23.11";

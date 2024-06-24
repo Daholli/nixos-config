@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -18,18 +17,12 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ xdg-utils ];
 
-    services = {
-      xserver = {
-        enable = true;
+    wyrdgard.graphical-interface = {
+      display-manager.sddm = enabled;
+      desktop-manager = {
+        hyprland = enabled;
+        kde = enabled;
       };
-      displayManager = {
-        defaultSession = "plasmax11";
-        sddm = {
-          enable = true;
-          wayland.enable = true;
-        };
-      };
-      desktopManager.plasma6 = enabled;
     };
   };
 }

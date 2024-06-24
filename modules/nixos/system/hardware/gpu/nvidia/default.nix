@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 with lib;
 with lib.wyrdgard;
 let
@@ -14,14 +10,16 @@ in
   };
 
   config = mkIf cfg.enable {
-    hardware.graphics = enabled;
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
 
     hardware.nvidia = {
       modesetting.enable = true;
-      powerManagement.enable = false;
-      powerManagement.finegrained = false;
+      powerManagement.enable = true;
       open = false;
-      nvidiaSettings = false;
+      nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.beta; # stable, beta
     };
 

@@ -15,7 +15,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ polkit xdg-desktop-portal-hyprland dconf ];
+    environment.systemPackages = with pkgs; [
+      polkit
+      xdg-desktop-portal-hyprland
+      dconf
+    ];
 
     services.xserver = enabled;
 

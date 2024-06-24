@@ -9,7 +9,11 @@ with lib.wyrdgard;
 {
   imports = [ ./hardware.nix ];
 
-  environment.systemPackages = with pkgs; [ jetbrains.rust-rover inputs.pyfa teamspeak_client ];
+  environment.systemPackages = with pkgs; [
+    jetbrains.rust-rover
+    inputs.pyfa
+    teamspeak_client
+  ];
 
   environment.pathsToLink = [ "/libexec" ];
 

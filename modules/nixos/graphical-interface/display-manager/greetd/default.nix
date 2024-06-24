@@ -15,7 +15,11 @@ let
 
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session";
 
-  command = if hyperland.enable then "${tuigreet} --sessions ${hyprland-session}" else "${tuigreet} --sessions ${kde-session}";
+  command =
+    if hyperland.enable then
+      "${tuigreet} --sessions ${hyprland-session}"
+    else
+      "${tuigreet} --sessions ${kde-session}";
 in
 {
   options.wyrdgard.graphical-interface.display-manager.greetd = with types; {

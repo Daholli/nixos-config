@@ -1,5 +1,4 @@
 {
-  options,
   config,
   pkgs,
   lib,
@@ -16,6 +15,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_8;
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 

@@ -20,7 +20,7 @@ let
     pinentry-program ${pkgs.pinentry-qt}/bin/pinentry-qt
   '';
 
-    reload-yubikey = pkgs.writeShellScriptBin "reload-yubikey" ''
+  reload-yubikey = pkgs.writeShellScriptBin "reload-yubikey" ''
     ${pkgs.gnupg}/bin/gpg-connect-agent "scd serialno" "learn --force" /bye
   '';
 in

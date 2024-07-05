@@ -19,6 +19,9 @@ in
     environment.systemPackages = with pkgs; [
       vivaldi
       vivaldi-ffmpeg-codecs
+      qt5.qtwayland
     ];
+
+    # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }

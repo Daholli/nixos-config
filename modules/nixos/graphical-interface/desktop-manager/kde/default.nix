@@ -15,7 +15,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ xdg-utils ];
+    environment.systemPackages = with pkgs; [
+      xdg-utils
+      kdePackages.qtbase
+    ];
 
     services = {
       xserver = enabled;

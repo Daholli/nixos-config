@@ -13,6 +13,7 @@ with lib.wyrdgard;
     jetbrains.rust-rover
     inputs.pyfa
     teamspeak_client
+    path-of-building
   ];
 
   environment.pathsToLink = [ "/libexec" ];

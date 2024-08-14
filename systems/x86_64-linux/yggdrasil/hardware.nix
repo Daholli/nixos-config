@@ -48,10 +48,10 @@ in
       fsType = "vfat";
     };
 
-    "/storage" = {
-      device = "/dev/disk/by-uuid/c3c1dec1-7716-4c37-a3f2-bb60f9af84fd";
-      fsType = "ext4";
-    };
+    #"/storage" = {
+    #  device = "/dev/disk/by-uuid/c3c1dec1-7716-4c37-a3f2-bb60f9af84fd";
+    #  fsType = "ext4";
+    #};
   };
 
   swapDevices = [ ];

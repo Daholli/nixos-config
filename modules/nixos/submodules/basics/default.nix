@@ -36,7 +36,6 @@ in
 
       tools = {
         git = enabled;
-        nix-ld = enabled;
       };
 
       system.hardware = {

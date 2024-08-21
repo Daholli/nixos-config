@@ -11,8 +11,6 @@ with lib.wyrdgard;
 
   environment.systemPackages = with pkgs; [
     jetbrains.rust-rover
-    inputs.pyfa
-    teamspeak_client
     path-of-building
   ];
 
@@ -31,6 +29,7 @@ with lib.wyrdgard;
       _1password = enabled;
       onedrive = enabled;
       factorio-server = enabled;
+      obs-studio = enabled;
     };
 
     system = {

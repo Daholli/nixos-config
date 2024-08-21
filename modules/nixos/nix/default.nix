@@ -1,9 +1,7 @@
 {
-  options,
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 with lib;
@@ -14,7 +12,7 @@ in
 {
   options.wyrdgard.nix = with types; {
     enable = mkBoolOpt true "Whether or not to manage nix configuration.";
-    package = mkOpt package pkgs.nixVersions.git "Which nix package to use.";
+    package = mkOpt package pkgs.lix "Which nix package to use.";
   };
 
   config = mkIf cfg.enable {

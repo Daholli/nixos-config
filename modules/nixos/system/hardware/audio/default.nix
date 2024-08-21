@@ -23,7 +23,6 @@ in
 
     programs.noisetorch.enable = true;
 
-    sound.enable = true;
     hardware.pulseaudio = disabled;
     security.rtkit.enable = true;
 

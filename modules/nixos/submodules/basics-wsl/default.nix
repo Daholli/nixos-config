@@ -8,10 +8,10 @@
 with lib;
 with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.submodules.basics;
+  cfg = config.wyrdgard.submodules.basics-wsl;
 in
 {
-  options.wyrdgard.submodules.basics = with types; {
+  options.wyrdgard.submodules.basics-wsl = with types; {
     enable = mkBoolOpt false "Whether or not to enable basic configuration.";
   };
 
@@ -24,11 +24,6 @@ in
       ripgrep
       fzf
       colorls
-
-      #optional
-      pciutils
-      usbutils
-      htop
     ];
 
     wyrdgard = {
@@ -43,7 +38,6 @@ in
       };
 
       system = {
-        boot = enabled;
         fonts = enabled;
         locale = enabled;
         time = enabled;

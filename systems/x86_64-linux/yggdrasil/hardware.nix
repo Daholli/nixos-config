@@ -4,12 +4,21 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
+  inputs,
   ...
 }:
+let
+  inherit (inputs) nixos-hardware;
+in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = with nixos-hardware.nixosModules; [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    common-cpu-amd
+    common-gpu-nvidia-nonprime
+    common-pc
+    common-pc-ssd
+  ];
 
   boot = {
     initrd.availableKernelModules = [

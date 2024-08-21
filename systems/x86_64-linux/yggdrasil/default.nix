@@ -9,9 +9,16 @@ with lib.wyrdgard;
 {
   imports = [ ./hardware.nix ];
 
-  environment.systemPackages = with pkgs; [ jetbrains.rust-rover inputs.pyfa ];
+  environment.systemPackages = with pkgs; [
+    jetbrains.rust-rover
+    inputs.pyfa
+    teamspeak_client
+    path-of-building
+  ];
 
   environment.pathsToLink = [ "/libexec" ];
+
+  virtualisation.waydroid = enabled;
 
   wyrdgard = {
     archetypes = {
@@ -36,6 +43,8 @@ with lib.wyrdgard;
         gpu.nvidia = enabled;
       };
     };
+
+    security.gpg = enabled;
   };
 
   system.stateVersion = "23.11";

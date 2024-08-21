@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 with lib;
 with lib.wyrdgard;
 let
@@ -14,19 +10,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
     };
 
     hardware.nvidia = {
       modesetting.enable = true;
-      powerManagement.enable = false;
-      powerManagement.finegrained = false;
+      powerManagement.enable = true;
       open = false;
-      nvidiaSettings = false;
-      package = config.boot.kernelPackages.nvidiaPackages.beta; # stable, beta
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable; # stable, beta
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];

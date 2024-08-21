@@ -29,6 +29,7 @@ with lib.wyrdgard;
       _1password = enabled;
       onedrive = enabled;
       factorio-server = enabled;
+      obs-studio = enabled;
     };
 
     system = {

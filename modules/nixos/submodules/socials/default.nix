@@ -1,8 +1,6 @@
 {
-  options,
   config,
   lib,
-  pkgs,
   ...
 }:
 with lib;
@@ -19,6 +17,7 @@ in
     wyrdgard = {
       apps = {
         discord = enabled;
+        teamspeak = enabled;
       };
     };
   };

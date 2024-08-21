@@ -34,7 +34,7 @@ in
           defaultBranch = "main";
         };
         pull = {
-          rebase = false;
+          rebase = true;
         };
         push = {
           autoSetupRemote = true;

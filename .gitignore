@@ -1,0 +1,4 @@
+# output of nixos-rebuild build or deploy-rs
+result
+
+.direnv

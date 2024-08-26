@@ -11,6 +11,7 @@ with lib.wyrdgard;
 
   environment.systemPackages = with pkgs; [
     jetbrains.rust-rover
+    teamspeak_client
     path-of-building
   ];
 

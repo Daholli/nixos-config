@@ -24,6 +24,9 @@ in
       ripgrep
       fzf
       colorls
+
+      wslu
+      wsl-open
     ];
 
     wyrdgard = {

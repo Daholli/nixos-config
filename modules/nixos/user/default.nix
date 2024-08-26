@@ -52,11 +52,8 @@ in
   config = {
     environment.systemPackages = with pkgs; [ ];
 
-    programs.zsh = {
-      enable = true;
-      autosuggestions.enable = true;
-      histFile = "$XDG_CACHE_HOME/zsh.history";
-    };
+    programs.fish = enabled;
+    users.defaultUserShell = pkgs.fish;
 
     wyrdgard.home = {
       file = {
@@ -79,8 +76,6 @@ in
 
       home = "/home/${cfg.name}";
       group = "users";
-
-      shell = pkgs.zsh;
 
       # Arbitrary user ID to use for the user. Since I only
       # have a single user on my machines this won't ever collide.

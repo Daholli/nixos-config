@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1724221791,
+        "narHash": "sha256-mKX67QPnUybOopVph/LhOV1G/H4EvPxDIfSmbufrVdA=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "e88b38a5a3834e039d413a88f8150a75ef6453ef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -437,29 +458,9 @@
         "type": "github"
       }
     },
-    "pyfa": {
-      "inputs": {
-        "nixpkgs": [
-          "unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1716550164,
-        "narHash": "sha256-X7duLlJK2sCgXXZ1K2rN3WazbhMN7Ap50YIU1IU1hzs=",
-        "owner": "Daholli",
-        "repo": "Pyfa",
-        "rev": "cf7f4e2fe4b5fa6a21b6c10588e48334dfbc9f71",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Daholli",
-        "ref": "nixos-support",
-        "repo": "Pyfa",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
+        "fenix": "fenix",
         "gpg-base-conf": "gpg-base-conf",
         "home-manager": "home-manager",
         "kickstartnvim": "kickstartnvim",
@@ -467,11 +468,27 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
-        "pyfa": "pyfa",
         "snowfall-flake": "snowfall-flake",
         "snowfall-lib": "snowfall-lib_2",
         "sops-nix": "sops-nix",
         "unstable": "unstable"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1724153119,
+        "narHash": "sha256-WxpvDJDttkINkXmUA/W5o11lwLPYhATAgu0QUAacZ2g=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "3723e5910c14f0ffbd13de474b8a8fcc74db04ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "snowfall-flake": {

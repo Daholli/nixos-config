@@ -1,5 +1,3 @@
 { channels, ... }:
 
-final: prev: {
-  inherit (channels.unstable) pobfrontend;
-}
+final: prev: { inherit (channels.unstable) pobfrontend; }

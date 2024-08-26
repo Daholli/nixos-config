@@ -12,11 +12,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:nixos/nixos-hardware";
+
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Run unpatched dynamically compiled binaries
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
+    ###
+    # Snowfall dependencies
     snowfall-lib = {
       url = "github:snowfallorg/lib";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,27 +42,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Hardware Configuration
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    # Run unpatched dynamically compiled binaries
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "unstable";
-    };
-
     # GPG default configuration
     gpg-base-conf = {
       url = "github:drduh/config";
       flake = false;
     };
 
-    pyfa = {
-      url = "github:Daholli/Pyfa/nixos-support";
-      inputs.nixpkgs.follows = "unstable";
-    };
-
     sops-nix.url = "github:Mic92/sops-nix";
+
+    ################
+    ## inputs for dev shells
+
+    # rust
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -90,8 +95,6 @@
         sops-nix.nixosModules.sops
       ];
 
-      systems.hosts.wsl.modules = with inputs; [
-        nixos-wsl.nixosModules.default
-      ];
+      systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];
     };
 }

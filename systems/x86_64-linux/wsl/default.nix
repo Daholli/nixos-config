@@ -12,14 +12,13 @@ with lib.wyrdgard;
     defaultUser = config.wyrdgard.user.name;
   };
 
-  environment.systemPackages = with pkgs; [
-    git
-    wslu
-    wsl-open
-  ];
-
   wyrdgard = {
     submodules.basics-wsl = enabled;
+
+    security = {
+      gpg = enabled;
+      sops = enabled;
+    };
   };
 
   system.stateVersion = "24.11";

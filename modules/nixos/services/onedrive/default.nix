@@ -1,11 +1,15 @@
-{ lib, config, ... }:
-with lib;
-with lib.wyrdgard;
+{
+  lib,
+  config,
+  ...
+}:
+
 let
-  cfg = config.wyrdgard.apps.onedrive;
+  cfg = config.wyrdgard.services.onedrive;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.wyrdgard.apps.onedrive = with types; {
+  options.wyrdgard.services.onedrive = {
     enable = mkEnableOption "Enable OneDrive integration";
   };
 

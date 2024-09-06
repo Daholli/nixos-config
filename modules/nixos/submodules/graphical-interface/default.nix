@@ -20,7 +20,6 @@ in
     wyrdgard.graphical-interface = {
       display-manager.sddm = enabled;
       desktop-manager = {
-        hyprland = enabled;
         kde = enabled;
       };
     };

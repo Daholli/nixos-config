@@ -3,34 +3,32 @@
   config,
   lib,
   pkgs,
+  system,
+  inputs,
   ...
 }:
 with lib;
 with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps.vivaldi;
+  cfg = config.wyrdgard.apps.zen-browser;
 in
 {
-  options.wyrdgard.apps.vivaldi = with types; {
-    enable = mkBoolOpt false "Whether or not to enable vivaldi browser";
+  options.wyrdgard.apps.zen-browser = with types; {
+    enable = mkBoolOpt false "Whether or not to enable zen browser";
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      vivaldi
-      vivaldi-ffmpeg-codecs
-      qt5.qtwayland
+      inputs.zen-browser.packages."${system}".default
     ];
 
     environment.etc = {
       "1password/custom_allowed_browsers" = {
         text = ''
-          vivaldi-bin
+          .zen-wrapped
         '';
         mode = "0755";
       };
     };
-
-    # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }

@@ -1,17 +1,16 @@
 {
-  options,
   config,
   lib,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
+  inherit(lib) mkIf;
+  inherit(lib.wyrdgard) mkBoolOpt;
   cfg = config.wyrdgard.apps.cli-apps.nixvim;
 in
 {
-  options.wyrdgard.apps.cli-apps.nixvim = with types; {
+  options.wyrdgard.apps.cli-apps.nixvim =   {
     enable = mkBoolOpt true "Whether to enable nixvim or not (Default true)";
   };
 

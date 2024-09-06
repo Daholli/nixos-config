@@ -4,14 +4,13 @@
   pkgs,
   ...
 }:
-with lib;
 with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps.factorio-server;
-  inherit (config.wyrdgard.user) name;
+  cfg = config.wyrdgard.services.factorio-server;
+  inherit (lib) mkIf mkEnableOption;
 in
 {
-  options.wyrdgard.apps.factorio-server = with types; {
+  options.wyrdgard.services.factorio-server = {
     enable = mkEnableOption "Enable Factorio Headless Server";
   };
 
@@ -55,7 +54,6 @@ in
       nonBlockingSaving = true;
       autosave-interval = 5;
       loadLatestSave = true;
-      bind = "192.168.178.34";
       extraSettingsFile = config.sops.templates."extraSettingsFile.json".path;
     };
   };

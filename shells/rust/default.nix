@@ -16,14 +16,16 @@
   ...
 }:
 let
-  fenix = with inputs.fenix.packages.${system}; combine [
-    latest.toolchain 
-    targets.wasm32-unknown-unknown.latest.rust-std 
-  ];
+  fenix =
+    with inputs.fenix.packages.${system};
+    combine [
+      latest.toolchain
+      targets.wasm32-unknown-unknown.latest.rust-std
+    ];
 in
 mkShell {
   # Create your shell
-  nativeBuildInputs = [ 
+  nativeBuildInputs = [
     fenix
     pkgs.llvmPackages.bintools
     pkgs.wasm-pack

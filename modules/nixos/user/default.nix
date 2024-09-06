@@ -28,7 +28,7 @@ let
     pkgs.runCommandNoCC "propagated-icon"
       {
         passthru = {
-          inherit (fileName);
+          inherit (fileName) ;
         };
       }
       ''

@@ -1,10 +1,8 @@
 {
-  inputs,
   pkgs,
   lib,
   ...
 }:
-with lib;
 with lib.wyrdgard;
 {
   imports = [ ./hardware.nix ];
@@ -26,11 +24,15 @@ with lib.wyrdgard;
 
     apps = {
       vivaldi = enabled;
+      zen-browser = enabled;
       discord = enabled;
       _1password = enabled;
-      onedrive = enabled;
-      factorio-server = enabled;
       obs-studio = enabled;
+    };
+
+    services = {
+      factorio-server = enabled;
+      onedrive = enabled;
     };
 
     system = {

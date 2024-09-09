@@ -158,6 +158,7 @@ in
                   #run important programs
                   "$mod, Return, exec, kitty"
                   "$mod, Z, exec, zen"
+                  "$mod, P, exec, 1password"
                   # "$mod, D, exec, rofi -show combi"
 
                   #screenshot

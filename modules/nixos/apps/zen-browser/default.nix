@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -7,20 +6,24 @@
   inputs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
+
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.wyrdgard.apps.zen-browser;
+
+  zenbrowser = inputs.zen-browser.packages."${system}".default;
 in
 {
-  options.wyrdgard.apps.zen-browser = with types; {
-    enable = mkBoolOpt false "Whether or not to enable zen browser";
+  options.wyrdgard.apps.zen-browser = {
+    enable = mkEnableOption "Whether or not to enable zen browser";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      inputs.zen-browser.packages."${system}".default
+    environment.systemPackages = [
+      zenbrowser
     ];
+
+    environment.sessionVariables.DEFAULT_BROWSER = "${zenbrowser}/bin/zen";
 
     environment.etc = {
       "1password/custom_allowed_browsers" = {

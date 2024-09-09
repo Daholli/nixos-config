@@ -28,6 +28,7 @@ in
       settings = {
         "background_opacity" = "0.95";
         "shell" = "fish";
+        "confirm_os_window_close" = "0";
       };
     };
   };

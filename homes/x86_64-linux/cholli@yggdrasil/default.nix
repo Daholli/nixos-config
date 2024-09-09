@@ -17,4 +17,6 @@ with lib.wyrdgard;
       direnv = enabled;
     };
   };
+
+  home.stateVersion = "23.11";
 }

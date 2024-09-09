@@ -29,7 +29,7 @@ in
       };
 
       apps = {
-        vivaldi = enabled;
+        zen-browser = enabled;
       };
     };
   };

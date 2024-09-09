@@ -1,17 +1,16 @@
 {
-  options,
   config,
   lib,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
+  inherit (lib) mkIf;
+  inherit (lib.wyrdgard) mkBoolOpt enabled;
   cfg = config.wyrdgard.submodules.basics-wsl;
 in
 {
-  options.wyrdgard.submodules.basics-wsl = with types; {
+  options.wyrdgard.submodules.basics-wsl = {
     enable = mkBoolOpt false "Whether or not to enable basic configuration.";
   };
 

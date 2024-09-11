@@ -96,6 +96,7 @@ in
 
               misc = {
                 force_default_wallpaper = 2;
+                focus_on_activate = true;
               };
 
               decoration = {
@@ -220,7 +221,7 @@ in
                 kb_layout = "us";
 
                 # focus change on cursor move
-                follow_mouse = 1;
+                follow_mouse = 2;
                 accel_profile = "flat";
               };
 

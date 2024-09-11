@@ -36,10 +36,21 @@ in
           #Vertical
           "HDMI-A-1,1920x1080@144, auto-right, 1, transform, 1"
         ];
+
+        exec-once = [
+          "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
+        ];
+
         workspace = [
-          "1, monitor:DP-2"
-          "2, monitor:HDMI-A-1"
-          "3, monitor:DP-2 on-created-empty:zen"
+          "1, monitor:DP-2, persistant:true"
+          "2, monitor:HDMI-A-1, persistant:true"
+          "3, monitor:DP-2, persistant:true, defaultName:3 Steam"
+          "4, monitor:HDMI-A-1: persistant:true, defaultName:4 1Password"
+          "5, monitor:DP-2, persistant:true"
+        ];
+
+        windowrulev2 = [
+          "workspace 2, class:^(steam)$, title:^(Friends List)"
         ];
       };
     };

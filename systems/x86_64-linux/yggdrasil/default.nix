@@ -11,6 +11,7 @@ in
 
   environment.systemPackages = with pkgs; [
     path-of-building
+    steamcmd
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -39,6 +40,7 @@ in
 
         exec-once = [
           "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
+          "xrandr --output DP-2 --primary"
         ];
 
         workspace = [

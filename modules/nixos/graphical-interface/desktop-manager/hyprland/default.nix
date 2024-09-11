@@ -53,7 +53,7 @@ in
       wlr-randr
       grimblast
 
-      waybar
+      rofi
 
       jq
       focus-1password
@@ -69,7 +69,13 @@ in
     };
 
     wyrdgard = {
-      graphical-interface.desktop-manager.addons.waybar = enabled;
+      graphical-interface.desktop-manager.addons = {
+        waybar = enabled;
+        rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland-unwrapped;
+        };
+        };
 
       nix.extra-substituters.${cachix-url} = {
         key = cachix-key;
@@ -193,6 +199,7 @@ in
                   #run important programs
                   "$mod, Return, exec, kitty"
                   "$mod, Z, exec, zen"
+                  "$mod, D, exec, rofi -show drun"
                   "$mod, P, exec, focus-or-open-1pass"
                   # "$mod, D, exec, rofi -show combi"
 

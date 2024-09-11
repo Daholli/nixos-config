@@ -40,6 +40,8 @@ in
       wl-screenrec
       wlr-randr
       grimblast
+
+      waybar
     ];
 
     services.xserver = enabled;
@@ -52,6 +54,8 @@ in
     };
 
     wyrdgard = {
+      graphical-interface.desktop-manager.addons.waybar = enabled;
+
       nix.extra-substituters.${cachix-url} = {
         key = cachix-key;
       };
@@ -66,8 +70,16 @@ in
               "$mod" = "SUPER";
 
               exec-once = [
-                "steam"
-                "discord"
+                "waybar"
+                "[workspace 3 silent] steam"
+                "[workspace 2 silent] discord"
+                "[workspace 2 silent] noisetorch"
+                "[workspace 4 silent] 1password"
+                "[workspace 1 silent] zen"
+              ];
+
+              windowrulev2 = [
+                "workspace 3 silent, class:^(steam)$, title:^(Steam)"
               ];
 
               general = {
@@ -80,6 +92,10 @@ in
 
                 allow_tearing = true;
                 resize_on_border = true;
+              };
+
+              misc = {
+                force_default_wallpaper = 2;
               };
 
               decoration = {

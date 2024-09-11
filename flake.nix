@@ -25,6 +25,8 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
+    ###
+    # hyprland stuff
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";

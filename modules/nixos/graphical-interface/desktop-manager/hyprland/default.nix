@@ -21,6 +21,18 @@ let
   cachix-key = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
 
   hyprland-package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+
+  focus-1password = pkgs.writeShellScriptBin "focus-or-open-1pass" ''
+    running=$(hyprctl -j clients | jq -r '.[] | select(.class == "1password") | .workspace.id')
+
+    if [[ $running != "" ]]; then
+        hyprctl dispatch workspace $running
+    else
+        # always open on w/space 4    
+        hyprctl dispatch workspace 4
+        1password&
+    fi
+  '';
 in
 {
   options.wyrdgard.graphical-interface.desktop-manager.hyprland = {
@@ -42,6 +54,9 @@ in
       grimblast
 
       waybar
+
+      jq
+      focus-1password
     ];
 
     services.xserver = enabled;
@@ -79,6 +94,7 @@ in
               ];
 
               windowrulev2 = [
+                #stean is a bit wierd, since it opens in multiple phases, so just move the last window to the workspace
                 "workspace 3 silent, class:^(steam)$, title:^(Steam)"
               ];
 
@@ -95,7 +111,9 @@ in
               };
 
               misc = {
+                # hyprchan
                 force_default_wallpaper = 2;
+                # focus new windows that want to be focused
                 focus_on_activate = true;
               };
 
@@ -175,7 +193,7 @@ in
                   #run important programs
                   "$mod, Return, exec, kitty"
                   "$mod, Z, exec, zen"
-                  "$mod, P, exec, 1password"
+                  "$mod, P, exec, focus-or-open-1pass"
                   # "$mod, D, exec, rofi -show combi"
 
                   #screenshot

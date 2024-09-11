@@ -31,7 +31,7 @@ in
           time = {
             disabled = false;
             time_format = "%T";
-            utc_time_offset = "+1";
+            utc_time_offset = "+2";
           };
           username = {
             style_user = "#00de00";

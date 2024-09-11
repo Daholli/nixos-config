@@ -27,6 +27,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ cfg.package ];
+
+
     wyrdgard.home.file = {
       ".config/waybar/config".source = ./config;
       ".config/waybar/style.css".source = ./style.css;

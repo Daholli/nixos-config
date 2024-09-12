@@ -39,8 +39,8 @@ in
         ];
 
         exec-once = [
-          "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
           "xrandr --output DP-2 --primary"
+          "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
         ];
 
         workspace = [

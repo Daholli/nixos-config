@@ -17,11 +17,8 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ xdg-utils ];
 
-    wyrdgard.graphical-interface = {
-      display-manager.sddm = enabled;
-      desktop-manager = {
-        kde = enabled;
+    wyrdgard.graphical-interface =
+      {
       };
-    };
   };
 }

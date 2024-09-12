@@ -46,36 +46,49 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      polkit
+      polkit-kde-agent
 
       wl-clipboard
       wl-screenrec
       wlr-randr
       grimblast
-
-      rofi
+      xfce.thunar
+      dunst
 
       jq
       focus-1password
     ];
 
-    services.xserver = enabled;
+    programs = {
+      hyprland = {
+        enable = true;
+        package = hyprland-package;
+        portalPackage =
+          inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      };
+    };
 
-    programs.hyprland = {
-      enable = true;
-      package = hyprland-package;
-      portalPackage =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    services = {
+      xserver = enabled;
+      greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${lib.getExe pkgs.greetd.tuigreet} --cmd Hyprland";
+            user = config.wyrdgard.user.name;
+          };
+        };
+      };
     };
 
     wyrdgard = {
       graphical-interface.desktop-manager.addons = {
         waybar = enabled;
         rofi = {
-        enable = true;
-        package = pkgs.rofi-wayland-unwrapped;
+          enable = true;
+          package = pkgs.rofi-wayland-unwrapped;
         };
-        };
+      };
 
       nix.extra-substituters.${cachix-url} = {
         key = cachix-key;
@@ -92,6 +105,9 @@ in
 
               exec-once = [
                 "waybar"
+                "dunst"
+                "systemctl --user start plasma-polkit-agent"
+
                 "[workspace 3 silent] steam"
                 "[workspace 2 silent] discord"
                 "[workspace 2 silent] noisetorch"
@@ -175,6 +191,9 @@ in
                   "$mod, T, togglefloating,"
                   "$mod, P, pseudo,"
                   "$mod ALT, ,resizeactive,"
+
+                  "$mod CTRL, left, movecurrentworkspacetomonitor, l"
+                  "$mod CTRL, right, movecurrentworkspacetomonitor, r"
 
                   # move focus
                   "$mod, h, hy3:movefocus, l"

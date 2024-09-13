@@ -7,7 +7,7 @@
   ...
 }:
 let
-  cfg = config.${namespace}.graphical-interface.desktop-manager.addons.waybar;
+  cfg = config.${namespace}.desktop.addons.waybar;
 
   inherit (lib)
     mkEnableOption
@@ -17,7 +17,7 @@ let
     ;
 in
 {
-  options.${namespace}.graphical-interface.desktop-manager.addons.waybar = {
+  options.${namespace}.desktop.addons.waybar = {
     enable = mkEnableOption "Waybar";
     package = mkOption {
       type = types.package;

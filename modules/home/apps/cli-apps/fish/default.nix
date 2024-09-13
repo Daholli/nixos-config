@@ -16,27 +16,37 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs.fishPlugins; [
-      forgit
-      sponge
-    ];
-
     programs = {
       fish = {
         enable = true;
-        shellInit = "
-	zoxide init fish | source
-	direnv hook fish | source
-	source ~/.config/op/plugins.sh
-	";
+        shellInit = ''
+          zoxide init fish | source
+          direnv hook fish | source
+          source ~/.config/op/plugins.sh
+
+          set -x LESS_TERMCAP_mb \e'[01;32m'
+          set -x LESS_TERMCAP_md \e'[01;32m'
+          set -x LESS_TERMCAP_me \e'[0m'
+          set -x LESS_TERMCAP_se \e'[0m'
+          set -x LESS_TERMCAP_so \e'[01;47;34m'
+          set -x LESS_TERMCAP_ue \e'[0m'
+          set -x LESS_TERMCAP_us \e'[01;36m'
+          set -x LESS -R
+          set -x GROFF_NO_SGR 1
+        '';
         shellAliases = {
           vim = "nvim";
           ls = "colorls --gs";
           l = "ls -l";
-          la = "ls -a";
-          lla = "ls -la";
+          la = "ls -la";
           lt = "ls --tree";
         };
+        plugins = with pkgs.fishPlugins; [
+          {
+            name = "forgit";
+            src = forgit.src;
+          }
+        ];
       };
 
       zoxide = {

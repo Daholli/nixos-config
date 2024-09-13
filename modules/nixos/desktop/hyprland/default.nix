@@ -4,6 +4,7 @@
   lib,
   pkgs,
   system,
+  namespace,
   ...
 }:
 with lib.wyrdgard;
@@ -15,7 +16,7 @@ let
     mkMerge
     types
     ;
-  cfg = config.wyrdgard.graphical-interface.desktop-manager.hyprland;
+  cfg = config.${namespace}.desktop.hyprland;
 
   cachix-url = "https://hyprland.cachix.org";
   cachix-key = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
@@ -35,7 +36,7 @@ let
   '';
 in
 {
-  options.wyrdgard.graphical-interface.desktop-manager.hyprland = {
+  options.${namespace}.desktop.hyprland = {
     enable = mkEnableOption "Whether to enable hyprland";
     settings = mkOption {
       type = types.attrs;
@@ -55,6 +56,8 @@ in
       xfce.thunar
       dunst
 
+      elegant-sddm
+
       jq
       focus-1password
     ];
@@ -70,19 +73,14 @@ in
 
     services = {
       xserver = enabled;
-      greetd = {
+      displayManager.sddm = {
         enable = true;
-        settings = {
-          default_session = {
-            command = "${lib.getExe pkgs.greetd.tuigreet} --cmd Hyprland";
-            user = config.wyrdgard.user.name;
-          };
-        };
+        theme = "Elegant";
       };
     };
 
     wyrdgard = {
-      graphical-interface.desktop-manager.addons = {
+      desktop.addons = {
         waybar = enabled;
         rofi = {
           enable = true;
@@ -110,7 +108,7 @@ in
 
                 "[workspace 3 silent] steam"
                 "[workspace 2 silent] discord"
-                "[workspace 2 silent] noisetorch"
+                "[workspace 2 silent] noisetorch -i"
                 "[workspace 4 silent] 1password"
                 "[workspace 1 silent] zen"
               ];

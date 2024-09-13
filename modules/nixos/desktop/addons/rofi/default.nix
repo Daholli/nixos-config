@@ -7,7 +7,7 @@
   ...
 }:
 let
-  cfg = config.${namespace}.graphical-interface.desktop-manager.addons.rofi;
+  cfg = config.${namespace}.desktop.addons.rofi;
 
   inherit (lib)
     mkIf
@@ -17,7 +17,7 @@ let
     ;
 in
 {
-  options.${namespace}.graphical-interface.desktop-manager.addons.rofi = {
+  options.${namespace}.desktop.addons.rofi = {
     enable = mkEnableOption "Rofi";
     package = mkOption {
       type = types.package;

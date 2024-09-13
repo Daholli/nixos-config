@@ -11,12 +11,16 @@ in
 
   environment.systemPackages = with pkgs; [
     path-of-building
-    steamcmd
+    pkgs.most
+    pkgs.man-pages
+    pkgs.man-pages-posix
   ];
 
   environment.pathsToLink = [ "/libexec" ];
 
   virtualisation.waydroid = enabled;
+
+  services.xserver.displayManager.setupCommands = "xrandr --output HDMI-A-1 --off";
 
   wyrdgard = {
     archetypes = {
@@ -28,7 +32,7 @@ in
       obs-studio = enabled;
     };
 
-    graphical-interface.desktop-manager.hyprland = {
+    desktop.hyprland = {
       enable = true;
       settings = {
         monitor = [
@@ -39,7 +43,7 @@ in
         ];
 
         exec-once = [
-          "xrandr --output DP-2 --primary"
+          "xrandr --output DP-2 --primary --output HDMI-A-1 --on"
           "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
         ];
 

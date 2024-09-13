@@ -23,6 +23,8 @@ in
       variables = {
         EDITOR = "nvim";
         SUDOEDITOR = "nvim";
+        PAGER = "less";
+        MANPAGER = "less";
       };
     };
 

@@ -1,16 +1,17 @@
 {
   config,
   lib,
+  namespace,
   pkgs,
   ...
 }:
 with lib;
 with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.graphical-interface.desktop-manager.kde;
+  cfg = config.${namespace}.desktop.kde;
 in
 {
-  options.wyrdgard.graphical-interface.desktop-manager.kde = with types; {
+  options.${namespace}.desktop.kde = with types; {
     enable = mkEnableOption "Whether to enable a kde plasma6";
   };
 

@@ -19,7 +19,6 @@ in
     wyrdgard = {
       submodules = {
         basics = enabled;
-        graphical-interface = enabled;
         games = enabled;
         socials = enabled;
       };

@@ -15,6 +15,7 @@ let
     mkIf
     types
     ;
+  inherit (lib.wyrdgard) enabled;
 in
 {
   options.${namespace}.desktop.addons.waybar = {
@@ -29,8 +30,17 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
 
+    services.upower = enabled;
+    fonts.packages = with pkgs; [
+      cascadia-code
+      jetbrains-mono
+      maple-mono-NF
+      material-design-icons
+      noto-fonts-cjk-sans
+    ];
+
     wyrdgard.home.file = {
-      ".config/waybar/config".source = ./config;
+      ".config/waybar/config.jsonc".source = ./config.jsonc;
       ".config/waybar/style.css".source = ./style.css;
     };
   };

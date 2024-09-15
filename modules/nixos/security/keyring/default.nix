@@ -5,17 +5,17 @@
   namespace,
   ...
 }:
-with lib;
-with lib.${namespace};
 let
+  inherit (lib) mkIf types;
+  inherit (lib.wyrdgard) mkBoolOpt;
   cfg = config.${namespace}.security.keyring;
 in
 {
-  options.${namespace}.security.keyring = with types; {
+  options.${namespace}.security.keyring = {
     enable = mkBoolOpt true "Whether to enable gnome keyring.";
   };
 
   config = mkIf cfg.enable {
-    services.gnome.gnome-keyring.enable = true; 
+    services.gnome.gnome-keyring.enable = true;
   };
 }

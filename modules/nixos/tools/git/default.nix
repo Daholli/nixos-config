@@ -23,6 +23,7 @@ in
     environment.systemPackages = with pkgs; [
       git
       gitAndTools.gh
+      gitbutler
     ];
 
     wyrdgard.home.extraOptions = {

@@ -101,6 +101,12 @@ in
             {
               "$mod" = "SUPER";
 
+              env = [
+                "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+                "QT_QPA_PLATFORM,wayland;xcb"
+                "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+              ];
+
               exec-once = [
                 "waybar"
                 "dunst"
@@ -108,7 +114,6 @@ in
 
                 "[workspace 3 silent] steam"
                 "[workspace 2 silent] discord"
-                "[workspace 2 silent] noisetorch -i"
                 "[workspace 4 silent] 1password"
                 "[workspace 1 silent] zen"
               ];
@@ -264,6 +269,7 @@ in
 
                 # focus change on cursor move
                 follow_mouse = 2;
+                force_no_accel = 1;
                 accel_profile = "flat";
               };
 
@@ -285,6 +291,8 @@ in
       };
     };
 
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
   };
 }

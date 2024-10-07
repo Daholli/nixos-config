@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf types;
+  inherit (lib) mkIf;
   inherit (lib.wyrdgard) mkBoolOpt;
   cfg = config.${namespace}.security.keyring;
 in
@@ -17,5 +17,6 @@ in
 
   config = mkIf cfg.enable {
     services.gnome.gnome-keyring.enable = true;
+    security.pam.services.sddm.enableGnomeKeyring = true;
   };
 }

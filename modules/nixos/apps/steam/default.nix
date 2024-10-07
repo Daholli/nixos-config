@@ -1,18 +1,18 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps.steam;
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.${namespace}.apps.steam;
 in
 {
-  options.wyrdgard.apps.steam = with types; {
-    enable = mkBoolOpt false "Whether or not to enable support for Steam.";
+  options.${namespace}.apps.steam = {
+    enable = mkEnableOption "Whether or not to enable support for Steam.";
   };
 
   config = mkIf cfg.enable {
@@ -24,7 +24,6 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      steam
       protontricks
     ];
   };

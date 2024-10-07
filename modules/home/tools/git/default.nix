@@ -30,6 +30,9 @@ in
         inherit (cfg) signByDefault;
       };
       extraConfig = {
+        core = {
+          fsmonitor = true;
+        };
         init = {
           defaultBranch = "main";
         };
@@ -41,6 +44,13 @@ in
         };
         safe = {
           directory = "${user.home}/projects/config";
+        };
+        maintenance = {
+          repo = [
+            "${user.home}/projects/nixpkgs"
+            "${user.home}/projects/config"
+          ];
+          strategy = "incremental";
         };
       };
     };

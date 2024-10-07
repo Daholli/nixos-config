@@ -1,15 +1,22 @@
-{ lib, config, ... }:
-with lib;
-with lib.wyrdgard;
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 let
-  cfg = config.wyrdgard.system.hardware.gpu.nvidia;
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.${namespace}.system.hardware.gpu.nvidia;
 in
 {
-  options.wyrdgard.system.hardware.gpu.nvidia = with types; {
+  options.${namespace}.system.hardware.gpu.nvidia = {
     enable = mkEnableOption "Enable Nvidia GPU";
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ pkgs.nvidia-vaapi-driver ];
+
     hardware.graphics = {
       enable = true;
       enable32Bit = true;

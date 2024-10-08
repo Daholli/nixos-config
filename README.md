@@ -9,9 +9,16 @@
 
 My all-inclusive nix flake to solve all my problems.
 
-[[ToC]]
-
 ## Repository Overview
+
+- [homes](#homes)
+- [lib](#lib)
+- [modules](#modules)
+- [overlays](#overlays)
+- [secrets](#secrets)
+- [shells](#shells)
+- [systems](#systems)
+
 
 ### homes
 

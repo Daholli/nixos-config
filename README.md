@@ -1,4 +1,4 @@
-# Wyrdgard
+# Wyrdgard 
 
 <a href="https://nixos.wiki/wiki/Flakes" target="_blank">
 	<img alt="Nix Flakes Ready" src="https://img.shields.io/static/v1?logo=nixos&logoColor=d8dee9&label=Nix%20Flakes&labelColor=5e81ac&message=Ready&color=d8dee9&style=for-the-badge">
@@ -7,11 +7,52 @@
 	<img alt="Built With Snowfall" src="https://img.shields.io/static/v1?logoColor=d8dee9&label=Built%20With&labelColor=5e81ac&message=Snowfall&color=d8dee9&style=for-the-badge">
 </a>
 
-Most of this config draws inspiration from this config:
-[https://github.com/jakehamilton/config](https://github.com/jakehamilton/config)
-
+My all-inclusive nix flake to solve all my problems.
 
 [ToC]
+
+# Repository Overview
+
+## homes
+
+- user@system syntax
+- home manager config possible
+
+## lib
+
+- extending lib
+
+## modules
+
+- nixos
+- home
+- darwin
+
+[Different modules explained](./modules/README.md)
+
+## overlays
+
+- overlays provided byt this flake
+[Overlays](./overlays/README.md)
+
+## secrets
+
+- secrets used currently only one file
+## shells
+
+[Shells](./shells/README.md)
+## systems
+
+- all the systems that can be built with the flake
+
+
+<br>
+<br>
+
+## inspirations and thanks
+
+Most of this config draws inspiration from this config:
+[https://github.com/jakehamilton/config](https://github.com/jakehamilton/config)
 
 
 # NixOs config

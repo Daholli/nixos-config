@@ -11,6 +11,9 @@ Most of this config draws inspiration from this config:
 [https://github.com/jakehamilton/config](https://github.com/jakehamilton/config)
 
 
+[ToC]
+
+
 # NixOs config
 
 ## Archetypes
@@ -46,3 +49,5 @@ How do I deplo my config onto new systems, and how do I safely transmit my signi
 ## Backups
 
 I saw that there is a onedrive version for linux, but I feel like that is not a good solution, I should look into [syncthing](https://syncthing.net) as this one looks really interesting, but I don't want to start this until I understood all of the implications.
+
+

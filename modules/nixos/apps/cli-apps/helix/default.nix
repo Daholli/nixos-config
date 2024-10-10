@@ -76,6 +76,10 @@ in
 
               keys = {
                 normal = {
+                  esc = [
+                    "collapse_selection"
+                    "keep_primary_selection"
+                  ];
                   space = {
                     space = "file_picker";
                   };
@@ -127,9 +131,6 @@ in
                 };
                 marksman = {
                   command = "${pkgs.marksman}/bin/marksman";
-                };
-                omnisharp = {
-                  command = "${pkgs.omnisharp-roslyn}/bin/OmniSharp";
                 };
               };
             };

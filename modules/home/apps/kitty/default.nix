@@ -1,32 +1,32 @@
 {
-  lib,
   config,
+  lib,
+  namespace,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps.kitty;
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.${namespace}.apps.kitty;
 in
 {
-  options.wyrdgard.apps.kitty = {
-    enable = mkEnableOption "Kity";
+  options.${namespace}.apps.kitty = {
+    enable = mkEnableOption "Kitty";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ kitty ];
+    home.packages = [ pkgs.kitty ];
 
     programs.kitty = {
       enable = true;
-      theme = "Tokyo Night";
+      themeFile = "tokyo_night_night";
       font = {
         name = "Code New Roman";
         size = 15;
       };
       shellIntegration.enableFishIntegration = true;
       settings = {
-        "background_opacity" = "0.95";
+        "background_opacity" = "0.90";
         "shell" = "fish";
         "confirm_os_window_close" = "0";
       };

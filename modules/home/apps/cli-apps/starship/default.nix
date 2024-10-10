@@ -1,17 +1,17 @@
 {
-  options,
   config,
   lib,
-  pkgs,
+  namespace,
+  options,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps.cli-apps.starship;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
+  cfg = config.${namespace}.apps.cli-apps.starship;
 in
 {
-  options.wyrdgard.apps.cli-apps.starship = with types; {
+  options.${namespace}.apps.cli-apps.starship = {
     enable = mkBoolOpt true "Whether or not to enable starship shell";
   };
 

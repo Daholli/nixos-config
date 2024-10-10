@@ -2,13 +2,14 @@
   config,
   inputs,
   lib,
+  namespace,
   pkgs,
   system,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.wyrdgard.apps.cli-apps.helix;
+  cfg = config.${namespace}.apps.cli-apps.helix;
 
   cachix-url = "https://helix.cachix.org";
   cachix-key = "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs=";
@@ -16,7 +17,7 @@ let
   helix-pkg = inputs.helix.packages.${system}.default;
 in
 {
-  options.wyrdgard.apps.cli-apps.helix = {
+  options.${namespace}.apps.cli-apps.helix = {
     enable = mkEnableOption "Whether to enable nixvim or not";
   };
 
@@ -25,7 +26,7 @@ in
       systemPackages = [ helix-pkg ];
     };
 
-    wyrdgard = {
+    ${namespace} = {
       home = {
         extraOptions = {
           programs.helix = {

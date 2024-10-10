@@ -1,22 +1,22 @@
 {
-  options,
   config,
   lib,
-  pkgs,
+  namespace,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.tools.direnv;
+  cfg = config.${namespace}.tools.direnv;
 in
 {
-  options.wyrdgard.tools.direnv = with types; {
+  options.${namespace}.tools.direnv = with types; {
     enable = mkBoolOpt false "Whether or not to enable direnv.";
   };
 
   config = mkIf cfg.enable {
-    wyrdgard.home.extraOptions = {
+    ${namespace}.home.extraOptions = {
       programs.direnv = {
         enable = true;
         nix-direnv = enabled;

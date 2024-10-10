@@ -1,17 +1,19 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps._1password;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
+
+  cfg = config.${namespace}.apps._1password;
 in
 {
-  options.wyrdgard.apps._1password = with types; {
+  options.${namespace}.apps._1password = {
     enable = mkBoolOpt true "Enable 1Password";
   };
 
@@ -20,7 +22,7 @@ in
       _1password.enable = true;
       _1password-gui = {
         enable = true;
-        polkitPolicyOwners = [ config.wyrdgard.user.name ];
+        polkitPolicyOwners = [ config.${namespace}.user.name ];
       };
     };
   };

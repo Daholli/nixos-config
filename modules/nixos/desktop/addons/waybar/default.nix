@@ -15,7 +15,7 @@ let
     mkIf
     types
     ;
-  inherit (lib.wyrdgard) enabled;
+  inherit (lib.${namespace}) enabled;
 in
 {
   options.${namespace}.desktop.addons.waybar = {
@@ -39,7 +39,7 @@ in
       noto-fonts-cjk-sans
     ];
 
-    wyrdgard.home.file = {
+    ${namespace}.home.file = {
       ".config/waybar/config.jsonc".source = ./config.jsonc;
       ".config/waybar/style.css".source = ./style.css;
     };

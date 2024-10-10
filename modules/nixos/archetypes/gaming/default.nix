@@ -1,22 +1,23 @@
 {
-  options,
   config,
   lib,
+  namespace,
   pkgs,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.archetypes.gaming;
+  cfg = config.${namespace}.archetypes.gaming;
 in
 {
-  options.wyrdgard.archetypes.gaming = with types; {
+  options.${namespace}.archetypes.gaming = with types; {
     enable = mkBoolOpt false "Whether or not to enable the gaming archetype.";
   };
 
   config = mkIf cfg.enable {
-    wyrdgard = {
+    ${namespace} = {
       submodules = {
         basics = enabled;
         games = enabled;

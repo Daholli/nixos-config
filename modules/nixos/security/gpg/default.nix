@@ -1,15 +1,16 @@
 {
-  options,
   config,
-  pkgs,
-  lib,
   inputs,
+  lib,
+  namespace,
+  options,
+  pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.security.gpg;
+  cfg = config.${namespace}.security.gpg;
 
   gpgConf = "${inputs.gpg-base-conf}/gpg.conf";
 
@@ -25,7 +26,7 @@ let
   '';
 in
 {
-  options.wyrdgard.security.gpg = with types; {
+  options.${namespace}.security.gpg = with types; {
     enable = mkBoolOpt false "Wether or not to enable GPG.";
     agentTimeout = mkOpt int 5 "The amount of time to wait before continuing with shell init.";
   };
@@ -56,7 +57,7 @@ in
       };
     };
 
-    wyrdgard = {
+    ${namespace} = {
       home.file = {
         ".gnupg/.keep".text = "";
 

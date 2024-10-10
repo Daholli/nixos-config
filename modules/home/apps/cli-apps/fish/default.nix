@@ -1,17 +1,19 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.apps.cli-apps.fish;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
+  cfg = config.${namespace}.apps.cli-apps.fish;
 in
 {
-  options.wyrdgard.apps.cli-apps.fish = with types; {
+  options.${namespace}.apps.cli-apps.fish = {
     enable = mkBoolOpt true "Whether or not to enable the fish shell";
   };
 

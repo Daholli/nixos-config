@@ -1,17 +1,18 @@
 {
-  options,
   config,
   lib,
+  namespace,
   pkgs,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.apps.discord;
+  cfg = config.${namespace}.apps.discord;
 in
 {
-  options.wyrdgard.apps.discord = with types; {
+  options.${namespace}.apps.discord = with types; {
     enable = mkBoolOpt false "Whether or not to enable basic configuration";
   };
 

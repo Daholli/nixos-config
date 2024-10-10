@@ -1,17 +1,18 @@
 {
-  options,
   config,
   lib,
+  namespace,
   pkgs,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.apps.vivaldi;
+  cfg = config.${namespace}.apps.vivaldi;
 in
 {
-  options.wyrdgard.apps.vivaldi = with types; {
+  options.${namespace}.apps.vivaldi = with types; {
     enable = mkBoolOpt false "Whether or not to enable vivaldi browser";
   };
 

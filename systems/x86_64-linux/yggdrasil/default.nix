@@ -1,10 +1,11 @@
 {
-  pkgs,
   lib,
+  namespace,
+  pkgs,
   ...
 }:
 let
-  inherit (lib.wyrdgard) enabled;
+  inherit (lib.${namespace}) enabled;
 in
 {
   imports = [ ./hardware.nix ];
@@ -13,13 +14,14 @@ in
     path-of-building
     teams-for-linux
     obsidian
+    zed-editor
   ];
 
   environment.pathsToLink = [ "/libexec" ];
 
   virtualisation.waydroid = enabled;
 
-  wyrdgard = {
+  ${namespace} = {
     archetypes = {
       gaming.enable = true;
     };

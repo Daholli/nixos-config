@@ -1,14 +1,15 @@
 {
-  options,
   config,
-  pkgs,
   lib,
+  namespace,
+  options,
+  pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.user;
+  cfg = config.${namespace}.user;
   defaultIconFileName = "profile.png";
   defaultIcon = pkgs.stdenvNoCC.mkDerivation {
     name = "default-icon";
@@ -32,14 +33,14 @@ let
         };
       }
       ''
-        local target="$out/share/wyrdgard-icons/user/${cfg.name}"
+        local target="$out/share/${namespace}-icons/user/${cfg.name}"
         mkdir -p "$target"
 
         cp ${cfg.icon} "$target/${cfg.icon.fileName}"
       '';
 in
 {
-  options.wyrdgard.user = with types; {
+  options.${namespace}.user = with types; {
     name = mkOpt str "cholli" "The name to use for the user account.";
     fullName = mkOpt str "Christoph Hollizeck" "The full name of the user.";
     email = mkOpt str "christoph.hollizeck@hey.com" "The email of the user.";
@@ -55,7 +56,7 @@ in
     programs.fish = enabled;
     users.defaultUserShell = pkgs.fish;
 
-    wyrdgard.home = {
+    ${namespace}.home = {
       file = {
         "Desktop/.keep".text = "";
         "Documents/.keep".text = "";

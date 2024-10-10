@@ -622,22 +622,6 @@
         "type": "github"
       }
     },
-    "kitty-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1724021581,
-        "narHash": "sha256-f+ghj8qiljbHyIPZb6b2IAxxQU9GvbYpTdEEjSN9g8E=",
-        "owner": "drduh",
-        "repo": "config",
-        "rev": "eedb4ecf4bb2b5fd71bb27768f76da0f2e2605c8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drduh",
-        "repo": "config",
-        "type": "github"
-      }
-    },
     "nix-ld": {
       "inputs": {
         "nixpkgs": [
@@ -813,7 +797,6 @@
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "kickstartnvim": "kickstartnvim",
-        "kitty-theme": "kitty-theme",
         "nix-ld": "nix-ld",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",

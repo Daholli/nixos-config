@@ -1,24 +1,25 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.submodules.games;
+  cfg = config.${namespace}.submodules.games;
 in
 {
-  options.wyrdgard.submodules.games = with types; {
+  options.${namespace}.submodules.games = with types; {
     enable = mkBoolOpt false "Whether or not you want to enable steam and other games";
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ prismlauncher ];
 
-    wyrdgard = {
+    ${namespace} = {
       apps = {
         steam = enabled;
       };

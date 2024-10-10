@@ -1,16 +1,17 @@
 {
   lib,
   config,
+  namespace,
   pkgs,
   ...
 }:
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.services.factorio-server;
+  cfg = config.${namespace}.services.factorio-server;
   inherit (lib) mkIf mkEnableOption;
 in
 {
-  options.wyrdgard.services.factorio-server = {
+  options.${namespace}.services.factorio-server = {
     enable = mkEnableOption "Enable Factorio Headless Server";
   };
 

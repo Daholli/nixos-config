@@ -1,11 +1,16 @@
-{ lib, config, ... }:
-with lib;
-with lib.wyrdgard;
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
-  cfg = config.wyrdgard.apps.cli-apps.home-manager;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt enabled;
+  cfg = config.${namespace}.apps.cli-apps.home-manager;
 in
 {
-  options.wyrdgard.apps.cli-apps.home-manager = {
+  options.${namespace}.apps.cli-apps.home-manager = {
     enable = mkBoolOpt true "Enable home-manager";
   };
 

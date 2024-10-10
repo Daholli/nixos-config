@@ -6,7 +6,7 @@
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
   cfg = config.${namespace}.desktop.kde;
 in

@@ -1,16 +1,17 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.system.xkb;
+  cfg = config.${namespace}.system.xkb;
 in
 {
-  options.wyrdgard.system.xkb = with types; {
+  options.${namespace}.system.xkb = with types; {
     enable = mkBoolOpt false "Whether or not to configure xkb.";
   };
 

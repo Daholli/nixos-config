@@ -1,17 +1,17 @@
 {
-  options,
   config,
   lib,
-  pkgs,
+  namespace,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.system.hardware.networking;
+  cfg = config.${namespace}.system.hardware.networking;
 in
 {
-  options.wyrdgard.system.hardware.networking = with types; {
+  options.${namespace}.system.hardware.networking = with types; {
     enable = mkBoolOpt false "Whether or not to enable networking";
   };
 

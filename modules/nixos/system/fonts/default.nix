@@ -1,17 +1,18 @@
 {
-  options,
   config,
-  pkgs,
   lib,
+  namespace,
+  options,
+  pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.system.fonts;
+  cfg = config.${namespace}.system.fonts;
 in
 {
-  options.wyrdgard.system.fonts = with types; {
+  options.${namespace}.system.fonts = with types; {
     enable = mkBoolOpt false "Whether or not to manage fonts.";
     fonts = mkOpt (listOf package) [ ] "Custom font packages to install.";
   };

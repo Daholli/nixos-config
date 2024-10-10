@@ -1,20 +1,21 @@
 {
   config,
   lib,
+  namespace,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.submodules.socials;
+  cfg = config.${namespace}.submodules.socials;
 in
 {
-  options.wyrdgard.submodules.socials = with types; {
+  options.${namespace}.submodules.socials = with types; {
     enable = mkBoolOpt false "Whether to enable social apps";
   };
 
   config = mkIf cfg.enable {
-    wyrdgard = {
+    ${namespace} = {
       apps = {
         discord = enabled;
         teamspeak = enabled;

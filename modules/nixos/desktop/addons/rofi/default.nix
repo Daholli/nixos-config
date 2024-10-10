@@ -28,7 +28,7 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
-    wyrdgard.home.file = {
+    ${namespace}.home.file = {
       ".config/rofi/config.rasi".source = ./config.rasi;
     };
   };

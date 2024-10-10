@@ -1,17 +1,17 @@
 {
-  options,
   config,
   lib,
-  pkgs,
+  namespace,
+  options,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.tools.direnv;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt enabled;
+  cfg = config.${namespace}.tools.direnv;
 in
 {
-  options.wyrdgard.tools.direnv = with types; {
+  options.${namespace}.tools.direnv = {
     enable = mkBoolOpt false "Whether or not to enable direnv.";
   };
 

@@ -7,7 +7,7 @@
 }:
 let
   inherit (lib) mkIf;
-  inherit (lib.wyrdgard) mkBoolOpt;
+  inherit (lib.${namespace}) mkBoolOpt;
   cfg = config.${namespace}.security.keyring;
 in
 {

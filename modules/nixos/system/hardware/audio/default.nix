@@ -1,17 +1,18 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.system.hardware.audio;
+  cfg = config.${namespace}.system.hardware.audio;
 in
 {
-  options.wyrdgard.system.hardware.audio = with types; {
+  options.${namespace}.system.hardware.audio = with types; {
     enable = mkBoolOpt false "Whether or not to enable audio";
   };
 
@@ -34,8 +35,8 @@ in
 
       wireplumber.configPackages = [
         (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/11-bluetooth-policy.conf" ''
-          wireplumber.settings = {	
-            bluetooth.autoswitch-to-headset-profile = false	
+          wireplumber.settings = {
+            bluetooth.autoswitch-to-headset-profile = false
           }
         '')
         (pkgs.writeTextDir "share/wireplumber/policy.lua.d/11-bluetooth-policy.conf" ''

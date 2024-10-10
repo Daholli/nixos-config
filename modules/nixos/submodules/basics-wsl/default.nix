@@ -1,16 +1,17 @@
 {
   config,
   lib,
+  namespace,
   pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
-  inherit (lib.wyrdgard) mkBoolOpt enabled;
-  cfg = config.wyrdgard.submodules.basics-wsl;
+  inherit (lib.${namespace}) mkBoolOpt enabled;
+  cfg = config.${namespace}.submodules.basics-wsl;
 in
 {
-  options.wyrdgard.submodules.basics-wsl = {
+  options.${namespace}.submodules.basics-wsl = {
     enable = mkBoolOpt false "Whether or not to enable basic configuration.";
   };
 
@@ -28,7 +29,7 @@ in
       wsl-open
     ];
 
-    wyrdgard = {
+    ${namespace} = {
       nix = enabled;
 
       apps.cli-apps.helix = enabled;

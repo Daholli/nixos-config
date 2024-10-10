@@ -1,18 +1,19 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.tools.git;
-  user = config.wyrdgard.user;
+  cfg = config.${namespace}.tools.git;
+  user = config.${namespace}.user;
 in
 {
-  options.wyrdgard.tools.git = with types; {
+  options.${namespace}.tools.git = with types; {
     enable = mkBoolOpt true "Wether or not to enable git (Default enabled)";
     userName = mkOpt types.str user.fullName "The name to use git with";
     userEmail = mkOpt types.str user.email "The email to use git with";
@@ -26,7 +27,7 @@ in
       gitbutler
     ];
 
-    wyrdgard.home.extraOptions = {
+    ${namespace}.home.extraOptions = {
       programs.git = {
         enable = true;
         inherit (cfg) userName userEmail;

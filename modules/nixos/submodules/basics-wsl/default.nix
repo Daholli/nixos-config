@@ -31,6 +31,8 @@ in
     wyrdgard = {
       nix = enabled;
 
+      apps.cli-apps.helix = enabled;
+
       tools = {
         git = enabled;
       };

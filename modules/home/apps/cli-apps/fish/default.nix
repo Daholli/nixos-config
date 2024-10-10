@@ -35,7 +35,7 @@ in
           set -x GROFF_NO_SGR 1
         '';
         shellAliases = {
-          vim = "nvim";
+          vim = "hx";
           ls = "colorls --gs";
           l = "ls -l";
           la = "ls -la";

@@ -1,205 +1,205 @@
 {
-    "layer":"top",
-    "height": 42,
-    "position":"top",
-    "mod":"dock",
-    "margin-left":10,
-    "margin-right":10,
-    "margin-top":7,
-    "margin-bottom":0,
-    "exclusive":true,
-    "passthrough":false,
-    "gtk-layer-shell":true,
-    "reload_style_on_change":true,
-    "modules-left":[
-        "custom/smallspacer",
-        "hyprland/workspaces",
-        "custom/spacer"
+  "layer": "top",
+  "height": 42,
+  "position": "top",
+  "mod": "dock",
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-top": 7,
+  "margin-bottom": 0,
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "reload_style_on_change": true,
+  "modules-left": [
+    "custom/smallspacer",
+    "hyprland/workspaces",
+    "custom/spacer"
+  ],
+  "modules-center": [
+    "custom/padd",
+    "custom/l_end",
+    "custom/r_end",
+    "hyprland/window",
+    "custom/padd"
+  ],
+  "modules-right": [
+    "custom/padd",
+    "custom/l_end",
+    "tray",
+    "custom/smallspacer",
+    "pulseaudio",
+    "pulseaudio/slider",
+    "memory",
+    "cpu",
+    "clock",
+    "custom/padd"
+  ],
+  "custom/smallspacer": {
+    "format": " "
+  },
+  "memory": {
+    "interval": 1,
+    "rotate": 270,
+    "format": "{icon}",
+    "format-icons": [
+      "󰝦",
+      "󰪞",
+      "󰪟",
+      "󰪠",
+      "󰪡",
+      "󰪢",
+      "󰪣",
+      "󰪤",
+      "󰪥"
     ],
-    "modules-center":[
-        "custom/padd",
-        "custom/l_end",
-        "custom/r_end",
-        "hyprland/window",
-        "custom/padd"
-    ],
-    "modules-right":[
-        "custom/padd",
-        "custom/l_end",
-        "tray",
-        "custom/smallspacer",
-        "pulseaudio",
-        "pulseaudio/slider",
-        "memory",
-        "cpu",
-        "clock",
-        "custom/padd"
-    ],
-    "custom/smallspacer":{
-        "format":" "
-    },
-    "memory":{
-        "interval":1,
-        "rotate":270,
-        "format":"{icon}",
-        "format-icons":[
-            "󰝦",
-            "󰪞",
-            "󰪟",
-            "󰪠",
-            "󰪡",
-            "󰪢",
-            "󰪣",
-            "󰪤",
-            "󰪥"
-        ],
-        "max-length":10
-    },
-    "cpu":{
-        "interval":1,
-        "format":"{icon}",
-        "rotate":270,
-        "format-icons":[
-            "󰝦",
-            "󰪞",
-            "󰪟",
-            "󰪠",
-            "󰪡",
-            "󰪢",
-            "󰪣",
-            "󰪤",
-            "󰪥"
-        ]
-    },
-    "tray":{
-        "icon-size":18,
-        "rotate":0,
-        "spacing":3
-    },
-    "hyprland/window":{
-        "format":"<span  weight='bold' >{initialTitle}</span>",
-        "max-length":120,
-        "separate-outputs":true,
-        "icon":false,
-        "icon-size":18
-    },
-    "custom/spacer":{
-        "format":"|"
-    },
-    "hyprland/workspaces":{
-        "format":"{icon}",
-        "format-icons":{
-            "default":"○",
-            "active":"",
-        }
-    },
-    "wlr/workspaces":{
-        "persistent-workspaces":{
-            "1":[
-                "DP-2"
-            ],
-            "2":[
-                "HDMI-A-1"
-            ],
-            "3":[
-                "DP-2"
-            ],
-            "4":[
-                "HDMI-A-1"
-            ]
-        }
-    },
-    "idle_inhibitor":{
-        "format":"{icon}",
-        "rotate":0,
-        "format-icons":{
-            "activated":"󰥔",
-            "deactivated":""
-        }
-    },
-    "clock":{
-        "format":"{:%H:%M}",
-        "rotate":0,
-        "tooltip-format":"<tt>{calendar}</tt>",
-        "calendar":{
-            "mode":"month",
-            "mode-mon-col":3,
-            "on-scroll":1,
-            "on-click-right":"mode",
-            "format":{
-                "months":"<span color='#ffead3'><b>{}</b></span>",
-                "weekdays":"<span color='#ffcc66'><b>{}</b></span>",
-                "today":"<span color='#ff6699'><b>{}</b></span>"
-            }
-        },
-        "actions":{
-            "on-click-right":"mode",
-            "on-click-forward":"tz_up",
-            "on-click-backward":"tz_down",
-            "on-scroll-up":"shift_up",
-            "on-scroll-down":"shift_down"
-        }
-    },
-    "pulseaudio":{
-        "format":" {icon}",
-        "rotate":0,
-        "format-muted":"婢",
-        "tooltip-format":"{icon} {desc} // {volume}%",
-        "scroll-step":5,
-        "format-icons":{
-            "headphone":"",
-            "hands-free":"",
-            "headset":"",
-            "phone":"",
-            "portable":"",
-            "car":"",
-            "default":[
-                "",
-                "",
-                ""
-            ]
-        }
-    },
-    "custom/l_end":{
-        "format":" ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "custom/r_end":{
-        "format":" ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "custom/sl_end":{
-        "format":" ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "custom/sr_end":{
-        "format":" ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "custom/rl_end":{
-        "format":" ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "custom/rr_end":{
-        "format":" ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "custom/padd":{
-        "format":"  ",
-        "interval":"once",
-        "tooltip":false
-    },
-    "pulseaudio/slider":{
-        "min":5,
-        "max":100,
-        "rotate":0,
-        "device":"pulseaudio",
-        "scroll-step":1
+    "max-length": 10
+  },
+  "cpu": {
+    "interval": 1,
+    "format": "{icon}",
+    "rotate": 270,
+    "format-icons": [
+      "󰝦",
+      "󰪞",
+      "󰪟",
+      "󰪠",
+      "󰪡",
+      "󰪢",
+      "󰪣",
+      "󰪤",
+      "󰪥"
+    ]
+  },
+  "tray": {
+    "icon-size": 18,
+    "rotate": 0,
+    "spacing": 3
+  },
+  "hyprland/window": {
+    "format": "<span  weight='bold' >{initialTitle}</span>",
+    "max-length": 120,
+    "separate-outputs": true,
+    "icon": false,
+    "icon-size": 18
+  },
+  "custom/spacer": {
+    "format": "|"
+  },
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": "○",
+      "active": ""
     }
+  },
+  "wlr/workspaces": {
+    "persistent-workspaces": {
+      "1": [
+        "DP-2"
+      ],
+      "2": [
+        "HDMI-A-1"
+      ],
+      "3": [
+        "DP-2"
+      ],
+      "4": [
+        "HDMI-A-1"
+      ]
+    }
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "rotate": 0,
+    "format-icons": {
+      "activated": "󰥔",
+      "deactivated": ""
+    }
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "rotate": 0,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b>{}</b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "pulseaudio": {
+    "format": " {icon}",
+    "rotate": 0,
+    "format-muted": "婢",
+    "tooltip-format": "{icon} {desc} // {volume}%",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "custom/l_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/r_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/sl_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/sr_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/rl_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/rr_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/padd": {
+    "format": "  ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "pulseaudio/slider": {
+    "min": 5,
+    "max": 100,
+    "rotate": 0,
+    "device": "pulseaudio",
+    "scroll-step": 1
+  }
 }

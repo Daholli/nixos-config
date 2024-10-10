@@ -1,5 +1,6 @@
 {
     "layer":"top",
+    "height": 42,
     "position":"top",
     "mod":"dock",
     "margin-left":10,
@@ -71,20 +72,16 @@
         ]
     },
     "tray":{
-        "icon-size":15,
+        "icon-size":18,
         "rotate":0,
         "spacing":3
-    },
-    "custom/menu":{
-        "format":" ",
-        "rotate":90
     },
     "hyprland/window":{
         "format":"<span  weight='bold' >{initialTitle}</span>",
         "max-length":120,
         "separate-outputs":true,
         "icon":false,
-        "icon-size":13
+        "icon-size":18
     },
     "custom/spacer":{
         "format":"|"

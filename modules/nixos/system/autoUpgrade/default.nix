@@ -1,18 +1,18 @@
 {
-  options,
   config,
-  pkgs,
-  lib,
   inputs,
+  lib,
+  namespace,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.system.autoUpgrade;
+  cfg = config.${namespace}.system.autoUpgrade;
 in
 {
-  options.wyrdgard.system.autoUpgrade = with types; {
+  options.${namespace}.system.autoUpgrade = with types; {
     enable = mkEnableOption "Enable auto-upgrade";
     time = mkOpt str "02:00" "Time to run auto-upgrade";
   };

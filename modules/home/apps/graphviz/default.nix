@@ -1,16 +1,17 @@
 {
-  lib,
   config,
+  lib,
+  namespace,
   pkgs,
   ...
 }:
-with lib;
-with lib.wyrdgard;
 let
-  cfg = config.wyrdgard.apps.graphviz;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
+  cfg = config.${namespace}.apps.graphviz;
 in
 {
-  options.wyrdgard.apps.graphviz = {
+  options.${namespace}.apps.graphviz = {
     enable = mkBoolOpt true "Whether or not you want to install graphviz";
   };
 

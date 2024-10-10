@@ -1,16 +1,17 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.home;
+  cfg = config.${namespace}.home;
 in
 {
-  options.wyrdgard.home = with types; {
+  options.${namespace}.home = with types; {
     file = mkOpt attrs { } (mdDoc "A set of files to be managed by home-manager's `home.file`.");
     configFile = mkOpt attrs { } (
       mdDoc "A set of files to be managed by home-manager's `xdg.configFile`."
@@ -19,14 +20,15 @@ in
   };
 
   config = {
-    wyrdgard.home.extraOptions = {
+    ${namespace}.home.extraOptions = {
       home.stateVersion = config.system.stateVersion;
-      home.file = mkAliasDefinitions options.wyrdgard.home.file;
+      home.file = mkAliasDefinitions options.${namespace}.home.file;
       xdg.enable = true;
-      xdg.configFile = mkAliasDefinitions options.wyrdgard.home.configFile;
+      xdg.configFile = mkAliasDefinitions options.${namespace}.home.configFile;
     };
 
-    snowfallorg.users.${config.wyrdgard.user.name}.home.config = config.wyrdgard.home.extraOptions;
+    snowfallorg.users.${config.${namespace}.user.name}.home.config =
+      config.${namespace}.home.extraOptions;
 
     home-manager = {
       useUserPackages = true;

@@ -1,20 +1,20 @@
 {
   config,
-  lib,
-  pkgs,
-  system,
   inputs,
+  lib,
+  namespace,
+  system,
   ...
 }:
 
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.wyrdgard.apps.zen-browser;
+  cfg = config.${namespace}.apps.zen-browser;
 
   zenbrowser = inputs.zen-browser.packages."${system}".default;
 in
 {
-  options.wyrdgard.apps.zen-browser = {
+  options.${namespace}.apps.zen-browser = {
     enable = mkEnableOption "Whether or not to enable zen browser";
   };
 

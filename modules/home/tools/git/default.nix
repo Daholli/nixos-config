@@ -1,18 +1,18 @@
 {
-  options,
-  lib,
   config,
-  pkgs,
+  lib,
+  namespace,
+  options,
   ...
 }:
-with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.tools.git;
-  user = config.wyrdgard.user;
+  inherit (lib) mkIf types;
+  cfg = config.${namespace}.tools.git;
+  user = config.${namespace}.user;
 in
 {
-  options.wyrdgard.tools.git = {
+  options.${namespace}.tools.git = {
     enable = mkBoolOpt true "Enable Git (Default true)";
     userName = mkOpt types.str user.fullName "The name to configure git with.";
     userEmail = mkOpt types.str user.email "The email to configure git with.";

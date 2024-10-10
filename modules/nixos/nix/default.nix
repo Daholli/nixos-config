@@ -1,13 +1,14 @@
 {
   config,
-  pkgs,
   lib,
+  namespace,
+  pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.nix;
+  cfg = config.${namespace}.nix;
 
   substituters-submodule = types.submodule (
     { name, ... }:
@@ -19,7 +20,7 @@ let
   );
 in
 {
-  options.wyrdgard.nix = with types; {
+  options.${namespace}.nix = with types; {
     enable = mkBoolOpt true "Whether or not to manage nix configuration.";
     package = mkOpt package pkgs.lix "Which nix package to use.";
 
@@ -50,7 +51,7 @@ in
       let
         users = [
           "root"
-          config.wyrdgard.user.name
+          config.${namespace}.user.name
         ];
       in
       {
@@ -73,7 +74,7 @@ in
               cfg.default-substituter.key
             ] ++ (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
           }
-          // (lib.optionalAttrs config.wyrdgard.tools.direnv.enable {
+          // (lib.optionalAttrs config.${namespace}.tools.direnv.enable {
             keep-outputs = true;
             keep-derivations = true;
           });

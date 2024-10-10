@@ -1,16 +1,17 @@
 {
   config,
-  pkgs,
   lib,
+  namespace,
+  pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.system.boot;
+  cfg = config.${namespace}.system.boot;
 in
 {
-  options.wyrdgard.system.boot = with types; {
+  options.${namespace}.system.boot = with types; {
     enable = mkBoolOpt false "Whether or not to enable booting.";
   };
 

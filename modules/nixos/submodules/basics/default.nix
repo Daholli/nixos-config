@@ -1,17 +1,18 @@
 {
-  options,
   config,
   lib,
+  namespace,
+  options,
   pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.submodules.basics;
+  cfg = config.${namespace}.submodules.basics;
 in
 {
-  options.wyrdgard.submodules.basics = with types; {
+  options.${namespace}.submodules.basics = with types; {
     enable = mkBoolOpt false "Whether or not to enable basic configuration.";
   };
 
@@ -31,7 +32,7 @@ in
       htop
     ];
 
-    wyrdgard = {
+    ${namespace} = {
       nix = enabled;
 
       apps.cli-apps.helix = enabled;

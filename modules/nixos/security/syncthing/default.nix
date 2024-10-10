@@ -1,12 +1,17 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.security.syncthing;
-  user = config.wyrdgard.user;
+  cfg = config.${namespace}.security.syncthing;
+  user = config.${namespace}.user;
 in
 {
-  options.wyrdgard.security.syncthing = with types; {
+  options.${namespace}.security.syncthing = with types; {
     enable = mkEnableOption "Enable Syncthing";
   };
 

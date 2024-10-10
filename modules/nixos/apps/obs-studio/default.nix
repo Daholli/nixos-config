@@ -1,16 +1,17 @@
 {
   config,
   lib,
+  namespace,
   pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.apps.obs-studio;
+  cfg = config.${namespace}.apps.obs-studio;
 in
 {
-  options.wyrdgard.apps.obs-studio = with types; {
+  options.${namespace}.apps.obs-studio = with types; {
     enable = mkBoolOpt false "Whether or not to enable obs-studio";
   };
 

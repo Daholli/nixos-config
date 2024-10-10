@@ -1,15 +1,16 @@
 {
-  lib,
   config,
+  lib,
+  namespace,
   pkgs,
   ...
 }:
 let
-  user = config.wyrdgard.user.name;
+  user = config.${namespace}.user.name;
 in
 {
   config = {
-    wyrdgard.home.extraOptions = {
+    ${namespace}.home.extraOptions = {
       dconf.settings = {
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";

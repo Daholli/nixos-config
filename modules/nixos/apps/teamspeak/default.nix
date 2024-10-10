@@ -1,16 +1,17 @@
 {
   config,
   lib,
+  namespace,
   pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.apps.teamspeak;
+  cfg = config.${namespace}.apps.teamspeak;
 in
 {
-  options.wyrdgard.apps.teamspeak = with types; {
+  options.${namespace}.apps.teamspeak = with types; {
     enable = mkBoolOpt false "Whether or not to enable basic configuration";
   };
 

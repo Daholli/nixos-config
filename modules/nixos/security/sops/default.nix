@@ -1,16 +1,17 @@
 {
   config,
-  pkgs,
   lib,
+  namespace,
+  pkgs,
   ...
 }:
 with lib;
-with lib.wyrdgard;
+with lib.${namespace};
 let
-  cfg = config.wyrdgard.security.sops;
+  cfg = config.${namespace}.security.sops;
 in
 {
-  options.wyrdgard.security.sops = with types; {
+  options.${namespace}.security.sops = with types; {
     enable = mkBoolOpt true "Enable sops (Default true)";
   };
 

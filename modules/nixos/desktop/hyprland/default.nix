@@ -7,7 +7,7 @@
   namespace,
   ...
 }:
-with lib.wyrdgard;
+with lib.${namespace};
 let
   inherit (lib)
     mkIf
@@ -29,7 +29,7 @@ let
     if [[ $running != "" ]]; then
         hyprctl dispatch workspace $running
     else
-        # always open on w/space 4    
+        # always open on w/space 4
         hyprctl dispatch workspace 4
         1password&
     fi
@@ -79,7 +79,7 @@ in
       };
     };
 
-    wyrdgard = {
+    ${namespace} = {
       desktop.addons = {
         waybar = enabled;
         rofi = {

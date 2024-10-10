@@ -11,7 +11,7 @@ let
 in
 {
   options.wyrdgard.apps.cli-apps.nixvim = {
-    enable = mkBoolOpt true "Whether to enable nixvim or not (Default true)";
+    enable = mkBoolOpt false "Whether to enable nixvim or not (Default true)";
   };
 
   config = mkIf cfg.enable {

@@ -132,6 +132,17 @@ in
                 marksman = {
                   command = "${pkgs.marksman}/bin/marksman";
                 };
+                vscode-json-language-server = {
+                  command = "${pkgs.vscode-langservers-extracted}/bin/vscode-json-language-server";
+                  args = [ "--stdio" ];
+                  config.provideFormatter = true;
+                  config.json.validate.enable = true;
+                };
+                vscode-css-language-server = {
+                  command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
+                  args = [ "--stdio" ];
+                  config.provideFormatter = true;
+                };
               };
             };
           };

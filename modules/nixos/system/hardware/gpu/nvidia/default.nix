@@ -15,11 +15,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.nvidia-vaapi-driver ];
-
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = [
+        pkgs.nvidia-vaapi-driver
+      ];
     };
 
     hardware.nvidia = {

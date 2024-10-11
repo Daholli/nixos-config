@@ -21,7 +21,7 @@ let
   cachix-url = "https://hyprland.cachix.org";
   cachix-key = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
 
-  hyprland-package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+  hyprland-package = inputs.hyprland.packages.${system}.hyprland;
 
   focus-1password = pkgs.writeShellScriptBin "focus-or-open-1pass" ''
     running=$(hyprctl -j clients | jq -r '.[] | select(.class == "1password") | .workspace.id')
@@ -66,8 +66,7 @@ in
       hyprland = {
         enable = true;
         package = hyprland-package;
-        portalPackage =
-          inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+        portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
       };
     };
 
@@ -86,6 +85,7 @@ in
           enable = true;
           package = pkgs.rofi-wayland-unwrapped;
         };
+        hyprlock = enabled;
       };
 
       nix.extra-substituters.${cachix-url} = {

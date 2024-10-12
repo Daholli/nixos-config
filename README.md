@@ -9,6 +9,9 @@
 
 My all-inclusive nix flake to solve all my problems.
 
+![hyprlock_screenshot](./modules/nixos/desktop/addons/hyprlock/hyprlock_preview.png)
+
+
 ## Repository Overview
 
 - [homes](#homes)

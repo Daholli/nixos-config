@@ -89,8 +89,8 @@
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "default": "○",
-      "active": ""
+      "default": "",
+      "active": ""
     }
   },
   "wlr/workspaces": {
@@ -131,28 +131,17 @@
         "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
         "today": "<span color='#ff6699'><b>{}</b></span>"
       }
-    },
-    "actions": {
-      "on-click-right": "mode",
-      "on-click-forward": "tz_up",
-      "on-click-backward": "tz_down",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
     }
   },
   "pulseaudio": {
     "format": " {icon}",
     "rotate": 0,
-    "format-muted": "婢",
     "tooltip-format": "{icon} {desc} // {volume}%",
     "scroll-step": 5,
     "format-icons": {
       "headphone": "",
       "hands-free": "",
       "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
       "default": [
         "",
         "",

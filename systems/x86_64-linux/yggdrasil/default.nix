@@ -59,7 +59,7 @@ in
         exec-once = [
           "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
           "xrandr --output DP-2 --primary"
-          "[workspace 1 silent] obsidian"
+          "[workspace 1 silent] obsidian --disabled-gpu"
           "[workspace 4 silent] git-butler"
         ];
 

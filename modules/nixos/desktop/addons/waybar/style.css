@@ -1,19 +1,14 @@
 * {
   font-family: "JetBrains Mono Nerd Font";
-  /*font-family: "JetBrainsMono Nerd Font";*/
   font-weight: bold;
   font-size: 16px;
 }
 
 window#waybar {
   background: #0F0F17;
-  /*  border-radius: 15px; */
-  /*  border: 2px solid #124323; */
-  /* border: 0px solid #A1BDCE; */
+  border-radius: 12px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
 }
-
 
 tooltip {
   background: #171717;
@@ -21,49 +16,25 @@ tooltip {
   font-size: 13px;
   border-radius: 7px;
   border: 2px solid #101a24;
-
-
 }
 
 #workspaces {
-  background: rgba(23, 23, 23, 0.0);
-  color: #888789;
-  box-shadow: none;
-  text-shadow: none;
-  border-radius: 9px;
-  transition: 0.2s ease;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-top: 1px;
+  margin-left: 2px;
 }
 
-
 #workspaces button {
-  background: rgba(23, 23, 23, 0.0);
-  color: #A1BDCE;
-  box-shadow: none;
-  text-shadow: none;
-  border-radius: 9px;
-  transition: 0.2s ease;
-  padding-left: 4px;
-  padding-right: 4px;
-  /*   animation: ws_normal 20s ease-in-out 1; */
+  color: #86aaec;
+  margin-left: 2px;
+  background-color: transparent;
+}
+
+#workspaces button.hover {
+  background-color: transparent;
 }
 
 #workspaces button.active {
-  /* background-image: url("/home/anik/Documents/bar1.png");*/
-  color: #A1BDCE;
-  transition: all 0.3s ease;
-  padding-left: 4px;
-  padding-right: 4px;
-  /*  transition: all 0.4s cubic-bezier(.55,0.68,.48,1.682); */
-}
-
-#workspaces button:hover {
-  background: none;
-  color: #72D792;
-  animation: ws_hover 20s ease-in-out 1;
-  transition: all 0.5s cubic-bezier(.55, -0.68, .48, 1.682);
+  color: #c296eb;
+  background-color: transparent;
 }
 
 #taskbar button {
@@ -170,7 +141,6 @@ tooltip {
 @keyframes blink {
   to {
     color: #4a4a4a;
-
   }
 }
 
@@ -262,9 +232,6 @@ tooltip {
   margin-left: 1px;
   padding-left: 3px;
 }
-
-
-/* Style for launchers */
 
 #custom-expand {
   min-width: 25px;

@@ -35,7 +35,7 @@ Luckily for me Jake (the creator of snowfall-lib) was so kind and helped me bugf
 ### homes
 
 The homes folder is home to all your homemanager configuration that is specific to that system (and user) and that system only. 
-If you want generic home manager configuration then look into [modules/home](moddules/home/README.md).
+If you want generic home manager configuration then look into [modules/home](modules/home/README.md).
 
 - home/system/user@hostname syntax 
 

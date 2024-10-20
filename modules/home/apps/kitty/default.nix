@@ -17,6 +17,27 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.kitty ];
 
+    home.sessionVariables.TERMINAL = "kitty";
+
+    # TODO: move this to a thunar specific module
+    home.file.".config/Thunar/uca.xml".text = ''
+      <?xml version="1.0" encoding="UTF-8"?>
+      <actions>
+      <action>
+      	<icon>kitty</icon>
+      	<name>Open Kitty here</name>
+      	<submenu></submenu>
+      	<unique-id>1726095927116900-1</unique-id>
+      	<command>${pkgs.kitty}/bin/kitty %f</command>
+      	<description>Example for a custom action</description>
+      	<range></range>
+      	<patterns>*</patterns>
+      	<startup-notify/>
+      	<directories/>
+      </action>
+      </actions>
+    '';
+
     programs.kitty = {
       enable = true;
       themeFile = "tokyo_night_night";

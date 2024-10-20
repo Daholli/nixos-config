@@ -15,5 +15,14 @@ in
     enable = mkBoolOpt false "Whether or not to enable obs-studio";
   };
 
-  config = mkIf cfg.enable { environment.systemPackages = with pkgs; [ obs-studio ]; };
+  config = mkIf cfg.enable {
+    programs.obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-move-transition
+      ];
+    };
+
+  };
 }

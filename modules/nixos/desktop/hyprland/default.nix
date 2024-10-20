@@ -108,6 +108,7 @@ in
               ];
 
               exec-once = [
+                "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
                 "waybar"
                 "dunst"
                 "systemctl --user start plasma-polkit-agent"
@@ -121,6 +122,13 @@ in
               windowrulev2 = [
                 #stean is a bit wierd, since it opens in multiple phases, so just move the last window to the workspace
                 "workspace 3 silent, class:^(steam)$, title:^(Steam)"
+
+                # make xwaylandvideobridge window invisible
+                "opacity 0.0 override, class:^(xwaylandvideobridge)$"
+                "noanim, class:^(xwaylandvideobridge)$"
+                "noinitialfocus, class:^(xwaylandvideobridge)$"
+                "maxsize 1 1, class:^(xwaylandvideobridge)$"
+                "noblur, class:^(xwaylandvideobridge)$"
               ];
 
               general = {

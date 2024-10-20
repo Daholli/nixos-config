@@ -16,5 +16,9 @@ in
     enable = mkBoolOpt false "Whether or not to enable basic configuration";
   };
 
-  config = mkIf cfg.enable { environment.systemPackages = with pkgs; [ discord ]; };
+  config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      discord
+    ];
+  };
 }

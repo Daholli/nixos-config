@@ -38,10 +38,9 @@ in
         '';
         shellAliases = {
           vim = "hx";
-          ls = "colorls --gs";
-          l = "ls -l";
-          la = "ls -la";
-          lt = "ls --tree";
+          ls = "colorls --gs -A";
+          ll = "ls -l";
+          lt = "colorls --tree";
         };
         plugins = with pkgs.fishPlugins; [
           {

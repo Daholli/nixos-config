@@ -86,6 +86,7 @@ in
           package = pkgs.rofi-wayland-unwrapped;
         };
         hyprlock = enabled;
+        hyprpaper = enabled;
       };
 
       nix.extra-substituters.${cachix-url} = {
@@ -108,7 +109,7 @@ in
               ];
 
               exec-once = [
-                "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+                "hyprpaper"
                 "waybar"
                 "dunst"
                 "systemctl --user start plasma-polkit-agent"

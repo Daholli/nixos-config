@@ -23,7 +23,10 @@ in
 
   config = mkIf cfg.enable {
     environment = {
-      systemPackages = [ helix-pkg ];
+      systemPackages = [
+        helix-pkg
+        pkgs.wl-clipboard
+      ];
     };
 
     ${namespace} = {
@@ -36,6 +39,7 @@ in
             settings = {
               theme = "tokyonight";
               editor = {
+                auto-format = true;
                 line-number = "relative";
 
                 lsp = {

@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ factorio-headless ];
+    environment.systemPackages = with pkgs; [ pkgs.factorio-headless ];
     sops = {
       secrets = {
         factorio_token = {
@@ -31,7 +31,7 @@ in
       };
       templates."extraSettingsFile.json".content = ''
         {
-          "name": "Alles Nix!",
+          "name": "SpaceAge",
           "description": "Trying to run a factorio-headless-server on my nix system",
           "tags": ["vanilla"],
           "max_players": 10,
@@ -54,7 +54,7 @@ in
       lan = true;
       nonBlockingSaving = true;
       autosave-interval = 5;
-      loadLatestSave = true;
+      saveName = "SpaceAge";
       extraSettingsFile = config.sops.templates."extraSettingsFile.json".path;
     };
   };

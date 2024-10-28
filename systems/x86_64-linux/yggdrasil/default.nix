@@ -82,10 +82,10 @@ in
     };
 
     system = {
-      autoUpgrade = {
-        enable = true;
-        time = "10:00";
-      };
+      # autoUpgrade = {
+      #   enable = true;
+      #   time = "10:00";
+      # };
       hardware = {
         bluetooth = enabled;
         gpu.nvidia = enabled;

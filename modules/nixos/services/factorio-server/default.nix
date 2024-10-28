@@ -31,7 +31,7 @@ in
       };
       templates."extraSettingsFile.json".content = ''
         {
-          "name": "SpaceAge",
+          "name": "SpaceAgeHolli",
           "description": "Trying to run a factorio-headless-server on my nix system",
           "tags": ["vanilla"],
           "max_players": 10,
@@ -53,7 +53,7 @@ in
       public = true;
       lan = true;
       nonBlockingSaving = true;
-      autosave-interval = 5;
+      autosave-interval = 15;
       saveName = "SpaceAge";
       extraSettingsFile = config.sops.templates."extraSettingsFile.json".path;
     };

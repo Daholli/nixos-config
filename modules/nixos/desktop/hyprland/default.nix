@@ -109,7 +109,6 @@ in
               ];
 
               exec-once = [
-                "hyprpaper"
                 "waybar"
                 "dunst"
                 "systemctl --user start plasma-polkit-agent"

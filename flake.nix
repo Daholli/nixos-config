@@ -4,7 +4,10 @@
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/19493dc0ad16ffd5414ac9b4e12179d0e1b98468";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -22,7 +25,7 @@
     # Run unpatched dynamically compiled binaries
     nix-ld = {
       url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     ###
@@ -48,7 +51,7 @@
 
     snowfall-flake = {
       url = "github:snowfallorg/flake";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     kickstartnvim = {

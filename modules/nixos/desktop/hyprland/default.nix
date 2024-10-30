@@ -125,8 +125,8 @@ in
                 "dunst"
                 "systemctl --user start plasma-polkit-agent"
 
-                "[workspace 3 silent] steam"
-                "[workspace 2 silent] discord"
+                "[workspace 3 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
+                "[workspace 2 silent] discord --disable-gpu-compositing"
                 "[workspace 4 silent] 1password"
                 "[workspace 1 silent] zen"
               ];

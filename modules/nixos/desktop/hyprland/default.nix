@@ -30,7 +30,7 @@ let
         hyprctl dispatch workspace $running
     else
         # always open on w/space 4
-        hyprctl dispatch workspace 4
+        hyprctl dispatch workspace 9
         1password&
     fi
   '';
@@ -47,19 +47,31 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      polkit-kde-agent
+      # Auth Agent
+      hyprpolkitagent
 
+      # Notification daemon
+      libnotify
+
+      # Wayland Utilities
       wl-clipboard
       wl-screenrec
       wlr-randr
-      grimblast
-      xfce.thunar
-      dunst
 
+      # Screenshot Utility
+      grimblast
+
+      # File Manager
+      xfce.thunar
+
+      # clean sddm theme
       elegant-sddm
 
+      # json cli parser for bash script to focus 1password
       jq
       focus-1password
+
+      hyprpanel
     ];
 
     programs = {

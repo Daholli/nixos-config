@@ -1,16 +1,11 @@
 {
   config,
-  inputs,
   lib,
   namespace,
-  pkgs,
-  system,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-
-  # hyprpaper-package = inputs.hyprpaper.packages.${system}.hyprpaper;
 
   cfg = config.${namespace}.desktop.addons.hyprpaper;
 

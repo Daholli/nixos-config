@@ -42,6 +42,8 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+
     ###
     # Snowfall dependencies
     snowfall-lib = {
@@ -54,6 +56,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # still not sure if I like helix or nvim more, for now helix does mostly everything I need it to
     kickstartnvim = {
       url = "github:Daholli/kickstart-nix-nvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -112,6 +115,7 @@
       overlays = with inputs; [
         snowfall-flake.overlays.default
         kickstartnvim.overlays.default
+        hyprpanel.overlay
       ];
 
       systems.modules.nixos = with inputs; [

@@ -109,19 +109,18 @@ in
               ];
 
               exec-once = [
-                "waybar"
-                "dunst"
-                "systemctl --user start plasma-polkit-agent"
+                "${pkgs.hyprpanel}/bin/hyprpanel"
+                "systemctl --user start hyprpolkitagent"
 
-                "[workspace 3 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
-                "[workspace 2 silent] discord --disable-gpu-compositing"
-                "[workspace 4 silent] 1password"
+                "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
+                "[workspace 8 silent] discord --disable-gpu-compositing"
+                "[workspace 9 silent] 1password"
                 "[workspace 1 silent] zen"
               ];
 
               windowrulev2 = [
                 #stean is a bit wierd, since it opens in multiple phases, so just move the last window to the workspace
-                "workspace 3 silent, class:^(steam)$, title:^(Steam)"
+                "workspace 2 silent, class:^(steam)$, title:^(Steam)"
 
                 # make xwaylandvideobridge window invisible
                 "opacity 0.0 override, class:^(xwaylandvideobridge)$"

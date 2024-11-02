@@ -80,11 +80,11 @@ in
 
     ${namespace} = {
       desktop.addons = {
-        waybar = enabled;
         rofi = {
           enable = true;
           package = pkgs.rofi-wayland-unwrapped;
         };
+        hypridle = enabled;
         hyprlock = enabled;
         hyprpaper = enabled;
       };

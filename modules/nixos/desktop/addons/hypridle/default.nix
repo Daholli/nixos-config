@@ -30,7 +30,7 @@ in
           listener = [
             {
               timeout = 900;
-              on-timeout = "hyprlock";
+              on-timeout = "loginctl lock-session";
             }
             {
               timeout = 1200;

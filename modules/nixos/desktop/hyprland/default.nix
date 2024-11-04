@@ -55,7 +55,6 @@ in
 
       # Wayland Utilities
       wl-clipboard
-      wl-screenrec
       wlr-randr
 
       # Screenshot Utility
@@ -91,14 +90,18 @@ in
     };
 
     ${namespace} = {
-      desktop.addons = {
-        rofi = {
-          enable = true;
-          package = pkgs.rofi-wayland-unwrapped;
+      desktop = {
+        enable = true;
+        addons = {
+          rofi = {
+            enable = true;
+            package = pkgs.rofi-wayland-unwrapped;
+          };
+          hypridle = enabled;
+          hyprlock = enabled;
+          hyprpanel = enabled;
+          hyprpaper = enabled;
         };
-        hypridle = enabled;
-        hyprlock = enabled;
-        hyprpaper = enabled;
       };
 
       nix.extra-substituters.${cachix-url} = {
@@ -121,7 +124,6 @@ in
               ];
 
               exec-once = [
-                "${pkgs.hyprpanel}/bin/hyprpanel"
                 "systemctl --user start hyprpolkitagent"
 
                 "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things

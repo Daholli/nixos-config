@@ -48,6 +48,11 @@ in
     icon = mkOpt (nullOr package) defaultIcon "The profile picture to use for the user.";
     extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
     extraOptions = mkOpt attrs { } (mdDoc "Extra options passed to `users.users.<name>`.");
+    trustedPublicKeys = mkOption {
+      default = [ ];
+      type = nullOr (listOf str);
+      description = "Trusted public keys for this user for the machine";
+    };
   };
 
   config = {
@@ -91,6 +96,8 @@ in
       # so each user has their own unique uid (or leave it out for the
       # system to select).
       uid = 1000;
+
+      openssh.authorizedKeys.keys = cfg.trustedPublicKeys;
 
       extraGroups = [ "steamcmd" ] ++ cfg.extraGroups;
     } // cfg.extraOptions;

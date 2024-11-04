@@ -24,7 +24,7 @@ in
     };
 
     services = {
-      factorio-server = enabled;
+      # factorio-server = enabled;
     };
 
     user.trustedPublicKeys = [

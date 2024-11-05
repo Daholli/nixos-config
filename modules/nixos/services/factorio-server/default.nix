@@ -40,7 +40,6 @@ in
           "autosave_slots": 5,
           "ignore_player_limit_for_returning_players": true,
           "username" : "${config.sops.placeholder.factorio_username}",
-          "admins": ["${config.sops.placeholder.factorio_username}"],
           "token": "${config.sops.placeholder.factorio_token}"
         }
       '';
@@ -55,6 +54,11 @@ in
       nonBlockingSaving = true;
       autosave-interval = 15;
       saveName = "SpaceAge";
+      admins = [
+        "daholli"
+        "galbrain"
+        "geigeabc"
+      ];
       extraSettingsFile = config.sops.templates."extraSettingsFile.json".path;
     };
   };

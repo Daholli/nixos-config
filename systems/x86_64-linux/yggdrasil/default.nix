@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) enabled;
+  inherit (lib.${namespace}) enabled disabled;
 in
 {
   imports = [ ./hardware.nix ];
@@ -79,7 +79,7 @@ in
     };
 
     services = {
-      factorio-server = enabled;
+      factorio-server = disabled;
     };
 
     system = {

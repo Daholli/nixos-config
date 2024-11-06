@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   namespace,
   pkgs,
@@ -6,11 +7,23 @@
 }:
 let
   inherit (lib.${namespace}) enabled;
+
+  sopsFile = lib.snowfall.fs.get-file "secrets/secrets-loptland.yaml";
 in
 {
   imports = [ ./hardware.nix ];
 
   environment.systemPackages = [ pkgs.forgejo-cli ];
+
+  sops.secrets = {
+    domain = {
+      inherit sopsFile;
+    };
+
+    forgejo_db_password = {
+      inherit sopsFile;
+    };
+  };
 
   services.openssh = {
     enable = true;
@@ -23,6 +36,13 @@ in
   services.forgejo = {
     enable = true;
     lfs.enable = true;
+    database = {
+      passwordFile = config.sops.secrets.forgejo_db_password.path;
+    };
+    # settings = {
+    #   server.DOMAIN = config.sops.secrets.domain;
+    # };
+
   };
 
   ${namespace} = {
@@ -33,7 +53,7 @@ in
     services = {
       factorio-server = {
         enable = true;
-        sopsFile = lib.snowfall.fs.get-file "secrets/secrets-loptland.yaml";
+        inherit sopsFile;
       };
     };
 

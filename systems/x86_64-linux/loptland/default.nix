@@ -10,12 +10,19 @@ in
 {
   imports = [ ./hardware.nix ];
 
+  environment.systemPackages = [ pkgs.forgejo-cli ];
+
   services.openssh = {
     enable = true;
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
     };
+  };
+
+  services.forgejo = {
+    enable = true;
+    lfs.enable = true;
   };
 
   ${namespace} = {

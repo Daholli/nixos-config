@@ -26,15 +26,15 @@ in
       secrets = {
         factorio_token = {
           restartUnits = [ "factorio.service" ];
-          inherit sopsFile;
+          inherit (cfg) sopsFile;
         };
         factorio_username = {
           restartUnits = [ "factorio.service" ];
-          inherit sopsFile;
+          inherit (cfg) sopsFile;
         };
         factorio_game_password = {
           restartUnits = [ "factorio.service" ];
-          inherit sopsFile;
+          inherit (cfg) sopsFile;
         };
       };
       templates."extraSettingsFile.json".content = ''

@@ -8,25 +8,33 @@
 with lib.${namespace};
 let
   cfg = config.${namespace}.services.factorio-server;
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkOption mkEnableOption;
 in
 {
   options.${namespace}.services.factorio-server = {
     enable = mkEnableOption "Enable Factorio Headless Server";
+    sopsFile = mkOption {
+      type = lib.types.path;
+      default = lib.snowfall.fs.get-file "secrets/secrets.yaml";
+      description = "SecretFile";
+    };
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ pkgs.factorio-headless ];
+    environment.systemPackages = [ pkgs.factorio-headless ];
     sops = {
       secrets = {
         factorio_token = {
           restartUnits = [ "factorio.service" ];
+          inherit sopsFile;
         };
         factorio_username = {
           restartUnits = [ "factorio.service" ];
+          inherit sopsFile;
         };
         factorio_game_password = {
           restartUnits = [ "factorio.service" ];
+          inherit sopsFile;
         };
       };
       templates."extraSettingsFile.json".content = ''

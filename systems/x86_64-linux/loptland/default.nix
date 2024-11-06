@@ -16,8 +16,6 @@ in
 {
   imports = [ ./hardware.nix ];
 
-  environment.systemPackages = [ pkgs.forgejo-cli ];
-
   sops.secrets = {
     forgejo_db_password = {
       inherit sopsFile;
@@ -34,13 +32,22 @@ in
 
   services.nginx = {
     enable = true;
+    recommendedProxySettings = true;
+
     virtualHosts = {
       "git.${domainName}" = {
         locations."/" = {
           proxyPass = "http://localhost:${toString forgejoPort}/";
         };
       };
+
+      "${domainName}" = {
+        locations."/" = {
+          return = "404 This Site does not exist yet";
+        };
+      };
     };
+
   };
 
   services.forgejo = {

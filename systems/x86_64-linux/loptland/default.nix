@@ -8,6 +8,9 @@
 let
   inherit (lib.${namespace}) enabled;
 
+  domainName = "v2202411240203293899.ultrasrv.de";
+  forgejoPort = 3000;
+
   sopsFile = lib.snowfall.fs.get-file "secrets/secrets-loptland.yaml";
 in
 {
@@ -16,10 +19,6 @@ in
   environment.systemPackages = [ pkgs.forgejo-cli ];
 
   sops.secrets = {
-    domain = {
-      inherit sopsFile;
-    };
-
     forgejo_db_password = {
       inherit sopsFile;
     };
@@ -33,17 +32,40 @@ in
     };
   };
 
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      "git.${domainName}" = {
+        locations."/" = {
+          proxyPass = "http://localhost:${toString forgejoPort}/";
+        };
+      };
+    };
+  };
+
   services.forgejo = {
     enable = true;
+    database.type = "postgres";
     lfs.enable = true;
     database = {
       passwordFile = config.sops.secrets.forgejo_db_password.path;
     };
-    # settings = {
-    #   server.DOMAIN = config.sops.secrets.domain;
-    # };
+    settings = {
+      server = {
+        DOMAIN = "git.${domainName}";
+        ROOT_URL = "http://git.${domainName}:${toString forgejoPort}";
+        HTTP_PORT = forgejoPort;
+      };
 
+      service.DISABLE_REGISTRATION = false;
+    };
   };
+
+  networking.firewall.allowedTCPPorts = [
+    forgejoPort
+    80
+    443
+  ];
 
   ${namespace} = {
     submodules = {

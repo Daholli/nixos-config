@@ -31,7 +31,10 @@ in
     };
 
     services = {
-      factorio-server = enabled;
+      factorio-server = {
+        enable = true;
+        sopsFile = lib.snowfall.fs.get-file "secrets/secrets-loptland.yaml";
+      };
     };
 
     user.trustedPublicKeys = [

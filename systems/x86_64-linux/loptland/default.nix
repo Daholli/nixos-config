@@ -108,14 +108,14 @@ in
 
     user.trustedPublicKeys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFrDiO5+vMfD5MimkzN32iw3MnSMLZ0mHvOrHVVmLD0"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4Pr7p0jizrvIl0UhcvrmL5SHRQQQWIcHLAnRFyUZS6"
     ];
+  };
 
-    home.extraOptions = {
-      programs.fish.shellInit = ''
-        eval $(op signin)
-      '';
-    };
-
+  snowfallorg.users.${config.${namespace}.user.name}.home.config = {
+    programs.fish.shellInit = ''
+      eval $(op signin)
+    '';
   };
 
   system.stateVersion = "24.11";

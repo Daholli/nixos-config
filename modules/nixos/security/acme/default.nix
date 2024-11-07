@@ -19,23 +19,23 @@ in
       default = lib.snowfall.fs.get-file "secrets/secrets.yaml";
       description = "SecretFile";
     };
-    domainname = mkOpt str "christophhollizeck.dev";
-    staging = mkOpt bool virtual "Use staging server for testing or not";
+    domainname = mkOpt str "christophhollizeck.dev" "domainname to use";
+    staging = mkOpt bool false "Use staging server for testing or not";
   };
 
   config = mkIf cfg.enable {
     sops = {
       secrets = {
         netcup_customer_number = {
-          inherit sopsFile;
+          inherit (cfg) sopsFile;
         };
 
         netcup_api_key = {
-          inherit sopsFile;
+          inherit (cfg) sopsFile;
         };
 
         netcup_api_password = {
-          inherit sopsFile;
+          inherit (cfg) sopsFile;
         };
       };
 
@@ -64,10 +64,10 @@ in
         environmentFile = config.sops.templates."netcup.env".path;
       };
 
-      certs."${cfg.domainName}" = {
+      certs."${cfg.domainname}" = {
         server = mkIf cfg.staging "https://acme-staging-v02.api.letsencrypt.org/directory";
         dnsResolver = "1.1.1.1:53";
-        extraDomainNames = [ "*.${cfg.domainName}" ];
+        extraDomainNames = [ "*.${cfg.domainname}" ];
       };
     };
 

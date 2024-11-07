@@ -23,7 +23,7 @@ in
       tree
       ripgrep
       fzf
-      colorls
+      eza
 
       wslu
       wsl-open

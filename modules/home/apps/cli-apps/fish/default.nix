@@ -38,9 +38,8 @@ in
         '';
         shellAliases = {
           vim = "hx";
-          ls = "colorls --gs -A";
-          ll = "ls -l";
-          lt = "colorls --tree";
+          ls = "eza -lh --icons --git";
+          lss = "ls --total-size";
         };
         plugins = with pkgs.fishPlugins; [
           {

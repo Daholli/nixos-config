@@ -51,7 +51,14 @@ in
   };
 
   config = {
-    environment.systemPackages = with pkgs; [ ];
+    environment.systemPackages = [ ];
+
+    # remove default nix alias
+    environment.shellAliases = {
+      l = null;
+      ls = null;
+      ll = null;
+    };
 
     programs.fish = enabled;
     users.defaultUserShell = pkgs.fish;

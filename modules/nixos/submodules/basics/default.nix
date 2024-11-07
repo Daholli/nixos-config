@@ -24,7 +24,7 @@ in
       tree
       ripgrep
       fzf
-      colorls
+      eza
 
       #optional
       pciutils

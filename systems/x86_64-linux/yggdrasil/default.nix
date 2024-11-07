@@ -21,6 +21,10 @@ in
 
   virtualisation.waydroid = enabled;
 
+  programs.ssh.extraConfig = ''
+    AddressFamily inet
+  '';
+
   ${namespace} = {
     archetypes = {
       gaming.enable = true;

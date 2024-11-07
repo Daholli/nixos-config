@@ -110,6 +110,12 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFrDiO5+vMfD5MimkzN32iw3MnSMLZ0mHvOrHVVmLD0"
     ];
 
+    home.extraOptions = {
+      programs.fish.shellInit = ''
+        eval $(op signin)
+      '';
+    };
+
   };
 
   system.stateVersion = "24.11";

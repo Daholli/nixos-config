@@ -6,19 +6,26 @@
   ...
 }:
 let
+  inherit (lib) mkIf;
   inherit (lib.${namespace}) enabled;
 
-  domainName = "v2202411240203293899.ultrasrv.de";
+  domainName = "christophhollizeck.dev";
   forgejoPort = 3000;
+
+  cfg.enableAcme = true;
 
   sopsFile = lib.snowfall.fs.get-file "secrets/secrets-loptland.yaml";
 in
 {
   imports = [ ./hardware.nix ];
 
-  sops.secrets = {
-    forgejo_db_password = {
-      inherit sopsFile;
+  environment.systemPackages = [ ];
+
+  sops = {
+    secrets = {
+      forgejo_db_password = {
+        inherit sopsFile;
+      };
     };
   };
 
@@ -36,18 +43,23 @@ in
 
     virtualHosts = {
       "git.${domainName}" = {
+        forceSSL = cfg.enableAcme;
+        useACMEHost = mkIf cfg.enableAcme domainName;
+
         locations."/" = {
           proxyPass = "http://localhost:${toString forgejoPort}/";
         };
       };
 
       "${domainName}" = {
+        forceSSL = cfg.enableAcme;
+        useACMEHost = mkIf cfg.enableAcme domainName;
+
         locations."/" = {
-          return = "404 This Site does not exist yet";
+          return = "404";
         };
       };
     };
-
   };
 
   services.forgejo = {
@@ -57,6 +69,7 @@ in
     database = {
       passwordFile = config.sops.secrets.forgejo_db_password.path;
     };
+
     settings = {
       server = {
         DOMAIN = "git.${domainName}";
@@ -64,7 +77,7 @@ in
         HTTP_PORT = forgejoPort;
       };
 
-      service.DISABLE_REGISTRATION = false;
+      service.DISABLE_REGISTRATION = true;
     };
   };
 
@@ -82,6 +95,13 @@ in
     services = {
       factorio-server = {
         enable = true;
+        inherit sopsFile;
+      };
+    };
+
+    security = {
+      acme = {
+        enable = cfg.enableAcme;
         inherit sopsFile;
       };
     };

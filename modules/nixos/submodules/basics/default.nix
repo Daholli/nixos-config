@@ -13,7 +13,7 @@ let
 in
 {
   options.${namespace}.submodules.basics = with types; {
-    enable = mkBoolOpt false "Whether or not to enable basic configuration.";
+    enable = mkEnableOption "Whether or not to enable basic configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -29,7 +29,7 @@ in
       #optional
       pciutils
       usbutils
-      htop
+      btop
     ];
 
     ${namespace} = {

@@ -73,7 +73,7 @@ in
     settings = {
       server = {
         DOMAIN = "git.${domainName}";
-        ROOT_URL = "http://git.${domainName}:${toString forgejoPort}";
+        ROOT_URL = "https://git.${domainName}";
         HTTP_PORT = forgejoPort;
       };
 

@@ -1,15 +1,7 @@
 {
   config,
-<<<<<<< HEAD
   lib,
   namespace,
-=======
-  inputs,
-  lib,
-  namespace,
-  pkgs,
-  system,
->>>>>>> 8f3c53de (hyprland: setup hyprpanel, fix nvidia issues, accomodate new shadow config)
   ...
 }:
 let

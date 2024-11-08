@@ -1,20 +1,16 @@
 {
   config,
-  inputs,
   lib,
   namespace,
-  pkgs,
-  system,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
 
-  # hyprpaper-package = inputs.hyprpaper.packages.${system}.hyprpaper;
-
   cfg = config.${namespace}.desktop.addons.hyprpaper;
 
   username = config.${namespace}.user.name;
+  picture-path = "/home/${username}/Pictures/firewatch.jpg";
 in
 {
   options.${namespace}.desktop.addons.hyprpaper = {
@@ -28,13 +24,15 @@ in
         "Pictures/firewatch.jpg".source = ./firewatch.jpg;
       };
 
+      wayland.windowManager.hyprland.settings.exec-once = [
+        ''hyprctl hyprpaper wallpaper "DP-2,${picture-path}"''
+      ];
+
       services.hyprpaper = {
         enable = true;
         settings = {
-          preload = [
-            "/home/${username}/Pictures/firewatch.jpg"
-          ];
-          wallpaper = "monitor DP-2, /home/${username}/Pictures/firewatch.jpg";
+          preload = [ picture-path ];
+          wallpaper = "DP-2,${picture-path}";
         };
       };
     };

@@ -6,10 +6,17 @@
   ...
 }:
 let
+  inherit (lib) mkIf mkEnableOption;
   user = config.${namespace}.user.name;
+
+  cfg = config.${namespace}.desktop.hyprland;
 in
 {
-  config = {
+  options.${namespace}.desktop = {
+    enable = mkEnableOption "Whether to enable desktop theming";
+  };
+
+  config = mkIf cfg.enable {
     ${namespace}.home.extraOptions = {
       dconf.settings = {
         "org/gnome/desktop/interface" = {

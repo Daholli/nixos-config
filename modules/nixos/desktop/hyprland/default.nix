@@ -30,7 +30,7 @@ let
         hyprctl dispatch workspace $running
     else
         # always open on w/space 4
-        hyprctl dispatch workspace 4
+        hyprctl dispatch workspace 9
         1password&
     fi
   '';
@@ -47,19 +47,30 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      polkit-kde-agent
+      # Auth Agent
+      hyprpolkitagent
 
+      # Notification daemon
+      libnotify
+
+      # Wayland Utilities
       wl-clipboard
-      wl-screenrec
       wlr-randr
-      grimblast
-      xfce.thunar
-      dunst
 
+      # Screenshot Utility
+      grimblast
+
+      # File Manager
+      xfce.thunar
+
+      # clean sddm theme
       elegant-sddm
 
+      # json cli parser for bash script to focus 1password
       jq
       focus-1password
+
+      hyprpanel
     ];
 
     programs = {
@@ -79,14 +90,18 @@ in
     };
 
     ${namespace} = {
-      desktop.addons = {
-        waybar = enabled;
-        rofi = {
-          enable = true;
-          package = pkgs.rofi-wayland-unwrapped;
+      desktop = {
+        enable = true;
+        addons = {
+          rofi = {
+            enable = true;
+            package = pkgs.rofi-wayland-unwrapped;
+          };
+          hypridle = enabled;
+          hyprlock = enabled;
+          hyprpanel = enabled;
+          hyprpaper = enabled;
         };
-        hyprlock = enabled;
-        hyprpaper = enabled;
       };
 
       nix.extra-substituters.${cachix-url} = {
@@ -109,20 +124,17 @@ in
               ];
 
               exec-once = [
-                "hyprpaper"
-                "waybar"
-                "dunst"
-                "systemctl --user start plasma-polkit-agent"
+                "systemctl --user start hyprpolkitagent"
 
-                "[workspace 3 silent] steam"
-                "[workspace 2 silent] discord"
-                "[workspace 4 silent] 1password"
+                "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
+                "[workspace 8 silent] discord --disable-gpu-compositing"
+                "[workspace 9 silent] 1password"
                 "[workspace 1 silent] zen"
               ];
 
               windowrulev2 = [
                 #stean is a bit wierd, since it opens in multiple phases, so just move the last window to the workspace
-                "workspace 3 silent, class:^(steam)$, title:^(Steam)"
+                "workspace 2 silent, class:^(steam)$, title:^(Steam)"
 
                 # make xwaylandvideobridge window invisible
                 "opacity 0.0 override, class:^(xwaylandvideobridge)$"

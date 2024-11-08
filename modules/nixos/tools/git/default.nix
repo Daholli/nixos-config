@@ -24,7 +24,7 @@ in
     environment.systemPackages = with pkgs; [
       git
       gitAndTools.gh
-      gitbutler
+      # gitbutler
     ];
 
     ${namespace}.home.extraOptions = {

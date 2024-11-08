@@ -4,7 +4,10 @@
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/d941e9aa2d89f377d45516c5edd765fef15ea90a";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -22,7 +25,7 @@
     # Run unpatched dynamically compiled binaries
     nix-ld = {
       url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     ###
@@ -39,6 +42,8 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+
     ###
     # Snowfall dependencies
     snowfall-lib = {
@@ -48,9 +53,10 @@
 
     snowfall-flake = {
       url = "github:snowfallorg/flake";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # still not sure if I like helix or nvim more, for now helix does mostly everything I need it to
     kickstartnvim = {
       url = "github:Daholli/kickstart-nix-nvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -109,6 +115,7 @@
       overlays = with inputs; [
         snowfall-flake.overlays.default
         kickstartnvim.overlays.default
+        hyprpanel.overlay
       ];
 
       systems.modules.nixos = with inputs; [

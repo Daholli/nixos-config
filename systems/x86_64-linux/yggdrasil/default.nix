@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) enabled;
+  inherit (lib.${namespace}) enabled disabled;
 in
 {
   imports = [ ./hardware.nix ];
@@ -20,6 +20,10 @@ in
   environment.pathsToLink = [ "/libexec" ];
 
   virtualisation.waydroid = enabled;
+
+  programs.ssh.extraConfig = ''
+    AddressFamily inet
+  '';
 
   ${namespace} = {
     archetypes = {
@@ -57,35 +61,32 @@ in
         };
 
         exec-once = [
-          "hyprctl dispatch moveworkspacetomonitor 4 HDMI-A-1"
           "xrandr --output DP-2 --primary"
           "[workspace 1 silent] obsidian --disabled-gpu"
-          "[workspace 4 silent] git-butler"
+          "[workspace 9 silent] git-butler"
         ];
 
         workspace = [
           "1, monitor:DP-2"
-          "2, monitor:HDMI-A-1"
+          "2, monitor:DP-2"
           "3, monitor:DP-2"
-          "4, monitor:HDMI-A-1"
+          "4, monitor:DP-2"
+          "8, monitor:HDMI-A-1"
+          "9, monitor:HDMI-A-1"
         ];
 
         windowrulev2 = [
-          "workspace 2 silent, class:^(steam)$, title:^(Friends List)"
-          "workspace 2 silent, class:^(discord)$, title:^(Discord)"
+          "workspace 8 silent, class:^(steam)$, title:^(Friends List)"
+          "workspace 8 silent, class:^(discord)$, title:^(Discord)"
         ];
       };
     };
 
     services = {
-      factorio-server = enabled;
+      factorio-server = disabled;
     };
 
     system = {
-      autoUpgrade = {
-        enable = true;
-        time = "10:00";
-      };
       hardware = {
         bluetooth = enabled;
         gpu.nvidia = enabled;

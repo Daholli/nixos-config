@@ -117,12 +117,6 @@ in
             {
               "$mod" = "SUPER";
 
-              env = [
-                "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-                "QT_QPA_PLATFORM,wayland;xcb"
-                "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-              ];
-
               exec-once = [
                 "systemctl --user start hyprpolkitagent"
 
@@ -316,7 +310,19 @@ in
     };
 
     environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
+      NIXOS_OZONE_WL = "1"; # Hint electron apps to use wayland
+
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_TYPE = "wayland";
+      XDG_SESSION_DESKTOP = "Hyprland";
+
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      QT_QPA_PLATFORM = "wayland;xcb";
+
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+
+      WLR_DRM_NO_ATOMIC = "1";
     };
   };
 }

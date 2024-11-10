@@ -29,7 +29,7 @@ in
 
           listener = [
             {
-              timeout = 900;
+              timeout = 600;
               on-timeout = "loginctl lock-session";
             }
             {

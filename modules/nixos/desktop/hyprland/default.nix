@@ -81,11 +81,15 @@ in
       };
     };
 
-    services = {
-      xserver = enabled;
-      displayManager.sddm = {
-        enable = true;
-        theme = "Elegant";
+    services.greetd = {
+      enable = true;
+      settings = rec {
+        initial_session = {
+          command = "${hyprland-package}/bin/Hyprland";
+          user = "cholli";
+        };
+
+        default_session = initial_session;
       };
     };
 
@@ -311,18 +315,13 @@ in
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1"; # Hint electron apps to use wayland
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
-      XDG_CURRENT_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
-      XDG_SESSION_DESKTOP = "Hyprland";
 
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       QT_QPA_PLATFORM = "wayland;xcb";
-
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";
-
-      WLR_DRM_NO_ATOMIC = "1";
     };
   };
 }

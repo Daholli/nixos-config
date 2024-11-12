@@ -26,15 +26,15 @@ in
   config = mkIf cfg.enable {
     sops = {
       secrets = {
-        netcup_customer_number = {
+        "netcup/customer_number" = {
           inherit (cfg) sopsFile;
         };
 
-        netcup_api_key = {
+        "netcup/api/key" = {
           inherit (cfg) sopsFile;
         };
 
-        netcup_api_password = {
+        "netcup/api/password" = {
           inherit (cfg) sopsFile;
         };
       };
@@ -42,9 +42,9 @@ in
       templates = {
         "netcup.env" = {
           content = ''
-            NETCUP_CUSTOMER_NUMBER=${config.sops.placeholder.netcup_customer_number}
-            NETCUP_API_KEY=${config.sops.placeholder.netcup_api_key}
-            NETCUP_API_PASSWORD=${config.sops.placeholder.netcup_api_password}
+            NETCUP_CUSTOMER_NUMBER=${config.sops.placeholder."netcup/customer_number"}
+            NETCUP_API_KEY=${config.sops.placeholder."netcup/api/key"}
+            NETCUP_API_PASSWORD=${config.sops.placeholder."netcup/api/password"}
             NETCUP_PROPAGATION_TIMEOUT=1200
           '';
         };

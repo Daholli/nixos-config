@@ -816,17 +816,17 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1730638571,
-        "narHash": "sha256-z9Wy1jmhFrABK3cEyiVmQtUwOuQW1YPwA8+HMnbEpnE=",
+        "lastModified": 1731242709,
+        "narHash": "sha256-zGhhtd4U3AxjA5dqzbHhD10q74Ychyu5mNGI7ic+Yng=",
         "owner": "Daholli",
         "repo": "nixpkgs",
-        "rev": "d941e9aa2d89f377d45516c5edd765fef15ea90a",
+        "rev": "2adc4d1f11c5abcf654ed50c2cbce897c6e78ccc",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
         "repo": "nixpkgs",
-        "rev": "d941e9aa2d89f377d45516c5edd765fef15ea90a",
+        "rev": "2adc4d1f11c5abcf654ed50c2cbce897c6e78ccc",
         "type": "github"
       }
     },

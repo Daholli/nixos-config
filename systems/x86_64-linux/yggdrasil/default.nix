@@ -15,6 +15,10 @@ in
     teams-for-linux
     obsidian
     zed-editor
+
+    # eve
+    bottles
+
   ];
 
   environment.pathsToLink = [ "/libexec" ];

@@ -125,5 +125,8 @@
       ];
 
       systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];
+    }
+    // {
+      self = inputs.self;
     };
 }

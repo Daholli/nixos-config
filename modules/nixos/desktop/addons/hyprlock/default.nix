@@ -31,6 +31,8 @@ in
   config = mkIf cfg.enable {
     security.pam.services.hyprlock = { };
 
+    environment.systemPackages = [ hyprlock-blur ];
+
     ${namespace}.desktop.hyprland.settings = {
       bind = [
         "$mod CTRL, l, exec, ${hyprlock-blur}/bin/hyprlock-blur"

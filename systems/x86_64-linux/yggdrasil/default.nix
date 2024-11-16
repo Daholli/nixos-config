@@ -63,6 +63,9 @@ in
           "2, monitor:DP-2"
           "3, monitor:DP-2"
           "4, monitor:DP-2"
+          "5, monitor:DP-2"
+          "6, monitor:DP-2"
+          "7, monitor:HDMI-A-1"
           "8, monitor:HDMI-A-1"
           "9, monitor:HDMI-A-1"
         ];
@@ -70,6 +73,8 @@ in
         windowrulev2 = [
           "workspace 8 silent, class:^(steam)$, title:^(Friends List)"
           "workspace 8 silent, class:^(discord)$, title:^(Discord)"
+          "workspace 7 silent, class:^(zen-alpha)$, title:^(da_holIi - Chat - Twitch)"
+          "workspace 7 silent, class:^(com.obsproject.Studio)$"
         ];
       };
     };

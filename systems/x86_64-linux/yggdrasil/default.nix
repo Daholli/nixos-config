@@ -73,7 +73,6 @@ in
         windowrulev2 = [
           "workspace 8 silent, class:^(steam)$, title:^(Friends List)"
           "workspace 8 silent, class:^(discord)$, title:^(Discord)"
-          "workspace 7 silent, class:^(zen-alpha)$, title:^(da_holIi - Chat - Twitch)"
           "workspace 7 silent, class:^(com.obsproject.Studio)$"
         ];
       };

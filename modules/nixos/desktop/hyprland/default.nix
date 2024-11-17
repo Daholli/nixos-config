@@ -125,7 +125,7 @@ in
                 "systemctl --user start hyprpolkitagent"
 
                 "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
-                "[workspace 8 silent] discord --disable-gpu-compositing"
+                "[workspace 8 silent] vesktop"
                 "[workspace 9 silent] 1password"
                 "[workspace 1 silent] zen"
               ];

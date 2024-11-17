@@ -25,7 +25,7 @@ in
           general = {
             after_sleep_cmd = "hyprctl dispatch dpms on";
             ignore_dbus_inhibit = false;
-            lock_cmd = "${pkgs.hyprlock-blur}/bin/hyprlock-blur";
+            lock_cmd = "hyprlock-blur";
           };
 
           listener = [

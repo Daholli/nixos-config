@@ -35,7 +35,7 @@ in
 
     ${namespace}.desktop.hyprland.settings = {
       bind = [
-        "$mod CTRL, l, exec, ${hyprlock-blur}/bin/hyprlock-blur"
+        "$mod CTRL, l, exec, hyprlock-blur"
       ];
     };
 

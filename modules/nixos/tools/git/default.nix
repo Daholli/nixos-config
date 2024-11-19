@@ -17,7 +17,7 @@ in
     enable = mkBoolOpt true "Wether or not to enable git (Default enabled)";
     userName = mkOpt types.str user.fullName "The name to use git with";
     userEmail = mkOpt types.str user.email "The email to use git with";
-    signingKey = mkOpt types.str "6995A5FF33791B7B" "The key ID to sign commits with.";
+    signingKey = mkOpt types.str "ACCFA2DB47795D9E" "The key ID to sign commits with.";
   };
 
   config = mkIf cfg.enable {

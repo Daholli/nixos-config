@@ -31,6 +31,12 @@ in
 
     ${namespace} = {
       home.extraOptions = {
+        home.file.".config/helix/ignore".text = ''
+          # unignore in file picker and global search
+          .idea/
+          !**/appsettings.json
+        '';
+
         programs.helix = {
           enable = true;
           package = helix-pkg;
@@ -40,6 +46,9 @@ in
             editor = {
               auto-format = true;
               line-number = "relative";
+              file-picker = {
+                hidden = false;
+              };
 
               lsp = {
                 display-inlay-hints = true;

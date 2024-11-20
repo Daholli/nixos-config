@@ -32,6 +32,25 @@ in
     backupFileExtension = ".bak";
   };
 
+  nix = {
+    buildMachines = [
+      {
+        hostName = "pi";
+        sshUser = "remotebuild";
+        sshKey = "/root/.ssh/remotebuild";
+        systems = [ "aarch64-linux" ];
+        protocol = "ssh-ng";
+
+        supportedFeatures = [
+          "nixos-test"
+          "big-parallel"
+        ];
+      }
+    ];
+
+    distributedBuilds = true;
+
+  };
   ${namespace} = {
     archetypes = {
       gaming.enable = true;

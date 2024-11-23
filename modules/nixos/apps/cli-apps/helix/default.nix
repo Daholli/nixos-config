@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkOption;
   cfg = config.${namespace}.apps.cli-apps.helix;
 
   cachix-url = "https://helix.cachix.org";
@@ -19,13 +19,17 @@ in
 {
   options.${namespace}.apps.cli-apps.helix = {
     enable = mkEnableOption "Whether to enable helix or not";
+    pkg = mkOption {
+      type = lib.types.package;
+      default = helix-pkg;
+      description = "Which helix pacakge to use";
+    };
   };
 
   config = mkIf cfg.enable {
     environment = {
       systemPackages = [
-        helix-pkg
-        pkgs.wl-clipboard
+        cfg.pkg
       ];
     };
 

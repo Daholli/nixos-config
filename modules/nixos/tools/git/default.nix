@@ -34,7 +34,7 @@ in
         lfs.enable = true;
         signing = {
           key = cfg.signingKey;
-          signByDefault = mkIf gpg.enable true;
+          signByDefault = true;
         };
         extraConfig = {
           init = {

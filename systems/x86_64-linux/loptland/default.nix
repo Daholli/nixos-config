@@ -23,7 +23,7 @@ in
 
   sops = {
     secrets = {
-      forgejo_db_password = {
+      "forgejo/db/password" = {
         inherit sopsFile;
       };
     };
@@ -71,7 +71,7 @@ in
     database.type = "postgres";
     lfs.enable = true;
     database = {
-      passwordFile = config.sops.secrets.forgejo_db_password.path;
+      passwordFile = config.sops.secrets."forgejo/db/password".path;
     };
 
     settings = {
@@ -111,8 +111,8 @@ in
     };
 
     user.trustedPublicKeys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFrDiO5+vMfD5MimkzN32iw3MnSMLZ0mHvOrHVVmLD0"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4Pr7p0jizrvIl0UhcvrmL5SHRQQQWIcHLAnRFyUZS6"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFrDiO5+vMfD5MimkzN32iw3MnSMLZ0mHvOrHVVmLD0" # yggdrasil
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4Pr7p0jizrvIl0UhcvrmL5SHRQQQWIcHLAnRFyUZS6" # Phone
     ];
   };
 

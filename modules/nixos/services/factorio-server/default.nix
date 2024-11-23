@@ -24,15 +24,15 @@ in
     environment.systemPackages = [ pkgs.factorio-headless ];
     sops = {
       secrets = {
-        factorio_token = {
+        "factorio/token" = {
           restartUnits = [ "factorio.service" ];
           inherit (cfg) sopsFile;
         };
-        factorio_username = {
+        "factorio/username" = {
           restartUnits = [ "factorio.service" ];
           inherit (cfg) sopsFile;
         };
-        factorio_game_password = {
+        "factorio/game_password" = {
           restartUnits = [ "factorio.service" ];
           inherit (cfg) sopsFile;
         };
@@ -43,12 +43,12 @@ in
           "description": "Trying to run a factorio-headless-server on my nix system",
           "tags": ["vanilla"],
           "max_players": 10,
-          "game_password": "${config.sops.placeholder.factorio_game_password}",
+          "game_password": "${config.sops.placeholder."factorio/game_password"}",
           "allow_commands": "admins-only",
           "autosave_slots": 5,
           "ignore_player_limit_for_returning_players": true,
-          "username" : "${config.sops.placeholder.factorio_username}",
-          "token": "${config.sops.placeholder.factorio_token}"
+          "username" : "${config.sops.placeholder."factorio/username"}",
+          "token": "${config.sops.placeholder."factorio/token"}"
         }
       '';
       templates."extraSettingsFile.json".mode = "0444";

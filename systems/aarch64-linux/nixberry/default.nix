@@ -1,5 +1,7 @@
 {
+  inputs,
   lib,
+  modulesPath,
   namespace,
   pkgs,
   ...
@@ -10,12 +12,12 @@ let
   inherit (lib) mkForce;
 in
 {
-  # imports = with inputs.nixos-hardware.nixosModules; [
-  #   (modulesPath + "/installer/scan/not-detected.nix")
-  #   raspberry-pi-5
-  # ];
+  imports = with inputs.nixos-hardware.nixosModules; [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    raspberry-pi-5
+  ];
 
-  raspberry-pi-nix.board = "bcm2712";
+  raspberry-pi-nix.board = "bcm2711";
 
   hardware = {
     raspberry-pi = {

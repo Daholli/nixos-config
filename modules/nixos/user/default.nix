@@ -2,7 +2,6 @@
   config,
   lib,
   namespace,
-  options,
   pkgs,
   ...
 }:
@@ -11,33 +10,6 @@ with lib.${namespace};
 let
   cfg = config.${namespace}.user;
   defaultIconFileName = "profile.png";
-  defaultIcon = pkgs.stdenvNoCC.mkDerivation {
-    name = "default-icon";
-    src = ./. + "/${defaultIconFileName}";
-
-    dontUnpack = true;
-
-    installPhase = ''
-      cp $src $out
-    '';
-
-    passthru = {
-      fileName = defaultIconFileName;
-    };
-  };
-  propagatedIcon =
-    pkgs.runCommandNoCC "propagated-icon"
-      {
-        passthru = {
-          inherit (fileName) ;
-        };
-      }
-      ''
-        local target="$out/share/${namespace}-icons/user/${cfg.name}"
-        mkdir -p "$target"
-
-        cp ${cfg.icon} "$target/${cfg.icon.fileName}"
-      '';
 in
 {
   options.${namespace}.user = with types; {
@@ -45,7 +17,7 @@ in
     fullName = mkOpt str "Christoph Hollizeck" "The full name of the user.";
     email = mkOpt str "christoph.hollizeck@hey.com" "The email of the user.";
     initialPassword = mkOpt str "asdf" "The initial password to use when the user is first created.";
-    icon = mkOpt (nullOr package) defaultIcon "The profile picture to use for the user.";
+    icon = mkOpt (nullOr path) ./${defaultIconFileName} "The profile picture to use for the user.";
     extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
     extraOptions = mkOpt attrs { } (mdDoc "Extra options passed to `users.users.<name>`.");
     trustedPublicKeys = mkOption {
@@ -78,7 +50,7 @@ in
         "Videos/.keep".text = "";
         "projects/.keep".text = "";
         ".face".source = cfg.icon;
-        "Pictures/${cfg.icon.fileName or (builtins.baseNameOf cfg.icon)}".source = cfg.icon;
+        "Pictures/${defaultIconFileName}".source = cfg.icon;
       };
     };
 

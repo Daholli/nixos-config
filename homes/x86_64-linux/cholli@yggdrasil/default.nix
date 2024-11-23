@@ -2,11 +2,12 @@
   lib,
   pkgs,
   config,
+  namespace,
   osConfig ? { },
   format ? "unknown",
   ...
 }:
-with lib.wyrdgard;
+with lib.${namespace};
 {
   wyrdgard = {
     apps = {
@@ -17,6 +18,4 @@ with lib.wyrdgard;
       direnv = enabled;
     };
   };
-
-  home.stateVersion = "23.11";
 }

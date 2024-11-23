@@ -7,10 +7,7 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-
   cfg = config.${namespace}.desktop.addons.hypridle;
-
-  username = config.${namespace}.user.name;
 in
 {
   options.${namespace}.desktop.addons.hypridle = {
@@ -18,7 +15,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    snowfallorg.users.${username}.home.config = {
+    ${namespace}.home.extraOptions = {
       services.hypridle = {
         enable = true;
         settings = {

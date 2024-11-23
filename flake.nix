@@ -78,6 +78,11 @@
     ## temporary
     zen-browser.url = "github:ch4og/zen-browser-flake";
 
+    raspberry-pi-nix = {
+      url = "github:nix-community/raspberry-pi-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ################
     ## inputs for dev shells
 
@@ -122,6 +127,11 @@
         home-manager.nixosModules.home-manager
         nix-ld.nixosModules.nix-ld
         sops-nix.nixosModules.sops
+      ];
+
+      systems.hosts.nixberry.modules = with inputs; [
+        raspberry-pi-nix.nixosModules.raspberry-pi
+        raspberry-pi-nix.nixosModules.sd-image
       ];
 
       systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];

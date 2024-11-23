@@ -49,8 +49,15 @@ in
     ];
 
     distributedBuilds = true;
-
+    settings = {
+      trusted-users = [
+        "@wheel"
+        "remotebuild"
+      ];
+      trusted-public-keys = [ "nixberry:25s8/rxsolAXg4skjnecCeqcfkxYE9FGCPG5UcXsFlw=" ];
+    };
   };
+
   ${namespace} = {
     archetypes = {
       gaming.enable = true;

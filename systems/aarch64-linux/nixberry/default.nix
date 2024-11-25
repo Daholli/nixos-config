@@ -97,6 +97,11 @@ in
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_24.txt"
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_47.txt"
           ];
+
+      statistics = {
+        enabled = true;
+        interval = "8760h";
+      };
     };
   };
 

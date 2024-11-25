@@ -24,7 +24,6 @@ in
         shellInit = ''
           zoxide init fish | source
           direnv hook fish | source
-          source ~/.config/op/plugins.sh
 
           set -x LESS_TERMCAP_mb \e'[01;32m'
           set -x LESS_TERMCAP_md \e'[01;32m'

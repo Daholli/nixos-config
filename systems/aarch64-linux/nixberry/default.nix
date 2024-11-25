@@ -3,7 +3,6 @@
   lib,
   modulesPath,
   namespace,
-  pkgs,
   ...
 }:
 
@@ -17,8 +16,63 @@ in
     raspberry-pi-5
   ];
 
-  raspberry-pi-nix.board = "bcm2711";
+  users.users.remotebuild = {
+    isNormalUser = true;
+    createHome = false;
+    group = "remotebuild";
 
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJYZjG+XPNoVHVdCel5MK4mwvtoFCqDY1WMI1yoU71Rd root@yggdrasil"
+    ];
+  };
+
+  users.groups.remotebuild = { };
+
+  nix = {
+    nrBuildUsers = 64;
+    settings = {
+      trusted-users = [ "remotebuild" ];
+
+      min-free = 10 * 1024 * 1024;
+      max-free = 200 * 1024 * 1024;
+
+      max-jobs = "auto";
+      cores = 0;
+    };
+  };
+
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryAccounting = true;
+    MemoryMax = "90%";
+    OOMScoreAdjust = 500;
+  };
+
+  networking = {
+    interfaces.wlan0 = {
+      ipv4.addresses = [
+        {
+          address = "192.168.178.2";
+          prefixLength = 24;
+        }
+      ];
+    };
+    defaultGateway = {
+      address = "192.168.178.1";
+      interface = "wlan0";
+    };
+
+    wireless = {
+      enable = true;
+      networks = {
+        "Slow Internet" = {
+          pskRaw = "521b6d766b27276c29c7b6bec5b495b1c52bf88b0682277e65b37dc649b630de";
+        };
+      };
+    };
+  };
+
+  # Pi specific stuff  
+  raspberry-pi-nix.board = "bcm2712";
   hardware = {
     raspberry-pi = {
       config = {
@@ -53,19 +107,14 @@ in
   };
 
   ${namespace} = {
-    submodules = {
-      basics = enabled;
-    };
-
-    apps.cli-apps.helix = {
-      pkg = pkgs.helix;
-    };
+    submodules.basics = enabled;
 
     system = {
-      boot = {
-        # Raspberry Pi requires a specific bootloader.
-        enable = mkForce false;
-      };
+      # cachemiss for webkit gtk
+      hardware.networking.enable = mkForce false;
+
+      # rasberry pi uses alternative boot settings
+      boot.enable = mkForce false;
     };
 
     user.trustedPublicKeys = [

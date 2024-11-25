@@ -33,9 +33,11 @@ in
   };
 
   nix = {
+    distributedBuilds = true;
+    settings.builders-use-substitutes = true;
     buildMachines = [
       {
-        hostName = "pi";
+        hostName = "nixberry";
         sshUser = "remotebuild";
         sshKey = "/root/.ssh/remotebuild";
         systems = [ "aarch64-linux" ];
@@ -44,18 +46,10 @@ in
         supportedFeatures = [
           "nixos-test"
           "big-parallel"
+          "kvm"
         ];
       }
     ];
-
-    distributedBuilds = true;
-    settings = {
-      trusted-users = [
-        "@wheel"
-        "remotebuild"
-      ];
-      trusted-public-keys = [ "nixberry:25s8/rxsolAXg4skjnecCeqcfkxYE9FGCPG5UcXsFlw=" ];
-    };
   };
 
   ${namespace} = {

@@ -45,6 +45,10 @@ in
       nixfmt-rfc-style
       nix-prefetch-git
       nix-du
+
+      nix-weather
+      nix-index
+      nix-output-monitor
     ];
 
     nix =

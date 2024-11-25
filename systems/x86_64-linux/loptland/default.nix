@@ -29,18 +29,6 @@ in
     };
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-  };
-
-  services.fail2ban = {
-    enable = true;
-  };
-
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
@@ -101,6 +89,7 @@ in
         enable = true;
         inherit sopsFile;
       };
+      openssh = enabled;
     };
 
     security = {

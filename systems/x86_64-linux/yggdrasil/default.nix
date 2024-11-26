@@ -80,9 +80,10 @@ in
         };
 
         exec-once = [
-          "xrandr --output DP-2 --primary"
           "[workspace 1 silent] obsidian --disabled-gpu"
           "[workspace 9 silent] git-butler"
+
+          "${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --primary"
         ];
 
         workspace = [

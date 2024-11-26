@@ -25,10 +25,19 @@ in
   };
 
   networking = {
-    interfaces.wlan0 = {
+    interfaces.end0 = {
       ipv4.addresses = [
         {
           address = ipAddress;
+          prefixLength = 24;
+        }
+      ];
+      useDHCP = true;
+    };
+    interfaces.wlan0 = {
+      ipv4.addresses = [
+        {
+          address = "192.168.178.3";
           prefixLength = 24;
         }
       ];

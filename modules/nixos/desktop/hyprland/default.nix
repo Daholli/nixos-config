@@ -34,6 +34,48 @@ let
         1password&
     fi
   '';
+
+  # clipsync = pkgs.writeShellScriptBin "clipsync" ''
+  #   insert() {
+  #     # Read all the piped input into variable.
+  #     value=$(cat)
+  #     wValue="$(wl-paste)"
+  #     xValue="$(xclip -o -selection clipboard)"
+
+  #     notify() {
+  #       notify-send -u low -c clipboard "$1" "$value"
+  #     }
+
+  #     if [ "$value" != "$wValue" ]; then
+  #       notify "Wayland"
+  #       echo -n "$value" | wl-copy
+  #     fi
+
+  #     if [ "$value" != "$xValue" ]; then
+  #       notify "X11"
+  #       echo -n "$value" | xclip -selection clipboard
+  #     fi
+  #   }
+
+  #   watch() {
+  #     # Wayland -> X11
+  #     wl-paste --type text --watch clipsync insert &
+
+  #     # X11 -> Wayland
+  #     while clipnotify; do
+  #       xclip -o -selection clipboard | clipsync insert
+  #     done &
+  #   }
+
+  #   kill() {
+  #     pkill wl-paste
+  #     pkill clipnotify
+  #     pkill xclip
+  #     pkill clipsync
+  #   }
+  #   "$@"
+  # '';
+
 in
 {
   options.${namespace}.desktop.hyprland = {
@@ -54,8 +96,13 @@ in
       libnotify
 
       # Wayland Utilities
-      wl-clipboard
       wlr-randr
+
+      # Clipboard Stuff
+      wl-clipboard
+      xclip
+      clipnotify
+      # clipsync
 
       # Screenshot Utility
       grimblast
@@ -128,6 +175,8 @@ in
                 "[workspace 8 silent] vesktop"
                 "[workspace 9 silent] 1password"
                 "[workspace 1 silent] zen"
+
+                "${pkgs.xorg.xhost}/bin/xhost +"
               ];
 
               windowrulev2 = [

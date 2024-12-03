@@ -26,6 +26,12 @@ in
       "forgejo/db/password" = {
         inherit sopsFile;
       };
+      "forgejo/mail/password" = {
+        inherit sopsFile;
+      };
+      "forgejo/mail/passwordHash" = {
+        inherit sopsFile;
+      };
     };
   };
 
@@ -83,13 +89,33 @@ in
 
       mailer = {
         ENABLED = true;
-        PROTOCOL = "sendmail";
+        PROTOCOL = "smtps";
         FROM = "no-reply@${domainName}";
-        SENDMAIL_PATH = "${pkgs.system-sendmail}/bin/sendmail";
+        SMTP_ADDR = "mail.${domainName}";
+        USER = "forgejo@${domainName}";
       };
 
       service.DISABLE_REGISTRATION = true;
     };
+
+    secrets = {
+      mailer.PASSWD = config.sops.secrets."forgejo/mail/password".path;
+    };
+  };
+
+  mailserver = {
+    enable = true;
+    fqdn = "mail.${domainName}";
+    domains = [ domainName ];
+
+    loginAccounts = {
+      "forgejo@${domainName}" = {
+        hashedPasswordFile = config.sops.secrets."forgejo/mail/passwordHash".path;
+        aliases = [ "no-reply@${domainName}" ];
+      };
+    };
+
+    certificateScheme = "acme-nginx";
   };
 
   networking.firewall.allowedTCPPorts = [

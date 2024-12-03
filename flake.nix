@@ -83,6 +83,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+
     ################
     ## inputs for dev shells
 
@@ -132,6 +134,10 @@
       systems.hosts.nixberry.modules = with inputs; [
         raspberry-pi-nix.nixosModules.raspberry-pi
         raspberry-pi-nix.nixosModules.sd-image
+      ];
+
+      systems.hosts.loptland.modules = with inputs; [
+        simple-nixos-mailserver.nixosModules.default
       ];
 
       systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];

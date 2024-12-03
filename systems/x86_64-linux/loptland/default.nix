@@ -81,6 +81,13 @@ in
         HTTP_PORT = forgejoPort;
       };
 
+      mailer = {
+        ENABLED = true;
+        PROTOCOL = "sendmail";
+        FROM = "no-reply@${domainName}";
+        SENDMAIL_PATH = "${pkgs.system-sendmail}/bin/sendmail";
+      };
+
       service.DISABLE_REGISTRATION = true;
     };
   };

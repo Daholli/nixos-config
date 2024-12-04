@@ -28,15 +28,11 @@ in
     fonts.packages =
       with pkgs;
       [
-        (nerdfonts.override {
-          fonts = [
-            "CodeNewRoman"
-            "NerdFontsSymbolsOnly"
-          ];
-        })
         font-awesome
         powerline-fonts
         powerline-symbols
+        nerd-fonts.code-new-roman
+        nerd-fonts.symbols-only
       ]
       ++ cfg.fonts;
   };

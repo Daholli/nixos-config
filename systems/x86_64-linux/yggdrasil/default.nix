@@ -110,6 +110,8 @@ in
       factorio-server = disabled;
     };
 
+    tools.devenv = enabled;
+
     system = {
       hardware = {
         bluetooth = enabled;

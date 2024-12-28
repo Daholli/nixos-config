@@ -11,6 +11,7 @@ let
 
   domainName = "christophhollizeck.dev";
   forgejoPort = 3000;
+  hydraPort = 2000;
 
   cfg.enableAcme = true;
 
@@ -61,6 +62,15 @@ in
 
         locations."/" = {
           proxyPass = "http://localhost:${toString forgejoPort}/";
+        };
+      };
+
+      "hydra.${domainName}" = {
+        forceSSL = cfg.enableAcme;
+        useACMEHost = mkIf cfg.enableAcme domainName;
+
+        locations."/" = {
+          proxyPass = "http://localhost:${toString hydraPort}/";
         };
       };
 
@@ -123,7 +133,8 @@ in
 
   services.hydra = {
     enable = true;
-    hydraURL = "http://hydra.${domainName}:2000";
+    hydraURL = "http://localhost:2000";
+    port = 2000;
     notificationSender = "hydra@localhost";
     buildMachinesFiles = [ ];
     useSubstitutes = true;

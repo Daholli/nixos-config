@@ -52,6 +52,7 @@ in
           ];
           strategy = "incremental";
         };
+        lfs."https://git.christophhollizeck.dev/Daholli/nixos-config.git/info/lfs".locksverify = true;
       };
     };
   };

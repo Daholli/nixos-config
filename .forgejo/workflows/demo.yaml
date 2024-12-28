@@ -3,6 +3,6 @@ jobs:
   test:
     runs-on: native
     steps:
-      - run: nom build .#loptland
+      - run: nix build .#loptland
 
 

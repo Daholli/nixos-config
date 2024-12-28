@@ -1,8 +1,13 @@
-on: [push]
+on: 
+  schedule:
+    - cron: 0 3 * * *
 jobs:
   test:
     runs-on: native
+
     steps:
-      - run: nix build .#loptland
+      - uses: action/checkout@v4
+
+      - run: nix build 
 
 

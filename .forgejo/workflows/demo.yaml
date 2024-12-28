@@ -1,6 +1,6 @@
 on: [push]
 jobs:
   test:
-    runs-on: docker
+    runs-on: native
     steps:
       - run: echo All Good

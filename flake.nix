@@ -84,6 +84,7 @@
     };
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+    catppuccin.url = "github:catppuccin/nix";
 
     ################
     ## inputs for dev shells
@@ -125,10 +126,17 @@
         hyprpanel.overlay
       ];
 
+      homes.modules = with inputs; [
+        sops-nix.homeManagerModules.sops
+        catppuccin.homeManagerModules.catppuccin
+      ];
+
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
         nix-ld.nixosModules.nix-ld
         sops-nix.nixosModules.sops
+
+        catppuccin.nixosModules.catppuccin
       ];
 
       systems.hosts.nixberry.modules = with inputs; [

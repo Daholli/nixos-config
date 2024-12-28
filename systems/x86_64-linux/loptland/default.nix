@@ -126,16 +126,31 @@ in
     instances.default = {
       enable = true;
       name = "monolith";
-      url = "https://git.${domainName}.com";
+      url = "https://git.${domainName}";
       tokenFile = config.sops.secrets."forgejo/runner/token".path;
       labels = [
-        "ubuntu-latest:docker://node:16-bullseye"
-        "ubuntu-22.04:docker://node:16-bullseye"
-        "ubuntu-20.04:docker://node:16-bullseye"
-        "ubuntu-18.04:docker://node:16-buster"
-        ## optionally provide native execution on the host:
-        # "native:host"
+        "native:host"
       ];
+      hostPackages = with pkgs; [
+        bash
+        coreutils
+        curl
+        gawk
+        gitMinimal
+        gnused
+        nodejs
+        wget
+      ];
+      settings = {
+        log.level = "info";
+        runner = {
+          capacity = 1;
+          timeout = "3h";
+          shutdown_timeout = "3s";
+          fetch_timeout = "5s";
+          fetch_inteval = "2s";
+        };
+      };
     };
   };
 

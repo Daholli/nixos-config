@@ -3,4 +3,5 @@ jobs:
   test:
     runs-on: native
     steps:
-      - run: echo All Good
+      - run: nix build nixpkgs#hello
+

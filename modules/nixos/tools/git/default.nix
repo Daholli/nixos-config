@@ -49,6 +49,7 @@ in
           safe = {
             directory = "${config.users.users.${user.name}.home}/projects/config";
           };
+          lfs."https://git.christophhollizeck.dev/Daholli/nixos-config.git/info/lfs".locksverify = true;
         };
       };
     };

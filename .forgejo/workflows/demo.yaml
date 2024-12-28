@@ -3,12 +3,6 @@ jobs:
   test:
     runs-on: native
     steps:
-      - run: nix build nixpkgs#hello
-      - run: ls -la
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: hello-artifact
-          path: result/
+      - run: nom build .#loptland
 
 

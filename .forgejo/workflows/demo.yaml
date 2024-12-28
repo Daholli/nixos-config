@@ -5,3 +5,9 @@ jobs:
     steps:
       - run: nix build nixpkgs#hello
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: hello-artifact
+          path: result/
+
+

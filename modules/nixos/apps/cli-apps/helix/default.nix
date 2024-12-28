@@ -41,6 +41,8 @@ in
           !**/appsettings.json
         '';
 
+        catppuccin.helix.enable = true;
+
         programs.helix = {
           enable = true;
           package = helix-pkg;

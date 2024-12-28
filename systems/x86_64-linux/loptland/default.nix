@@ -121,38 +121,46 @@ in
     certificateScheme = "acme-nginx";
   };
 
-  services.gitea-actions-runner = {
-    package = pkgs.forgejo-actions-runner;
-    instances.default = {
-      enable = true;
-      name = "monolith";
-      url = "https://git.${domainName}";
-      tokenFile = config.sops.secrets."forgejo/runner/token".path;
-      labels = [
-        "native:host"
-      ];
-      hostPackages = with pkgs; [
-        bash
-        coreutils
-        curl
-        gawk
-        gitMinimal
-        gnused
-        nodejs
-        wget
-      ];
-      settings = {
-        log.level = "info";
-        runner = {
-          capacity = 1;
-          timeout = "3h";
-          shutdown_timeout = "3s";
-          fetch_timeout = "5s";
-          fetch_inteval = "2s";
-        };
-      };
-    };
+  services.hydra = {
+    enable = true;
+    hydraURL = "http://hydra.${domainName}:2000";
+    notificationSender = "hydra@localhost";
+    buildMachinesFiles = [ ];
+    useSubstitutes = true;
   };
+
+  # services.gitea-actions-runner = {
+  #   package = pkgs.forgejo-actions-runner;
+  #   instances.default = {
+  #     enable = true;
+  #     name = "monolith";
+  #     url = "https://git.${domainName}";
+  #     tokenFile = config.sops.secrets."forgejo/runner/token".path;
+  #     labels = [
+  #       "native:host"
+  #     ];
+  #     hostPackages = with pkgs; [
+  #       bash
+  #       coreutils
+  #       curl
+  #       gawk
+  #       gitMinimal
+  #       gnused
+  #       nodejs
+  #       wget
+  #     ];
+  #     settings = {
+  #       log.level = "info";
+  #       runner = {
+  #         capacity = 1;
+  #         timeout = "3h";
+  #         shutdown_timeout = "3s";
+  #         fetch_timeout = "5s";
+  #         fetch_inteval = "2s";
+  #       };
+  #     };
+  #   };
+  # };
 
   networking.firewall.allowedTCPPorts = [
     forgejoPort

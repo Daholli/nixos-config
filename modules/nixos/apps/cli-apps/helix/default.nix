@@ -46,7 +46,6 @@ in
           package = helix-pkg;
           defaultEditor = true;
           settings = {
-            theme = "tokyonight";
             editor = {
               auto-format = true;
               line-number = "relative";

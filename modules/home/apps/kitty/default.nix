@@ -40,7 +40,7 @@ in
 
     programs.kitty = {
       enable = true;
-      themeFile = "tokyo_night_night";
+      # themeFile = "tokyo_night_night";
       font = {
         name = "Code New Roman";
         size = 15;

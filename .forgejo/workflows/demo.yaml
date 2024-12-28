@@ -1,6 +1,8 @@
 on: 
   schedule:
     - cron: 0 3 * * *
+  push:
+  
 jobs:
   test:
     runs-on: native

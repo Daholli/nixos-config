@@ -8,7 +8,7 @@ jobs:
     runs-on: native
 
     steps:
-      - uses: action/checkout@v3
+      - uses: action/checkout
 
       - run: nix build 
 

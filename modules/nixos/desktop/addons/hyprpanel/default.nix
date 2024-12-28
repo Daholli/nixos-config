@@ -610,5 +610,9 @@ in
         text = builtins.toJSON settings;
       };
     };
+
+    environment.systemPackages = with pkgs.nerd-fonts; [
+      jetbrains-mono
+    ];
   };
 }

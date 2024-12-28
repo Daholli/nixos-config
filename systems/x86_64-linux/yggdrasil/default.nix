@@ -17,7 +17,7 @@ in
     zed-editor
 
     # eve
-    bottles
+    # bottles
 
   ];
 

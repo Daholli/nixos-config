@@ -4,6 +4,7 @@ jobs:
     runs-on: native
     steps:
       - run: nix build nixpkgs#hello
+      - run: ls -la
 
       - uses: actions/upload-artifact@v3
         with:

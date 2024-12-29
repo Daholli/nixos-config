@@ -152,5 +152,10 @@
     }
     // {
       self = inputs.self;
+
+      hydraJobs = {
+        loptland = inputs.self.nixosConfigurations.loptland.config.system.build.toplevel;
+        yggdrasil = inputs.self.nixosConfigurations.yggdrasil.config.system.build.toplevel;
+      };
     };
 }

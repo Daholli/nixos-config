@@ -56,7 +56,7 @@ in
         users = [
           "root"
           config.${namespace}.user.name
-        ];
+        ] ++ optional config.services.hydra.enable "hydra";
       in
       {
         package = cfg.package;
@@ -82,6 +82,10 @@ in
             keep-outputs = true;
             keep-derivations = true;
           });
+
+        extraOptions = ''
+          allowed-uris = https://github.com/ https://git.christophhollizeck.dev/
+        '';
 
         gc = {
           automatic = true;

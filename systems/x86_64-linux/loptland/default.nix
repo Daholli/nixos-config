@@ -82,6 +82,15 @@ in
           return = "404";
         };
       };
+
+      "_" = {
+        forceSSL = cfg.enableAcme;
+        useACMEHost = mkIf cfg.enableAcme domainName;
+
+        locations."/" = {
+          return = "404";
+        };
+      };
     };
   };
 
@@ -133,8 +142,8 @@ in
 
   services.hydra = {
     enable = true;
-    hydraURL = "http://localhost:2000";
-    port = 2000;
+    hydraURL = "http://localhost:${toString hydraPort}";
+    port = hydraPort;
     notificationSender = "hydra@localhost";
     buildMachinesFiles = [ ];
     useSubstitutes = true;

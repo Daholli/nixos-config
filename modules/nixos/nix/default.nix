@@ -56,7 +56,7 @@ in
         users = [
           "root"
           config.${namespace}.user.name
-        ] ++ optional config.services.hydra.enable "hydra";
+        ] ++ optional config.services.hydra.enable "hydra hydra-evaluator hydra-queue-runner";
       in
       {
         package = cfg.package;
@@ -71,6 +71,7 @@ in
             auto-optimise-store = true;
             trusted-users = users;
             allowed-users = users;
+            allowed-uris = "github: https://github.com/ git+https://github.com/ gitlab: https://gitlab.com/ git+https://gitlab.com/";
             substituters = [
               cfg.default-substituter.url
             ] ++ (mapAttrsToList (name: value: name) cfg.extra-substituters);
@@ -82,10 +83,6 @@ in
             keep-outputs = true;
             keep-derivations = true;
           });
-
-        extraOptions = ''
-          allowed-uris = https://github.com/ https://git.christophhollizeck.dev/
-        '';
 
         gc = {
           automatic = true;

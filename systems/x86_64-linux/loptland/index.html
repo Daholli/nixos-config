@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christoph Hollizeck</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    body {
+      height: inherit;
+      font-family: monospace;
+      background-color: #2e2c42;
+    }
+
+    .content-box {
+      margin: auto;
+      margin-top: 10%;
+      position: relative;
+      width: 50vw;
+      height: 50vw;
+      max-width: 828px;
+      max-height: 828px;
+      min-width: 541px;
+      min-height: 541px;
+      text-align: center;
+      border-radius: 15%;
+      color: #90A0C1;
+      background-color: #151823;
+    }
+
+    .content-box:after {
+      position: absolute;
+      content: "";
+      top: 5vw;
+      left: 0;
+      right: 0;
+      z-index: -1;
+      height: 100%;
+      width: 100%;
+      margin: auto;
+      transform: scale(0.75);
+      -webkit-filter: blur(5vw);
+      -moz-filter: blur(5vw);
+      -ms-filter: blur(5vw);
+      filter: blur(5vw);
+      background: linear-gradient(270deg, #0fffc1, #7e0fff);
+      background-size: 200% 200%;
+      animation: animateGlow 10s ease infinite;
+    }
+
+    .text-box {
+      display: flex;
+      flex-direction: column;
+      padding: 10%;
+      height: 100%;
+    }
+
+    p {
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .hyperlinks {
+      margin-top: auto;
+    }
+
+    /* Style all font awesome icons */
+    .fa,
+    .fa-brands {
+      padding: 20px;
+      font-size: 30px;
+      width: 50px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .fa:visited {
+      color: inherit;
+    }
+
+    /* Add a hover effect if you want */
+    .fa:hover {
+      opacity: 0.7;
+    }
+
+    @keyframes animateGlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes textColor {
+      0% {
+        color: #7e0fff;
+      }
+
+      50% {
+        color: #0fffc1;
+      }
+
+      100% {
+        color: #7e0fff;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content-box">
+    <div class="text-box">
+      <h1> Christoph Hollizeck </h1>
+
+      <p> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      </p>
+
+      <p> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      </p>
+
+      <div class="hyperlinks">
+        <a href="https://git.christophhollizeck.dev" class="fa fa-git"></a>
+        <a href="https://https://www.linkedin.com/in/christoph-hollizeck-650007214/" class="fa fa-linkedin"></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

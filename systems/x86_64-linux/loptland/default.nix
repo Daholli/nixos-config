@@ -79,7 +79,7 @@ in
         useACMEHost = mkIf cfg.enableAcme domainName;
 
         locations."/" = {
-          return = "404";
+          return = ./index.html;
         };
       };
 

@@ -19,6 +19,8 @@ in
 
     home.sessionVariables.TERMINAL = "kitty";
 
+    catppuccin.kitty.enable = true;
+
     # TODO: move this to a thunar specific module
     home.file.".config/Thunar/uca.xml".text = ''
       <?xml version="1.0" encoding="UTF-8"?>

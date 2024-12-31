@@ -153,8 +153,18 @@ in
                 config.provideFormatter = true;
                 config.json.validate.enable = true;
               };
+              vscode-html-language-server = {
+                command = "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server";
+                args = [ "--stdio" ];
+                config.provideFormatter = true;
+              };
               vscode-css-language-server = {
                 command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
+                args = [ "--stdio" ];
+                config.provideFormatter = true;
+              };
+              vscode-eslint-language-server = {
+                command = "${pkgs.vscode-langservers-extracted}/bin/vscode-eslint-language-server";
                 args = [ "--stdio" ];
                 config.provideFormatter = true;
               };

@@ -16,6 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    catppuccin.starship.enable = true;
     programs = {
       fish.shellInit = "
 	        starship init fish | source

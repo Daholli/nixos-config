@@ -18,6 +18,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    catppuccin.fish.enable = true;
+
     programs = {
       fish = {
         enable = true;

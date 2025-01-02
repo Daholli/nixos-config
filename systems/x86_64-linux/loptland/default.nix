@@ -79,7 +79,8 @@ in
         useACMEHost = mkIf cfg.enableAcme domainName;
 
         locations."/" = {
-          return = ./index.html;
+          root = /var/www/website;
+          index = "index.html";
         };
       };
 
@@ -88,7 +89,7 @@ in
         useACMEHost = mkIf cfg.enableAcme domainName;
 
         locations."/" = {
-          return = "404";
+          proxyPass = "https://${domainName}";
         };
       };
     };

@@ -18,7 +18,6 @@ in
 
     # eve
     # bottles
-
   ];
 
   environment.pathsToLink = [ "/libexec" ];

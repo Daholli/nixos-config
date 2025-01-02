@@ -76,7 +76,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     ## temporary
-    zen-browser.url = "github:ch4og/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     raspberry-pi-nix = {
       url = "github:nix-community/raspberry-pi-nix";

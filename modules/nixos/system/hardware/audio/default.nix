@@ -24,7 +24,7 @@ in
 
     programs.noisetorch.enable = true;
 
-    hardware.pulseaudio = disabled;
+    services.pulseaudio = disabled;
     security.rtkit.enable = true;
 
     services.pipewire = {

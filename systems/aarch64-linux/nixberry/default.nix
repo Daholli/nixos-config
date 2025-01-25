@@ -51,6 +51,11 @@ in
     OOMScoreAdjust = 500;
   };
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
+
   networking = {
     interfaces.wlan0 = {
       ipv4.addresses = [
@@ -129,7 +134,7 @@ in
     };
   };
 
-  # Pi specific stuff  
+  # Pi specific stuff
   raspberry-pi-nix.board = "bcm2712";
   hardware = {
     raspberry-pi = {

@@ -30,7 +30,7 @@
 
     ###
     # hyprland stuff
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "github:hyprwm/Hyprland";
     hyprlock.url = "github:hyprwm/hyprlock";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
@@ -56,12 +56,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # still not sure if I like helix or nvim more, for now helix does mostly everything I need it to
-    kickstartnvim = {
-      url = "github:Daholli/kickstart-nix-nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     helix = {
       url = "github:helix-editor/helix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -85,6 +79,8 @@
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
     catppuccin.url = "github:catppuccin/nix";
+
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
     ################
     ## inputs for dev shells
@@ -122,7 +118,6 @@
 
       overlays = with inputs; [
         snowfall-flake.overlays.default
-        kickstartnvim.overlays.default
         hyprpanel.overlay
       ];
 

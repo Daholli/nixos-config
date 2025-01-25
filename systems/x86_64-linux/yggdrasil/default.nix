@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   namespace,
   pkgs,
@@ -17,7 +18,10 @@ in
     zed-editor
 
     # eve
-    # bottles
+    bottles
+    pyfa
+
+    unzip
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -29,6 +33,11 @@ in
   '';
   home-manager = {
     backupFileExtension = ".bak";
+  };
+
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
   };
 
   nix = {
@@ -99,7 +108,7 @@ in
 
         windowrulev2 = [
           "workspace 8 silent, class:^(steam)$, title:^(Friends List)"
-          "workspace 8 silent, class:^(vesktop)$, title:^(Discord)"
+          "workspace 8 silent, class:^(discord)$, title:^(Discord)"
           "workspace 7 silent, class:^(com.obsproject.Studio)$"
         ];
       };

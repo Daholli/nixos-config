@@ -4,6 +4,7 @@
   lib,
   modulesPath,
   namespace,
+  pkgs,
   ...
 }:
 
@@ -16,8 +17,11 @@ in
 {
   imports = with inputs.nixos-hardware.nixosModules; [
     (modulesPath + "/installer/scan/not-detected.nix")
-    raspberry-pi-5
   ];
+
+  nixpkgs.hostPlatform = {
+    system = "aarch64-linux";
+  };
 
   services.tailscale = {
     enable = true;
@@ -148,6 +152,8 @@ in
       openssh = enabled;
       remotebuild = enabled;
     };
+
+    apps.cli-apps.helix.pkg = pkgs.helix;
 
     system = {
       # cachemiss for webkit gtk

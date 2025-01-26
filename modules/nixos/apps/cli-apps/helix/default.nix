@@ -36,9 +36,10 @@ in
     ${namespace} = {
       home.extraOptions = {
         home.file.".config/helix/ignore".text = ''
-          # unignore in file picker and global search
           .idea/
           !**/appsettings.json
+          .direnv/
+          .devenv/
         '';
 
         catppuccin.helix.enable = true;

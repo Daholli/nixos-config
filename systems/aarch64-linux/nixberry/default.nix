@@ -32,6 +32,10 @@ in
 
   users.groups.remotebuild = { };
 
+  nixpkgs.hostPlatform = {
+    system = "aarch64-linux";
+  };
+
   nix = {
     nrBuildUsers = 64;
     settings = {

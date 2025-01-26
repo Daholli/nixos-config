@@ -39,7 +39,7 @@ in
         '';
         shellAliases = {
           vim = "hx";
-          ls = "eza -lh --icons --git";
+          ls = "eza -lah --icons --git";
           lss = "ls --total-size";
         };
         plugins = with pkgs.fishPlugins; [

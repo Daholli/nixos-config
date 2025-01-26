@@ -25,5 +25,11 @@ in
         polkitPolicyOwners = [ config.${namespace}.user.name ];
       };
     };
+
+    ${namespace}.home.file.".ssh/config".text = ''
+      Host *
+       	ForwardAgent yes
+      	IdentityAgent ~/.1password/agent.sock
+    '';
   };
 }

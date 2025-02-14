@@ -1,9 +1,8 @@
 {
-  config,
-  inputs,
   lib,
-  modulesPath,
   namespace,
+  pkgs,
+  system,
   ...
 }:
 
@@ -14,45 +13,8 @@ let
   ipAddress = "192.168.178.2";
 in
 {
-  imports = with inputs.nixos-hardware.nixosModules; [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    raspberry-pi-5
-  ];
-
-  security.sudo.wheelNeedsPassword = false;
-  users.users.remotebuild = {
-    isNormalUser = true;
-    createHome = false;
-    group = "remotebuild";
-
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJYZjG+XPNoVHVdCel5MK4mwvtoFCqDY1WMI1yoU71Rd root@yggdrasil"
-    ];
-  };
-
-  users.groups.remotebuild = { };
-
   nixpkgs.hostPlatform = {
     system = "aarch64-linux";
-  };
-
-  nix = {
-    nrBuildUsers = 64;
-    settings = {
-      trusted-users = [ "remotebuild" ];
-
-      min-free = 10 * 1024 * 1024;
-      max-free = 200 * 1024 * 1024;
-
-      max-jobs = "auto";
-      cores = 0;
-    };
-  };
-
-  systemd.services.nix-daemon.serviceConfig = {
-    MemoryAccounting = true;
-    MemoryMax = "90%";
-    OOMScoreAdjust = 500;
   };
 
   services.tailscale = {
@@ -61,10 +23,19 @@ in
   };
 
   networking = {
-    interfaces.wlan0 = {
+    interfaces.end0 = {
       ipv4.addresses = [
         {
           address = ipAddress;
+          prefixLength = 24;
+        }
+      ];
+      useDHCP = true;
+    };
+    interfaces.wlan0 = {
+      ipv4.addresses = [
+        {
+          address = "192.168.178.3";
           prefixLength = 24;
         }
       ];
@@ -83,16 +54,15 @@ in
         };
       };
     };
-  };
-
-  networking.firewall = {
-    allowedTCPPorts = [
-      53
-      80
-    ];
-    allowedUDPPorts = [
-      53
-    ];
+    firewall = {
+      allowedTCPPorts = [
+        53
+        80
+      ];
+      allowedUDPPorts = [
+        53
+      ];
+    };
   };
 
   services.adguardhome = {
@@ -135,11 +105,19 @@ in
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_47.txt"
           ];
 
+      statistics = {
+        enabled = true;
+        interval = "8760h";
+      };
     };
   };
 
   # Pi specific stuff
-  raspberry-pi-nix.board = "bcm2712";
+  raspberry-pi-nix = {
+    board = "bcm2712";
+    # kernel-build-system = "x86_64-linux";
+  };
+
   hardware = {
     raspberry-pi = {
       config = {
@@ -165,16 +143,15 @@ in
     };
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-  };
-
   ${namespace} = {
     submodules.basics = enabled;
+
+    services = {
+      openssh = enabled;
+      remotebuild = enabled;
+    };
+
+    apps.cli-apps.helix.pkg = pkgs.helix;
 
     system = {
       # cachemiss for webkit gtk

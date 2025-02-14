@@ -1,10 +1,8 @@
 {
-  config,
-  inputs,
   lib,
-  modulesPath,
   namespace,
   pkgs,
+  system,
   ...
 }:
 
@@ -15,10 +13,6 @@ let
   ipAddress = "192.168.178.2";
 in
 {
-  imports = with inputs.nixos-hardware.nixosModules; [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
-
   nixpkgs.hostPlatform = {
     system = "aarch64-linux";
   };
@@ -119,7 +113,11 @@ in
   };
 
   # Pi specific stuff
-  raspberry-pi-nix.board = "bcm2712";
+  raspberry-pi-nix = {
+    board = "bcm2712";
+    # kernel-build-system = "x86_64-linux";
+  };
+
   hardware = {
     raspberry-pi = {
       config = {

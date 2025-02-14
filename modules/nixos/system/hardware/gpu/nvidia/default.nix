@@ -28,7 +28,7 @@ in
       powerManagement.enable = true;
       open = false;
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.latest; # stable, beta
+      package = config.boot.kernelPackages.nvidiaPackages.beta; # stable, beta
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];

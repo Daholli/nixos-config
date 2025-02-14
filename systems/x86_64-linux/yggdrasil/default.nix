@@ -35,11 +35,6 @@ in
     backupFileExtension = ".bak";
   };
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-  };
-
   nix = {
     distributedBuilds = true;
     settings.builders-use-substitutes = true;

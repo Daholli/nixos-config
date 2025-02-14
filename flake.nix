@@ -2,7 +2,6 @@
   description = "NixOs Config";
 
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -73,7 +72,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     raspberry-pi-nix = {
-      url = "github:nix-community/raspberry-pi-nix";
+      url = "github:JamieMagee/raspberry-pi-nix/25118248489e047a7da43a21409b457aa2af315e";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

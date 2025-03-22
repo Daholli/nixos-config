@@ -64,6 +64,7 @@ in
       _1password = enabled;
       obs-studio = enabled;
       cli-apps.helix = enabled;
+      starsector = enabled;
     };
 
     desktop.hyprland = {

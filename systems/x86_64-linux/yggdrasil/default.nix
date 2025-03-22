@@ -22,6 +22,8 @@ in
     pyfa
 
     unzip
+
+    microsoft-edge
   ];
 
   environment.pathsToLink = [ "/libexec" ];

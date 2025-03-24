@@ -263,7 +263,6 @@ in
                   "$mod SHIFT, P, changegroupactive, b"
                   "$mod, R, togglesplit,"
                   "$mod, T, togglefloating,"
-                  "$mod, P, pseudo,"
                   "$mod ALT, ,resizeactive,"
 
                   "$mod CTRL, left, movecurrentworkspacetomonitor, l"

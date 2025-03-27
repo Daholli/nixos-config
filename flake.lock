@@ -320,7 +320,7 @@
     },
     "flake-utils_3": {
       "inputs": {
-        "systems": "systems_5"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1694529238,
@@ -1001,18 +1001,18 @@
         "type": "github"
       }
     },
-    "nixpkgs-24_05": {
+    "nixpkgs-24_11": {
       "locked": {
-        "lastModified": 1717144377,
-        "narHash": "sha256-F/TKWETwB5RaR8owkPPi+SPJh83AQsm6KrQAlJ8v/uA=",
+        "lastModified": 1742937945,
+        "narHash": "sha256-lWc+79eZRyvHp/SqMhHTMzZVhpxkRvthsP1Qx6UCq0E=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "805a384895c696f802a9bf5bf4720f37385df547",
+        "rev": "d02d88f8de5b882ccdde0465d8fa2db3aa1169f7",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-24.05",
+        "ref": "nixos-24.11",
         "type": "indirect"
       }
     },
@@ -1450,21 +1450,20 @@
         "blobs": "blobs",
         "flake-compat": "flake-compat_3",
         "nixpkgs": "nixpkgs_7",
-        "nixpkgs-24_05": "nixpkgs-24_05",
-        "utils": "utils"
+        "nixpkgs-24_11": "nixpkgs-24_11"
       },
       "locked": {
-        "lastModified": 1734885828,
-        "narHash": "sha256-G0fB1YBlkalu8lLGRB07K8CpUWNVd+unfrjNomSL7SM=",
+        "lastModified": 1742413977,
+        "narHash": "sha256-NkhM9GVu3HL+MiXtGD0TjuPCQ4GFVJPBZ8KyI2cFDGU=",
         "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "636b82f4175e3f6b1e80d2189bb0469e2ae01a55",
+        "rev": "b4fbffe79c00f19be94b86b4144ff67541613659",
         "type": "gitlab"
       },
       "original": {
         "owner": "simple-nixos-mailserver",
-        "ref": "nixos-24.05",
         "repo": "nixos-mailserver",
+        "rev": "b4fbffe79c00f19be94b86b4144ff67541613659",
         "type": "gitlab"
       }
     },
@@ -1614,21 +1613,6 @@
         "type": "github"
       }
     },
-    "systems_5": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "u-boot-src": {
       "flake": false,
       "locked": {
@@ -1640,24 +1624,6 @@
       "original": {
         "type": "tarball",
         "url": "https://ftp.denx.de/pub/u-boot/u-boot-2024.07.tar.bz2"
-      }
-    },
-    "utils": {
-      "inputs": {
-        "systems": "systems_4"
-      },
-      "locked": {
-        "lastModified": 1709126324,
-        "narHash": "sha256-q6EQdSeUZOG26WelxqkmR7kArjgWCdw5sfJVHPH/7j8=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "d465f4819400de7c8d874d50b982301f28a84605",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
       }
     },
     "xdph": {

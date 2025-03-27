@@ -112,6 +112,26 @@ in
     };
   };
 
+  services.home-assistant = {
+    enable = true;
+    configWritable = true;
+    config = {
+      homeassistant = {
+        name = "Heidelberg";
+        temperature_unit = "C";
+        unit_system = "metric";
+      };
+
+      http = {
+        use_x_forwarded_for = true;
+        trusted_proxies = [
+          "100.86.250.97"
+        ];
+      };
+    };
+    openFirewall = true;
+  };
+
   # Pi specific stuff
   raspberry-pi-nix = {
     board = "bcm2712";

@@ -138,6 +138,11 @@ in
     useSubstitutes = true;
   };
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
+
   # services.gitea-actions-runner = {
   #   package = pkgs.forgejo-actions-runner;
   #   instances.default = {

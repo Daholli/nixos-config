@@ -81,6 +81,11 @@
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 
+    steam-servers = {
+      url = "github:scottbot95/nix-steam-servers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ################
     ## inputs for dev shells
 
@@ -140,6 +145,7 @@
 
       systems.hosts.loptland.modules = with inputs; [
         simple-nixos-mailserver.nixosModules.default
+        steam-servers.nixosModules.default
       ];
 
       systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];

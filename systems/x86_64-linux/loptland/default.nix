@@ -68,6 +68,10 @@ in
 
         locations."/" = {
           # tailscale ip
+          extraConfig = ''
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+          '';
           proxyPass = "http://100.86.23.74:8123";
         };
       };

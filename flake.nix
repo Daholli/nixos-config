@@ -76,7 +76,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/b4fbffe79c00f19be94b86b4144ff67541613659";
     catppuccin.url = "github:catppuccin/nix";
 
     nix-gaming.url = "github:fufexan/nix-gaming";

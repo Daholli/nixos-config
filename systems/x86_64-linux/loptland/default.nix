@@ -62,15 +62,25 @@ in
         };
       };
 
-      "${domainName}" = {
+      "ha.${domainName}" = {
         forceSSL = cfg.enableAcme;
         useACMEHost = mkIf cfg.enableAcme domainName;
 
         locations."/" = {
-          root = /var/www/website;
-          index = "index.html";
+          # tailscale ip
+          proxyPass = "http://100.86.23.74:8123";
         };
       };
+
+      # "${domainName}" = {
+      #   forceSSL = cfg.enableAcme;
+      #   useACMEHost = mkIf cfg.enableAcme domainName;
+
+      #   locations."/" = {
+      #     root = /var/www/website;
+      #     index = "index.html";
+      #   };
+      # };
 
       "_" = {
         forceSSL = cfg.enableAcme;
@@ -208,11 +218,11 @@ in
     ];
   };
 
-  snowfallorg.users.${config.${namespace}.user.name}.home.config = {
-    programs.fish.shellInit = ''
-      eval $(op signin)
-    '';
-  };
+  # snowfallorg.users.${config.${namespace}.user.name}.home.config = {
+  #   programs.fish.shellInit = ''
+  #     eval $(op signin)
+  #   '';
+  # };
 
   system.stateVersion = "24.11";
 }

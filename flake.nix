@@ -86,6 +86,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ###############
+    # homeassitant
+
+    tuya-vaccum-maps = {
+      url = "github:jaidenlabelle/tuya-vacuum-maps";
+      flake = false;
+    };
+
     ################
     ## inputs for dev shells
 

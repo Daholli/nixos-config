@@ -412,7 +412,7 @@
     },
     "flake-utils_4": {
       "inputs": {
-        "systems": "systems_6"
+        "systems": "systems_5"
       },
       "locked": {
         "lastModified": 1701680307,
@@ -430,7 +430,7 @@
     },
     "flake-utils_5": {
       "inputs": {
-        "systems": "systems_7"
+        "systems": "systems_6"
       },
       "locked": {
         "lastModified": 1701680307,
@@ -1459,6 +1459,7 @@
         "snowfall-lib": "snowfall-lib_2",
         "sops-nix": "sops-nix",
         "steam-servers": "steam-servers",
+        "tuya-vaccum-maps": "tuya-vaccum-maps",
         "zen-browser": "zen-browser"
       }
     },
@@ -1864,21 +1865,6 @@
         "type": "github"
       }
     },
-    "systems_7": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1897,6 +1883,23 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "tuya-vaccum-maps": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1732670317,
+        "narHash": "sha256-YxeVH0OaZd7MvbURnuiizC6P4MrgEI8Av0jg4PlIiiM=",
+        "owner": "jaidenlabelle",
+        "repo": "tuya-vacuum-maps",
+        "rev": "796da700777fa084fe844ed70c882303a09fc268",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jaidenlabelle",
+        "ref": "v0.1.4",
+        "repo": "tuya-vacuum-maps",
         "type": "github"
       }
     },

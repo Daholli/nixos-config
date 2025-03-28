@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   namespace,
   pkgs,
@@ -11,6 +12,8 @@ let
   inherit (lib) mkForce;
 
   ipAddress = "192.168.178.2";
+  sopsFile = lib.snowfall.fs.get-file "secrets/secrets-nixberry.yaml";
+
 in
 {
   nixpkgs.hostPlatform = {
@@ -112,20 +115,47 @@ in
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "C /var/lib/hass/custom_components/tuya-vaccum-maps - - - - ${inputs.tuya-vaccum-maps}/custom_components/tuya-vaccum-maps"
+    "Z /var/lib/hass/custom_components 770 hass hass - -"
+  ];
+
   services.home-assistant = {
     enable = true;
     configWritable = true;
+    extraComponents = [
+      "analytics"
+      "shopping_list"
+      "fritzbox"
+      "met"
+    ];
+
+    customComponents = with pkgs.home-assistant-custom-components; [
+      tuya_local
+      smartthinq-sensors
+      sleep_as_android
+    ];
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+      mushroom
+    ];
+
     config = {
       homeassistant = {
-        name = "Heidelberg";
+        latitude = 49.4;
+        longitude = 8.6;
         temperature_unit = "C";
         unit_system = "metric";
+      };
+
+      mobile_app = "";
+
+      lovelace = {
       };
 
       http = {
         use_x_forwarded_for = true;
         trusted_proxies = [
-          "100.86.250.97"
+          "100.86.250.97" # loptland tailscale
         ];
       };
     };

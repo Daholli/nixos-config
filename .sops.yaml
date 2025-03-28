@@ -2,6 +2,7 @@ keys:
   - &primary age1amdd4hu6k0czf3mtlhd03yj3yzkdaynl7q5fdlqmjzpe9pwgxfjs3j0c85
   - &yggdrasil age1xxv54tzxz6n4cp4undmejl2lyd7k7s3yh9q0z6ed83evfuz6asqsqhaduv
   - &loptland age13xshg5e6ucvnu3vqgn344mxpk5kcqutv2lf4gdffvwadq0ku5ewqy4cck6
+  - &nixberry age1ev7c7xfz0gmj6p5p8ugzz55y28lsn8fjlk0d8wc3w9drmw4e69ys6z5yg4
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups: 
@@ -19,3 +20,9 @@ creation_rules:
     - age:
       - *primary
       - *loptland
+      
+  - path_regex: secrets/secrets-nixberry.yaml$
+    key_groups: 
+    - age:
+      - *primary
+      - *nixberry

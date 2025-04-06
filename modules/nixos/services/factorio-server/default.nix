@@ -54,6 +54,10 @@ in
       templates."extraSettingsFile.json".mode = "0444";
     };
 
+    systemd.tmpfiles.rules = [
+      "Z /var/lib/factorio 770 65400 65400 - -"
+    ];
+
     services.factorio = {
       enable = true;
       openFirewall = true;

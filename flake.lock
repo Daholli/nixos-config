@@ -1150,17 +1150,17 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1731242709,
-        "narHash": "sha256-zGhhtd4U3AxjA5dqzbHhD10q74Ychyu5mNGI7ic+Yng=",
+        "lastModified": 1743943147,
+        "narHash": "sha256-4twtjynlPR8thJfN4Jty8ttMaAMXzuf/az1UCCL8mR4=",
         "owner": "Daholli",
         "repo": "nixpkgs",
-        "rev": "2adc4d1f11c5abcf654ed50c2cbce897c6e78ccc",
+        "rev": "9b2e671195f25c73366bc36863bf64ded6f71194",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
         "repo": "nixpkgs",
-        "rev": "2adc4d1f11c5abcf654ed50c2cbce897c6e78ccc",
+        "rev": "9b2e671195f25c73366bc36863bf64ded6f71194",
         "type": "github"
       }
     },
@@ -1208,6 +1208,22 @@
         "owner": "NixOS",
         "ref": "nixos-23.11",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-tuya-vacuum": {
+      "locked": {
+        "lastModified": 1743180016,
+        "narHash": "sha256-REuNO+d3gTjk+03wZEcwCvXZNQGbb0nv44gwoLMTj4Q=",
+        "owner": "Daholli",
+        "repo": "nixpkgs",
+        "rev": "84b34e39e7a0879367189f34401191f6a0364bcf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Daholli",
+        "repo": "nixpkgs",
+        "rev": "84b34e39e7a0879367189f34401191f6a0364bcf",
         "type": "github"
       }
     },
@@ -1452,6 +1468,7 @@
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-latest-factorio": "nixpkgs-latest-factorio",
         "nixpkgs-master": "nixpkgs-master",
+        "nixpkgs-tuya-vacuum": "nixpkgs-tuya-vacuum",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "raspberry-pi-nix": "raspberry-pi-nix",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
@@ -1898,7 +1915,6 @@
       },
       "original": {
         "owner": "jaidenlabelle",
-        "ref": "v0.1.4",
         "repo": "tuya-vacuum-maps",
         "type": "github"
       }

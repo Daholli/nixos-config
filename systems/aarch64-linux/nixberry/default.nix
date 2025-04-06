@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   lib,
   namespace,
@@ -116,8 +117,9 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "C /var/lib/hass/custom_components/tuya-vaccum-maps - - - - ${inputs.tuya-vaccum-maps}/custom_components/tuya-vaccum-maps"
+    "C+ /var/lib/hass/custom_components/tuya_vacuum_maps - - - - ${inputs.tuya-vaccum-maps}/custom_components/tuya_vacuum_maps"
     "Z /var/lib/hass/custom_components 770 hass hass - -"
+    "f ${config.services.home-assistant.configDir}/automations.yaml 0755 hass hass"
   ];
 
   services.home-assistant = {
@@ -135,6 +137,12 @@ in
       smartthinq-sensors
       sleep_as_android
     ];
+
+    extraPackages =
+      python3Packages: with python3Packages; [
+        tuya-vacuum
+      ];
+
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
       mushroom
     ];

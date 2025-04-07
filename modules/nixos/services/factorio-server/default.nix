@@ -39,7 +39,7 @@ in
       };
       templates."extraSettingsFile.json".content = ''
         {
-          "name": "SpaceAgeHolli",
+          "name": "WarptorioHolli",
           "description": "Trying to run a factorio-headless-server on my nix system",
           "tags": ["vanilla"],
           "max_players": 10,
@@ -55,7 +55,8 @@ in
     };
 
     systemd.tmpfiles.rules = [
-      "Z /var/lib/factorio 770 65400 65400 - -"
+      "Z /var/lib/factorio/mods 770 65400 65400 - -"
+      "Z /var/lib/factorio/saves 770 65400 65400 - -"
     ];
 
     services.factorio = {
@@ -65,7 +66,7 @@ in
       lan = true;
       nonBlockingSaving = true;
       autosave-interval = 15;
-      saveName = "SpaceAge";
+      saveName = "Warptorio";
       admins = [
         "daholli"
         "galbrain"

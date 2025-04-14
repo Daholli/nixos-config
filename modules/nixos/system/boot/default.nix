@@ -17,7 +17,7 @@ in
 
   config = mkIf cfg.enable {
     boot = {
-      kernelPackages = pkgs.linuxPackages_6_12;
+      kernelPackages = pkgs.linuxPackages_latest;
       loader = {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;

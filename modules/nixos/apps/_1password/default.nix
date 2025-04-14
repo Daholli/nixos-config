@@ -11,8 +11,10 @@ let
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.apps._1password;
+  username = config.${namespace}.user.name;
 in
 {
+
   options.${namespace}.apps._1password = {
     enable = mkBoolOpt true "Enable 1Password";
   };
@@ -22,14 +24,14 @@ in
       _1password.enable = true;
       _1password-gui = {
         enable = true;
-        polkitPolicyOwners = [ config.${namespace}.user.name ];
+        polkitPolicyOwners = [ username ];
       };
     };
 
     ${namespace}.home.file.".ssh/config".text = ''
       Host *
        	ForwardAgent yes
-      	IdentityAgent ~/.1password/agent.sock
+      	IdentityAgent /home/${username}/.1password/agent.sock
     '';
   };
 }

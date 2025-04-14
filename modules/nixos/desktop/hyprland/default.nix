@@ -31,7 +31,7 @@ let
     else
         # always open on w/space 4
         hyprctl dispatch workspace 9
-        1password&
+        ELECTRON_OZONE_PLATFORM_HINT=x11 1password&
     fi
   '';
 
@@ -173,7 +173,7 @@ in
 
                 "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
                 "[workspace 8 silent] vesktop"
-                "[workspace 9 silent] 1password"
+                "[workspace 9 silent] ELECTRON_OZONE_PLATFORM_HINT=x11 1password" # fix for promts not showing up anymore
                 "[workspace 1 silent] zen-beta"
 
                 "${pkgs.xorg.xhost}/bin/xhost +"

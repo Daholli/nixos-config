@@ -64,7 +64,6 @@ in
         ".gnupg/gpg.conf".source = gpgConf;
         ".gnupg/gpg-agent.conf".text = gpgAgentConf;
         ".gnupg/scdeamon.conf".text = "disable-ccid";
-        # YUBIKEYCERTIFYPASSWORD
       };
     };
   };

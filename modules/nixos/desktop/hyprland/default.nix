@@ -174,7 +174,7 @@ in
                 "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
                 "[workspace 8 silent] vesktop"
                 "[workspace 9 silent] 1password"
-                "[workspace 1 silent] zen"
+                "[workspace 1 silent] zen-beta"
 
                 "${pkgs.xorg.xhost}/bin/xhost +"
               ];
@@ -290,7 +290,6 @@ in
 
                   #run important programs
                   "$mod, Return, exec, kitty"
-                  "$mod, Z, exec, zen"
                   "$mod, D, exec, rofi -show drun"
                   "$mod, P, exec, focus-or-open-1pass"
                   # "$mod, D, exec, rofi -show combi"

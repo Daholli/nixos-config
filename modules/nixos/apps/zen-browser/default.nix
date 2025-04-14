@@ -23,13 +23,12 @@ in
       zenbrowser
     ];
 
-    environment.sessionVariables.DEFAULT_BROWSER = "${zenbrowser}/bin/zen";
+    environment.sessionVariables.DEFAULT_BROWSER = "${zenbrowser}/bin/zen-beta";
 
     environment.etc = {
       "1password/custom_allowed_browsers" = {
         text = ''
-          .zen-wrapped
-          .zen-beta-wrapp
+          zen
         '';
         mode = "0755";
       };

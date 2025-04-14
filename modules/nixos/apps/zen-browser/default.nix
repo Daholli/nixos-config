@@ -29,6 +29,7 @@ in
       "1password/custom_allowed_browsers" = {
         text = ''
           .zen-wrapped
+          .zen-beta-wrapp
         '';
         mode = "0755";
       };

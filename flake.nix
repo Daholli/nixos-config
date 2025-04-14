@@ -136,7 +136,7 @@
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
-        catppuccin.homeManagerModules.catppuccin
+        catppuccin.homeModules.catppuccin
       ];
 
       systems.modules.nixos = with inputs; [

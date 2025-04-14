@@ -43,7 +43,7 @@ in
       pinentry-qt
 
       yubikey-manager
-      yubikey-manager-qt
+      yubioath-flutter
       reload-yubikey
     ];
 

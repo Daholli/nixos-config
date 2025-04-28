@@ -56,7 +56,7 @@ in
         users = [
           "root"
           config.${namespace}.user.name
-        ] ++ optional config.services.hydra.enable "hydra hydra-evaluator hydra-queue-runner";
+        ] ++ optional config.services.hydra.enable "hydra hydra-www hydra-evaluator hydra-queue-runner";
       in
       {
         package = cfg.package;

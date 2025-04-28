@@ -143,12 +143,29 @@ in
     certificateScheme = "acme-nginx";
   };
 
+  nix = {
+    distributedBuilds = true;
+
+    buildMachines = [
+      {
+        hostName = "localhost";
+        protocol = null;
+        system = "x86_64-linux";
+        supportedFeatures = [
+          "kvm"
+          "nixos-test"
+          "big-parallel"
+          "benchmark"
+        ];
+      }
+    ];
+  };
+
   services.hydra = {
     enable = true;
     hydraURL = "http://localhost:${toString hydraPort}";
     port = hydraPort;
     notificationSender = "hydra@localhost";
-    buildMachinesFiles = [ ];
     useSubstitutes = true;
   };
 

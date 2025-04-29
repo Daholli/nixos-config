@@ -18,5 +18,11 @@ jobs:
       - name: Update flake
         run: | 
           cd ${{ gitea.workspace }}
-          ls
           nix flake update
+      - name: Commit new Flake.lock
+        run: |
+          git config --local user.email "christoph.hollizeck@hey.com"
+          git config --local user.name "forgjo-actions[bot]"
+          git commit -a -m "chore: update flake"
+      - name: Push changes
+          git push

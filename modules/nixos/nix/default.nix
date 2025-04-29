@@ -56,6 +56,7 @@ in
         users = [
           "root"
           config.${namespace}.user.name
+          "gitea-runner"
         ] ++ optional config.services.hydra.enable "hydra hydra-www hydra-evaluator hydra-queue-runner";
       in
       {

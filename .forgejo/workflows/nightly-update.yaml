@@ -1,18 +1,12 @@
-name: Gitea Actions Demo
-run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
-
 on: 
   schedule:
     - cron: 0 3 * * *
-  push:
   
 jobs:
-  test:
+  UpdateFlake:
     runs-on: native
 
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ gitea.event_name }} event."
-      - run: echo "🔎 The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Update flake

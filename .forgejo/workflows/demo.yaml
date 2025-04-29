@@ -9,7 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - run: nix build self#loptland
+      - run: nix flake update
 
 

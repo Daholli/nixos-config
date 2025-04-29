@@ -25,4 +25,4 @@ jobs:
           git config --local user.name "forgjo-actions[bot]"
           git commit -a -m "chore: update flake"
       - name: Push changes
-          git push
+        run: git push

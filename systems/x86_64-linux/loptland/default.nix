@@ -22,6 +22,8 @@ in
 
   environment.systemPackages = [ ];
 
+  services.qemuGuest.enable = true;
+
   sops = {
     secrets = {
       "forgejo/db/password" = {
@@ -154,6 +156,7 @@ in
         hostName = "localhost";
         protocol = null;
         system = "x86_64-linux";
+
         supportedFeatures = [
           "kvm"
           "nixos-test"
@@ -161,13 +164,12 @@ in
           "benchmark"
         ];
       }
-
       {
         hostName = "100.86.23.74";
         sshUser = "remotebuild";
         sshKey = "/root/.ssh/remotebuild";
         systems = [ "aarch64-linux" ];
-        protocol = "ssh-ng";
+        protocol = "ssh";
 
         supportedFeatures = [
           "nixos-test"

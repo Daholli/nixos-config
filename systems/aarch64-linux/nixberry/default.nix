@@ -126,10 +126,13 @@ in
     enable = true;
     configWritable = true;
     extraComponents = [
+      "default_config"
       "analytics"
       "shopping_list"
       "fritzbox"
       "met"
+      "esphome"
+      "rpi_power"
     ];
 
     customComponents = with pkgs.home-assistant-custom-components; [
@@ -140,7 +143,7 @@ in
 
     extraPackages =
       python3Packages: with python3Packages; [
-        tuya-vacuum
+        ical
       ];
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [

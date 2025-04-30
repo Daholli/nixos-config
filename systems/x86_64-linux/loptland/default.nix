@@ -76,15 +76,14 @@ in
         };
       };
 
-      # "${domainName}" = {
-      #   forceSSL = cfg.enableAcme;
-      #   useACMEHost = mkIf cfg.enableAcme domainName;
+      "nixcache.${domainName}" = {
+        forceSSL = cfg.enableAcme;
+        useACMEHost = mkIf cfg.enableAcme domainName;
 
-      #   locations."/" = {
-      #     root = /var/www/website;
-      #     index = "index.html";
-      #   };
-      # };
+        locations."/" = {
+          proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+        };
+      };
 
       "_" = {
         forceSSL = cfg.enableAcme;
@@ -146,6 +145,10 @@ in
   nix = {
     distributedBuilds = true;
 
+    extraOptions = ''
+      builders-use-substitutes = true
+    '';
+
     buildMachines = [
       {
         hostName = "localhost";
@@ -173,6 +176,11 @@ in
         ];
       }
     ];
+  };
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/var/cache-priv-key.pem";
   };
 
   services.hydra = {

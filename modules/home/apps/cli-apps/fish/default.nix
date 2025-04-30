@@ -42,6 +42,11 @@ in
           ls = "eza -lah --icons --git";
           lss = "ls --total-size";
         };
+        functions = {
+          checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
+          deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --use-remote-sudo --fast";
+          deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --use-remote-sudo --fast";
+        };
         plugins = with pkgs.fishPlugins; [
           {
             name = "forgit";

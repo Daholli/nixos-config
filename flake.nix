@@ -164,6 +164,7 @@
 
       hydraJobs = {
         hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
+        packages = self.packages;
       };
     };
 }

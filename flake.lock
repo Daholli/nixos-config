@@ -577,16 +577,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1745993315,
-        "narHash": "sha256-VfpLQYa5QBMJoAg4BwIt5QHSRy3KdUc+uIxRy5oMn6I=",
-        "owner": "outfoxxed",
+        "lastModified": 1746462926,
+        "narHash": "sha256-qecgKwowsbJuV1H5gzSShuymf9nteuk+As6/mMxA4mk=",
+        "owner": "Daholli",
         "repo": "hy3",
-        "rev": "74a17a83c97cf332501c7f2be64381ddb9a1c679",
+        "rev": "fb2832c2d376332e612cd36a3273e793ecd6b62e",
         "type": "github"
       },
       "original": {
-        "owner": "outfoxxed",
+        "owner": "Daholli",
         "repo": "hy3",
+        "rev": "fb2832c2d376332e612cd36a3273e793ecd6b62e",
         "type": "github"
       }
     },

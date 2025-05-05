@@ -35,9 +35,6 @@ in
       "forgejo/mail/passwordHash" = {
         inherit sopsFile;
       };
-      "forgejo/runner/token" = {
-        inherit sopsFile;
-      };
     };
   };
 
@@ -55,7 +52,7 @@ in
         };
       };
 
-      "hydra.${domainName}" = {
+      "hydra.${domainName}" = mkIf config.${namespace}.services.hydra.enable {
         forceSSL = cfg.enableAcme;
         useACMEHost = mkIf cfg.enableAcme domainName;
 
@@ -78,7 +75,7 @@ in
         };
       };
 
-      "nixcache.${domainName}" = {
+      "nixcache.${domainName}" = mkIf config.${namespace}.services.hydra.enableCache {
         forceSSL = cfg.enableAcme;
         useACMEHost = mkIf cfg.enableAcme domainName;
 
@@ -180,58 +177,9 @@ in
     ];
   };
 
-  services.nix-serve = {
-    enable = true;
-    secretKeyFile = "/var/cache-priv-key.pem";
-  };
-
-  services.hydra = {
-    enable = true;
-    hydraURL = "http://localhost:${toString hydraPort}";
-    port = hydraPort;
-    notificationSender = "hydra@localhost";
-    useSubstitutes = true;
-  };
-
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
-  };
-
-  services.gitea-actions-runner = {
-    package = pkgs.forgejo-actions-runner;
-    instances = {
-      native = {
-        enable = true;
-        name = "monolith";
-        url = "https://git.${domainName}";
-        tokenFile = config.sops.secrets."forgejo/runner/token".path;
-        labels = [
-          "native:host"
-        ];
-        hostPackages = with pkgs; [
-          bash
-          coreutils
-          curl
-          gawk
-          gitMinimal
-          gnused
-          nodejs
-          wget
-          lix
-        ];
-        settings = {
-          log.level = "info";
-          runner = {
-            capacity = 1;
-            timeout = "3h";
-            shutdown_timeout = "5s";
-            fetch_timeout = "10s";
-            fetch_inteval = "5s";
-          };
-        };
-      };
-    };
   };
 
   networking.firewall.allowedTCPPorts = [
@@ -251,6 +199,15 @@ in
         inherit sopsFile;
       };
       openssh = enabled;
+      hydra = {
+        enable = true;
+        httpPort = hydraPort;
+        enableCache = true;
+      };
+      gitea-runner = {
+        enable = true;
+        inherit sopsFile;
+      };
     };
 
     security = {

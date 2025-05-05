@@ -38,7 +38,9 @@
     };
 
     hy3 = {
-      url = "github:outfoxxed/hy3";
+      # url = "github:outfoxxed/hy3";
+
+      url = "github:Daholli/hy3/fb2832c2d376332e612cd36a3273e793ecd6b62e";
       inputs.hyprland.follows = "hyprland";
     };
 

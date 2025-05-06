@@ -40,7 +40,7 @@
     hy3 = {
       # url = "github:outfoxxed/hy3";
 
-      url = "github:Daholli/hy3/fb2832c2d376332e612cd36a3273e793ecd6b62e";
+      url = "github:Daholli/hy3/a9caea020e457b4c5868913eea391beffd5fc22c";
       inputs.hyprland.follows = "hyprland";
     };
 

@@ -18,11 +18,9 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      noisetorch
       pavucontrol
+      easyeffects
     ];
-
-    programs.noisetorch.enable = true;
 
     services.pulseaudio = disabled;
     security.rtkit.enable = true;

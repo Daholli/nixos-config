@@ -18,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      neofetch
+      fastfetch
 
       fd
       tree
@@ -30,6 +30,9 @@ in
       pciutils
       usbutils
       btop
+
+      zip
+      unzip
     ];
 
     ${namespace} = {

@@ -17,7 +17,7 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      neofetch
+      fastfetch
 
       fd
       tree
@@ -27,6 +27,9 @@ in
 
       wslu
       wsl-open
+
+      zip
+      unzip
     ];
 
     ${namespace} = {

@@ -1152,17 +1152,17 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1743943147,
-        "narHash": "sha256-4twtjynlPR8thJfN4Jty8ttMaAMXzuf/az1UCCL8mR4=",
+        "lastModified": 1746906442,
+        "narHash": "sha256-kQme/JyxLvfpabjoeOwEBzX/3fgkiCqffknGljeT1SU=",
         "owner": "Daholli",
         "repo": "nixpkgs",
-        "rev": "9b2e671195f25c73366bc36863bf64ded6f71194",
+        "rev": "b7b8918da23391e1bd5f12e2f2f602455680fb67",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
         "repo": "nixpkgs",
-        "rev": "9b2e671195f25c73366bc36863bf64ded6f71194",
+        "rev": "b7b8918da23391e1bd5f12e2f2f602455680fb67",
         "type": "github"
       }
     },

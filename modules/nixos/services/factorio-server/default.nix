@@ -39,7 +39,7 @@ in
       };
       templates."extraSettingsFile.json".content = ''
         {
-          "name": "WarptorioHolli",
+          "name": "Pyanodons Holli",
           "description": "Trying to run a factorio-headless-server on my nix system",
           "tags": ["vanilla"],
           "max_players": 10,
@@ -66,7 +66,7 @@ in
       lan = true;
       nonBlockingSaving = true;
       autosave-interval = 15;
-      saveName = "Warptorio";
+      saveName = "Pyanodons";
       admins = [
         "daholli"
         "galbrain"

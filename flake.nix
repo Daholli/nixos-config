@@ -6,7 +6,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
-    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/b7b8918da23391e1bd5f12e2f2f602455680fb67";
+    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/1f36f691a2a05eb0785d35164ba03962607348bf";
     nixpkgs-tuya-vacuum.url = "github:Daholli/nixpkgs/84b34e39e7a0879367189f34401191f6a0364bcf";
 
     home-manager = {
@@ -51,11 +51,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    snowfall-flake = {
-      url = "github:snowfallorg/flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     helix = {
       url = "github:helix-editor/helix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,13 +74,6 @@
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/b4fbffe79c00f19be94b86b4144ff67541613659";
     catppuccin.url = "github:catppuccin/nix";
-
-    nix-gaming.url = "github:fufexan/nix-gaming";
-
-    steam-servers = {
-      url = "github:scottbot95/nix-steam-servers";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     ###############
     # homeassitant
@@ -130,7 +118,6 @@
       outputs-builder = channels: { formatter = channels.nixpkgs.nixfmt-rfc-style; };
 
       overlays = with inputs; [
-        snowfall-flake.overlays.default
         hyprpanel.overlay
       ];
 

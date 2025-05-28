@@ -41,7 +41,6 @@ in
     }) cfg.extra-substituters;
 
     environment.systemPackages = with pkgs; [
-      snowfallorg.flake
       nixfmt-rfc-style
       nix-prefetch-git
       nix-du

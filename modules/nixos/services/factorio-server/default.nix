@@ -65,8 +65,9 @@ in
       public = true;
       lan = true;
       nonBlockingSaving = true;
-      autosave-interval = 15;
+      autosave-interval = 5;
       saveName = "Pyanodons";
+      loadLatestSave = true;
       admins = [
         "daholli"
         "galbrain"

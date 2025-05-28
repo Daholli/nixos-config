@@ -60,6 +60,7 @@ in
     };
     firewall = {
       allowedTCPPorts = [
+        443
         53
         80
       ];
@@ -117,8 +118,8 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "C+ /var/lib/hass/custom_components/tuya_vacuum_maps - - - - ${inputs.tuya-vaccum-maps}/custom_components/tuya_vacuum_maps"
-    "Z /var/lib/hass/custom_components 770 hass hass - -"
+    # "C+ /var/lib/hass/custom_components/tuya_vacuum_maps - - - - ${inputs.tuya-vaccum-maps}/custom_components/tuya_vacuum_maps"
+    # "Z /var/lib/hass/custom_components 770 hass hass - -"
     "f ${config.services.home-assistant.configDir}/automations.yaml 0755 hass hass"
   ];
 
@@ -133,10 +134,10 @@ in
       "met"
       "esphome"
       "rpi_power"
+      "tuya"
     ];
 
     customComponents = with pkgs.home-assistant-custom-components; [
-      tuya_local
       smartthinq-sensors
       sleep_as_android
     ];
@@ -148,6 +149,9 @@ in
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
       mushroom
+      bubble-card
+      clock-weather-card
+      vacuum-card
     ];
 
     config = {
@@ -156,11 +160,34 @@ in
         longitude = 8.6;
         temperature_unit = "C";
         unit_system = "metric";
+
+        external_url = "https://ha.christophhollizeck.dev";
+        internal_url = "http://192.168.178.2:8123";
       };
 
       mobile_app = "";
+      recorder = "";
 
       lovelace = {
+        # mode = "yaml";
+        resources = [
+          {
+            url = "/local/nixos-lovelace-modules/vacuum-card.js";
+            type = "module";
+          }
+          {
+            url = "/local/nixos-lovelace-modules/bubble-card.js";
+            type = "module";
+          }
+          {
+            url = "/local/nixos-lovelace-modules/clock-weather-card.js";
+            type = "module";
+          }
+          {
+            url = "/local/nixos-lovelace-modules/mushroom.js";
+            type = "module";
+          }
+        ];
       };
 
       http = {

@@ -172,7 +172,7 @@ in
                 "systemctl --user start hyprpolkitagent"
 
                 "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
-                "[workspace 8 silent] vesktop"
+                "[workspace 8 silent] discord"
                 "[workspace 9 silent] ELECTRON_OZONE_PLATFORM_HINT=x11 1password" # fix for promts not showing up anymore
                 "[workspace 1 silent] zen-beta"
 

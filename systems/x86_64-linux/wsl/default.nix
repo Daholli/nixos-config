@@ -10,6 +10,11 @@ with lib.wyrdgard;
   wsl = {
     enable = true;
     defaultUser = config.wyrdgard.user.name;
+
+    usbip = {
+      enable = true;
+      autoAttach = [ "3-1" ];
+    };
   };
 
   wyrdgard = {

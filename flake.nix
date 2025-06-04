@@ -141,7 +141,6 @@
 
       systems.hosts.loptland.modules = with inputs; [
         simple-nixos-mailserver.nixosModules.default
-        steam-servers.nixosModules.default
       ];
 
       systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];

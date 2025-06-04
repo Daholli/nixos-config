@@ -23,10 +23,6 @@ in
     # eve
     bottles
     pyfa
-
-    unzip
-
-    microsoft-edge
   ];
 
   environment.pathsToLink = [ "/libexec" ];

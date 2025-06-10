@@ -103,20 +103,8 @@ in
                   space = "file_picker";
                 };
 
-                C-j = [
-                  "move_line_down"
-                  "move_line_down"
-                  "move_line_down"
-                  "move_line_down"
-                  "move_line_down"
-                ];
-                C-k = [
-                  "move_line_up"
-                  "move_line_up"
-                  "move_line_up"
-                  "move_line_up"
-                  "move_line_up"
-                ];
+                C-j = (builtins.genList (_: "move_line_down") 5) ++ [ "align_view_center" ];
+                C-k = (builtins.genList (_: "move_line_up") 5) ++ [ "align_view_center" ];
               };
             };
           };

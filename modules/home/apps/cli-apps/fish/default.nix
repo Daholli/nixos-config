@@ -44,8 +44,10 @@ in
         };
         functions = {
           checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
+          buildandDeployYggdrasil = "nom build '.#nixosConfigurations.yggdrasil.config.system.build.toplevel' && sudo nixos-rebuild switch --flake .#yggdrasil";
           deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --use-remote-sudo --fast";
           deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --use-remote-sudo --fast";
+          checkPR = "cd nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --approve";
         };
         plugins = with pkgs.fishPlugins; [
           {

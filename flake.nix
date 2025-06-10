@@ -85,6 +85,11 @@
 
     ################
     ## inputs for dev shells
+    #
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # rust
     fenix = {
@@ -119,6 +124,7 @@
 
       overlays = with inputs; [
         hyprpanel.overlay
+        devenv.overlays.default
       ];
 
       homes.modules = with inputs; [

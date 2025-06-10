@@ -23,6 +23,8 @@ in
     # eve
     bottles
     pyfa
+
+    nixpkgs-review
   ];
 
   environment.pathsToLink = [ "/libexec" ];

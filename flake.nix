@@ -170,7 +170,7 @@
       hydraJobs = {
         hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
         packages = self.packages;
-        shells = self.devShells;
+        shells = lib.filterAttrs (name: shell: name == "x86_64-linux") self.devShells;
       };
     };
 }

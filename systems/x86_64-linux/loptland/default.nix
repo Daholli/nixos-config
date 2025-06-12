@@ -48,6 +48,9 @@ in
         useACMEHost = mkIf cfg.enableAcme domainName;
 
         locations."/" = {
+          extraConfig = ''
+            client_max_body_size 200M;
+          '';
           proxyPass = "http://localhost:${toString forgejoPort}/";
         };
       };

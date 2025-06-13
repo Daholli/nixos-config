@@ -1,8 +1,10 @@
 {
   config,
+  inputs,
   lib,
   namespace,
   pkgs,
+  system,
   ...
 }:
 with lib;
@@ -50,6 +52,12 @@ in
       nix-output-monitor
     ];
 
+    programs.nh = {
+      enable = true;
+      package = inputs.nh-flake.packages.${system}.nh;
+      flake = "/home/cholli/projects/config";
+    };
+
     nix =
       let
         users = [
@@ -63,7 +71,7 @@ in
 
         settings =
           {
-            experimental-features = "nix-command flakes";
+            experimental-features = "nix-command flakes repl-flake";
             http-connections = 50;
             warn-dirty = false;
             log-lines = 50;

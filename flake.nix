@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nh-flake = {
+      url = "github:nix-community/nh";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     ###
     # hyprland stuff
     hyprland.url = "github:hyprwm/Hyprland";

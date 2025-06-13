@@ -137,7 +137,6 @@
       overlays = with inputs; [
         hyprpanel.overlay
         devenv.overlays.default
-        zig-overlay.overlays.default
       ];
 
       homes.modules = with inputs; [

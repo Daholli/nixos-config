@@ -9,5 +9,8 @@ mkShell {
     jdt-language-server
     zulu8
     zulu21
+    jetbrains.idea-community
+    maven
+    ant
   ];
 }

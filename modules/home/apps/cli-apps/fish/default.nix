@@ -44,8 +44,8 @@ in
         };
         functions = {
           checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
-          deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --use-remote-sudo --fast";
-          deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --use-remote-sudo --fast";
+          deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --sudo --ask-sudo-password";
+          deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --sudo --ask-sudo-password";
           checkPR = "cd nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --approve";
         };
         plugins = with pkgs.fishPlugins; [

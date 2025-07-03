@@ -46,7 +46,7 @@ in
           checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
           deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --sudo --ask-sudo-password";
           deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --sudo --ask-sudo-password";
-          checkPR = "cd nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --approve";
+          checkPR = "cd /home/cholli/projects/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result";
         };
         plugins = with pkgs.fishPlugins; [
           {

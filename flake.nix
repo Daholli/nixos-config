@@ -47,8 +47,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-
     ###
     # Snowfall dependencies
     snowfall-lib = {
@@ -140,7 +138,6 @@
       outputs-builder = channels: { formatter = channels.nixpkgs.nixfmt-rfc-style; };
 
       overlays = with inputs; [
-        hyprpanel.overlay
         devenv.overlays.default
       ];
 

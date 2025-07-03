@@ -24,6 +24,9 @@ in
     bottles
     pyfa
 
+    # misc
+    diebahn
+
     nixpkgs-review
   ];
 

@@ -42,6 +42,9 @@ in
         push = {
           autoSetupRemote = true;
         };
+        rebase = {
+          autoStash = true;
+        };
         safe = {
           directory = "${user.home}/projects/config";
         };

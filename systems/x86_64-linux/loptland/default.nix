@@ -142,7 +142,7 @@ in
     };
 
     certificateScheme = "acme-nginx";
-    stateVersion = 2;
+    stateVersion = 3;
   };
 
   nix = {

@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ prismlauncher ];
+    # environment.systemPackages = with pkgs; [ prismlauncher ];
 
     ${namespace} = {
       apps = {

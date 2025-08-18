@@ -38,7 +38,7 @@ in
     AddressFamily inet
   '';
   home-manager = {
-    backupFileExtension = ".bak";
+    backupFileExtension = "bak";
   };
 
   nix = {
@@ -86,7 +86,7 @@ in
     system = {
       hardware = {
         bluetooth = enabled;
-        gpu.nvidia = enabled;
+        gpu.amd = enabled;
       };
     };
 

@@ -3,6 +3,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 let
@@ -17,7 +18,15 @@ in
 
   config = mkIf cfg.enable {
     services.gnome.gnome-keyring.enable = true;
+    security.pam.services.gdm.enableGnomeKeyring = true;
     security.pam.services.sddm.enableGnomeKeyring = true;
     security.pam.services.greetd.enableGnomeKeyring = true;
+
+    services.dbus.packages = [
+      pkgs.gnome-keyring
+      pkgs.gcr
+    ];
+
+    environment.systemPackages = [ pkgs.seahorse ];
   };
 }

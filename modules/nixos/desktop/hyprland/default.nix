@@ -118,6 +118,9 @@ in
       focus-1password
 
       hyprpanel
+
+      #####
+      xdg-dbus-proxy
     ];
 
     programs = {
@@ -125,19 +128,52 @@ in
         enable = true;
         package = hyprland-package;
         portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+        withUWSM = true;
       };
     };
 
-    services.greetd = {
-      enable = true;
-      settings = rec {
-        initial_session = {
-          command = "${hyprland-package}/bin/Hyprland";
-          user = "cholli";
-        };
+    xdg = {
+      autostart.enable = true;
+      portal = {
+        enable = true;
+        extraPortals = [
+          pkgs.xdg-desktop-portal
+          pkgs.xdg-desktop-portal-gtk
+        ];
+        xdgOpenUsePortal = true;
 
-        default_session = initial_session;
+        config = {
+          common = {
+            default = [ "*" ];
+            "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+          };
+          hyprland = {
+            default = [
+              "hyprland"
+              "gtk"
+            ];
+            "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+            "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+          };
+        };
       };
+    };
+
+    # services.greetd = {
+    #   enable = true;
+    #   settings = rec {
+    #     initial_session = {
+    #       command = "${hyprland-package}/bin/Hyprland";
+    #       user = "cholli";
+    #     };
+
+    #     default_session = initial_session;
+    #   };
+    # };
+    #
+    services.displayManager.gdm = {
+      enable = true;
+      wayland = true;
     };
 
     ${namespace} = {
@@ -164,6 +200,7 @@ in
           enable = true;
           package = hyprland-package;
           plugins = [ inputs.hy3.packages.${system}.hy3 ];
+          systemd.variables = [ "--all" ];
           settings = mkMerge [
             {
               "$mod" = "SUPER";
@@ -171,7 +208,7 @@ in
               exec-once = [
                 "systemctl --user start hyprpolkitagent"
 
-                "[workspace 2 silent] steam --disable-gpu-compositing" # nvidia pls let me have nice things
+                "[workspace 2 silent] steam"
                 "[workspace 8 silent] discord"
                 "[workspace 9 silent] ELECTRON_OZONE_PLATFORM_HINT=x11 1password" # fix for promts not showing up anymore
                 "[workspace 1 silent] zen-beta"
@@ -250,69 +287,68 @@ in
                 ];
               };
 
-              bind =
-                [
-                  # compositor commands
-                  "$mod SHIFT, R, exec, hyprctl reload"
-                  "$mod SHIFT, Q, killactive,"
-                  "$mod SHIFT, E, exec, pkill Hyprland"
+              bind = [
+                # compositor commands
+                "$mod SHIFT, R, exec, hyprctl reload"
+                "$mod SHIFT, Q, killactive,"
+                "$mod SHIFT, E, exec, pkill Hyprland"
 
-                  "$mod, F, fullscreen,"
-                  "$mod, G, togglegroup,"
-                  "$mod SHIFT, N, changegroupactive, f"
-                  "$mod SHIFT, P, changegroupactive, b"
-                  "$mod, R, togglesplit,"
-                  "$mod, T, togglefloating,"
-                  "$mod ALT, ,resizeactive,"
+                "$mod, F, fullscreen,"
+                "$mod, G, togglegroup,"
+                "$mod SHIFT, N, changegroupactive, f"
+                "$mod SHIFT, P, changegroupactive, b"
+                "$mod, R, togglesplit,"
+                "$mod, T, togglefloating,"
+                "$mod ALT, ,resizeactive,"
 
-                  "$mod CTRL, left, movecurrentworkspacetomonitor, l"
-                  "$mod CTRL, right, movecurrentworkspacetomonitor, r"
+                "$mod CTRL, left, movecurrentworkspacetomonitor, l"
+                "$mod CTRL, right, movecurrentworkspacetomonitor, r"
 
-                  # move focus
-                  "$mod, h, hy3:movefocus, l"
-                  "$mod, j, hy3:movefocus, d"
-                  "$mod, k, hy3:movefocus, u"
-                  "$mod, l, hy3:movefocus, r"
-                  "$mod, left, hy3:movefocus, l"
-                  "$mod, down, hy3:movefocus, d"
-                  "$mod, up, hy3:movefocus, u"
-                  "$mod, right, hy3:movefocus, r"
+                # move focus
+                "$mod, h, hy3:movefocus, l"
+                "$mod, j, hy3:movefocus, d"
+                "$mod, k, hy3:movefocus, u"
+                "$mod, l, hy3:movefocus, r"
+                "$mod, left, hy3:movefocus, l"
+                "$mod, down, hy3:movefocus, d"
+                "$mod, up, hy3:movefocus, u"
+                "$mod, right, hy3:movefocus, r"
 
-                  # move focus
-                  "$mod SHIFT, h, hy3:movewindow, l, once"
-                  "$mod SHIFT, j, hy3:movewindow, d, once"
-                  "$mod SHIFT, k, hy3:movewindow, u, once"
-                  "$mod SHIFT, l, hy3:movewindow, r, once"
-                  "$mod SHIFT, left, hy3:movewindow, l, once"
-                  "$mod SHIFT, down, hy3:movewindow, d, once"
-                  "$mod SHIFT, up, hy3:movewindow, u, once"
-                  "$mod SHIFT, right, hy3:movewindow, r, once"
+                # move focus
+                "$mod SHIFT, h, hy3:movewindow, l, once"
+                "$mod SHIFT, j, hy3:movewindow, d, once"
+                "$mod SHIFT, k, hy3:movewindow, u, once"
+                "$mod SHIFT, l, hy3:movewindow, r, once"
+                "$mod SHIFT, left, hy3:movewindow, l, once"
+                "$mod SHIFT, down, hy3:movewindow, d, once"
+                "$mod SHIFT, up, hy3:movewindow, u, once"
+                "$mod SHIFT, right, hy3:movewindow, r, once"
 
-                  #run important programs
-                  "$mod, Return, exec, kitty"
-                  "$mod, D, exec, rofi -show drun"
-                  "$mod, P, exec, focus-or-open-1pass"
-                  # "$mod, D, exec, rofi -show combi"
+                #run important programs
+                "$mod, Return, exec, kitty"
+                "$mod, D, exec, rofi -show drun"
+                "$mod, P, exec, focus-or-open-1pass"
+                # "$mod, D, exec, rofi -show combi"
 
-                  #screenshot
-                  ", Print, exec, grimblast copy area"
-                ]
-                ++ (
-                  # workspaces
-                  # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-                  builtins.concatLists (
-                    builtins.genList (
-                      i:
-                      let
-                        ws = i + 1;
-                      in
-                      [
-                        "$mod, code:1${toString i}, workspace, ${toString ws}"
-                        "$mod SHIFT, code:1${toString i}, hy3:movetoworkspace, ${toString ws}"
-                      ]
-                    ) 9
-                  )
-                );
+                #screenshot
+                ", Print, exec, grimblast copy area"
+              ]
+              ++ (
+                # workspaces
+                # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+                builtins.concatLists (
+                  builtins.genList (
+                    i:
+                    let
+                      ws = i + 1;
+                    in
+                    [
+                      "$mod, code:1${toString i}, workspace, ${toString ws}"
+                      "$mod SHIFT, code:1${toString i}, hy3:movetoworkspace, ${toString ws}"
+                    ]
+                  ) 9
+                )
+              );
 
               # mouse movements
               bindm = [

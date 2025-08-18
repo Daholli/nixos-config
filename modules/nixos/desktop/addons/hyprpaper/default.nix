@@ -25,14 +25,14 @@ in
       };
 
       wayland.windowManager.hyprland.settings.exec-once = [
-        ''hyprctl hyprpaper wallpaper "DP-2,${picture-path}"''
+        ''hyprctl hyprpaper wallpaper "DP-1,${picture-path}"''
       ];
 
       services.hyprpaper = {
         enable = true;
         settings = {
           preload = [ picture-path ];
-          wallpaper = "DP-2,${picture-path}";
+          wallpaper = "DP-1,${picture-path}";
         };
       };
     };

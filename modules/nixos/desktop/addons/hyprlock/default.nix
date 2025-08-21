@@ -13,7 +13,7 @@ let
   hyprlock-package = inputs.hyprlock.packages.${system}.hyprlock;
 
   hyprlock-blur = pkgs.writeShellScriptBin "hyprlock-blur" ''
-    ${pkgs.grim}/bin/grim -o DP-2 -l 0 /tmp/screenshot1.png &
+    ${pkgs.grim}/bin/grim -o DP-1 -l 0 /tmp/screenshot1.png &
     ${pkgs.grim}/bin/grim -o HDMI-A-1 -l 0 /tmp/screenshot2.png & 
     wait &&
     hyprlock 
@@ -29,7 +29,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    security.pam.services.hyprlock = { };
+    security.pam.services.hyprlock = {
+      allowNullPassword = false;
+      startSession = false;
+      text = ''
+        auth    include login
+        account include login
+      '';
+    };
 
     environment.systemPackages = [ hyprlock-blur ];
 
@@ -48,7 +55,7 @@ in
           # inspiration from https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf
           background = [
             {
-              monitor = "DP-2";
+              monitor = "DP-1";
               path = "/tmp/screenshot1.png";
 
               blur_passes = 1; # 0 disables blurring
@@ -67,7 +74,7 @@ in
 
           label = [
             {
-              monitor = "DP-2";
+              monitor = "DP-1";
               text = "$TIME";
               color = "rgba(242, 243, 244, 0.75)";
               font_size = 95;
@@ -78,7 +85,7 @@ in
             }
             {
 
-              monitor = "DP-2";
+              monitor = "DP-1";
               text = ''cmd[update:1000] echo $(date +"%A, %B %d")'';
               color = "rgba(242, 243, 244, 0.75)";
               font_size = 22;
@@ -91,7 +98,7 @@ in
           ];
 
           image = {
-            monitor = "DP-2";
+            monitor = "DP-1";
             path = "/home/${username}/Pictures/profile.png";
 
             position = "0, 50";
@@ -100,7 +107,7 @@ in
           };
 
           input-field = {
-            monitor = "DP-2";
+            monitor = "DP-1";
             size = "200,50";
             outline_thickness = 2;
             dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
@@ -117,6 +124,10 @@ in
             position = "0, -100";
             halign = "center";
             valign = "center";
+          };
+
+          general = {
+            auth_method = "pam";
           };
         };
       };

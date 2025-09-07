@@ -15,5 +15,5 @@ in
     enable = mkBoolOpt false "Whether or not to enable basic configuration";
   };
 
-  config = mkIf cfg.enable { environment.systemPackages = with pkgs; [ teamspeak_client ]; };
+  config = mkIf cfg.enable { environment.systemPackages = with pkgs; [ teamspeak6-client ]; };
 }

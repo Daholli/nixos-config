@@ -32,6 +32,9 @@ in
       Host *
        	ForwardAgent yes
       	IdentityAgent /home/${username}/.1password/agent.sock
+
+      Host loptland
+        Hostname christophhollizeck.dev
     '';
   };
 }

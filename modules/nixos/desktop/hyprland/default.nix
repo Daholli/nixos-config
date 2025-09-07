@@ -159,18 +159,6 @@ in
       };
     };
 
-    # services.greetd = {
-    #   enable = true;
-    #   settings = rec {
-    #     initial_session = {
-    #       command = "${hyprland-package}/bin/Hyprland";
-    #       user = "cholli";
-    #     };
-
-    #     default_session = initial_session;
-    #   };
-    # };
-    #
     services.displayManager.gdm = {
       enable = true;
       wayland = true;

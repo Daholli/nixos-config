@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ libsForQt5.bluez-qt ];
+    environment.systemPackages = with pkgs; [ kdePackages.bluez-qt ];
 
     hardware.bluetooth = {
       enable = true;

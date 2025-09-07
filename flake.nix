@@ -174,7 +174,9 @@
       self = inputs.self;
 
       hydraJobs = {
-        hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
+        hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) (
+          lib.filterAttrs (name: cfg: name != "nixberry") self.outputs.nixosConfigurations
+        );
         packages = self.packages;
         shells = lib.filterAttrs (name: shell: name == "x86_64-linux") self.devShells;
       };

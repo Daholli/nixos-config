@@ -6,7 +6,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
-    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/1f36f691a2a05eb0785d35164ba03962607348bf";
+    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/e880129391be2f558d6c205cfd931be338b3b707";
     nixpkgs-tuya-vacuum.url = "github:Daholli/nixpkgs/84b34e39e7a0879367189f34401191f6a0364bcf";
 
     home-manager = {

@@ -170,7 +170,7 @@ in
         addons = {
           rofi = {
             enable = true;
-            package = pkgs.rofi-wayland-unwrapped;
+            package = pkgs.rofi-unwrapped;
           };
           hypridle = enabled;
           hyprlock = enabled;

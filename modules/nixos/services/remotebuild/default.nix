@@ -37,12 +37,16 @@ in
         max-jobs = "auto";
         cores = 0;
       };
+
+      daemonIOSchedClass = lib.mkDefault "idle";
+      daemonCPUSchedPolicy = lib.mkDefault "idle";
     };
 
     systemd.services.nix-daemon.serviceConfig = {
       MemoryAccounting = true;
       MemoryMax = "90%";
       OOMScoreAdjust = 500;
+      Slice = "-.slice";
     };
   };
 }

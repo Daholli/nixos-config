@@ -17,12 +17,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    catppuccin.flavor = "mocha";
-    catppuccin.enable = true;
-
     ${namespace}.home.extraOptions = {
-      catppuccin.flavor = "mocha";
-      catppuccin.enable = true;
 
       dconf = {
         settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";

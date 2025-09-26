@@ -165,6 +165,8 @@ in
         internal_url = "http://192.168.178.2:8123";
       };
 
+      default_config = "";
+
       mobile_app = "";
       recorder = "";
 

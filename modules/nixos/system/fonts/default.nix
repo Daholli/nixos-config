@@ -32,7 +32,9 @@ in
         powerline-fonts
         powerline-symbols
         nerd-fonts.code-new-roman
+        nerd-fonts.fira-code
         nerd-fonts.symbols-only
+        fira
       ]
       ++ cfg.fonts;
   };

@@ -44,7 +44,7 @@ in
       enable = true;
       # themeFile = "tokyo_night_night";
       font = {
-        name = "Code New Roman";
+        name = "FiraCode Nerd Font";
         size = 15;
       };
       shellIntegration.enableFishIntegration = true;

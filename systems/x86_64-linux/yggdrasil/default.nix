@@ -28,7 +28,10 @@ in
     diebahn
 
     nixpkgs-review
+    teamviewer
   ];
+
+  services.teamviewer.enable = true;
 
   environment.pathsToLink = [ "/libexec" ];
 

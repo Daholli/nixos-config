@@ -82,13 +82,16 @@ in
 
     programs.git = {
       enable = true;
-      inherit (cfg) userName userEmail;
       lfs = enabled;
       signing = {
         key = cfg.signingKey;
         inherit (cfg) signByDefault;
       };
-      extraConfig = {
+      settings = {
+        user = {
+          name = cfg.userName;
+          email = cfg.userEmail;
+        };
         core = {
           fsmonitor = true;
         };

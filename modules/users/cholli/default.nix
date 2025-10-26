@@ -37,8 +37,11 @@
             "wheel"
           ];
           shell = pkgs.fish;
+          # TODO: fix this with sops
+          initialPassword = "asdf";
         };
 
+        nix.settings.trusted-users = [ config.flake.meta.users.cholli.username ];
       };
   };
 }

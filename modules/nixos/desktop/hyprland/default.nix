@@ -293,24 +293,24 @@ in
                 "$mod CTRL, right, movecurrentworkspacetomonitor, r"
 
                 # move focus
-                "$mod, h, hy3:movefocus, l"
-                "$mod, j, hy3:movefocus, d"
-                "$mod, k, hy3:movefocus, u"
-                "$mod, l, hy3:movefocus, r"
-                "$mod, left, hy3:movefocus, l"
-                "$mod, down, hy3:movefocus, d"
-                "$mod, up, hy3:movefocus, u"
-                "$mod, right, hy3:movefocus, r"
+                "$mod, h, movefocus, l"
+                "$mod, j, movefocus, d"
+                "$mod, k, movefocus, u"
+                "$mod, l, movefocus, r"
+                "$mod, left, movefocus, l"
+                "$mod, down, movefocus, d"
+                "$mod, up, movefocus, u"
+                "$mod, right, movefocus, r"
 
                 # move focus
-                "$mod SHIFT, h, hy3:movewindow, l, once"
-                "$mod SHIFT, j, hy3:movewindow, d, once"
-                "$mod SHIFT, k, hy3:movewindow, u, once"
-                "$mod SHIFT, l, hy3:movewindow, r, once"
-                "$mod SHIFT, left, hy3:movewindow, l, once"
-                "$mod SHIFT, down, hy3:movewindow, d, once"
-                "$mod SHIFT, up, hy3:movewindow, u, once"
-                "$mod SHIFT, right, hy3:movewindow, r, once"
+                "$mod SHIFT, h, movewindow, l, once"
+                "$mod SHIFT, j, movewindow, d, once"
+                "$mod SHIFT, k, movewindow, u, once"
+                "$mod SHIFT, l, movewindow, r, once"
+                "$mod SHIFT, left, movewindow, l, once"
+                "$mod SHIFT, down, movewindow, d, once"
+                "$mod SHIFT, up, movewindow, u, once"
+                "$mod SHIFT, right, movewindow, r, once"
 
                 #run important programs
                 "$mod, Return, exec, kitty"
@@ -332,7 +332,7 @@ in
                     in
                     [
                       "$mod, code:1${toString i}, workspace, ${toString ws}"
-                      "$mod SHIFT, code:1${toString i}, hy3:movetoworkspace, ${toString ws}"
+                      "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
                     ]
                   ) 9
                 )

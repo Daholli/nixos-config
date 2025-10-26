@@ -76,8 +76,9 @@ in
       starsector = enabled;
     };
 
-    desktop.hyprland = {
-      enable = true;
+    desktop = {
+      hyprland = enabled;
+      niri = enabled;
     };
 
     services = {

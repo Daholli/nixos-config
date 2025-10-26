@@ -40,7 +40,7 @@ in
 
     environment.systemPackages = [ hyprlock-blur ];
 
-    ${namespace}.desktop.hyprland.settings = {
+    ${namespace}.desktop.hyprland.settings = mkIf config.desktop.hyprland.enable {
       bind = [
         "$mod CTRL, l, exec, hyprlock-blur"
       ];

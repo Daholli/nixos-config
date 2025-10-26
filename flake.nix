@@ -53,6 +53,24 @@
     };
 
     ###
+    # Niri
+    niri = {
+      url = "github:YaLTeR/niri";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "";
+      };
+    };
+
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs = {
+        niri-stable.follows = "niri";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    ###
     # Snowfall dependencies
     snowfall-lib = {
       url = "github:snowfallorg/lib";
@@ -144,6 +162,7 @@
 
       overlays = with inputs; [
         devenv.overlays.default
+        niri-flake.overlays.niri
       ];
 
       homes.modules = with inputs; [
@@ -157,6 +176,14 @@
         sops-nix.nixosModules.sops
 
         catppuccin.nixosModules.catppuccin
+      ];
+
+      systems.hosts.yggdrasil.modules = with inputs; [
+        niri-flake.nixosModules.niri
+      ];
+
+      homes.hosts.yggdrasil.modules = with inputs; [
+        niri-flake.homeModules.niri
       ];
 
       systems.hosts.nixberry.modules = with inputs; [

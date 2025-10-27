@@ -40,6 +40,13 @@
             ssh-to-age
           ];
 
+          services.gnome.gnome-keyring.enable = true;
+
+          services.dbus.packages = [
+            pkgs.gnome-keyring
+            pkgs.gcr
+          ];
+
           sops = {
             defaultSopsFile = ../../../secrets/secrets.yaml;
             defaultSopsFormat = "yaml";

@@ -8,11 +8,45 @@ in
   flake.modules.nixos."hosts/yggdrasil" =
     { lib, pkgs, ... }:
     {
+      nixpkgs.config.allowUnfree = true;
+
+      environment.systemPackages = with pkgs; [
+        teamviewer
+        teams-for-linux
+
+        pyfa
+        obsidian
+        diebahn
+
+        path-of-building
+      ];
+
+      services.teamviewer.enable = true;
+      environment.pathsToLink = [ "/libexec" ];
+
+      programs.ssh.extraConfig = ''
+        AddressFamily inet
+      '';
+
       imports =
         with config.flake.modules.nixos;
         [
           # System modules
           base
+          dev
+          desktop
+          games
+
+          # hardware
+          audio
+          bluetooth
+          amdgpu
+
+          # dektops
+          hyprland
+
+          # apps
+          _1password
 
           # Users
           cholli
@@ -22,11 +56,35 @@ in
             home-manager.users.cholli = {
               imports = with config.flake.modules.homeManager; [
                 base
+                dev
+
+                # Activate all user based config
+                cholli
               ];
             };
           }
 
         ];
+
+      nix = {
+        distributedBuilds = true;
+        settings.builders-use-substitutes = true;
+        buildMachines = [
+          {
+            hostName = "nixberry";
+            sshUser = "remotebuild";
+            sshKey = "/root/.ssh/remotebuild";
+            systems = [ "aarch64-linux" ];
+            protocol = "ssh-ng";
+
+            supportedFeatures = [
+              "nixos-test"
+              "big-parallel"
+              "kvm"
+            ];
+          }
+        ];
+      };
 
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
@@ -68,6 +126,16 @@ in
         "/storage" = {
           device = "/dev/disk/by-uuid/c3c1dec1-7716-4c37-a3f2-bb60f9af84fd";
           fsType = "ext4";
+        };
+
+        "/var/lib/bluetooth" = {
+          device = "/persist/var/lib/bluetooth";
+          options = [
+            "bind"
+            "noauto"
+            "x-systemd.automount"
+          ];
+          noCheck = true;
         };
       };
 

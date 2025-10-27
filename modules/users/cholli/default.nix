@@ -19,29 +19,53 @@
       };
     };
 
-    modules.nixos.cholli =
-      { pkgs, ... }:
-      {
-        programs.fish.enable = true;
+    modules = {
+      nixos.cholli =
+        { pkgs, ... }:
+        {
+          programs.fish.enable = true;
 
-        users.users.cholli = {
-          description = config.flake.meta.users.cholli.name;
-          isNormalUser = true;
-          createHome = true;
-          extraGroups = [
-            "audio"
-            "input"
-            "networkmanager"
-            "sound"
-            "tty"
-            "wheel"
-          ];
-          shell = pkgs.fish;
-          # TODO: fix this with sops
-          initialPassword = "asdf";
+          users.users.cholli = {
+            description = config.flake.meta.users.cholli.name;
+            isNormalUser = true;
+            createHome = true;
+            extraGroups = [
+              "audio"
+              "input"
+              "networkmanager"
+              "sound"
+              "tty"
+              "wheel"
+            ];
+            shell = pkgs.fish;
+            # TODO: fix this with sops
+            initialPassword = "asdf";
+          };
+
+          nix.settings.trusted-users = [ config.flake.meta.users.cholli.username ];
+
         };
 
-        nix.settings.trusted-users = [ config.flake.meta.users.cholli.username ];
-      };
+      homeManager.cholli =
+        { ... }:
+        let
+          defaultIconFileName = "profile.png";
+        in
+        {
+          home = {
+            file = {
+              "Desktop/.keep".text = "";
+              "Documents/.keep".text = "";
+              "Downloads/.keep".text = "";
+              "Music/.keep".text = "";
+              "Pictures/.keep".text = "";
+              "Videos/.keep".text = "";
+              "projects/.keep".text = "";
+              ".face".source = ./${defaultIconFileName};
+              "Pictures/${defaultIconFileName}".source = ./${defaultIconFileName};
+            };
+          };
+        };
+    };
   };
 }

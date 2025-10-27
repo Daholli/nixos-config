@@ -8,14 +8,12 @@
         networkmanager = {
           enable = true;
         };
-
-        useDHCP = false;
       };
 
-      systemd = {
-        services.NetworkManager-wait-online.enable = false;
-        network.wait-online.enable = false;
-      };
+      # systemd = {
+      #   services.NetworkManager-wait-online.enable = false;
+      #   network.wait-online.enable = false;
+      # };
 
       services.resolved = {
         enable = true;

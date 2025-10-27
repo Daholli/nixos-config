@@ -18,7 +18,7 @@
 
       };
 
-    homeManager.base =
+    homeManager.cholli =
       { inputs, pkgs, ... }:
       let
         helix-pkg = inputs.helix.packages.${pkgs.system}.default;

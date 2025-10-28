@@ -6,7 +6,12 @@ let
 in
 {
   flake.modules.nixos."hosts/yggdrasil" =
-    { lib, pkgs, ... }:
+    {
+      inputs,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       nixpkgs.config.allowUnfree = true;
 
@@ -19,7 +24,18 @@ in
         diebahn
 
         path-of-building
+        bottles
+
+        # to be removed
+        kdePackages.bluez-qt
+        zed-editor
+        seahorse
+        font-manager
+        vesktop
+        rofi-unwrapped
       ];
+      # to be removed
+      virtualisation.waydroid.enable = true;
 
       services.teamviewer.enable = true;
       environment.pathsToLink = [ "/libexec" ];
@@ -31,6 +47,11 @@ in
       imports =
         with config.flake.modules.nixos;
         [
+          inputs.nixos-hardware.nixosModules.common-cpu-amd
+          inputs.nixos-hardware.nixosModules.common-pc
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
+          inputs.catppuccin.nixosModules.catppuccin
+
           # System modules
           base
           dev
@@ -44,6 +65,7 @@ in
 
           # dektops
           hyprland
+          niri
 
           # apps
           _1password
@@ -55,6 +77,9 @@ in
           {
             home-manager.users.cholli = {
               imports = with config.flake.modules.homeManager; [
+                inputs.catppuccin.homeModules.catppuccin
+
+                # components
                 base
                 dev
 
@@ -106,8 +131,6 @@ in
 
       };
 
-      services.fstrim.enable = true;
-
       fileSystems = {
         "/" = {
           device = "/dev/disk/by-uuid/b1a956f4-91d5-456e-a92b-be505bb719bd";
@@ -144,6 +167,7 @@ in
       ];
 
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      hardware.enableRedistributableFirmware = true;
       hardware.cpu.amd.updateMicrocode = true;
     };
 }

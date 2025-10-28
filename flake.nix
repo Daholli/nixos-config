@@ -16,8 +16,10 @@
     import-tree.url = "github:vic/import-tree";
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
+    catppuccin.url = "github:catppuccin/nix";
+    sops-nix.url = "github:Mic92/sops-nix";
+
     nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/e880129391be2f558d6c205cfd931be338b3b707";
-    nixpkgs-tuya-vacuum.url = "github:Daholli/nixpkgs/84b34e39e7a0879367189f34401191f6a0364bcf";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -90,13 +92,9 @@
       flake = false;
     };
 
-    sops-nix.url = "github:Mic92/sops-nix";
-
-    ## temporary
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    catppuccin.url = "github:catppuccin/nix";
 
     ################
     ## inputs for dev shells

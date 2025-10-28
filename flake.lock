@@ -1276,22 +1276,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-tuya-vacuum": {
-      "locked": {
-        "lastModified": 1743180016,
-        "narHash": "sha256-REuNO+d3gTjk+03wZEcwCvXZNQGbb0nv44gwoLMTj4Q=",
-        "owner": "Daholli",
-        "repo": "nixpkgs",
-        "rev": "84b34e39e7a0879367189f34401191f6a0364bcf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Daholli",
-        "repo": "nixpkgs",
-        "rev": "84b34e39e7a0879367189f34401191f6a0364bcf",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1761373498,
@@ -1450,7 +1434,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-latest-factorio": "nixpkgs-latest-factorio",
-        "nixpkgs-tuya-vacuum": "nixpkgs-tuya-vacuum",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",

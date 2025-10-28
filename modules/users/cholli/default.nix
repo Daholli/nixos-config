@@ -47,7 +47,7 @@
         };
 
       homeManager.cholli =
-        { ... }:
+        { pkgs, ... }:
         let
           defaultIconFileName = "profile.png";
         in
@@ -64,6 +64,12 @@
               ".face".source = ./${defaultIconFileName};
               "Pictures/${defaultIconFileName}".source = ./${defaultIconFileName};
             };
+
+            packages = with pkgs; [ graphviz ];
+            shellAliases = {
+              nixsize = "nix-du -n=50 | dot -Tsvg > ~/Pictures/store.svg";
+            };
+
           };
         };
     };

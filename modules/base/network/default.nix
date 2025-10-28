@@ -9,14 +9,5 @@
           enable = true;
         };
       };
-
-      # systemd = {
-      #   services.NetworkManager-wait-online.enable = false;
-      #   network.wait-online.enable = false;
-      # };
-
-      services.resolved = {
-        enable = true;
-      };
     };
 }

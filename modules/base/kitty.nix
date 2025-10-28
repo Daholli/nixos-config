@@ -7,8 +7,8 @@
 
         home.packages = [
           pkgs.kitty
-          pkgs.xfce.thunar
         ];
+
         home.sessionVariables.TERMINAL = "kitty";
 
         home.file.".config/Thunar/uca.xml".text = ''

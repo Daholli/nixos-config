@@ -11,12 +11,18 @@
       username = "cholli";
     in
     {
+      imports = [ inputs.nix-ld.nixosModules.nix-ld ];
+
       environment.systemPackages = with pkgs; [
         nixfmt-rfc-style
         nix-prefetch-git
-
         nix-index
+
         nix-output-monitor
+
+        nix-du
+        nix-weather
+        nix-index
       ];
 
       programs.nh = {
@@ -26,6 +32,8 @@
       };
 
       nix = {
+        package = pkgs.lix;
+
         settings =
           let
             users = [

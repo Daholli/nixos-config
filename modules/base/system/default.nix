@@ -13,7 +13,6 @@
         {
           imports = [
             inputs.sops-nix.homeManagerModules.sops
-            inputs.catppuccin.homeModules.catppuccin
           ];
 
           home = {
@@ -31,7 +30,6 @@
         {
           imports = [
             inputs.sops-nix.nixosModules.sops
-            inputs.catppuccin.nixosModules.catppuccin
           ];
 
           environment.systemPackages = with pkgs; [

@@ -1,4 +1,4 @@
-{
+topLevel: {
   flake.modules.nixos.server =
     {
       config,
@@ -41,10 +41,10 @@
       security.acme = {
         acceptTerms = true;
         defaults = {
-          inherit (config.flake.meta.users.cholli) email;
+          inherit (topLevel.config.flake.meta.users.cholli) email;
 
-          group = lib.optional config.services.nginx.enable "nginx";
-          reloadServices = lib.optional config.services.nginx.enable "nginx.service";
+          group = lib.mkIf config.services.nginx.enable "nginx";
+          reloadServices = lib.mkIf config.services.nginx.enable "nginx.service";
 
           dnsProvider = "netcup";
           environmentFile = config.sops.templates."netcup.env".path;

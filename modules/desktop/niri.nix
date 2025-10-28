@@ -28,7 +28,8 @@
         ...
       }:
       {
-        config = lib.mkIf osConfig.programs.niri.enable {
+
+        config = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {
           programs.niri.settings = {
             input = {
               keyboard = {

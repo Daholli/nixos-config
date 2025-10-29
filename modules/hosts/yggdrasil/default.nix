@@ -24,6 +24,7 @@ in
         diebahn
 
         path-of-building
+        termscp
       ];
 
       services.teamviewer.enable = true;
@@ -53,7 +54,7 @@ in
           amdgpu
 
           # dektops
-          hyprland
+          # hyprland
           niri
 
           # apps
@@ -99,6 +100,5 @@ in
           }
         ];
       };
-
     };
 }

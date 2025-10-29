@@ -140,8 +140,34 @@
 
             screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
-            # TODO: block 1pass from screenshots and window capture
-            # TODO: move windows to workspaces where I expect them
+            workspaces = {
+              "01-zen" = {
+                open-on-output = "DP-1";
+              };
+              "02-steam" = {
+                open-on-output = "DP-1";
+              };
+              "03-work" = {
+                open-on-output = "DP-1";
+              };
+              "04-games" = {
+                open-on-output = "DP-1";
+              };
+              "01-communication" = {
+                open-on-output = "HDMI-A-1";
+              };
+              "02-1password" = {
+                open-on-output = "HDMI-A-1";
+              };
+            };
+
+            layer-rules = [
+              {
+                matches = [ { namespace = "^notifications$"; } ];
+                block-out-from = "screencast";
+              }
+            ];
+
             window-rules = [
               {
                 excludes = [ ];
@@ -152,27 +178,60 @@
                   bottom-left = 15.0;
                   bottom-right = 15.0;
                 };
+
+                #
+                open-fullscreen = false;
               }
               {
                 matches = [ { is-window-cast-target = true; } ];
 
-                focus-ring = {
-                  active.color = "#f38ba8";
-                  inactive.color = "#7d0d2d";
-                };
-
                 border = {
-                  inactive.color = "#7d0d2d";
+                  enable = true;
+                  width = 2;
+                  active.color = "#f38ba8";
+                  inactive.color = "#f38ba8";
                 };
 
                 shadow = {
-                  color = "#7d0d2d70";
+                  color = "#f38ba870";
                 };
+              }
+              {
+                matches = [
+                  {
+                    app-id = "1password";
+                    is-floating = true;
+                    is-focused = false;
+                  }
+                ];
 
-                tab-indicator = {
-                  active.color = "#f38ba8";
-                  inactive.color = "#7d0d2d";
-                };
+              }
+              {
+                matches = [
+                  {
+                    app-id = "steam";
+                    title = "Steam";
+                  }
+                ];
+
+                open-on-workspace = "02-steam";
+                open-maximized = true;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "steam_app_.*";
+                  }
+                  {
+                    app-id = "factorio";
+                  }
+                ];
+
+                open-on-workspace = "04-games";
+                default-column-width.proportion = 1.0;
+                default-window-height.proportion = 1.0;
+                min-width = 3440;
+                min-height = 1440;
               }
               {
                 matches = [
@@ -180,15 +239,43 @@
                     app-id = "discord";
                   }
                   {
+                    app-id = "steam";
+                    title = "Friends List.*";
+                  }
+                ];
+                open-on-workspace = "01-communication";
+                default-column-width.proportion = 1.0;
+                open-fullscreen = false;
+              }
+              {
+                matches = [
+                  {
                     app-id = "1Password";
+                  }
+                ];
+
+                open-on-workspace = "02-1password";
+                default-column-width.proportion = 1.0;
+                open-fullscreen = false;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "1Password";
+                  }
+                  {
+                    app-id = "discord";
                   }
                   {
                     app-id = "steam";
                     title = "Friends List.*";
                   }
+                  {
+                    app-id = "teams-for-linux";
+                  }
                 ];
-                open-on-output = "HDMI-A-1";
-                default-column-width.proportion = 1.0;
+
+                block-out-from = "screencast";
               }
             ];
 
@@ -223,10 +310,12 @@
                     repeat = false;
                   };
 
-                  "Mod+1".action = actions.focus-workspace "zen";
-                  "Mod+2".action = actions.focus-workspace "steam";
-                  "Mod+3".action = actions.focus-workspace "communication";
-                  "Mod+4".action = actions.focus-workspace "work";
+                  "Mod+1".action = actions.focus-workspace "01-zen";
+                  "Mod+2".action = actions.focus-workspace "02-steam";
+                  "Mod+3".action = actions.focus-workspace "03-work";
+                  "Mod+4".action = actions.focus-workspace "04-games";
+                  "Mod+5".action = actions.focus-workspace "01-communication";
+                  "Mod+9".action = actions.focus-workspace "02-1password";
 
                   "Mod+J" = {
                     action = actions.focus-window-or-workspace-down;
@@ -302,8 +391,8 @@
                   "Mod+R".action = actions.switch-preset-column-width;
                   "Mod+Shift+R".action = actions.switch-preset-window-height;
                   "Mod+Ctrl+R".action = actions.reset-window-height;
-                  "Mod+F".action = actions.fullscreen-window;
-                  "Mod+Shift+F".action = actions.maximize-column;
+                  "Mod+F".action = actions.maximize-column;
+                  "Mod+Shift+F".action = actions.fullscreen-window;
                   "Mod+Ctrl+F".action = actions.expand-column-to-available-width;
 
                   "Mod+C".action = actions.center-column;

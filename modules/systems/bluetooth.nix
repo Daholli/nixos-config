@@ -9,10 +9,10 @@
           General = {
             Experimental = true;
             KernelExperimental = true;
-            Enable = "Source,Sink,Media,Socket";
+            Enable = "Sink,Media,Socket";
+            Disable = "Handsfree,Headset,Source";
           };
         };
       };
-
     };
 }

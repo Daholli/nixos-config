@@ -17,6 +17,7 @@
           alsa.support32Bit = true;
           pulse.enable = true;
 
+          # TODO: make sure that `wpctl settings --save bluetooth.autoswitch-to-headset-profile false` is set since the things below are not working
           wireplumber.configPackages = [
             (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/11-bluetooth-policy.conf" ''
               wireplumber.settings = {

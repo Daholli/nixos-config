@@ -15,6 +15,7 @@
         nerd-fonts.code-new-roman
         nerd-fonts.fira-code
         nerd-fonts.symbols-only
+        nerd-fonts.jetbrains-mono
         fira
       ];
 

@@ -21,8 +21,8 @@
           wl-clipboard
           xsel
 
-          mako
           waybar
+          libnotify
         ];
 
         xdg = {
@@ -76,6 +76,14 @@
       }:
       {
         config = lib.mkIf (osConfig.networking.hostName == "yggdrasil" && osConfig.programs.niri.enable) {
+          services.mako = {
+            enable = true;
+            settings = {
+              border-radius = 15;
+              border-color = "#505050";
+              background-color = "#00000070";
+            };
+          };
 
           programs.niri.settings = {
             prefer-no-csd = true;

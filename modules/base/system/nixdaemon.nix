@@ -44,6 +44,7 @@
             ++ lib.optional config.services.hydra.enable "hydra hydra-www hydra-evaluator hydra-queue-runner";
           in
           {
+            nix-path = "nixpkgs=flake:nixpkgs";
             experimental-features = "nix-command flakes";
             http-connections = 50;
             warn-dirty = false;
@@ -53,6 +54,18 @@
             trusted-users = users;
             allowed-users = users;
             allowed-uris = "github: https://github.com/ git+https://github.com/ gitlab: https://gitlab.com/ git+https://gitlab.com/";
+            substituters = [
+              "https://cache.lix.systems"
+              "https://nix-community.cachix.org"
+              "https://nixcache.christophhollizeck.dev"
+              "https://hyprland.cachix.org"
+            ];
+            trusted-public-keys = [
+              "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+              "christophhollizeck.dev:7pPAvm9xqFQB8FDApVNL6Tii1Jsv+Sj/LjEIkdeGhbA="
+              "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+            ];
           }
           // (lib.optionalAttrs config.programs.direnv.enable {
             keep-outputs = true;

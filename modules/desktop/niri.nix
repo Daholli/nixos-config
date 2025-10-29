@@ -194,27 +194,6 @@
 
             binds =
               with config.lib.niri;
-              let
-                workspaces = (builtins.genList (x: x + 1) 9);
-
-                focus-workspaces = builtins.listToAttrs (
-                  map (num: {
-                    name = "Mod+${toString num}";
-                    value = {
-                      action.focus-workspace = num;
-                    };
-                  }) workspaces
-                );
-                move-to-workspaces = builtins.listToAttrs (
-                  map (num: {
-                    name = "Mod+Ctrl+${toString num}";
-                    value = {
-                      action.move-window-to-workspace = num;
-                    };
-                  }) workspaces
-                );
-              in
-
               lib.mkMerge [
                 {
                   "Mod+Shift+Slash".action = actions.show-hotkey-overlay;
@@ -234,6 +213,11 @@
                     action = actions.toggle-overview;
                     repeat = false;
                   };
+
+                  "Mod+1".action = actions.focus-workspace "zen";
+                  "Mod+2".action = actions.focus-workspace "steam";
+                  "Mod+3".action = actions.focus-workspace "communication";
+                  "Mod+4".action = actions.focus-workspace "work";
 
                   "Mod+J" = {
                     action = actions.focus-window-or-workspace-down;
@@ -365,8 +349,6 @@
                     allow-when-locked = true;
                   };
                 }
-                focus-workspaces
-                move-to-workspaces
               ];
 
             spawn-at-startup = [

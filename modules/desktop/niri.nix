@@ -204,6 +204,15 @@
                   "Mod+D".action.spawn = "${lib.getExe pkgs.fuzzel}";
                   "Mod+Alt+L".action.spawn = "hyprlock-blur";
 
+                  "Mod+Escape" = {
+                    allow-inhibiting = false;
+                    action = actions.toggle-keyboard-shortcuts-inhibit;
+                  };
+
+                  "Print".action.screenshot = [ ];
+                  "Ctrl+Print".action.screenshot-screen = [ ];
+                  "Alt+Print".action.screenshot-window = [ ];
+
                   "Mod+Shift+Q" = {
                     action = actions.close-window;
                     repeat = false;

@@ -1,10 +1,6 @@
 {
   description = "All encompassing flake";
 
-  nixConfig = {
-    allow-import-from-derivation = true;
-  };
-
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
@@ -75,6 +71,7 @@
 
     niri-flake = {
       url = "github:sodiboo/niri-flake";
+      # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7";
       inputs = {
         niri-stable.follows = "niri";
         nixpkgs.follows = "nixpkgs";

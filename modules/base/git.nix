@@ -6,7 +6,6 @@ topLevel: {
         environment.systemPackages = with pkgs; [
           git
         ];
-
       };
 
     homeManager.cholli =

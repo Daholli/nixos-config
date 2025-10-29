@@ -12,10 +12,57 @@
           package = inputs.niri-flake.packages.${pkgs.system}.niri-unstable;
         };
 
-        environment.systemPackages = [
-          pkgs.alacritty
-          pkgs.fuzzel
+        environment.systemPackages = with pkgs; [
+          kitty
+          fuzzel
+
+          inputs.niri-flake.packages.${pkgs.system}.xwayland-satellite-unstable
+
+          wl-clipboard
+          xsel
+
+          waybar
+          libnotify
         ];
+
+        xdg = {
+          autostart.enable = true;
+          portal = {
+            enable = true;
+            extraPortals = [
+              pkgs.xdg-desktop-portal-gnome
+              pkgs.xdg-desktop-portal-gtk
+            ];
+            xdgOpenUsePortal = true;
+
+            config = {
+              common = {
+                default = [ "*" ];
+                "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+              };
+              niri = {
+                default = [
+                  "gnome"
+                  "gtk"
+                ];
+                "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+                "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+              };
+            };
+          };
+        };
+
+        environment.sessionVariables = {
+          NIXOS_OZONE_WL = "1"; # Hint electron apps to use wayland
+          ELECTRON_OZONE_PLATFORM_HINT = "auto";
+
+          XDG_SESSION_TYPE = "wayland";
+
+          QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+          QT_QPA_PLATFORM = "wayland;xcb";
+        };
+
       };
 
     homeManager.cholli =
@@ -28,11 +75,30 @@
         ...
       }:
       {
-        config = lib.mkIf osConfig.programs.niri.enable {
+        config = lib.mkIf (osConfig.networking.hostName == "yggdrasil" && osConfig.programs.niri.enable) {
+          services.mako = {
+            enable = true;
+            settings = {
+              border-radius = 15;
+              border-color = "#505050";
+              background-color = "#00000070";
+            };
+          };
+
           programs.niri.settings = {
+            prefer-no-csd = true;
+
             input = {
               keyboard = {
+                xkb = {
+                  layout = "us";
+                  rules = "escape:nocaps";
+                };
                 numlock = true;
+              };
+
+              touchpad = {
+                enable = false;
               };
             };
 
@@ -48,6 +114,9 @@
                 height = 1080;
               };
               transform.rotation = 90;
+              # layout = {
+              #   default-column-width.proportion = 1.0;
+              # };
             };
 
             layout = {
@@ -62,7 +131,6 @@
                 { proportion = 1. / 3.; }
                 { proportion = 1. / 2.; }
                 { proportion = 2. / 3.; }
-
               ];
 
               focus-ring = {
@@ -80,32 +148,165 @@
 
             screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
-            # block 1pass from screenshots and window capture
+            workspaces = {
+              "01-zen" = {
+                open-on-output = "DP-1";
+              };
+              "02-steam" = {
+                open-on-output = "DP-1";
+              };
+              "03-work" = {
+                open-on-output = "DP-1";
+              };
+              "04-games" = {
+                open-on-output = "DP-1";
+              };
+              "01-communication" = {
+                open-on-output = "HDMI-A-1";
+              };
+              "02-1password" = {
+                open-on-output = "HDMI-A-1";
+              };
+            };
+
+            layer-rules = [
+              {
+                matches = [ { namespace = "^notifications$"; } ];
+                block-out-from = "screencast";
+              }
+            ];
+
             window-rules = [
+              {
+                excludes = [ ];
+                clip-to-geometry = true;
+                geometry-corner-radius = {
+                  top-left = 15.0;
+                  top-right = 15.0;
+                  bottom-left = 15.0;
+                  bottom-right = 15.0;
+                };
+
+                #
+                open-fullscreen = false;
+              }
+              {
+                matches = [ { is-window-cast-target = true; } ];
+
+                border = {
+                  enable = true;
+                  width = 2;
+                  active.color = "#f38ba8";
+                  inactive.color = "#f38ba8";
+                };
+
+                shadow = {
+                  color = "#f38ba870";
+                };
+              }
+              {
+                matches = [
+                  {
+                    app-id = "1password";
+                    is-floating = true;
+                    is-focused = false;
+                  }
+                ];
+
+              }
+              {
+                matches = [
+                  {
+                    app-id = "steam";
+                    title = "Steam";
+                  }
+                ];
+
+                open-on-workspace = "02-steam";
+                open-maximized = true;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "steam_app_.*";
+                  }
+                  {
+                    app-id = "factorio";
+                  }
+                ];
+
+                open-on-workspace = "04-games";
+                default-column-width.proportion = 1.0;
+                default-window-height.proportion = 1.0;
+                min-width = 3440;
+                min-height = 1440;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "discord";
+                  }
+                  {
+                    app-id = "steam";
+                    title = "Friends List.*";
+                  }
+                ];
+                open-on-workspace = "01-communication";
+                default-column-width.proportion = 1.0;
+                open-fullscreen = false;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "1Password";
+                  }
+                ];
+
+                open-on-workspace = "02-1password";
+                default-column-width.proportion = 1.0;
+                open-fullscreen = false;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "1Password";
+                  }
+                  {
+                    app-id = "discord";
+                  }
+                  {
+                    app-id = "steam";
+                    title = "Friends List.*";
+                  }
+                  {
+                    app-id = "teams-for-linux";
+                  }
+                ];
+
+                block-out-from = "screencast";
+              }
             ];
 
             binds =
               with config.lib.niri;
-              let
-                workspaces = (builtins.genList (x: x + 1) 9);
-
-                focus-workspaces = builtins.listToAttrs (
-                  map (num: {
-                    name = "Mod+${toString num}";
-                    value = {
-                      action.focus-workspace = num;
-                    };
-                  }) workspaces
-                );
-              in
-
               lib.mkMerge [
                 {
                   "Mod+Shift+Slash".action = actions.show-hotkey-overlay;
+                  "Mod+Shift+E".action = actions.quit;
+                  "Ctrl+Alt+Delete".action = actions.quit;
 
                   "Mod+Return".action.spawn = "${lib.getExe pkgs.kitty}";
                   "Mod+D".action.spawn = "${lib.getExe pkgs.fuzzel}";
                   "Mod+Alt+L".action.spawn = "hyprlock-blur";
+
+                  "Mod+Escape" = {
+                    allow-inhibiting = false;
+                    action = actions.toggle-keyboard-shortcuts-inhibit;
+                  };
+
+                  "Print".action.screenshot = [ ];
+                  "Ctrl+Print".action.screenshot-screen = [ ];
+                  "Alt+Print".action.screenshot-window = [ ];
 
                   "Mod+Shift+Q" = {
                     action = actions.close-window;
@@ -116,6 +317,106 @@
                     action = actions.toggle-overview;
                     repeat = false;
                   };
+
+                  "Mod+1".action = actions.focus-workspace "01-zen";
+                  "Mod+2".action = actions.focus-workspace "02-steam";
+                  "Mod+3".action = actions.focus-workspace "03-work";
+                  "Mod+4".action = actions.focus-workspace "04-games";
+                  "Mod+5".action = actions.focus-workspace "01-communication";
+                  "Mod+9".action = actions.focus-workspace "02-1password";
+
+                  "Mod+J" = {
+                    action = actions.focus-window-or-workspace-down;
+                  };
+                  "Mod+K" = {
+                    action = actions.focus-window-or-workspace-up;
+                  };
+                  "Mod+Ctrl+J" = {
+                    action = actions.move-window-down-or-to-workspace-down;
+                  };
+                  "Mod+Ctrl+K" = {
+                    action = actions.move-window-up-or-to-workspace-up;
+                  };
+                  "Mod+Down" = {
+                    action = actions.focus-window-or-workspace-down;
+                  };
+                  "Mod+Up" = {
+                    action = actions.focus-window-or-workspace-up;
+                  };
+                  "Mod+Ctrl+Down" = {
+                    action = actions.move-window-down-or-to-workspace-down;
+                  };
+                  "Mod+Ctrl+Up" = {
+                    action = actions.move-window-up-or-to-workspace-up;
+                  };
+
+                  "Mod+H" = {
+                    action = actions.focus-column-or-monitor-left;
+                  };
+                  "Mod+L" = {
+                    action = actions.focus-column-or-monitor-right;
+                  };
+                  "Mod+Ctrl+H" = {
+                    action = actions.move-column-left-or-to-monitor-left;
+                  };
+                  "Mod+Ctrl+L" = {
+                    action = actions.move-column-right-or-to-monitor-right;
+                  };
+                  "Mod+Left" = {
+                    action = actions.focus-column-or-monitor-left;
+                  };
+                  "Mod+Right" = {
+                    action = actions.focus-column-or-monitor-right;
+                  };
+                  "Mod+Ctrl+Left" = {
+                    action = actions.move-column-left-or-to-monitor-left;
+                  };
+                  "Mod+Ctrl+Right" = {
+                    action = actions.move-column-right-or-to-monitor-right;
+                  };
+
+                  "Mod+WheelScrollDown" = {
+                    action = actions.focus-column-right;
+                  };
+                  "Mod+WheelScrollUp" = {
+                    action = actions.focus-column-left;
+                  };
+                  "Mod+Shift+WheelScrollDown" = {
+                    action = actions.focus-workspace-down;
+                    cooldown-ms = 150;
+                  };
+                  "Mod+Shift+WheelScrollUp" = {
+                    action = actions.focus-workspace-up;
+                    cooldown-ms = 150;
+                  };
+
+                  # Window Sizes
+                  "Mod+BracketLeft".action = actions.consume-or-expel-window-left;
+                  "Mod+BracketRight".action = actions.consume-or-expel-window-right;
+                  "Mod+Comma".action = actions.consume-window-into-column;
+                  "Mod+Period".action = actions.expel-window-from-column;
+
+                  "Mod+R".action = actions.switch-preset-column-width;
+                  "Mod+Shift+R".action = actions.switch-preset-window-height;
+                  "Mod+Ctrl+R".action = actions.reset-window-height;
+                  "Mod+F".action = actions.maximize-column;
+                  "Mod+Shift+F".action = actions.fullscreen-window;
+                  "Mod+Ctrl+F".action = actions.expand-column-to-available-width;
+
+                  "Mod+C".action = actions.center-column;
+                  "Mod+V".action = actions.toggle-window-floating;
+
+                  # Xwayland keyboard stuff
+                  "Mod+Shift+C".action = actions.spawn [
+                    "sh"
+                    "-c"
+                    "env DISPLAY=:0 xsel -ob | wl-copy"
+                  ];
+                  "Mod+Shift+V".action = actions.spawn [
+                    "sh"
+                    "-c"
+                    "wl-paste -n | env DISPLAY=:0 xsel -ib"
+                  ];
 
                   "XF86AudioRaiseVolume" = {
                     action.spawn = [
@@ -154,8 +455,16 @@
                     allow-when-locked = true;
                   };
                 }
-                focus-workspaces
               ];
+
+            spawn-at-startup = [
+              { argv = [ "waybar" ]; }
+              { argv = [ "zen-beta" ]; }
+              { argv = [ "steam" ]; }
+              { argv = [ "obsidian" ]; }
+              { argv = [ "discord" ]; }
+              { argv = [ "1password" ]; }
+            ];
 
           };
 

@@ -30,6 +30,7 @@
         {
           imports = [
             inputs.sops-nix.nixosModules.sops
+            inputs.niri-flake.nixosModules.niri
           ];
 
           environment.systemPackages = with pkgs; [

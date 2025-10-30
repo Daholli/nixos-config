@@ -68,5 +68,41 @@ in
         443
       ];
 
+      nix = {
+        distributedBuilds = true;
+
+        extraOptions = ''
+          builders-use-substitutes = true
+        '';
+
+        buildMachines = [
+          {
+            hostName = "localhost";
+            protocol = null;
+            system = "x86_64-linux";
+
+            supportedFeatures = [
+              "kvm"
+              "nixos-test"
+              "big-parallel"
+              "benchmark"
+            ];
+          }
+          {
+            hostName = "100.86.23.74";
+            sshUser = "remotebuild";
+            sshKey = "/root/.ssh/remotebuild";
+            systems = [ "aarch64-linux" ];
+            protocol = "ssh";
+
+            supportedFeatures = [
+              "nixos-test"
+              "big-parallel"
+              "kvm"
+            ];
+          }
+        ];
+      };
+
     };
 }

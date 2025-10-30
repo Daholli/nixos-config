@@ -30,7 +30,6 @@ in
           # System modules
           base
           server
-          dev
 
           # apps
 
@@ -45,7 +44,6 @@ in
 
                 # components
                 base
-                dev
 
                 # Activate all user based config
                 cholli

@@ -8,8 +8,6 @@
     }:
     let
       domainName = "christophhollizeck.dev";
-      forgejoPort = 3000;
-      hydraPort = 2000;
     in
     {
       services.nginx = {
@@ -17,7 +15,7 @@
         recommendedProxySettings = true;
 
         virtualHosts = {
-          "git.${domainName}" = {
+          "git.${domainName}" = lib.mkIf config.services.forgejo.enable {
             forceSSL = true;
             useACMEHost = domainName;
 
@@ -25,7 +23,7 @@
               extraConfig = ''
                 client_max_body_size 200M;
               '';
-              proxyPass = "http://localhost:${toString forgejoPort}/";
+              proxyPass = "http://localhost:${toString 3000}/";
             };
           };
 
@@ -34,7 +32,7 @@
             useACMEHost = domainName;
 
             locations."/" = {
-              proxyPass = "http://localhost:${toString hydraPort}/";
+              proxyPass = "http://localhost:${toString config.services.hydra.port}/";
             };
           };
 

@@ -14,8 +14,8 @@ in
       ...
     }:
     let
+      domainName = "christophhollizeck.dev";
       sopsFile = ../../../secrets/secrets-loptland.yaml;
-
     in
     {
       nixpkgs.config.allowUnfree = true;
@@ -31,6 +31,7 @@ in
           base
           server
           hydra
+          forgejo
           factorio-server
 
           # apps
@@ -55,19 +56,16 @@ in
 
         ];
 
-      sops = {
-        secrets = {
-          "forgejo/db/password" = {
-            inherit sopsFile;
-          };
-          "forgejo/mail/password" = {
-            inherit sopsFile;
-          };
-          "forgejo/mail/passwordHash" = {
-            inherit sopsFile;
-          };
-        };
+      services.tailscale = {
+        enable = true;
+        useRoutingFeatures = "client";
       };
+
+      networking.firewall.allowedTCPPorts = [
+        3000
+        80
+        443
+      ];
 
     };
 }

@@ -30,6 +30,8 @@ in
           # System modules
           base
           server
+          hydra
+          factorio-server
 
           # apps
 

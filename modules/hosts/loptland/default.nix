@@ -31,8 +31,9 @@ in
           base
           server
           hydra
-          forgejo
           factorio-server
+          forgejo
+          forgejo-runner
 
           # apps
 

@@ -21,6 +21,7 @@ in
       nixpkgs.config.allowUnfree = true;
       services.qemuGuest.enable = true;
 
+      # TODO: dunno why I need this packge
       environment.systemPackages = [ pkgs.dconf ];
 
       imports =

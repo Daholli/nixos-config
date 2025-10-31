@@ -2,7 +2,6 @@
   flake.modules.homeManager.cholli =
     { ... }:
     {
-      catppuccin.starship.enable = false;
       programs = {
         starship = {
           enable = true;

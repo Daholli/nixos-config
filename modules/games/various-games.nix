@@ -5,6 +5,10 @@
       environment.systemPackages = with pkgs; [
         prismlauncher
         starsector
+
+        # gaming tools
+        pyfa
+        path-of-building
       ];
     };
 }

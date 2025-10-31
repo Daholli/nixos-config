@@ -3,9 +3,6 @@
     nixos.niri =
       { inputs, pkgs, ... }:
       {
-        imports = [
-          inputs.niri-flake.nixosModules.niri
-        ];
 
         programs.niri = {
           enable = true;
@@ -14,14 +11,12 @@
 
         environment.systemPackages = with pkgs; [
           kitty
-          fuzzel
 
           inputs.niri-flake.packages.${pkgs.system}.xwayland-satellite-unstable
 
           wl-clipboard
           xsel
 
-          waybar
           libnotify
         ];
 
@@ -76,13 +71,31 @@
       }:
       {
         config = lib.mkIf (osConfig.networking.hostName == "yggdrasil" && osConfig.programs.niri.enable) {
+          catppuccin = {
+            flavor = "mocha";
+            accent = "lavender";
+            cursors = {
+              enable = true;
+            };
+
+            fuzzel = {
+              enable = true;
+            };
+
+            mako = {
+              enable = true;
+            };
+          };
+
           services.mako = {
             enable = true;
             settings = {
               border-radius = 15;
-              border-color = "#505050";
-              background-color = "#00000070";
             };
+          };
+
+          programs.fuzzel = {
+            enable = true;
           };
 
           programs.niri.settings = {
@@ -142,6 +155,11 @@
                   color = "#505050";
                 };
               };
+            };
+
+            cursor = {
+              hide-when-typing = true;
+              hide-after-inactive-ms = 10000;
             };
 
             hotkey-overlay.skip-at-startup = true;
@@ -207,11 +225,24 @@
               {
                 matches = [
                   {
-                    app-id = "1password";
+                    # This matches any subwindow of 1password e.g. the confirmation window for ssh keys
+                    app-id = "1Password";
+                    title = "1Password";
                     is-floating = true;
-                    is-focused = false;
                   }
                 ];
+
+                # this works, the border is drawn correctly
+                border = {
+                  enable = true;
+                  width = 2;
+                  active.color = "#3a9657";
+                  inactive.color = "#dbd11c";
+                };
+
+                #this does not seem to work
+                open-focused = true;
+                open-on-output = "DP-1";
 
               }
               {
@@ -224,6 +255,18 @@
 
                 open-on-workspace = "02-steam";
                 open-maximized = true;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "obsidian";
+                  }
+                  {
+                    app-id = "teams-for-linux";
+                  }
+                ];
+
+                open-on-workspace = "03-work";
               }
               {
                 matches = [
@@ -259,6 +302,7 @@
                 matches = [
                   {
                     app-id = "1Password";
+                    at-startup = true;
                   }
                 ];
 
@@ -460,12 +504,11 @@
             spawn-at-startup = [
               { argv = [ "waybar" ]; }
               { argv = [ "zen-beta" ]; }
-              { argv = [ "steam" ]; }
               { argv = [ "obsidian" ]; }
               { argv = [ "discord" ]; }
               { argv = [ "1password" ]; }
+              { sh = "steam"; }
             ];
-
           };
 
         };

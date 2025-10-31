@@ -41,6 +41,8 @@
             shell = pkgs.fish;
             # TODO: fix this with sops
             initialPassword = "asdf";
+
+            openssh.authorizedKeys.keys = config.flake.meta.users.cholli.authorizedKeys;
           };
 
           nix.settings.trusted-users = [ config.flake.meta.users.cholli.username ];

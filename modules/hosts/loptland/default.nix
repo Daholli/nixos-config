@@ -21,6 +21,8 @@ in
       nixpkgs.config.allowUnfree = true;
       services.qemuGuest.enable = true;
 
+      environment.systemPackages = [ pkgs.dconf ];
+
       imports =
         with config.flake.modules.nixos;
         [

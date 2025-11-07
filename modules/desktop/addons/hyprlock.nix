@@ -33,7 +33,7 @@
         ...
       }:
       let
-        hyprlock-package = inputs.hyprlock.packages.${pkgs.system}.hyprlock;
+        hyprlock-package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
       in
       {
         config = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {

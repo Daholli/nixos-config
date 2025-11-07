@@ -7,7 +7,7 @@
         ...
       }:
       let
-        helix-pkg = inputs.helix.packages.${pkgs.system}.default;
+        helix-pkg = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
       in
       {
         environment = {
@@ -26,7 +26,7 @@
         ...
       }:
       let
-        helix-pkg = inputs.helix.packages.${pkgs.system}.default;
+        helix-pkg = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
       in
       {
         home.file.".config/helix/ignore".text = ''

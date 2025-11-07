@@ -6,13 +6,13 @@
 
         programs.niri = {
           enable = true;
-          package = inputs.niri-flake.packages.${pkgs.system}.niri-unstable;
+          package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         };
 
         environment.systemPackages = with pkgs; [
           kitty
 
-          inputs.niri-flake.packages.${pkgs.system}.xwayland-satellite-unstable
+          inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
 
           wl-clipboard
           xsel

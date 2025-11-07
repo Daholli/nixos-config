@@ -9,7 +9,7 @@
         ...
       }:
       let
-        zenbrowser = inputs.zen-browser.packages."${pkgs.system}".default;
+        zenbrowser = inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default;
       in
 
       {

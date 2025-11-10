@@ -301,7 +301,7 @@
               {
                 matches = [
                   {
-                    app-id = "1Password";
+                    app-id = "1password";
                     at-startup = true;
                   }
                 ];
@@ -507,7 +507,7 @@
               { argv = [ "obsidian" ]; }
               { argv = [ "discord" ]; }
               { argv = [ "1password" ]; }
-              { sh = "steam"; }
+              { sh = "sleep 1 && steam"; }
             ];
           };
 

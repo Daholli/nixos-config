@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.games =
-    { pkgs, ... }:
+    { inputs, pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
         prismlauncher
@@ -8,7 +8,7 @@
 
         # gaming tools
         pyfa
-        path-of-building
+        inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.rusty-path-of-building
       ];
     };
 }

@@ -56,8 +56,8 @@ topLevel: {
             };
             maintenance = {
               repo = [
-                "home/${username}/projects/nixpkgs"
-                "home/${username}/projects/config"
+                "/home/${username}/projects/nixpkgs"
+                "/home/${username}/projects/config"
               ];
               strategy = "incremental";
             };

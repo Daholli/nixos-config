@@ -23,8 +23,9 @@ in
         obsidian
         diebahn
 
-        path-of-building
         termscp
+        nixpkgs-review
+        # inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.star-citizen
       ];
 
       services.teamviewer.enable = true;
@@ -53,7 +54,7 @@ in
           bluetooth
           amdgpu
 
-          # dektops
+          # desktops
           # hyprland
           niri
 
@@ -86,7 +87,7 @@ in
         settings.builders-use-substitutes = true;
         buildMachines = [
           {
-            hostName = "nixberry";
+            hostName = "192.168.178.2";
             sshUser = "remotebuild";
             sshKey = "/root/.ssh/remotebuild";
             systems = [ "aarch64-linux" ];

@@ -8,7 +8,7 @@
         ...
       }:
       let
-        hyprland-package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        hyprland-package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
         focus-1password = pkgs.writeShellScriptBin "focus-or-open-1pass" ''
           running=$(hyprctl -j clients | jq -r '.[] | select(.class == "1password") | .workspace.id')
@@ -64,7 +64,7 @@
           hyprland = {
             enable = true;
             package = hyprland-package;
-            portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+            portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
             withUWSM = true;
           };
         };
@@ -124,14 +124,14 @@
         ...
       }:
       let
-        hyprland-package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        hyprland-package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       in
       {
         config = lib.mkIf osConfig.programs.hyprland.enable {
           wayland.windowManager.hyprland = {
             enable = true;
             package = hyprland-package;
-            plugins = [ inputs.hy3.packages.${pkgs.system}.hy3 ];
+            plugins = [ inputs.hy3.packages.${pkgs.stdenv.hostPlatform.system}.hy3 ];
             systemd.variables = [ "--all" ];
             settings = {
               "$mod" = "SUPER";

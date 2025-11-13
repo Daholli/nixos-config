@@ -6,13 +6,13 @@
 
         programs.niri = {
           enable = true;
-          package = inputs.niri-flake.packages.${pkgs.system}.niri-unstable;
+          package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         };
 
         environment.systemPackages = with pkgs; [
           kitty
 
-          inputs.niri-flake.packages.${pkgs.system}.xwayland-satellite-unstable
+          inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
 
           wl-clipboard
           xsel
@@ -301,7 +301,7 @@
               {
                 matches = [
                   {
-                    app-id = "1Password";
+                    app-id = "1password";
                     at-startup = true;
                   }
                 ];
@@ -507,7 +507,7 @@
               { argv = [ "obsidian" ]; }
               { argv = [ "discord" ]; }
               { argv = [ "1password" ]; }
-              { sh = "steam"; }
+              { sh = "sleep 1 && steam"; }
             ];
           };
 

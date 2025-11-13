@@ -7,7 +7,7 @@
         ...
       }:
       let
-        helix-pkg = inputs.helix.packages.${pkgs.system}.default;
+        helix-pkg = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
       in
       {
         environment = {
@@ -19,9 +19,14 @@
       };
 
     homeManager.cholli =
-      { inputs, pkgs, ... }:
+      {
+        inputs,
+        lib,
+        pkgs,
+        ...
+      }:
       let
-        helix-pkg = inputs.helix.packages.${pkgs.system}.default;
+        helix-pkg = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
       in
       {
         home.file.".config/helix/ignore".text = ''
@@ -107,14 +112,25 @@
                 language-servers = [
                   "nixd"
                   "nil"
+                  "harper-ls"
                 ];
               }
               {
-                # provided by the dev environment in the rust shell
+                # Provided by the dev environment in the rust shell
                 name = "rust";
                 auto-format = true;
                 formatter.command = "cargo fmt";
-                language-servers = [ "rust-analyzer" ];
+                language-servers = [
+                  "rust-analyzer"
+                  "harper-ls"
+                ];
+              }
+              {
+                name = "zig";
+                language-servers = [
+                  "zls"
+                  "harper-ls"
+                ];
               }
             ];
 
@@ -145,6 +161,15 @@
                 command = "${pkgs.vscode-langservers-extracted}/bin/vscode-eslint-language-server";
                 args = [ "--stdio" ];
                 config.provideFormatter = true;
+              };
+              harper-ls = {
+                command = "${lib.getExe pkgs.harper}";
+                args = [ "--stdio" ];
+                config = {
+                  linters = {
+                    long_sentences = false;
+                  };
+                };
               };
             };
           };

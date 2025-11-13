@@ -1,6 +1,11 @@
 {
   flake.modules.homeManager.cholli =
-    { lib, osConfig, ... }:
+    {
+      lib,
+      osConfig,
+      pkgs,
+      ...
+    }:
     {
 
       config = lib.mkIf osConfig.programs.niri.enable {
@@ -39,11 +44,13 @@
               };
               "wireplumber" = {
                 "format" = " {volume}%";
+                "on-click" = "${lib.getExe pkgs.pavucontrol}";
                 "max-volume" = 100;
                 "scroll-step" = 5;
               };
               "cpu" = {
                 "format" = " {usage}%";
+                "on-click" = "${lib.getExe pkgs.kitty} ${lib.getExe pkgs.btop}";
               };
               "memory" = {
                 "interval" = 30;
@@ -51,6 +58,7 @@
               };
               "bluetooth" = {
                 "format" = "";
+                "on-click" = "${lib.getExe pkgs.kitty} ${lib.getExe pkgs.bluetui}";
                 "format-disabled" = "󰂲";
                 "format-connected" = "󰂱";
                 "tooltip-format" = "{controller_alias}\t{controller_address}";

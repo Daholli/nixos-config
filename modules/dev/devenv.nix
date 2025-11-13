@@ -3,7 +3,7 @@
     { inputs, pkgs, ... }:
     {
       environment.systemPackages = [
-        inputs.devenv.packages.${pkgs.system}.devenv
+        inputs.devenv.packages.${pkgs.stdenv.hostPlatform.system}.devenv
       ];
     };
 }

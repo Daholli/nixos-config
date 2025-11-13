@@ -34,9 +34,12 @@ in
           base
           server
           hydra
-          factorio-server
           forgejo
           forgejo-runner
+
+          # game server
+          minecraft-server
+          factorio-server
 
           # apps
 

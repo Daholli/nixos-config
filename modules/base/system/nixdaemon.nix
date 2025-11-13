@@ -27,7 +27,7 @@
 
       programs.nh = {
         enable = true;
-        package = inputs.nh-flake.packages.${pkgs.system}.nh;
+        package = inputs.nh-flake.packages.${pkgs.stdenv.hostPlatform.system}.nh;
         flake = "/home/${username}/projects/config";
       };
 
@@ -59,12 +59,14 @@
               "https://nix-community.cachix.org"
               "https://nixcache.christophhollizeck.dev"
               "https://hyprland.cachix.org"
+              "https://nix-gaming.cachix.org"
             ];
             trusted-public-keys = [
               "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
               "christophhollizeck.dev:7pPAvm9xqFQB8FDApVNL6Tii1Jsv+Sj/LjEIkdeGhbA="
               "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+              "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
             ];
           }
           // (lib.optionalAttrs config.programs.direnv.enable {

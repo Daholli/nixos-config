@@ -52,7 +52,7 @@
               checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
               deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --sudo --ask-sudo-password";
               deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --sudo --ask-sudo-password";
-              checkPR = ''cd /home/cholli/projects/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
+              checkPR = ''cd /home/cholli/projects/NixOS/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
             };
             plugins = with pkgs.fishPlugins; [
               {

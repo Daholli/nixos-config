@@ -13,19 +13,23 @@ in
     (lib.mapAttrs' (
       name: module:
       let
+        raspberrypis = [ "nixberry" ];
+
+        stripped_name = lib.removePrefix prefix name;
+
         specialArgs = {
           inherit inputs;
           hostConfig = module // {
-            name = lib.removePrefix prefix name;
+            name = stripped_name;
           };
-        };
 
-        raspberrypis = [ "nixberry" ];
+          nixos-raspberrypi = lib.mkIf (builtins.elem stripped_name raspberrypis) inputs.nixos-raspberrypi;
+        };
       in
       {
-        name = lib.removePrefix prefix name;
+        name = stripped_name;
         value =
-          if builtins.elem name raspberrypis then
+          if builtins.elem stripped_name raspberrypis then
             inputs.nixos-raspberrypi.lib.nixosSystem {
               inherit specialArgs;
               modules = module.imports ++ [

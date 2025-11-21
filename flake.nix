@@ -42,7 +42,7 @@
     };
 
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
-    ############
+    nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
 
     nix-gaming = {
       url = "github:fufexan/nix-gaming";

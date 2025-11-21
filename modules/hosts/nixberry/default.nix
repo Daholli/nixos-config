@@ -6,43 +6,20 @@ let
 in
 {
   flake.modules.nixos."hosts/nixberry" =
-    { inputs, pkgs, ... }:
+    {
+      inputs,
+      pkgs,
+      ...
+    }:
     let
 
       ipAddress = "192.168.178.2";
       sopsFile = ../../../secrets/secrets-nixberry.yaml;
-      kernelBundle = pkgs.linuxAndFirmware.v6_6_31;
     in
     {
       nixpkgs = {
         config.allowUnfree = true;
-        hostPlatform = {
-          system = "aarch64-linux";
-        };
-
-        overlays = [
-          (self: super: {
-            inherit (kernelBundle) raspberrypiWirelessFirmware;
-            inherit (kernelBundle) raspberrypifw;
-          })
-        ];
       };
-
-      boot = {
-        loader.raspberryPi.firmwarePackage = kernelBundle.raspberrypifw;
-        loader.raspberryPi.bootloader = "kernel";
-        kernelPackages = kernelBundle.linuxPackages_rpi5;
-      };
-
-      system.nixos.tags =
-        let
-          cfg = config.boot.loader.raspberryPi;
-        in
-        [
-          "raspberry-pi-${cfg.variant}"
-          cfg.bootloader
-          config.boot.kernelPackages.kernel.version
-        ];
 
       imports =
         with config.flake.modules.nixos;
@@ -50,9 +27,6 @@ in
         [
           inputs.catppuccin.nixosModules.catppuccin
           raspberry-pi-5.base
-          raspberry-pi-5.page-size-16k # Recommended: optimizations and fixes for issues arising from 16k memory page size (only for systems running default rpi5 (bcm2712) kernel)
-          raspberry-pi-5.bluetooth
-          raspberry-pi-5.display-vc4 # display
 
           # System modules
           base
@@ -105,14 +79,6 @@ in
           interface = "wlan0";
         };
 
-        wireless = {
-          enable = true;
-          networks = {
-            "Slow Internet" = {
-              pskRaw = "521b6d766b27276c29c7b6bec5b495b1c52bf88b0682277e65b37dc649b630de";
-            };
-          };
-        };
         firewall = {
           allowedTCPPorts = [
             443
@@ -249,6 +215,20 @@ in
           };
         };
         openFirewall = true;
+      };
+
+      fileSystems."/" = {
+        device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
+        fsType = "ext4";
+      };
+
+      fileSystems."/boot/firmware" = {
+        device = "/dev/disk/by-uuid/2178-694E";
+        fsType = "vfat";
+        options = [
+          "fmask=0022"
+          "dmask=0022"
+        ];
       };
 
     };

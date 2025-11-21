@@ -137,31 +137,51 @@
             language-server = {
               nixd = {
                 command = "${pkgs.nixd}/bin/nixd";
+                args = [ "--semantic-tokens=true" ];
+                config.nixd =
+                  let
+                    myFlake = "(builtins.getFlake (toString /home/cholli/projects/config))";
+                    nixosOpts = "${myFlake}.nixosConfigurations.manin.options";
+                  in
+                  {
+                    nixpkgs.expr = "import ${myFlake}.inputs.nixpkgs { }";
+                    formatting.command = [ "nixfmt" ];
+                    options = {
+                      nixos.expr = nixosOpts;
+                      home-manager.expr = "${nixosOpts}.home-manager.users.type.getSubOptions []";
+                    };
+                  };
               };
+
               marksman = {
                 command = "${pkgs.marksman}/bin/marksman";
               };
+
               vscode-json-language-server = {
                 command = "${pkgs.vscode-langservers-extracted}/bin/vscode-json-language-server";
                 args = [ "--stdio" ];
                 config.provideFormatter = true;
                 config.json.validate.enable = true;
               };
+
               vscode-html-language-server = {
                 command = "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server";
                 args = [ "--stdio" ];
                 config.provideFormatter = true;
               };
+
               vscode-css-language-server = {
                 command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
                 args = [ "--stdio" ];
                 config.provideFormatter = true;
               };
+
               vscode-eslint-language-server = {
                 command = "${pkgs.vscode-langservers-extracted}/bin/vscode-eslint-language-server";
                 args = [ "--stdio" ];
                 config.provideFormatter = true;
               };
+
               harper-ls = {
                 command = "${lib.getExe pkgs.harper}";
                 args = [ "--stdio" ];

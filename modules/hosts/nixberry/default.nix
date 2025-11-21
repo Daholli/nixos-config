@@ -8,6 +8,7 @@ in
   flake.modules.nixos."hosts/nixberry" =
     {
       inputs,
+      lib,
       pkgs,
       ...
     }:
@@ -32,6 +33,8 @@ in
         [
           inputs.catppuccin.nixosModules.catppuccin
           raspberry-pi-5.base
+          raspberry-pi-5.page-size-16k
+          raspberry-pi-5.display-vc4
 
           # System modules
           base

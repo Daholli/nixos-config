@@ -21,6 +21,11 @@ in
         config.allowUnfree = true;
       };
 
+      # hack
+      environment.systemPackages = [ pkgs.dconf ];
+
+      programs.nix-ld.enable = false;
+
       imports =
         with config.flake.modules.nixos;
         with inputs.nixos-raspberrypi.nixosModules;

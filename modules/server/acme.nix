@@ -1,5 +1,5 @@
 topLevel: {
-  flake.modules.nixos.server =
+  flake.modules.nixos.loptland-acme =
     {
       config,
       lib,

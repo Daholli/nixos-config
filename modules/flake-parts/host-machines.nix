@@ -19,18 +19,32 @@ in
             name = lib.removePrefix prefix name;
           };
         };
+
+        raspberrypis = [ "nixberry" ];
       in
       {
         name = lib.removePrefix prefix name;
-        value = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = module.imports ++ [
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager.extraSpecialArgs = specialArgs;
+        value =
+          if builtins.elem name raspberrypis then
+            inputs.nixos-raspberrypi.lib.nixosSystem {
+              inherit specialArgs;
+              modules = module.imports ++ [
+                inputs.home-manager.nixosModules.home-manager
+                {
+                  home-manager.extraSpecialArgs = specialArgs;
+                }
+              ];
             }
-          ];
-        };
+          else
+            inputs.nixpkgs.lib.nixosSystem {
+              inherit specialArgs;
+              modules = module.imports ++ [
+                inputs.home-manager.nixosModules.home-manager
+                {
+                  home-manager.extraSpecialArgs = specialArgs;
+                }
+              ];
+            };
       }
     ))
   ];

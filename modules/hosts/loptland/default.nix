@@ -33,6 +33,7 @@ in
           # System modules
           base
           server
+          loptland-acme
           hydra
           forgejo
           forgejo-runner

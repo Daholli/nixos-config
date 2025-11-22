@@ -276,6 +276,9 @@
                   {
                     app-id = "factorio";
                   }
+                  {
+                    app-id = "dota2";
+                  }
                 ];
 
                 open-on-workspace = "04-games";

@@ -7,7 +7,7 @@
         starsector
 
         # gaming tools
-        pyfa
+        inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pyfa
         inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.rusty-path-of-building
       ];
     };

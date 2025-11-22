@@ -1,5 +1,5 @@
 {
-  description = "All encompassing flake";
+  description = "Infrastructure flake for my machines";
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
@@ -25,21 +25,29 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Run unpatched dynamically compiled binaries
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    # nix-ld = {
+    #   url = "github:Mic92/nix-ld";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
 
     nh-flake = {
       url = "github:nix-community/nh";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # Support for special cases
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
 
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
@@ -77,7 +85,7 @@
 
     niri-flake = {
       url = "github:sodiboo/niri-flake";
-      # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7";
+      # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7"; # for debugging
       inputs = {
         niri-stable.follows = "niri";
         nixpkgs.follows = "nixpkgs";
@@ -89,9 +97,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # GPG default configuration
     gpg-base-conf = {
-      url = "github:drduh/config";
+      url = "github:drduh/config"; # GPG default configuration
       flake = false;
     };
 
@@ -99,8 +106,8 @@
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 
-    ################
-    ## inputs for dev shells
+    ###
+    # inputs for dev shells
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -111,7 +118,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # zig
+    # Zig
     zig-overlay = {
       url = "github:mitchellh/zig-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -121,12 +128,6 @@
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.zig-overlay.follows = "zig-overlay";
-    };
-
-    # rust
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }

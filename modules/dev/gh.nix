@@ -9,28 +9,20 @@
             settings = {
               prSections = [
                 {
-                  title = "To review";
-                  filters = "repo:NixOS/nixpkgs is:open draft:false status:success";
-                }
-                {
-                  title = "1st contribution";
-                  filters = ''repo:NixOS/nixpkgs is:open draft:false label:"12. first-time contribution"'';
-                }
-                {
-                  title = "1st approval";
-                  filters = ''repo:NixOS/nixpkgs is:open draft:false status:success label:"12.approvals: 1"'';
-                }
-                {
-                  title = "From r-ryantm only";
-                  filters = ''repo:NixOS/nixpkgs is:open draft:false status:success base:master -label:"1.severity: mass-rebuild" -label:"1.severity: mass-darwin-rebuild"  author:r-ryantm'';
-                }
-                {
                   title = "My PRs";
                   filters = "is:open author:@me";
                 }
                 {
                   title = "Needs my review";
                   filters = "is:open review-requested:@me";
+                }
+                {
+                  title = "To review";
+                  filters = "repo:NixOS/nixpkgs is:open draft:false status:success";
+                }
+                {
+                  title = "1st contribution";
+                  filters = ''repo:NixOS/nixpkgs is:open draft:false label:"12. first-time contribution"'';
                 }
                 {
                   title = "Involved";
@@ -46,6 +38,11 @@
                   width = 100;
                 };
                 refetchIntervalMinutes = 10;
+              };
+              repoPaths = {
+                "NixOS/*" = "~/projects/NixOS/*";
+                "nix-community/*" = "~/projects/nix-community/*";
+                "sodiboo/niri-flake" = "~/projects/niri/niri-flake/";
               };
               theme.ui.table.showSeparator = false;
             };

@@ -50,7 +50,12 @@
         };
 
       homeManager.cholli =
-        { pkgs, ... }:
+        {
+          lib,
+          osConfig,
+          pkgs,
+          ...
+        }:
         let
           defaultIconFileName = "profile.png";
         in
@@ -63,9 +68,15 @@
               "Music/.keep".text = "";
               "Pictures/.keep".text = "";
               "Videos/.keep".text = "";
-              "projects/.keep".text = "";
               ".face".source = ./${defaultIconFileName};
               "Pictures/${defaultIconFileName}".source = ./${defaultIconFileName};
+            }
+            // lib.optionalAttrs (osConfig.networking.hostName == "yggdrasil") {
+              # Some Paths for my main machine
+              "projects/NixOS/.keep".text = "";
+              "projects/nix-community/.keep".text = "";
+              "projects/niri/.keep".text = "";
+              "work/.keep".text = "";
             };
 
             packages = with pkgs; [ graphviz ];

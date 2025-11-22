@@ -130,11 +130,16 @@ in
             filtering_enabled = true;
             rewrites = [
               {
-                domain = "nixberry";
+                domain = "nixberry.fritz.box";
                 answer = "192.168.178.2";
               }
             ];
           };
+
+          user_rules = [
+            "||qognify.sysaidit.com^$important"
+            "||*.live.darktracesensor.com^$important"
+          ];
 
           filters =
             map
@@ -166,6 +171,7 @@ in
                   "os_linux"
                 ];
                 uid = "019aac26-684c-7c2c-a43d-2253f4407d45";
+                use_global_settings = true;
               }
             ];
           };

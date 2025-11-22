@@ -173,6 +173,16 @@ in
                 uid = "019aac26-684c-7c2c-a43d-2253f4407d45";
                 use_global_settings = true;
               }
+              {
+                name = "work-laptop";
+                ids = [ "192.168.178.48" ];
+                tags = [
+                  "device_pc"
+                  "os_windows"
+                ];
+                uid = "019aac55-ae29-7c5e-aac0-baadd7157f92";
+                use_global_settings = true;
+              }
             ];
           };
 

@@ -58,7 +58,7 @@ in
       self = inputs.self;
     in
     {
-      # hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
+      hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
       packages = self.packages;
       shells = lib.filterAttrs (name: shell: name == "x86_64-linux") self.devShells;
     };

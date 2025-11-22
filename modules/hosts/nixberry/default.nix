@@ -20,11 +20,15 @@ in
     {
       nixpkgs = {
         config.allowUnfree = true;
+        crossSystem = lib.mkIf (pkgs.stdenv.buildPlatform.system != "aarch64-linux") (
+          lib.systems.elaborate "aarch64-linux"
+        );
       };
 
-      # hack
+      # hack, homemanager needs it
       environment.systemPackages = [ pkgs.dconf ];
 
+      # build failure
       programs.nix-ld.enable = false;
 
       imports =
@@ -147,7 +151,7 @@ in
       };
 
       services.home-assistant = {
-        enable = true;
+        enable = false;
         configWritable = true;
         extraComponents = [
           "default_config"
@@ -224,20 +228,5 @@ in
         };
         openFirewall = true;
       };
-
-      fileSystems."/" = {
-        device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-        fsType = "ext4";
-      };
-
-      fileSystems."/boot/firmware" = {
-        device = "/dev/disk/by-uuid/2178-694E";
-        fsType = "vfat";
-        options = [
-          "fmask=0022"
-          "dmask=0022"
-        ];
-      };
-
     };
 }

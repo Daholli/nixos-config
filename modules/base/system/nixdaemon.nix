@@ -11,7 +11,7 @@
       username = "cholli";
     in
     {
-      imports = [ inputs.nix-ld.nixosModules.nix-ld ];
+      # imports = [ inputs.nix-ld.nixosModules.nix-ld ];
 
       environment.systemPackages = with pkgs; [
         nixfmt-rfc-style

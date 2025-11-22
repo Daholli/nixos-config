@@ -13,13 +13,19 @@ in
       ...
     }:
     {
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs = {
+        config.allowUnfree = true;
+      };
+
+      # Enable binfmt emulation.
+      boot.binfmt.emulatedSystems = [
+        "aarch64-linux"
+      ];
 
       environment.systemPackages = with pkgs; [
         teamviewer
         teams-for-linux
 
-        pyfa
         obsidian
         diebahn
 

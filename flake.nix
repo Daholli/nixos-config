@@ -25,10 +25,15 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # nix-ld = {
+    #   url = "github:Mic92/nix-ld";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
 
     nh-flake = {
       url = "github:nix-community/nh";

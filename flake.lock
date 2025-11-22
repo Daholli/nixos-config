@@ -208,7 +208,6 @@
       }
     },
     "flake-compat_4": {
-      "flake": false,
       "locked": {
         "lastModified": 1761588595,
         "narHash": "sha256-XKUZz9zewJNUj46b4AJdiRZJAvSZ0Dqj2BNfXvFlJC4=",
@@ -240,6 +239,22 @@
       }
     },
     "flake-compat_6": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761588595,
+        "narHash": "sha256-XKUZz9zewJNUj46b4AJdiRZJAvSZ0Dqj2BNfXvFlJC4=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "f387cd2afec9419c8ee37694406ca490c3f34ee5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_7": {
       "flake": false,
       "locked": {
         "lastModified": 1696426674,
@@ -1243,6 +1258,30 @@
     "nixos-images": {
       "inputs": {
         "nixos-stable": [
+          "nixpkgs-rpi"
+        ],
+        "nixos-unstable": [
+          "nixpkgs-rpi"
+        ]
+      },
+      "locked": {
+        "lastModified": 1747747741,
+        "narHash": "sha256-LUOH27unNWbGTvZFitHonraNx0JF/55h30r9WxqrznM=",
+        "owner": "nvmd",
+        "repo": "nixos-images",
+        "rev": "cbbd6db325775096680b65e2a32fb6187c09bbb4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvmd",
+        "ref": "sdimage-installer",
+        "repo": "nixos-images",
+        "type": "github"
+      }
+    },
+    "nixos-images_2": {
+      "inputs": {
+        "nixos-stable": [
           "nixos-raspberrypi",
           "nixpkgs"
         ],
@@ -1269,7 +1308,7 @@
     "nixos-raspberrypi": {
       "inputs": {
         "argononed": "argononed",
-        "nixos-images": "nixos-images",
+        "nixos-images": "nixos-images_2",
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
@@ -1287,9 +1326,40 @@
         "type": "github"
       }
     },
+    "nixos-raspberrypi-installers": {
+      "inputs": {
+        "argononed": [
+          "nixos-raspberrypi",
+          "argononed"
+        ],
+        "flake-compat": "flake-compat_4",
+        "nixos-images": [
+          "nixos-raspberrypi",
+          "nixos-images"
+        ],
+        "nixpkgs": [
+          "nixos-raspberrypi",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763810751,
+        "narHash": "sha256-aQ4C2b6eNdgeSg6fTg6Et3Jl8cgOroed/FWymLgPo1g=",
+        "owner": "Daholli",
+        "repo": "nixos-raspberrypi",
+        "rev": "348148e195d8a35540f4913c47c8030cc69933d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Daholli",
+        "ref": "develop",
+        "repo": "nixos-raspberrypi",
+        "type": "github"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
-        "flake-compat": "flake-compat_4",
+        "flake-compat": "flake-compat_5",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -1589,7 +1659,9 @@
         "niri-flake": "niri-flake",
         "nix-gaming": "nix-gaming",
         "nixos-hardware": "nixos-hardware",
+        "nixos-images": "nixos-images",
         "nixos-raspberrypi": "nixos-raspberrypi",
+        "nixos-raspberrypi-installers": "nixos-raspberrypi-installers",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-latest-factorio": "nixpkgs-latest-factorio",
@@ -1629,7 +1701,7 @@
     "simple-nixos-mailserver": {
       "inputs": {
         "blobs": "blobs",
-        "flake-compat": "flake-compat_5",
+        "flake-compat": "flake-compat_6",
         "git-hooks": "git-hooks_3",
         "nixpkgs": "nixpkgs_5"
       },
@@ -1838,7 +1910,7 @@
     },
     "zig-overlay": {
       "inputs": {
-        "flake-compat": "flake-compat_6",
+        "flake-compat": "flake-compat_7",
         "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"

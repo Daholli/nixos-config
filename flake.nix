@@ -30,11 +30,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-ld = {
-    #   url = "github:Mic92/nix-ld";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
-
     nh-flake = {
       url = "github:nix-community/nh";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -47,7 +42,21 @@
     };
 
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    nixos-raspberrypi-installers = {
+      url = "github:Daholli/nixos-raspberrypi/develop";
+      inputs = {
+        argononed.follows = "nixos-raspberrypi/argononed";
+        nixos-images.follows = "nixos-raspberrypi/nixos-images";
+        nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
+      };
+    };
     nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
+
+    nixos-images = {
+      url = "github:nvmd/nixos-images/sdimage-installer";
+      inputs.nixos-stable.follows = "nixpkgs-rpi";
+      inputs.nixos-unstable.follows = "nixpkgs-rpi";
+    };
 
     nix-gaming = {
       url = "github:fufexan/nix-gaming";

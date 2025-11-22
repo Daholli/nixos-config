@@ -53,12 +53,17 @@ in
     ))
   ];
 
+  flake.installerImages = inputs.nixos-raspberrypi-installers.installerImages;
+
   flake.hydraJobs =
     let
       self = inputs.self;
     in
     {
       hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
+      installerImages = {
+        rpi5 = self.outputs.installerImages.rpi5;
+      };
       packages = self.packages;
       shells = lib.filterAttrs (name: shell: name == "x86_64-linux") self.devShells;
     };

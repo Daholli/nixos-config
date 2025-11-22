@@ -174,6 +174,16 @@ in
                 use_global_settings = true;
               }
               {
+                name = "nixberry";
+                ids = [ "192.168.178.2" ];
+                tags = [
+                  "device_pc"
+                  "os_linux"
+                ];
+                uid = "019aac5a-760e-73f9-a246-3470dae6219d";
+                use_global_settings = true;
+              }
+              {
                 name = "work-laptop";
                 ids = [ "192.168.178.48" ];
                 tags = [

@@ -24,7 +24,12 @@
       };
 
     homeManager.base =
-      { lib, pkgs, ... }:
+      {
+        lib,
+        osConfig,
+        pkgs,
+        ...
+      }:
       {
         catppuccin.fish.enable = true;
 
@@ -50,8 +55,8 @@
             };
             functions = {
               checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
-              deployNixberry = "nixos-rebuild switch --flake .#nixberry --target-host nixberry --sudo --ask-sudo-password";
-              deployLoptland = "nixos-rebuild switch --flake .#loptland --target-host christophhollizeck.dev --sudo --ask-sudo-password";
+              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --target-host nixberry -H nixberry";
+              deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --target-host christophhollizeck.dev -H loptland";
               checkPR = ''cd /home/cholli/projects/NixOS/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
             };
             plugins = with pkgs.fishPlugins; [

@@ -116,15 +116,24 @@ in
             ratelimit = 0;
             bind_hosts = [ "0.0.0.0" ];
             upstream_dns = [
-              "1.1.1.1"
-              "1.0.0.1"
-              "8.8.8.8"
-              "8.8.4.4"
+              "tls://unfiltered.adguard-dns.com"
+              "https://unfiltered.adguard-dns.com/dns-query"
+              "tls://dns.quad9.net"
+              "https://dns.quad9.net/dns-query"
+              "tls://security.cloudflare-dns.com"
+              "https://security.cloudflare-dns.com/dns-query"
             ];
+            upstream_mode = "parallel";
           };
           filtering = {
             protection_enabled = true;
             filtering_enabled = true;
+            rewrites = [
+              {
+                domain = "nixberry";
+                answer = "192.168.178.2";
+              }
+            ];
           };
 
           filters =
@@ -147,6 +156,20 @@ in
             enabled = true;
             interval = "8760h";
           };
+          clients = {
+            persistent = [
+              {
+                name = "yggdrasil";
+                ids = [ "192.168.178.51" ];
+                tags = [
+                  "device_pc"
+                  "os_linux"
+                ];
+                uid = "019aac26-684c-7c2c-a43d-2253f4407d45";
+              }
+            ];
+          };
+
         };
       };
 

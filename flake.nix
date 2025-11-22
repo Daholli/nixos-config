@@ -41,14 +41,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
-    nixos-raspberrypi-installers = {
+    nixos-raspberrypi = {
       url = "github:Daholli/nixos-raspberrypi/develop";
-      inputs = {
-        argononed.follows = "nixos-raspberrypi/argononed";
-        nixos-images.follows = "nixos-raspberrypi/nixos-images";
-        nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs-rpi";
     };
     nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
 

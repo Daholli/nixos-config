@@ -96,7 +96,7 @@ in
             ];
           }
           {
-            hostName = "100.86.23.74";
+            hostName = "100.90.93.35";
             sshUser = "remotebuild";
             sshKey = "/root/.ssh/remotebuild";
             systems = [ "aarch64-linux" ];

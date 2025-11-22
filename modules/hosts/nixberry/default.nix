@@ -26,7 +26,7 @@ in
       };
 
       # hack, homemanager needs it
-      environment.systemPackages = [ pkgs.dconf ];
+      programs.dconf.enable = true;
 
       # build failure
       programs.nix-ld.enable = false;

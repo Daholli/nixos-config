@@ -1,16 +1,14 @@
-on: 
+on:
   schedule:
     - cron: 0 */6 * * *
-  
 jobs:
   UpdateFlake:
     runs-on: native
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Update flake
-        run: | 
+        run: |
           cd ${{ env.FORGEJO_WORKSPACE }}
           nix flake update
       - name: Commit new Flake.lock

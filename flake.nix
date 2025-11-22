@@ -1,35 +1,56 @@
 {
-  description = "NixOs Config";
+  description = "Infrastructure flake for my machines";
+
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    systems.url = "github:nix-systems/default-linux";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    catppuccin.url = "github:catppuccin/nix";
+    sops-nix.url = "github:Mic92/sops-nix";
+
     nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/e880129391be2f558d6c205cfd931be338b3b707";
-    nixpkgs-tuya-vacuum.url = "github:Daholli/nixpkgs/84b34e39e7a0879367189f34401191f6a0364bcf";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      # url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # nix-ld = {
+    #   url = "github:Mic92/nix-ld";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
+
+    nh-flake = {
+      url = "github:nix-community/nh";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Support for special cases
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Run unpatched dynamically compiled binaries
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
 
-    nh-flake = {
-      url = "github:nix-community/nh";
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -64,17 +85,11 @@
 
     niri-flake = {
       url = "github:sodiboo/niri-flake";
+      # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7"; # for debugging
       inputs = {
         niri-stable.follows = "niri";
         nixpkgs.follows = "nixpkgs";
       };
-    };
-
-    ###
-    # Snowfall dependencies
-    snowfall-lib = {
-      url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     helix = {
@@ -82,42 +97,28 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # GPG default configuration
     gpg-base-conf = {
-      url = "github:drduh/config";
+      url = "github:drduh/config"; # GPG default configuration
       flake = false;
     };
 
-    sops-nix.url = "github:Mic92/sops-nix";
-
-    ## temporary
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
-    raspberry-pi-nix = {
-      url = "github:JamieMagee/raspberry-pi-nix/25118248489e047a7da43a21409b457aa2af315e";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+
+    ###
+    # inputs for dev shells
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    catppuccin.url = "github:catppuccin/nix";
-
-    ###############
-    # homeassitant
-
-    tuya-vaccum-maps = {
-      url = "github:jaidenlabelle/tuya-vacuum-maps";
-      flake = false;
-    };
-
-    ################
-    ## inputs for dev shells
-    #
     devenv = {
       url = "github:cachix/devenv";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # zig
+    # Zig
     zig-overlay = {
       url = "github:mitchellh/zig-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -128,85 +129,5 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.zig-overlay.follows = "zig-overlay";
     };
-
-    # rust
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
-
-  outputs =
-    inputs:
-    let
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
-
-        snowfall = {
-          meta = {
-            name = "wyrdgard";
-            title = "Wyrdgard";
-          };
-
-          namespace = "wyrdgard";
-        };
-      };
-    in
-    lib.mkFlake {
-      channels-config = {
-        allowUnfree = true;
-      };
-
-      outputs-builder = channels: { formatter = channels.nixpkgs.nixfmt-rfc-style; };
-
-      overlays = with inputs; [
-        devenv.overlays.default
-        niri-flake.overlays.niri
-      ];
-
-      homes.modules = with inputs; [
-        sops-nix.homeManagerModules.sops
-        catppuccin.homeModules.catppuccin
-      ];
-
-      systems.modules.nixos = with inputs; [
-        home-manager.nixosModules.home-manager
-        nix-ld.nixosModules.nix-ld
-        sops-nix.nixosModules.sops
-
-        catppuccin.nixosModules.catppuccin
-      ];
-
-      systems.hosts.yggdrasil.modules = with inputs; [
-        niri-flake.nixosModules.niri
-      ];
-
-      homes.hosts.yggdrasil.modules = with inputs; [
-        niri-flake.homeModules.niri
-      ];
-
-      systems.hosts.nixberry.modules = with inputs; [
-        raspberry-pi-nix.nixosModules.raspberry-pi
-        raspberry-pi-nix.nixosModules.sd-image
-      ];
-
-      systems.hosts.loptland.modules = with inputs; [
-        simple-nixos-mailserver.nixosModules.default
-      ];
-
-      systems.hosts.wsl.modules = with inputs; [ nixos-wsl.nixosModules.default ];
-    }
-    // rec {
-      self = inputs.self;
-
-      hydraJobs = {
-        # hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) (
-        #   lib.filterAttrs (name: cfg: name != "nixberry") self.outputs.nixosConfigurations
-        # );
-        hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) self.outputs.nixosConfigurations;
-        packages = self.packages;
-        shells = lib.filterAttrs (name: shell: name == "x86_64-linux") self.devShells;
-      };
-    };
 }

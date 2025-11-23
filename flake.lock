@@ -1315,11 +1315,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763847701,
-        "narHash": "sha256-+7A9OetA9aZgMtZfpuelAegZo/j6BpweH+Belcuktug=",
+        "lastModified": 1763857093,
+        "narHash": "sha256-WFyVzootvJvE4QTEF6nOgxFqXaM9hD92YrRWnl2h6Ug=",
         "owner": "Daholli",
         "repo": "nixos-raspberrypi",
-        "rev": "8c0055072edaa07e1c12f3fccc2f051ac77c22e7",
+        "rev": "4e4fafe5bacb64ca3da6dedf3a158e01cf70540a",
         "type": "github"
       },
       "original": {

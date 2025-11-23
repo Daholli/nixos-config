@@ -1,12 +1,7 @@
-{
-  config,
-  ...
-}:
-let
-in
-{
+topLevel: {
   flake.modules.nixos."hosts/nixberry" =
     {
+      config,
       inputs,
       lib,
       pkgs,
@@ -31,8 +26,12 @@ in
       # build failure
       programs.nix-ld.enable = false;
 
+      sops.secrets.tailscale_key = {
+        inherit sopsFile;
+      };
+
       imports =
-        with config.flake.modules.nixos;
+        with topLevel.config.flake.modules.nixos;
         with inputs.nixos-raspberrypi.nixosModules;
         [
           inputs.catppuccin.nixosModules.catppuccin
@@ -49,7 +48,7 @@ in
         ++ [
           {
             home-manager.users.cholli = {
-              imports = with config.flake.modules.homeManager; [
+              imports = with topLevel.config.flake.modules.homeManager; [
                 inputs.catppuccin.homeModules.catppuccin
 
                 # components
@@ -58,13 +57,19 @@ in
                 # Activate all user based config
                 cholli
               ];
+
+              # https://github.com/NixOS/nixpkgs/pull/398456
+              home.enableNixpkgsReleaseCheck = false;
             };
           }
         ];
 
       services.tailscale = {
         enable = true;
+        package = inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tailscale;
         useRoutingFeatures = "server";
+        authKeyFile = config.sops.secrets.tailscale_key.path;
+        extraUpFlags = [ "--advertise-exit-node" ];
       };
 
       networking = {
@@ -174,8 +179,25 @@ in
                 use_global_settings = true;
               }
               {
+                name = "holli - phone";
+                ids = [
+                  "192.168.178.51"
+                  "100.124.47.76"
+                  "fd7a:115c:a1e0::b701:2f4f"
+                ];
+                tags = [
+                  "device_pc"
+                  "os_linux"
+                ];
+                use_global_settings = true;
+              }
+              {
                 name = "nixberry";
-                ids = [ "192.168.178.2" ];
+                ids = [
+                  "192.168.178.2"
+                  "100.90.93.35"
+                  "fd7a:115c:a1e0::dd01:5d34"
+                ];
                 tags = [
                   "device_pc"
                   "os_linux"

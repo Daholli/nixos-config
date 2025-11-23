@@ -181,7 +181,7 @@ topLevel: {
               {
                 name = "holli - phone";
                 ids = [
-                  "192.168.178.51"
+                  "192.168.178.52"
                   "100.124.47.76"
                   "fd7a:115c:a1e0::b701:2f4f"
                 ];
@@ -299,5 +299,72 @@ topLevel: {
         };
         openFirewall = true;
       };
+
+      sops.secrets = {
+        "samba/cholli" = {
+          inherit sopsFile;
+        };
+      };
+
+      services = {
+        samba = {
+          enable = true;
+          openFirewall = true;
+
+          settings = {
+            global = {
+              "smb3 unix extensions" = "yes";
+            };
+
+            cholli = {
+              path = "/storage/cholli";
+              browsable = "yes";
+              writable = "yes";
+              "create mask" = "0664";
+              "directory mask" = "0775";
+              "force group" = "users";
+            };
+
+            kaman = {
+              path = "/storage/kaman";
+              browsable = "yes";
+              writable = "yes";
+              "create mask" = "0664";
+              "directory mask" = "0775";
+              "force group" = "users";
+            };
+
+          };
+
+        };
+
+        avahi.enable = true;
+        samba-wsdd = {
+          enable = true;
+          openFirewall = true;
+        };
+      };
+
+      # add user passwords
+      systemd.services.samba-smbd.postStart =
+        let
+          users = [
+            "cholli"
+          ];
+          setupUser =
+            user:
+            let
+              passwordPath = config.sops.secrets."samba/${user}".path;
+              smbpasswd = "${config.services.samba.package}/bin/smbpasswd";
+            in
+            ''
+              (echo $(< ${passwordPath});
+               echo $(< ${passwordPath})) | \
+                ${smbpasswd} -s -a ${user}
+            '';
+        in
+        ''
+          ${builtins.concatStringsSep "\n" (map setupUser users)}
+        '';
     };
 }

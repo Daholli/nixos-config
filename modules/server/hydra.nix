@@ -16,9 +16,6 @@
         port = httpPort;
         notificationSender = "hydra@localhost";
         useSubstitutes = true;
-        extraConfig = ''
-          allow-import-from-derivation = 1
-        '';
       };
 
     };

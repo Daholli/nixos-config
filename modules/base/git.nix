@@ -12,6 +12,7 @@ topLevel: {
       {
         config,
         lib,
+        osConfig,
         ...
       }:
       let
@@ -65,7 +66,7 @@ topLevel: {
           };
         };
 
-        systemd.user = {
+        systemd.user = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {
           services."git-maintenance@" = {
             Unit = {
               Description = "Optimize Git repositories data";

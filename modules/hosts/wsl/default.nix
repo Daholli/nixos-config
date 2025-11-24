@@ -18,6 +18,7 @@ topLevel: {
           inputs.nixos-wsl.nixosModules.default
 
           base
+          server
           cholli
         ]
 

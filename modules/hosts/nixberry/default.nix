@@ -18,7 +18,15 @@ topLevel: {
         crossSystem = lib.mkIf (pkgs.stdenv.buildPlatform.system != "aarch64-linux") (
           lib.systems.elaborate "aarch64-linux"
         );
+        overlays = [
+          (final: prev: {
+            homeassistant =
+              inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.homeassistant;
+          })
+        ];
       };
+
+      boot.loader.raspberryPi.bootloader = "kernel";
 
       # hack, homemanager needs it
       programs.dconf.enable = true;

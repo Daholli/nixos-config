@@ -69,6 +69,11 @@ in
         useRoutingFeatures = "client";
       };
 
+      services.resolved = {
+        enable = true;
+        domains = [ "~." ];
+      };
+
       networking.firewall.allowedTCPPorts = [
         3000
         80

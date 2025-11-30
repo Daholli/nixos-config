@@ -1,4 +1,6 @@
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: 0 */6 * * *
 jobs:
@@ -8,15 +10,18 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Update flake
+        if: ${{ github.event_name == 'schedule' }}
         run: |
           cd ${{ env.FORGEJO_WORKSPACE }}
           nix flake update
       - name: Commit new Flake.lock
+        if: ${{ github.event_name == 'schedule' }}
         run: |
           git config --local user.email "christoph.hollizeck@hey.com"
           git config --local user.name "forgjo-actions[bot]"
           git commit -a -m "chore: update flake"
       - name: Push changes
+        if: ${{ github.event_name == 'schedule' }}
         run: git push
 
       - name: Build Loptland

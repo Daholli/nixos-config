@@ -60,6 +60,7 @@
                 "format" = "";
                 "on-click" = "${lib.getExe pkgs.kitty} ${lib.getExe pkgs.bluetui}";
                 "format-disabled" = "󰂲";
+                "format-on" = "󰂯";
                 "format-connected" = "󰂱";
                 "tooltip-format" = "{controller_alias}\t{controller_address}";
                 "tooltip-format-connected" = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";

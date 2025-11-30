@@ -28,7 +28,6 @@
               pkgs.xdg-desktop-portal-gnome
               pkgs.xdg-desktop-portal-gtk
             ];
-            xdgOpenUsePortal = true;
 
             config = {
               common = {
@@ -40,8 +39,8 @@
                   "gnome"
                   "gtk"
                 ];
-                "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-                "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+                "org.freedesktop.impl.portal.FileChooser" = [ "gnome" ];
+                "org.freedesktop.impl.portal.OpenURI" = [ "gnome" ];
               };
             };
           };

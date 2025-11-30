@@ -1,6 +1,6 @@
 on:
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
   schedule:
     - cron: 0 */6 * * *
 jobs:
@@ -24,12 +24,12 @@ jobs:
         if: ${{ github.event_name == 'schedule' }}
         run: git push
 
-      - name: Build Loptland
-        run: |
-          cd ${{ env.FORGEJO_WORKSPACE }}
-          nix build .#nixosConfigurations.loptland.config.system.build.toplevel
+      # - name: Build Loptland
+      #   run: |
+      #     cd ${{ env.FORGEJO_WORKSPACE }}
+      #     nix build .#nixosConfigurations.loptland.config.system.build.toplevel
 
-      - name: Build Yggdrasil
-        run: |
-          cd ${{ env.FORGEJO_WORKSPACE }}
-          nix build .#nixosConfigurations.yggdrasil.config.system.build.toplevel
+      # - name: Build Yggdrasil
+      #   run: |
+      #     cd ${{ env.FORGEJO_WORKSPACE }}
+      #     nix build .#nixosConfigurations.yggdrasil.config.system.build.toplevel

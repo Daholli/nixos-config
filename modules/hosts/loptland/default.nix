@@ -101,7 +101,7 @@ in
             ];
           }
           {
-            hostName = "100.90.93.35";
+            hostName = "nixberry";
             sshUser = "remotebuild";
             sshKey = "/root/.ssh/remotebuild";
             systems = [ "aarch64-linux" ];

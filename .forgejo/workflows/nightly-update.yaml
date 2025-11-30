@@ -2,7 +2,7 @@ on:
   schedule:
     - cron: 0 */6 * * *
 jobs:
-  UpdateFlake:
+  update:
     runs-on: native
     steps:
       - name: Check out repository code
@@ -18,3 +18,13 @@ jobs:
           git commit -a -m "chore: update flake"
       - name: Push changes
         run: git push
+
+      - name: Build Loptland
+        run: |
+          cd ${{ env.FORGEJO_WORKSPACE }}
+          nix build .#nixosConfigurations.loptland.config.system.build.toplevel
+
+      - name: Build Yggdrasil
+        run: |
+          cd ${{ env.FORGEJO_WORKSPACE }}
+          nix build .#nixosConfigurations.yggdrasil.config.system.build.toplevel

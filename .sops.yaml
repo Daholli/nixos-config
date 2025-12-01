@@ -7,6 +7,8 @@ creation_rules:
     key_groups: 
     - age:
       - *primary
+      - *loptland
+      - *nixberry
 
   - path_regex: secrets/secrets-loptland.yaml$
     key_groups: 

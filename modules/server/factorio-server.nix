@@ -20,21 +20,25 @@
             inherit sopsFile;
           };
         };
-        templates."extraSettingsFile.json".content = ''
-          {
-            "name": "Pyanodons Holli",
-            "description": "Trying to run a factorio-headless-server on my nix system",
-            "tags": ["vanilla"],
-            "max_players": 10,
-            "game_password": "${config.sops.placeholder."factorio/game_password"}",
-            "allow_commands": "admins-only",
-            "autosave_slots": 5,
-            "ignore_player_limit_for_returning_players": true,
-            "username" : "${config.sops.placeholder."factorio/username"}",
-            "token": "${config.sops.placeholder."factorio/token"}"
-          }
-        '';
-        templates."extraSettingsFile.json".mode = "0444";
+        templates."extraSettingsFile.json" = {
+          content = ''
+            {
+              "name": "Pyanodons Holli",
+              "description": "Trying to run a factorio-headless-server on my nix system",
+              "tags": ["vanilla"],
+              "max_players": 10,
+              "game_password": "${config.sops.placeholder."factorio/game_password"}",
+              "allow_commands": "admins-only",
+              "autosave_slots": 5,
+              "ignore_player_limit_for_returning_players": true,
+              "username" : "${config.sops.placeholder."factorio/username"}",
+              "token": "${config.sops.placeholder."factorio/token"}"
+            }
+          '';
+          mode = "0400";
+          owner = "factorio";
+          group = "factorio";
+        };
       };
 
       systemd.tmpfiles.rules = [

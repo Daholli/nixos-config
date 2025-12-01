@@ -1,8 +1,4 @@
-{
-  config,
-  ...
-}:
-{
+topLevel: {
   flake = {
     meta.users = {
       cholli = {
@@ -22,12 +18,13 @@
 
     modules = {
       nixos.cholli =
-        { pkgs, ... }:
+        { config, pkgs, ... }:
         {
           programs.fish.enable = true;
+          sops.secrets.passwordHash.neededForUsers = true;
 
           users.users.cholli = {
-            description = config.flake.meta.users.cholli.name;
+            description = topLevel.config.flake.meta.users.cholli.name;
             isNormalUser = true;
             createHome = true;
             extraGroups = [
@@ -39,13 +36,12 @@
               "wheel"
             ];
             shell = pkgs.fish;
-            # TODO: fix this with sops
-            initialPassword = "asdf";
+            hashedPasswordFile = config.sops.secrets.passwordHash.path;
 
-            openssh.authorizedKeys.keys = config.flake.meta.users.cholli.authorizedKeys;
+            openssh.authorizedKeys.keys = topLevel.config.flake.meta.users.cholli.authorizedKeys;
           };
 
-          nix.settings.trusted-users = [ config.flake.meta.users.cholli.username ];
+          nix.settings.trusted-users = [ topLevel.config.flake.meta.users.cholli.username ];
 
         };
 

@@ -41,7 +41,7 @@
               username
             ]
             ++ lib.optional (builtins.hasAttr "native" config.services.gitea-actions-runner.instances) "gitea-runner"
-            ++ lib.optional config.services.hydra.enable "hydra hydra-www hydra-evaluator hydra-queue-runner";
+            ++ lib.optional config.services.hydra.enable "hydra hydra-www hydra-evaluator";
           in
           {
             nix-path = "nixpkgs=flake:nixpkgs";

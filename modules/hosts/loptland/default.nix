@@ -1,12 +1,7 @@
-{
-  config,
-  ...
-}:
-let
-in
-{
+topLevel: {
   flake.modules.nixos."hosts/loptland" =
     {
+      config,
       inputs,
       lib,
       pkgs,
@@ -25,7 +20,7 @@ in
       environment.systemPackages = [ pkgs.dconf ];
 
       imports =
-        with config.flake.modules.nixos;
+        with topLevel.config.flake.modules.nixos;
         [
           (modulesPath + "/profiles/qemu-guest.nix")
           inputs.catppuccin.nixosModules.catppuccin
@@ -50,7 +45,7 @@ in
         ++ [
           {
             home-manager.users.cholli = {
-              imports = with config.flake.modules.homeManager; [
+              imports = with topLevel.config.flake.modules.homeManager; [
                 inputs.catppuccin.homeModules.catppuccin
 
                 # components
@@ -80,6 +75,14 @@ in
         443
       ];
 
+      sops.secrets = {
+        "hydra/remotebuild/private-key" = {
+          inherit sopsFile;
+          owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+          mode = "0400";
+        };
+      };
+
       nix = {
         distributedBuilds = true;
 
@@ -103,7 +106,7 @@ in
           {
             hostName = "nixberry";
             sshUser = "remotebuild";
-            sshKey = "/root/.ssh/remotebuild";
+            sshKey = config.sops.secrets."hydra/remotebuild/private-key".path;
             systems = [ "aarch64-linux" ];
             protocol = "ssh";
 

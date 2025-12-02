@@ -11,6 +11,8 @@
         inputs.simple-nixos-mailserver.nixosModules.default
       ];
 
+      catppuccin.forgejo.enable = true;
+
       sops = {
         secrets = {
           "forgejo/db/password" = {

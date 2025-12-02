@@ -132,6 +132,13 @@
                   "harper-ls"
                 ];
               }
+              {
+                name = "markdown";
+                language-servers = [
+                  "marksman"
+                  "harper-ls"
+                ];
+              }
             ];
 
             language-server = {

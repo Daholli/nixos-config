@@ -52,6 +52,7 @@ topLevel: {
           server
 
           cholli
+          root
         ];
 
       services.tailscale = {

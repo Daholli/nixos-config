@@ -39,6 +39,7 @@ topLevel: {
 
         # Users
         cholli
+        root
       ];
 
       services.tailscale = {

@@ -104,7 +104,7 @@
               keyboard = {
                 xkb = {
                   layout = "us";
-                  rules = "escape:nocaps";
+                  options = "caps:escape";
                 };
                 numlock = true;
               };
@@ -504,7 +504,7 @@
               ];
 
             spawn-at-startup = [
-              { argv = [ "waybar" ]; }
+              { argv = [ "${lib.getExe config.programs.waybar.package}" ]; }
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
               { argv = [ "discord" ]; }

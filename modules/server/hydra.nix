@@ -1,17 +1,25 @@
 {
   flake.modules.nixos.hydra =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       httpPort = 2000;
 
+      generateHostEntry = machine: ''
+        Host ${machine.hostName}
+          IdentitiesOnly yes
+          IdentityFile ${machine.sshKey}
+          User remotebuild
+      '';
+
+      filteredMachines = lib.filter (machine: machine.hostName != "localhost") config.nix.buildMachines;
       remotebuild-ssh-config = pkgs.writeTextFile {
         name = "remotebuild-ssh-config";
-        text = ''
-          Host nixberry
-            IdentitiesOnly yes
-            IdentityFile ${config.sops.secrets."hydra/remotebuild/private-key".path}
-            User remotebuild
-        '';
+        text = lib.concatMapStringsSep "\n" generateHostEntry filteredMachines;
       };
     in
     {

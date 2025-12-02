@@ -1,11 +1,11 @@
 <a href="https://nixos.wiki/wiki/Flakes" target="_blank">
-	  <img alt="Nix Flakes Ready" src="https://img.shields.io/static/v1?logo=nixos&logoColor=d8dee9&label=Nix%20Flakes&labelColor=5e81ac&message=Ready&color=d8dee9&style=for-the-badge">
+	  <img alt="Nix Flakes Ready" src="https://img.shields.io/static/v1?logo=nixos&logoColor=d8dee9&label=Nix%20Flakes&labelColor=663399&message=Ready&color=d8dee9&style=for-the-badge">
 </a>
 <a href="https://github.com/NixOS/nixpkgs/tree/nixos-unstable" target="_blank">
-    <img alt="nixpkgs" src="https://img.shields.io/badge/nixpkgs-unstable-green.svg">
+    <img alt="nixpkgs" src="https://img.shields.io/static/v1?logo=nixos&logoColor=d8dee9&label=Nixpkgs&labelColor=663399&message=unstable&color=98fb98&style=for-the-badge">
 </a>
 <a href="https://spdx.org/licenses/AGPL-3.0-or-later.html" target="_blank">
-    <img alt="license" src="https://img.shields.io/badge/License-AGPL_3.0_or_later-blue.svg">
+    <img alt="license" src="https://img.shields.io/static/v1?&label=License&labelColor=663399&message=AGPL%203.0-or-later&color=87cefa&style=for-the-badge">
 </a>
 
 # Welcome to my infrastructure configuration

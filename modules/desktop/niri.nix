@@ -39,8 +39,8 @@
                   "gnome"
                   "gtk"
                 ];
-                "org.freedesktop.impl.portal.FileChooser" = [ "gnome" ];
-                "org.freedesktop.impl.portal.OpenURI" = [ "gnome" ];
+                "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+                "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
               };
             };
           };

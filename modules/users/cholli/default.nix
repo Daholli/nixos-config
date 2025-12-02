@@ -43,7 +43,10 @@ topLevel: {
           ];
 
           programs.fish.enable = true;
-          sops.secrets.passwordHash.neededForUsers = true;
+          sops.secrets.passwordHash = {
+            sopsFile = ./../../../secrets/secrets.yaml;
+            neededForUsers = true;
+          };
 
           users.users.cholli = {
             description = topLevel.config.flake.meta.users.cholli.name;

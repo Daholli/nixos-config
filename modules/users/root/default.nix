@@ -1,8 +1,28 @@
 topLevel: {
   flake = {
     modules.nixos.root =
-      { config, pkgs, ... }:
       {
+        config,
+        inputs,
+        pkgs,
+        ...
+      }:
+      {
+        imports = [
+          {
+            home-manager.users.root = {
+              imports = with topLevel.config.flake.modules.homeManager; [
+                inputs.catppuccin.homeModules.catppuccin
+
+                # components
+                base
+
+                # Activate all user based config
+                cholli # TODO: make root based config that makes it clear I am root user right now
+              ];
+            };
+          }
+        ];
         programs.fish.enable = true;
         sops.secrets.passwordHash.neededForUsers = true;
 

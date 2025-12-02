@@ -18,8 +18,30 @@ topLevel: {
 
     modules = {
       nixos.cholli =
-        { config, pkgs, ... }:
         {
+          config,
+          inputs,
+          pkgs,
+          ...
+        }:
+        {
+          imports = [
+            {
+              home-manager.users.cholli = {
+                imports = with topLevel.config.flake.modules.homeManager; [
+                  inputs.catppuccin.homeModules.catppuccin
+
+                  # components
+                  base
+                  dev
+
+                  # Activate all user based config
+                  cholli
+                ];
+              };
+            }
+          ];
+
           programs.fish.enable = true;
           sops.secrets.passwordHash.neededForUsers = true;
 

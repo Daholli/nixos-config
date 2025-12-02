@@ -12,31 +12,14 @@ topLevel: {
       };
       programs.dconf.enable = true;
 
-      imports =
-        with topLevel.config.flake.modules.nixos;
-        [
-          inputs.nixos-wsl.nixosModules.default
+      imports = with topLevel.config.flake.modules.nixos; [
+        inputs.nixos-wsl.nixosModules.default
 
-          base
-          server
-          cholli
-        ]
+        base
+        server
+        cholli
+      ];
 
-        ++ [
-          {
-            home-manager.users.cholli = {
-              imports = with topLevel.config.flake.modules.homeManager; [
-                inputs.catppuccin.homeModules.catppuccin
-
-                # components
-                base
-
-                # Activate all user based config
-                cholli
-              ];
-            };
-          }
-        ];
       wsl = {
         enable = true;
         defaultUser = topLevel.config.flake.meta.users.cholli.username;

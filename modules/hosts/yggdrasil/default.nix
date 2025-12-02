@@ -31,7 +31,6 @@ in
 
         termscp
         nixpkgs-review
-        # inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.star-citizen
       ];
 
       services.teamviewer.enable = true;
@@ -41,52 +40,34 @@ in
         AddressFamily inet
       '';
 
-      imports =
-        with config.flake.modules.nixos;
-        [
-          inputs.nixos-hardware.nixosModules.common-cpu-amd
-          inputs.nixos-hardware.nixosModules.common-pc
-          inputs.nixos-hardware.nixosModules.common-pc-ssd
-          inputs.catppuccin.nixosModules.catppuccin
+      imports = with config.flake.modules.nixos; [
+        inputs.nixos-hardware.nixosModules.common-cpu-amd
+        inputs.nixos-hardware.nixosModules.common-pc
+        inputs.nixos-hardware.nixosModules.common-pc-ssd
+        inputs.catppuccin.nixosModules.catppuccin
 
-          # System modules
-          base
-          dev
-          desktop
-          games
+        # System modules
+        base
+        dev
+        desktop
+        games
 
-          # hardware
-          audio
-          bluetooth
-          amdgpu
+        # hardware
+        audio
+        bluetooth
+        amdgpu
 
-          # desktops
-          # hyprland
-          niri
+        # desktops
+        # hyprland
+        niri
 
-          # apps
-          _1password
+        # apps
+        _1password
 
-          # Users
-          cholli
-        ]
-        ++ [
-          {
-            home-manager.users.cholli = {
-              imports = with config.flake.modules.homeManager; [
-                inputs.catppuccin.homeModules.catppuccin
-
-                # components
-                base
-                dev
-
-                # Activate all user based config
-                cholli
-              ];
-            };
-          }
-
-        ];
+        # Users
+        cholli
+        root
+      ];
 
       nix = {
         distributedBuilds = true;

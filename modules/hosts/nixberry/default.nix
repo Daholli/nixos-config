@@ -52,24 +52,6 @@ topLevel: {
           server
 
           cholli
-        ]
-        ++ [
-          {
-            home-manager.users.cholli = {
-              imports = with topLevel.config.flake.modules.homeManager; [
-                inputs.catppuccin.homeModules.catppuccin
-
-                # components
-                base
-
-                # Activate all user based config
-                cholli
-              ];
-
-              # https://github.com/NixOS/nixpkgs/pull/398456
-              home.enableNixpkgsReleaseCheck = false;
-            };
-          }
         ];
 
       services.tailscale = {

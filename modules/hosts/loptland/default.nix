@@ -19,45 +19,27 @@ topLevel: {
       # TODO: dunno why I need this packge
       environment.systemPackages = [ pkgs.dconf ];
 
-      imports =
-        with topLevel.config.flake.modules.nixos;
-        [
-          (modulesPath + "/profiles/qemu-guest.nix")
-          inputs.catppuccin.nixosModules.catppuccin
+      imports = with topLevel.config.flake.modules.nixos; [
+        (modulesPath + "/profiles/qemu-guest.nix")
+        inputs.catppuccin.nixosModules.catppuccin
 
-          # System modules
-          base
-          server
-          loptland-acme
-          hydra
-          forgejo
-          forgejo-runner
+        # System modules
+        base
+        server
+        loptland-acme
+        hydra
+        forgejo
+        forgejo-runner
 
-          # game server
-          minecraft-server
-          factorio-server
+        # game server
+        minecraft-server
+        factorio-server
 
-          # apps
+        # apps
 
-          # Users
-          cholli
-        ]
-        ++ [
-          {
-            home-manager.users.cholli = {
-              imports = with topLevel.config.flake.modules.homeManager; [
-                inputs.catppuccin.homeModules.catppuccin
-
-                # components
-                base
-
-                # Activate all user based config
-                cholli
-              ];
-            };
-          }
-
-        ];
+        # Users
+        cholli
+      ];
 
       services.tailscale = {
         enable = true;

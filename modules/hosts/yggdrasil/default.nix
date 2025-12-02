@@ -1,10 +1,4 @@
-{
-  config,
-  ...
-}:
-let
-in
-{
+topLevel: {
   flake.modules.nixos."hosts/yggdrasil" =
     {
       inputs,
@@ -40,7 +34,7 @@ in
         AddressFamily inet
       '';
 
-      imports = with config.flake.modules.nixos; [
+      imports = with topLevel.config.flake.modules.nixos; [
         inputs.nixos-hardware.nixosModules.common-cpu-amd
         inputs.nixos-hardware.nixosModules.common-pc
         inputs.nixos-hardware.nixosModules.common-pc-ssd

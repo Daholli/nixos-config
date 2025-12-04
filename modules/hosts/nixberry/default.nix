@@ -293,7 +293,7 @@ topLevel: {
 
       sops.secrets = {
         "samba/cholli" = {
-          inherit sopsFile;
+          sopsFile = ../../../secrets/secrets.yaml;
         };
       };
 

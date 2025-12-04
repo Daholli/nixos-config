@@ -45,7 +45,7 @@
       url = "github:Daholli/nixos-raspberrypi/develop";
       inputs.nixpkgs.follows = "nixpkgs-rpi";
     };
-    nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.05";
+    nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.11";
 
     nixos-images = {
       url = "github:nvmd/nixos-images/sdimage-installer";

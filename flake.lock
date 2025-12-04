@@ -1316,11 +1316,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763932347,
-        "narHash": "sha256-iVYe1R0hyW2qQirRDGN/OszEDsbOLTJwLZ8Z3TIkV+U=",
+        "lastModified": 1764862811,
+        "narHash": "sha256-6WdRPoiyfSdkl48ptugsEXXMsYL3OO5HfNly4ZL0a5Q=",
         "owner": "Daholli",
         "repo": "nixos-raspberrypi",
-        "rev": "f5f300c3109104f8bcc177d08ecbae14110c90db",
+        "rev": "65a8f92f34d009f5b1ca9077ec6f3cebb64f49dd",
         "type": "github"
       },
       "original": {
@@ -1431,16 +1431,16 @@
     },
     "nixpkgs-rpi": {
       "locked": {
-        "lastModified": 1764510468,
-        "narHash": "sha256-j/hYkqr6vrZofAYcc8stM5J/ATZEvcaVWC17o6aOcqM=",
+        "lastModified": 1764617226,
+        "narHash": "sha256-TW8wiEQKPcM8PYHDXVQBnfDpUU9wAJ8k1VG4GmWOqUA=",
         "owner": "nvmd",
         "repo": "nixpkgs",
-        "rev": "970b05ab28431feec8211c35251a9e88cdd3c20d",
+        "rev": "dc1316368de5ac244a82101cfcd91d661da2ac40",
         "type": "github"
       },
       "original": {
         "owner": "nvmd",
-        "ref": "modules-with-keys-25.05",
+        "ref": "modules-with-keys-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }

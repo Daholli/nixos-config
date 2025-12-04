@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       services.home-assistant = {
-        enable = false;
+        enable = true;
         configWritable = true;
         extraComponents = [
           "default_config"
@@ -18,7 +18,6 @@
 
         customComponents = with pkgs.home-assistant-custom-components; [
           smartthinq-sensors
-          sleep_as_android
         ];
 
         extraPackages =

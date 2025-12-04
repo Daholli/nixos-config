@@ -91,6 +91,7 @@ topLevel: {
               "Videos/.keep".text = "";
               ".face".source = ./${defaultIconFileName};
               "Pictures/${defaultIconFileName}".source = ./${defaultIconFileName};
+              "projects/.keep".text = "";
             }
             // lib.optionalAttrs (osConfig.networking.hostName == "yggdrasil") {
               # Some Paths for my main machine

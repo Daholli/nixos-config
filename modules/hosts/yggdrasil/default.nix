@@ -63,6 +63,22 @@ topLevel: {
         root
       ];
 
+      fileSystems."/mnt/pi_share" = {
+        device = "cholli@nixberry:/storage/";
+        fsType = "sshfs";
+
+        options = [
+          # Filesystem options
+          "allow_other" # for non-root access
+          "_netdev" # this is a network fs
+          "x-systemd.automount" # mount on demand
+
+          # SSH options
+          "reconnect" # handle connection drops
+          "ServerAliveInterval=15" # keep connections alive
+        ];
+      };
+
       nix = {
         distributedBuilds = true;
         settings.builders-use-substitutes = true;

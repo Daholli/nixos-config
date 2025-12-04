@@ -59,8 +59,11 @@
       boot.supportedFilesystems = [ "zfs" ];
       networking.hostId = "8425e349";
 
-      services.zfs.autoScrub.enable = true;
-      services.zfs.trim.enable = true;
+      services.zfs = {
+        autoScrub.enable = true;
+        autoSnapshot.enable = true;
+        trim.enable = true;
+      };
 
       disko.devices = {
         disk = {

@@ -124,6 +124,12 @@ topLevel: {
               {
                 domain = "nixberry.fritz.box";
                 answer = "192.168.178.2";
+                enabled = true;
+              }
+              {
+                domain = "nixberry";
+                answer = "192.168.178.2";
+                enabled = true;
               }
             ];
           };
@@ -173,9 +179,10 @@ topLevel: {
                   "fd7a:115c:a1e0::b701:2f4f"
                 ];
                 tags = [
-                  "device_pc"
-                  "os_linux"
+                  "device_phone"
+                  "os_android"
                 ];
+                uid = "019aeb6c-62bf-7a55-a549-45e17b14ef64";
                 use_global_settings = true;
               }
               {

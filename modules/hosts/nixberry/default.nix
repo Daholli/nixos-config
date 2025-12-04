@@ -31,9 +31,6 @@ topLevel: {
       # hack, homemanager needs it
       programs.dconf.enable = true;
 
-      # build failure
-      programs.nix-ld.enable = false;
-
       sops.secrets.tailscale_key = {
         inherit sopsFile;
       };

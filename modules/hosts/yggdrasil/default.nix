@@ -1,8 +1,8 @@
 topLevel: {
   flake.modules.nixos."hosts/yggdrasil" =
     {
+      config,
       inputs,
-      lib,
       pkgs,
       ...
     }:

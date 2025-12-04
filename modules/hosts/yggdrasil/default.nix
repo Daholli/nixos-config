@@ -79,14 +79,22 @@ topLevel: {
         ];
       };
 
+      sops.secrets = {
+        "remotebuild/private-key" = {
+          sopsFile = ../../../secrets/secrets.yaml;
+          owner = "cholli";
+          mode = "0400";
+        };
+      };
+
       nix = {
         distributedBuilds = true;
         settings.builders-use-substitutes = true;
         buildMachines = [
           {
-            hostName = "192.168.178.2";
+            hostName = "nixberry";
             sshUser = "remotebuild";
-            sshKey = "/root/.ssh/remotebuild";
+            sshKey = config.sops.secrets."remotebuild/private-key".path;
             systems = [ "aarch64-linux" ];
             protocol = "ssh-ng";
 

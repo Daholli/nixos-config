@@ -12,9 +12,9 @@ topLevel: {
       };
 
       # Enable binfmt emulation.
-      boot.binfmt.emulatedSystems = [
-        "aarch64-linux"
-      ];
+      # boot.binfmt.emulatedSystems = [
+      #   "aarch64-linux"
+      # ];
 
       environment.systemPackages = with pkgs; [
         teamviewer

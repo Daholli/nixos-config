@@ -1,5 +1,6 @@
 keys:
   - &primary age1pc92kl38mfr0j68dxww7tpzvqp3lpw6lwfylj6hn2k3rf4rddgtsjxdx47
+  - &yggdrasil age1gtu702a6crx4e450ny25acvsjffvt7kljhhadwhydlreew7z8gvs28d9st
   - &loptland age13xshg5e6ucvnu3vqgn344mxpk5kcqutv2lf4gdffvwadq0ku5ewqy4cck6
   - &nixberry age1mje6kvzzxl6slgpj4rtvmzz3dej3kdq9v85uu69xjcqy6947de6sue05z9
 creation_rules:
@@ -7,6 +8,7 @@ creation_rules:
     key_groups: 
     - age:
       - *primary
+      - *yggdrasil
       - *loptland
       - *nixberry
 

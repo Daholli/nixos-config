@@ -46,7 +46,7 @@
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
               '';
-              proxyPass = "http://100.86.23.74:8123";
+              proxyPass = "http://nixberry:8123";
             };
           };
 

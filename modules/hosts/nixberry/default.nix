@@ -46,6 +46,7 @@ topLevel: {
           # System modules
           base
           server
+          bluetooth
 
           cholli
           root

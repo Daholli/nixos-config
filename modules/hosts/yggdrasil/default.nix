@@ -63,8 +63,21 @@ topLevel: {
         root
       ];
 
+      sops.secrets = {
+        "remotebuild/private-key" = {
+          sopsFile = ../../../secrets/secrets.yaml;
+          owner = "cholli";
+          mode = "0400";
+        };
+
+        "cholli/private-key" = {
+          sopsFile = ../../../secrets/secrets.yaml;
+          mode = "0600";
+        };
+      };
+
       fileSystems."/mnt/pi_share" = {
-        device = "cholli@nixberry:/storage/";
+        device = "cholli@192.168.178.2:/storage/";
         fsType = "sshfs";
 
         options = [
@@ -76,15 +89,8 @@ topLevel: {
           # SSH options
           "reconnect" # handle connection drops
           "ServerAliveInterval=15" # keep connections alive
+          "IdentityFile=${config.sops.secrets."cholli/private-key".path}"
         ];
-      };
-
-      sops.secrets = {
-        "remotebuild/private-key" = {
-          sopsFile = ../../../secrets/secrets.yaml;
-          owner = "cholli";
-          mode = "0400";
-        };
       };
 
       nix = {

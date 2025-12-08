@@ -35,8 +35,9 @@
 
         config = {
           homeassistant = {
-            latitude = 49.4;
-            longitude = 8.6;
+            latitude = 49.37;
+            longitude = 8.66;
+            name = "Zone for Time";
             temperature_unit = "C";
             unit_system = "metric";
 
@@ -70,6 +71,12 @@
                   friendly_name = "Holli PC Power fixed";
                   unit_of_measurement = "W";
                   value_template = "{{ (states('sensor.holli_pc_power') | float / 10) | round(1) }}";
+                  device_class = "energy";
+                };
+                holli_desk_power_combined = {
+                  friendly_name = "Holli Desk Power Combined";
+                  unit_of_measurement = "W";
+                  value_template = "{{ states('sensor.holli_pc_power_fixed') | float + states('sensor.holli_monitors_power_fixed') | float }}";
                   device_class = "energy";
                 };
               };
@@ -111,7 +118,7 @@
                         entities = [
                           { entity = "person.christoph_hollizeck"; }
                           { entity = "person.kuralay_aman"; }
-                          { entity = "zone.home"; }
+                          { entity = "zone.home_2"; }
                         ];
                         theme_mode = "auto";
                         grid_options = {
@@ -120,12 +127,11 @@
                         };
                       }
                       {
-                        show_current = true;
-                        show_forecast = true;
-                        type = "weather-forecast";
+                        type = "custom:clock-weather-card";
                         entity = "weather.forecast_home";
-                        forecast_type = "hourly";
-                        forecast_slots = 5;
+                        forecast_rows = 6;
+                        date_pattern = "DDDD";
+                        time_pattern = "HH:mm";
                       }
                       {
                         display_order = "duedate_asc";
@@ -168,6 +174,9 @@
                     content = "# Hello {{ user }}\n";
                   };
                 };
+                type = "sections";
+                max_columns = 1;
+                cards = [ ];
               }
               {
                 type = "sections";
@@ -192,6 +201,58 @@
                         type = "history-graph";
                         entities = [ { entity = "sensor.living_room_humidity"; } ];
                         title = "Humidity";
+                      }
+                    ];
+                  }
+                  {
+                    type = "grid";
+                    cards = [
+                      {
+                        type = "custom:mushroom-media-player-card";
+                        entity = "media_player.bedroom";
+                        media_controls = [
+                          "previous"
+                          "play_pause_stop"
+                          "next"
+                          "repeat"
+                          "shuffle"
+                        ];
+                        use_media_info = true;
+                        show_volume_level = true;
+                        fill_container = false;
+                        grid_options = {
+                          columns = "full";
+                          rows = 2;
+                        };
+                        volume_controls = [
+                          "volume_set"
+                          "volume_mute"
+                        ];
+                        collapsible_controls = true;
+                      }
+                    ];
+                  }
+                  {
+                    type = "grid";
+                    cards = [
+                      {
+                        type = "history-graph";
+                        entities = [
+                          {
+                            entity = "sensor.holli_monitors_power_fixed";
+                            name = "Monitors + Misc";
+                          }
+                          {
+                            entity = "sensor.holli_pc_power_fixed";
+                            name = "PC";
+                          }
+                          {
+                            entity = "sensor.holli_desk_power_combined";
+                            name = "Combined";
+                          }
+                        ];
+                        hours_to_show = 0.25;
+                        title = "Desk - Holli";
                       }
                     ];
                   }

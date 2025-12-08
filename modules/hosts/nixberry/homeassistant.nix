@@ -55,6 +55,44 @@
               "100.86.250.97" # loptland tailscale
             ];
           };
+
+          sensor = [
+            {
+              platform = "template";
+              sensors = {
+                holli_monitors_power_fixed = {
+                  friendly_name = "Holli Monitors Power fixed";
+                  unit_of_measurement = "W";
+                  value_template = "{{ (states('sensor.holli_monitors_power') | float / 10) | round(1) }}";
+                  device_class = "energy";
+                };
+                holli_pc_power_fixed = {
+                  friendly_name = "Holli PC Power fixed";
+                  unit_of_measurement = "W";
+                  value_template = "{{ (states('sensor.holli_pc_power') | float / 10) | round(1) }}";
+                  device_class = "energy";
+                };
+              };
+            }
+            {
+              name = "Holli PC Total Energy";
+              platform = "integration";
+              source = "sensor.holli_pc_power_fixed";
+              unique_id = "holli_pc_total_energy";
+              unit_prefix = "k";
+              unit_time = "h";
+              method = "left";
+            }
+            {
+              name = "Holli Monitors Total Energy";
+              platform = "integration";
+              source = "sensor.holli_monitors_power_fixed";
+              unique_id = "holli_monitors_total_energy";
+              unit_prefix = "k";
+              unit_time = "h";
+              method = "left";
+            }
+          ];
         };
 
         lovelaceConfigWritable = true;

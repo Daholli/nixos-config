@@ -14,6 +14,7 @@
           "esphome"
           "rpi_power"
           "tuya"
+          "sonos"
         ];
 
         customComponents = with pkgs.home-assistant-custom-components; [

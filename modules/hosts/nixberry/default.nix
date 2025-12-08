@@ -89,6 +89,10 @@ topLevel: {
             443
             53
             80
+
+            # Sonos
+            1400
+            1443
           ];
           allowedUDPPorts = [
             53

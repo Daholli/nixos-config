@@ -32,7 +32,13 @@
           imports = [
             inputs.sops-nix.nixosModules.sops
             inputs.niri-flake.nixosModules.niri
+            inputs.catppuccin.nixosModules.catppuccin
           ];
+
+          catppuccin = {
+            flavor = "mocha";
+            accent = "lavender";
+          };
 
           environment.systemPackages = with pkgs; [
             sops

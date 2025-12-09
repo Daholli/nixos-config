@@ -21,7 +21,6 @@ topLevel: {
 
       imports = with topLevel.config.flake.modules.nixos; [
         (modulesPath + "/profiles/qemu-guest.nix")
-        inputs.catppuccin.nixosModules.catppuccin
 
         # System modules
         base

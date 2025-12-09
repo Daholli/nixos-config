@@ -38,7 +38,6 @@ topLevel: {
         inputs.nixos-hardware.nixosModules.common-cpu-amd
         inputs.nixos-hardware.nixosModules.common-pc
         inputs.nixos-hardware.nixosModules.common-pc-ssd
-        inputs.catppuccin.nixosModules.catppuccin
 
         # System modules
         base

@@ -35,9 +35,7 @@
               "token": "${config.sops.placeholder."factorio/token"}"
             }
           '';
-          mode = "0400";
-          owner = "factorio";
-          group = "factorio";
+          mode = "0444";
         };
       };
 

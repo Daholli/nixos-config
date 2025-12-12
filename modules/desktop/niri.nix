@@ -133,7 +133,8 @@
 
             layout = {
               gaps = 5;
-              center-focused-column = "never";
+              center-focused-column = "on-overflow";
+              always-center-single-column = true;
 
               default-column-width = {
                 proportion = 0.5;

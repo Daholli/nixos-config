@@ -139,6 +139,13 @@
                   "harper-ls"
                 ];
               }
+              {
+                name = "powershell";
+                language-servers = [
+                  "powershell-editor-services"
+                  "harper-ls"
+                ];
+              }
             ];
 
             language-server = {
@@ -197,6 +204,17 @@
                     long_sentences = false;
                   };
                 };
+              };
+
+              powershell-editor-services = {
+                command = "${lib.getExe pkgs.powershell-editor-services}";
+                args = [
+                  "-HostName helix"
+                  "-HostProfileId 0"
+                  "-HostVersion 1.0.0"
+                  "-Stdio"
+                  "-LogLevel Normal"
+                ];
               };
             };
           };

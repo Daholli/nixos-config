@@ -19,7 +19,7 @@ in
 
         specialArgs = {
           inherit inputs;
-          hostConfig = module // {
+          hostConfig = {
             name = stripped_name;
           };
 
@@ -32,7 +32,8 @@ in
           if builtins.elem stripped_name raspberrypis then
             inputs.nixos-raspberrypi.lib.nixosSystem {
               inherit specialArgs;
-              modules = module.imports ++ [
+              modules = [
+                module
                 inputs.home-manager.nixosModules.home-manager
                 {
                   home-manager.extraSpecialArgs = specialArgs;
@@ -42,7 +43,8 @@ in
           else
             inputs.nixpkgs.lib.nixosSystem {
               inherit specialArgs;
-              modules = module.imports ++ [
+              modules = [
+                module
                 inputs.home-manager.nixosModules.home-manager
                 {
                   home-manager.extraSpecialArgs = specialArgs;

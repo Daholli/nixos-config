@@ -36,7 +36,7 @@
         hyprlock-package = inputs.hyprlock.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock;
       in
       {
-        config = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {
+        config = lib.mkIf osConfig.programs.hyprland.enable {
           programs.hyprlock = {
             enable = true;
             package = hyprlock-package;

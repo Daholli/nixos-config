@@ -87,6 +87,11 @@
       };
     };
 
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     niri-flake = {
       url = "github:sodiboo/niri-flake";
       # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7"; # for debugging

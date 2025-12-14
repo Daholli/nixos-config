@@ -59,6 +59,5 @@ all that matters is that your modules are name exactly how you import them.
 ```
 
 ## Window Manager of choice
-A friend of mine introduced me to Niri and I really like it configuration of that can be found under [niri.nix](./modules/desktop/niri.nix)
-I still use [hyprpaper](./modules/desktop/addons/hyprpaper.nix), and [hyprlock](./modules/desktop/addons/hyprlock.nix) because I was previously using hyprland and the still work perfectly fine.
-My bar of choice is [waybar](./modules/desktop/addons/waybar.nix) it is very minimalistic, and my current runner is fuzzel with I just use with a catppuccin theme.
+A friend of mine introduced me to Niri and I really like it configuration of that can be found under [niri.nix](./modules/desktop/niri.nix).
+I also use [DankMaterialShell](https://danklinux.com/docs/) configurations for that can be found in [dms](./modules/desktop/addons/dms).

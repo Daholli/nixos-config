@@ -2,7 +2,7 @@
   flake.modules.homeManager.cholli =
     { lib, osConfig, ... }:
     {
-      config = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {
+      config = lib.mkIf osConfig.programs.hyprland.enable {
         services.hypridle = {
           enable = true;
           settings = {

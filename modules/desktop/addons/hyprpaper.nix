@@ -5,7 +5,7 @@
       picture-path = "/home/cholli/Pictures/firewatch.jpg";
     in
     {
-      config = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {
+      config = lib.mkIf osConfig.programs.hyprland.enable {
 
         home.file = {
           # https://www.reddit.com/r/WidescreenWallpaper/comments/13hib3t/purple_firewatch_3840x1620/

@@ -3,7 +3,6 @@
     nixos.niri =
       { inputs, pkgs, ... }:
       {
-
         programs.niri = {
           enable = true;
           package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
@@ -76,25 +75,6 @@
             cursors = {
               enable = true;
             };
-
-            fuzzel = {
-              enable = true;
-            };
-
-            mako = {
-              enable = true;
-            };
-          };
-
-          services.mako = {
-            enable = true;
-            settings = {
-              border-radius = 15;
-            };
-          };
-
-          programs.fuzzel = {
-            enable = true;
           };
 
           programs.niri.settings = {
@@ -343,8 +323,6 @@
                   "Ctrl+Alt+Delete".action = actions.quit;
 
                   "Mod+Return".action.spawn = "${lib.getExe pkgs.kitty}";
-                  "Mod+D".action.spawn = "${lib.getExe pkgs.fuzzel}";
-                  "Mod+Alt+L".action.spawn = "hyprlock-blur";
 
                   "Mod+Escape" = {
                     allow-inhibiting = false;
@@ -440,8 +418,6 @@
                   # Window Sizes
                   "Mod+BracketLeft".action = actions.consume-or-expel-window-left;
                   "Mod+BracketRight".action = actions.consume-or-expel-window-right;
-                  "Mod+Comma".action = actions.consume-window-into-column;
-                  "Mod+Period".action = actions.expel-window-from-column;
 
                   "Mod+R".action = actions.switch-preset-column-width;
                   "Mod+Shift+R".action = actions.switch-preset-window-height;
@@ -449,9 +425,6 @@
                   "Mod+F".action = actions.maximize-column;
                   "Mod+Shift+F".action = actions.fullscreen-window;
                   "Mod+Ctrl+F".action = actions.expand-column-to-available-width;
-
-                  "Mod+C".action = actions.center-column;
-                  "Mod+V".action = actions.toggle-window-floating;
 
                   # Xwayland keyboard stuff
                   "Mod+Shift+C".action = actions.spawn [
@@ -464,48 +437,10 @@
                     "-c"
                     "wl-paste -n | env DISPLAY=:0 xsel -ib"
                   ];
-
-                  "XF86AudioRaiseVolume" = {
-                    action.spawn = [
-                      "wpctl"
-                      "set-volume"
-                      "@DEFAULT_AUDIO_SINK@"
-                      "0.1+"
-                    ];
-                    allow-when-locked = true;
-                  };
-                  "XF86AudioLowerVolume" = {
-                    action.spawn = [
-                      "wpctl"
-                      "set-volume"
-                      "@DEFAULT_AUDIO_SINK@"
-                      "0.1-"
-                    ];
-                    allow-when-locked = true;
-                  };
-                  "XF86AudioMute" = {
-                    action.spawn = [
-                      "wpctl"
-                      "set-mute"
-                      "@DEFAULT_AUDIO_SINK@"
-                      "toggle"
-                    ];
-                    allow-when-locked = true;
-                  };
-                  "XF86AudioMicMute" = {
-                    action.spawn = [
-                      "wpctl"
-                      "set-mute"
-                      "@DEFAULT_AUDIO_SOURCE@"
-                      "toggle"
-                    ];
-                    allow-when-locked = true;
-                  };
                 }
               ];
 
             spawn-at-startup = [
-              { argv = [ "${lib.getExe config.programs.waybar.package}" ]; }
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
               { argv = [ "discord" ]; }

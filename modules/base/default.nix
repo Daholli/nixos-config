@@ -18,6 +18,11 @@
           home = {
             inherit stateVersion;
           };
+
+          catppuccin = {
+            flavor = "mocha";
+            accent = "lavender";
+          };
         };
 
       nixos.base =

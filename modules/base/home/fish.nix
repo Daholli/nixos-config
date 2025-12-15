@@ -37,15 +37,16 @@
           fish = {
             enable = true;
             shellInit = ''
-              set -x LESS_TERMCAP_mb \e'[01;32m'
-              set -x LESS_TERMCAP_md \e'[01;32m'
-              set -x LESS_TERMCAP_me \e'[0m'
-              set -x LESS_TERMCAP_se \e'[0m'
-              set -x LESS_TERMCAP_so \e'[01;47;34m'
-              set -x LESS_TERMCAP_ue \e'[0m'
-              set -x LESS_TERMCAP_us \e'[01;36m'
-              set -x LESS -R
-              set -x GROFF_NO_SGR 1
+              # Auto-start Tmux on SSH login  
+              if test -n "$SSH_TTY" && test -z "$TMUX"  
+                if command -v tmux > /dev/null 2>&1  
+                  if tmux has-session -t ssh-auto 2>/dev/null  
+                    tmux attach-session -t ssh-auto  
+                  else  
+                    tmux new-session -s ssh-auto  
+                  end  
+                end  
+              end
             '';
             shellAliases = {
               vim = "hx";

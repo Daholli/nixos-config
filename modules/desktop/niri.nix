@@ -70,8 +70,6 @@
       {
         config = lib.mkIf (osConfig.networking.hostName == "yggdrasil" && osConfig.programs.niri.enable) {
           catppuccin = {
-            flavor = "mocha";
-            accent = "lavender";
             cursors = {
               enable = true;
             };

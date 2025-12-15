@@ -8,7 +8,7 @@
         clock24 = true;
         newSession = true;
         keyMode = "vi";
-        terminal = "ghostty";
+        terminal = "kitty";
         extraConfig = ''
           set -g mouse on
         '';

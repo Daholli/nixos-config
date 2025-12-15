@@ -320,7 +320,7 @@
                   "Mod+Shift+E".action = actions.quit;
                   "Ctrl+Alt+Delete".action = actions.quit;
 
-                  "Mod+Return".action.spawn = "${lib.getExe pkgs.kitty}";
+                  "Mod+Return".action.spawn = "${lib.getExe config.programs.kitty.package}";
 
                   "Mod+Escape" = {
                     allow-inhibiting = false;

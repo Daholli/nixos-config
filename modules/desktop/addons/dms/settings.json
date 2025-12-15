@@ -149,7 +149,7 @@
   "notepadLastCustomTransparency": 0.7,
   "soundsEnabled": true,
   "useSystemSoundTheme": false,
-  "soundNewNotification": true,
+  "soundNewNotification": false,
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
   "acMonitorTimeout": 3600,

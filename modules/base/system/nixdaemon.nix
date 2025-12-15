@@ -29,6 +29,9 @@
         enable = true;
         package = inputs.nh-flake.packages.${pkgs.stdenv.hostPlatform.system}.nh;
         flake = "/home/${username}/projects/config";
+
+        clean.enable = true;
+        clean.extraArgs = "--keep-since 7d --keep 5";
       };
 
       nix = {
@@ -77,12 +80,6 @@
             keep-outputs = true;
             keep-derivations = true;
           });
-
-        gc = {
-          automatic = true;
-          dates = "daily";
-          options = "--delete-older-than 7d";
-        };
       };
     };
 }

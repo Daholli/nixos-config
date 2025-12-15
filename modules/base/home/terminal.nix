@@ -13,9 +13,9 @@
           };
           shellIntegration.enableFishIntegration = true;
           settings = {
-            "background_opacity" = "0.90";
-            "shell" = "fish";
-            "confirm_os_window_close" = "0";
+            background_opacity = 0.9;
+            shell = "fish";
+            confirm_os_window_close = 0;
           };
         };
 

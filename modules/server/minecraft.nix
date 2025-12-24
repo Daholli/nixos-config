@@ -1,9 +1,17 @@
 {
   flake.modules.nixos.minecraft-server =
-    { ... }:
+    { inputs, pkgs, ... }:
+    let
+      latest-minecraft = import inputs.nixpkgs-latest-minecraft {
+        system = pkgs.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      };
+    in
     {
       services.minecraft-server = {
         enable = true;
+        package = latest-minecraft.minecraft-server;
+
         eula = true;
         openFirewall = true; # Opens the port the server is running on (by default 25565 but in this case 43000)
         declarative = true;

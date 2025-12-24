@@ -17,6 +17,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/e880129391be2f558d6c205cfd931be338b3b707";
+    nixpkgs-latest-minecraft.url = "github:ChandlerSwift/nixpkgs/487be302ead911dc24db3068f6d9631f2db7585d";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";

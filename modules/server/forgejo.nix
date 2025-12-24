@@ -59,7 +59,7 @@
       };
 
       mailserver = {
-        enable = true;
+        enable = false;
         fqdn = "mail.${domainName}";
         domains = [ domainName ];
 
@@ -70,7 +70,9 @@
           };
         };
 
-        certificateScheme = "acme-nginx";
+        x509 = {
+          useACMEHost = domainName;
+        };
         stateVersion = 3;
       };
 

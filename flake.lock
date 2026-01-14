@@ -150,11 +150,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1768368374,
-        "narHash": "sha256-tl+LcvcjierbeLszwil86x8/L4jP3a8gxiaqM+fiP7E=",
+        "lastModified": 1768406370,
+        "narHash": "sha256-9aWoZQMzE0lBE2EFSCHAI4Zue+jpL/DF13UGf6zfOr8=",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "d68f9d218db9f54e5133dd0c2cb40107e931064f",
+        "rev": "9487ba6df6cbbfb59c051f9410cdc4521a4471ed",
         "type": "github"
       },
       "original": {
@@ -610,11 +610,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768366276,
-        "narHash": "sha256-NUdsaB6H1wvbOC7oh1UZ7Ojg1I+mYBQv8ovlMB6FbHk=",
+        "lastModified": 1768410656,
+        "narHash": "sha256-9CfEGvHgQ8KdhBI5x6RVkuvqCCM7KiVxCM1n9e3lVBA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4e235a8746b195e335306d898f0cc93ad6c4564c",
+        "rev": "85c83f70968516f571015e260fb21c774e586c0b",
         "type": "github"
       },
       "original": {
@@ -1220,11 +1220,11 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1768306584,
-        "narHash": "sha256-GWLONqOKcsWKFYqoEIFbIv6Ti/xoSvsYC9LzZzB1oj4=",
+        "lastModified": 1768400089,
+        "narHash": "sha256-w/jvQHJplvsHjxtv9kYsUDfc+CW/FMIuc0PIgsmGL0s=",
         "owner": "sodiboo",
         "repo": "niri-flake",
-        "rev": "1b8c8ba473cf336d74ffb05ee453c8fe6a05bbbc",
+        "rev": "904cf223bd25b5b40fc8a4254e542507674f0333",
         "type": "github"
       },
       "original": {
@@ -1339,11 +1339,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1767185284,
-        "narHash": "sha256-ljDBUDpD1Cg5n3mJI81Hz5qeZAwCGxon4kQW3Ho3+6Q=",
+        "lastModified": 1768397375,
+        "narHash": "sha256-7QqbFi3ERvKjEdAzEYPv7iSGwpUKSrQW5wPLMFq45AQ=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "40b1a28dce561bea34858287fbb23052c3ee63fe",
+        "rev": "efe2094529d69a3f54892771b6be8ee4a0ebef0f",
         "type": "github"
       },
       "original": {
@@ -1434,11 +1434,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765841014,
-        "narHash": "sha256-55V0AJ36V5Egh4kMhWtDh117eE3GOjwq5LhwxDn9eHg=",
+        "lastModified": 1768404695,
+        "narHash": "sha256-eT3dNE2CQYcPDHaeRZAEFrZ0BmMq2wLxMp7hCmzOZBA=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "be4af8042e7a61fa12fda58fe9a3b3babdefe17b",
+        "rev": "d0d3636b9d174c4558e3bbb18e194d970505fed8",
         "type": "github"
       },
       "original": {
@@ -1527,11 +1527,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1768391573,
-        "narHash": "sha256-URpwHV8DoUvnTghd9NxK8S29mGx2e4f/sv7ftXklTy8=",
+        "lastModified": 1768412321,
+        "narHash": "sha256-0tn96YnvwPY75QXd/IM17yAkarftBLphjSTRygOowcQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "90086ab7de86c9dcadbce33e38ff31d760fd2939",
+        "rev": "6ed815fdeff66e0f1cec0c5db54e6e4fca128c78",
         "type": "github"
       },
       "original": {
@@ -1559,11 +1559,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1768242861,
-        "narHash": "sha256-F4IIxa5xDHjtrmMcayM8lHctUq1oGltfBQu2+oqDWP4=",
+        "lastModified": 1768323494,
+        "narHash": "sha256-yBXJLE6WCtrGo7LKiB6NOt6nisBEEkguC/lq/rP3zRQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1327e798cb055f96f92685df444e9a2c326ab5ed",
+        "rev": "2c3e5ec5df46d3aeee2a1da0bfedd74e21f4bf3a",
         "type": "github"
       },
       "original": {
@@ -2054,11 +2054,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768227189,
-        "narHash": "sha256-8kL+ydRW1E0olVPydB0zLld8xWT3Z/oCjYARMk20EEE=",
+        "lastModified": 1768392206,
+        "narHash": "sha256-QwENVxMhwYW8qVhrbbMSaDv9+Caau6pGgntbzQd2llM=",
         "owner": "zigtools",
         "repo": "zls",
-        "rev": "027609c6b66bc10ec0bb00fea352fe913457ea07",
+        "rev": "ea5418b18dde6cf2a9d2443dd1cdc2fe8a5cd7d6",
         "type": "github"
       },
       "original": {

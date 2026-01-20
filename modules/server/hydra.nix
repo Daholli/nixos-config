@@ -30,6 +30,8 @@
 
       services.hydra = {
         enable = true;
+        package = pkgs.hydra.overrideAttrs { stdenv = pkgs.gcc14Stdenv; };
+
         hydraURL = "http://localhost:${toString httpPort}";
         port = httpPort;
         notificationSender = "hydra@localhost";

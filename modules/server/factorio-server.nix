@@ -1,7 +1,16 @@
 {
   flake.modules.nixos.factorio-server =
-    { config, ... }:
+    {
+      config,
+      inputs,
+      pkgs,
+      ...
+    }:
     let
+      latest-factorio = import inputs.nixpkgs-latest-factorio {
+        system = pkgs.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      };
       sopsFile = ../../secrets/secrets-loptland.yaml;
     in
     {
@@ -46,6 +55,8 @@
 
       services.factorio = {
         enable = true;
+        package = latest-factorio.factorio-headless;
+
         openFirewall = true;
         public = true;
         lan = true;

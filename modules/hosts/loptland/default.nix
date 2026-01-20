@@ -48,7 +48,8 @@ topLevel: {
 
       services.resolved = {
         enable = true;
-        domains = [ "~." ];
+
+        settings.Resolve.Domains = [ "~." ];
       };
 
       networking.firewall.allowedTCPPorts = [

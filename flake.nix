@@ -3,7 +3,7 @@
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
-  inputs = {
+  inputs = rec {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -16,8 +16,8 @@
     catppuccin.url = "github:catppuccin/nix";
     sops-nix.url = "github:Mic92/sops-nix";
 
-    nixpkgs-latest-factorio.url = "github:Daholli/nixpkgs/e880129391be2f558d6c205cfd931be338b3b707";
-    nixpkgs-latest-minecraft.url = "github:ChandlerSwift/nixpkgs/487be302ead911dc24db3068f6d9631f2db7585d";
+    nixpkgs-latest-factorio = nixpkgs-master;
+    nixpkgs-latest-minecraft = nixpkgs-master;
 
     home-manager = {
       url = "github:nix-community/home-manager/master";

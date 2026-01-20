@@ -3,6 +3,8 @@
     homeManager.dev =
       { pkgs, ... }:
       {
+        home.packages = [ pkgs.github-copilot-cli ];
+
         programs = {
           gh-dash = {
             enable = true;
@@ -52,7 +54,6 @@
             enable = true;
             extensions = [
               pkgs.gh-dash
-              pkgs.gh-copilot
             ];
           };
         };

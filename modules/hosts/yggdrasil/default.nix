@@ -25,6 +25,10 @@ topLevel: {
 
         termscp
         nixpkgs-review
+
+        postman
+        vlc
+        ffmpeg
       ];
 
       services.teamviewer.enable = true;

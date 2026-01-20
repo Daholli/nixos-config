@@ -20,7 +20,9 @@
           ".config/DankMaterialShell/settings.json".source = ./settings.json;
           ".config/DankMaterialShell/clsettings.json".source = ./clsettings.json;
           # https://www.reddit.com/r/WidescreenWallpaper/comments/13hib3t/purple_firewatch_3840x1620/
-          "Pictures/firewatch.jpg".source = ../firewatch.jpg;
+          "Pictures/firewatch_background.jpg".source = ../../../../assets/firewatch_background.jpg;
+          # https://wallpaperaccess.com/galaxy-nebula
+          "Pictures/nebula_background.jpg".source = ../../../../assets/nebula_background.jpg;
         };
 
         programs.dankMaterialShell = {

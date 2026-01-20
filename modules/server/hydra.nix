@@ -2,6 +2,7 @@
   flake.modules.nixos.hydra =
     {
       config,
+      inputs,
       lib,
       pkgs,
       ...
@@ -30,7 +31,7 @@
 
       services.hydra = {
         enable = true;
-        package = pkgs.hydra.overrideAttrs { stdenv = pkgs.gcc14Stdenv; };
+        package = inputs.hydra-ci.packages.${pkgs.stdenv.system}.hydra;
 
         hydraURL = "http://localhost:${toString httpPort}";
         port = httpPort;

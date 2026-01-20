@@ -26,6 +26,8 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    hydra-ci.url = "github:NixOS/hydra";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -11,8 +11,8 @@
     in
     {
       imports = [
-        inputs.dankMaterialShell.homeModules.dankMaterialShell.default
-        inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
+        inputs.dankMaterialShell.homeModules.dank-material-shell
+        inputs.dankMaterialShell.homeModules.niri
       ];
 
       config = lib.mkIf osConfig.programs.niri.enable {
@@ -25,11 +25,13 @@
           "Pictures/nebula_background.jpg".source = ../../../../assets/nebula_background.jpg;
         };
 
-        programs.dankMaterialShell = {
+        programs.dank-material-shell = {
           enable = true;
           niri = {
-            enableKeybinds = true;
             enableSpawn = true;
+            enableKeybinds = true;
+
+            includes.enable = false;
           };
 
           enableVPN = false;

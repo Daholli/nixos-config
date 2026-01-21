@@ -122,7 +122,7 @@
   "reverseScrolling": false,
   "dwlShowAllTags": false,
   "workspaceColorMode": "default",
-  "workspaceUnfocusedColorMode": "s",
+  "workspaceUnfocusedColorMode": "sc",
   "workspaceUrgentColorMode": "default",
   "workspaceFocusedBorderEnabled": false,
   "workspaceFocusedBorderColor": "primary",

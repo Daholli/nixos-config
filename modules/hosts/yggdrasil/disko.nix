@@ -103,7 +103,6 @@
                   compression = "lz4";
                   casesensitivity = "insensitive";
                 };
-                postCreateHook = "chown cholli:users /steam";
               };
               "local/nix" = {
                 type = "zfs_fs";

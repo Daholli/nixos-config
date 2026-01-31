@@ -148,13 +148,10 @@
               "01-zen" = {
                 open-on-output = "DP-1";
               };
-              "02-steam" = {
+              "02-games" = {
                 open-on-output = "DP-1";
               };
               "03-work" = {
-                open-on-output = "DP-1";
-              };
-              "04-games" = {
                 open-on-output = "DP-1";
               };
               "01-communication" = {
@@ -231,8 +228,7 @@
                   }
                 ];
 
-                open-on-workspace = "02-steam";
-                open-maximized = true;
+                open-on-workspace = "02-games";
               }
               {
                 matches = [
@@ -259,7 +255,7 @@
                   }
                 ];
 
-                open-on-workspace = "04-games";
+                open-on-workspace = "02-games";
                 default-column-width.proportion = 1.0;
                 default-window-height.proportion = 1.0;
                 min-width = 3440;
@@ -342,9 +338,8 @@
                   };
 
                   "Mod+1".action = actions.focus-workspace "01-zen";
-                  "Mod+2".action = actions.focus-workspace "02-steam";
+                  "Mod+2".action = actions.focus-workspace "02-games";
                   "Mod+3".action = actions.focus-workspace "03-work";
-                  "Mod+4".action = actions.focus-workspace "04-games";
                   "Mod+5".action = actions.focus-workspace "01-communication";
                   "Mod+9".action = actions.focus-workspace "02-1password";
 

@@ -1,12 +1,7 @@
 {
-  config,
-  ...
-}:
-let
-in
-{
   flake.modules.nixos."hosts/loptland" =
     {
+      config,
       inputs,
       lib,
       pkgs,

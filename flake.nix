@@ -115,6 +115,7 @@
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    hytale-launcher.url = "github:JPyke3/hytale-launcher-nix";
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 

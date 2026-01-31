@@ -29,6 +29,8 @@ topLevel: {
         postman
         vlc
         ffmpeg
+
+        inputs.hytale-launcher.packages.x86_64-linux.default
       ];
 
       services.teamviewer.enable = true;

@@ -13,12 +13,17 @@ topLevel: {
         config,
         lib,
         osConfig,
+        pkgs,
         ...
       }:
       let
         username = topLevel.config.flake.meta.users.cholli.username;
       in
       {
+        home.packages = [
+          pkgs.git-credential-manager
+        ];
+
         programs.git = {
           enable = true;
           lfs.enable = true;
@@ -36,6 +41,11 @@ topLevel: {
             user = {
               name = topLevel.config.flake.meta.users.cholli.name;
               email = topLevel.config.flake.meta.users.cholli.email;
+            };
+            credential = {
+              helper = "manager";
+              credentialStore = "secretservice";
+              "https://dev.azure.com".useHttpPath = true;
             };
             core = {
               fsmonitor = true;

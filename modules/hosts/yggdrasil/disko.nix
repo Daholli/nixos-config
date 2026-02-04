@@ -8,6 +8,7 @@
       imports = [ inputs.disko.nixosModules.disko ];
 
       boot.supportedFilesystems = [ "zfs" ];
+      boot.kernelParams = [ "zfs.zfs_arc_max=34359738368" ];
       networking.hostId = "007f0200";
 
       services.zfs = {

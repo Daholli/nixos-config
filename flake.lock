@@ -769,11 +769,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1770411740,
-        "narHash": "sha256-1LgzyuQXTfnbPJ56daOe4dLE2BbRyHmeG2YEoHDFY+c=",
+        "lastModified": 1770462705,
+        "narHash": "sha256-j/QkuEe3a3OP2YogJndozlzFN29scMq5zjkf+DYETF0=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "63eb6b3bda71e7e5a1043f585ae39e878cb56b55",
+        "rev": "cfbbfb591ae5c7d11bae72effe6e08ef60ce7453",
         "type": "github"
       },
       "original": {
@@ -1515,11 +1515,11 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1770443413,
-        "narHash": "sha256-GDsSIXRNWnJN32eRE67pDdjrfXFENhFmZ/x1McFTnvU=",
+        "lastModified": 1770464938,
+        "narHash": "sha256-DWqoxDayxCPwrgORSCRmUzo4X2z0GFrCKaELtxjdyCA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "293b472ef2853e16f476f3f27b21b8b03a0d35b2",
+        "rev": "10cbe3a34814407e16bd52035559d1b00b443621",
         "type": "github"
       },
       "original": {
@@ -1531,11 +1531,11 @@
     },
     "nixpkgs-latest-minecraft": {
       "locked": {
-        "lastModified": 1770443413,
-        "narHash": "sha256-GDsSIXRNWnJN32eRE67pDdjrfXFENhFmZ/x1McFTnvU=",
+        "lastModified": 1770464938,
+        "narHash": "sha256-DWqoxDayxCPwrgORSCRmUzo4X2z0GFrCKaELtxjdyCA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "293b472ef2853e16f476f3f27b21b8b03a0d35b2",
+        "rev": "10cbe3a34814407e16bd52035559d1b00b443621",
         "type": "github"
       },
       "original": {
@@ -1577,11 +1577,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1770443413,
-        "narHash": "sha256-GDsSIXRNWnJN32eRE67pDdjrfXFENhFmZ/x1McFTnvU=",
+        "lastModified": 1770464938,
+        "narHash": "sha256-DWqoxDayxCPwrgORSCRmUzo4X2z0GFrCKaELtxjdyCA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "293b472ef2853e16f476f3f27b21b8b03a0d35b2",
+        "rev": "10cbe3a34814407e16bd52035559d1b00b443621",
         "type": "github"
       },
       "original": {
@@ -2138,11 +2138,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770284855,
-        "narHash": "sha256-7du77n0E8ranKH0xmfwkXMvYMc1Hw29Gp/WveQSHQgI=",
+        "lastModified": 1770464836,
+        "narHash": "sha256-Qifdjm2BWM3cvinxkLHa2358aEDX6nZpEsBm4cyPAIM=",
         "owner": "zigtools",
         "repo": "zls",
-        "rev": "a27f8dceaf7f6959a8534d7b731fb5dcdf123ae0",
+        "rev": "cf45f8040887e05d0453d8600b33be1edb0bbae1",
         "type": "github"
       },
       "original": {

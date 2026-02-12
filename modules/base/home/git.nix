@@ -49,22 +49,24 @@ topLevel: {
             };
             core = {
               fsmonitor = true;
+              editor = "hx";
             };
-            init = {
-              defaultBranch = "main";
+            commit.verbose = true;
+            init.defaultBranch = "main";
+            pull.rebase = true;
+            fetch = {
+              prune = true;
+              pruneTags = true;
             };
-            pull = {
-              rebase = true;
-            };
-            push = {
-              autoSetupRemote = true;
-            };
+            push.autoSetupRemote = true;
             rebase = {
               autoStash = true;
+              autoSquash = true;
             };
-            safe = {
-              directory = "/home/${username}/projects/config";
-            };
+            merge.conflictstyle = "zdiff3";
+            safe.directory = "/home/${username}/projects/config";
+            submodules.recurse = true;
+            help.autocorrect = "prompt";
             maintenance = {
               repo = [
                 "/home/${username}/projects/NixOS/nixpkgs"

@@ -92,6 +92,13 @@
 
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell/v1.2.3";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+      };
+    };
+
+    dgop = {
+      url = "github:AvengeMedia/dgop";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

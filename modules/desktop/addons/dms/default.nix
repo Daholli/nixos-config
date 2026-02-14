@@ -4,11 +4,9 @@
       inputs,
       lib,
       osConfig,
+      pkgs,
       ...
     }:
-    let
-      picture-path = "/home/cholli/Pictures/firewatch.jpg";
-    in
     {
       imports = [
         inputs.dankMaterialShell.homeModules.dank-material-shell
@@ -33,6 +31,8 @@
 
             includes.enable = false;
           };
+
+          dgop.package = inputs.dgop.packages.${pkgs.stdenv.system}.default;
 
           enableVPN = false;
           enableDynamicTheming = false;

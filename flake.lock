@@ -162,6 +162,26 @@
         "type": "github"
       }
     },
+    "dgop": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771036606,
+        "narHash": "sha256-kYEFJvJApcgVgFu6QpSoNk2t0hv7AlmBARc5HPe/n+s=",
+        "owner": "AvengeMedia",
+        "repo": "dgop",
+        "rev": "d8fb09412f36d3e3f548362422b04645ad4c7f15",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dgop",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -1817,6 +1837,7 @@
         "catppuccin": "catppuccin",
         "dankMaterialShell": "dankMaterialShell",
         "devenv": "devenv",
+        "dgop": "dgop",
         "disko": "disko",
         "flake-parts": "flake-parts_2",
         "git-hooks": "git-hooks_2",

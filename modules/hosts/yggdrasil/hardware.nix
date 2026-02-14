@@ -14,6 +14,8 @@
         extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
         blacklistedKernelModules = [ "r8169" ];
 
+        kernelParams = [ "split_lock_detect=off" ];
+
         loader = {
           systemd-boot.enable = true;
           efi.canTouchEfiVariables = true;

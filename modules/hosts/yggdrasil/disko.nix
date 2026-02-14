@@ -17,6 +17,8 @@
         trim.enable = true;
       };
 
+      fileSystems."/home".neededForBoot = true;
+
       disko.devices = {
         disk = {
           x = {

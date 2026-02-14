@@ -64,7 +64,8 @@
           hyprland = {
             enable = true;
             package = hyprland-package;
-            portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+            portalPackage =
+              inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
             withUWSM = true;
           };
         };
@@ -144,9 +145,9 @@
                 "[workspace 7 silent] obsidian"
                 "[workspace 8 silent] discord"
                 "[workspace 9 silent] ELECTRON_OZONE_PLATFORM_HINT=x11 1password" # fix for promts not showing up anymore
-                "${pkgs.xorg.xhost}/bin/xhost +"
+                "${pkgs.xhost}/bin/xhost +"
 
-                "${lib.getExe pkgs.xorg.xrandr} --output DP-1 --primary"
+                "${lib.getExe pkgs.xrandr} --output DP-1 --primary"
               ];
 
               windowrulev2 = [

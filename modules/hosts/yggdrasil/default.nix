@@ -82,7 +82,7 @@ topLevel: {
       };
 
       fileSystems."/mnt/pi_share" = {
-        device = "cholli@192.168.178.2:/storage/";
+        device = "cholli@192.168.178.2:/storage/cholli/";
         fsType = "sshfs";
 
         options = [

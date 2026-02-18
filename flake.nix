@@ -47,9 +47,10 @@
     };
 
     nixos-raspberrypi = {
-      url = "github:Daholli/nixos-raspberrypi/f93cb0e2ac1ec3a78f3544d2f3bd18b6b5d3b8a8";
+      url = "github:Daholli/nixos-raspberrypi/6cc7de7109a7d68b5cebd0ffc490345f7fde1753";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
     nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.11";
 
     nixos-images = {

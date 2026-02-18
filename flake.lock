@@ -1464,17 +1464,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1770234826,
-        "narHash": "sha256-Z0E7bZmgD0NLqnUPC70WwbZnVjHt7AeyfuSoxNyLYp4=",
+        "lastModified": 1771458196,
+        "narHash": "sha256-kKaIQdAuYFXIlbhkS1onvQdQJBmPg1DKREEY6jGOy0k=",
         "owner": "Daholli",
         "repo": "nixos-raspberrypi",
-        "rev": "f93cb0e2ac1ec3a78f3544d2f3bd18b6b5d3b8a8",
+        "rev": "6cc7de7109a7d68b5cebd0ffc490345f7fde1753",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
         "repo": "nixos-raspberrypi",
-        "rev": "f93cb0e2ac1ec3a78f3544d2f3bd18b6b5d3b8a8",
+        "rev": "6cc7de7109a7d68b5cebd0ffc490345f7fde1753",
         "type": "github"
       }
     },

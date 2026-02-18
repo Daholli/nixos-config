@@ -47,7 +47,7 @@ topLevel: {
             sopsFile = ./../../../secrets/secrets.yaml;
             neededForUsers = true;
           };
-
+          users.groups.secrets-access.members = [ "cholli" ];
           users.users.cholli = {
             description = topLevel.config.flake.meta.users.cholli.name;
             isNormalUser = true;

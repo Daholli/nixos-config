@@ -1406,8 +1406,12 @@
     },
     "nixos-images": {
       "inputs": {
-        "nixos-stable": "nixos-stable",
-        "nixos-unstable": "nixos-unstable"
+        "nixos-stable": [
+          "nixpkgs-rpi"
+        ],
+        "nixos-unstable": [
+          "nixpkgs-rpi"
+        ]
       },
       "locked": {
         "lastModified": 1747747741,
@@ -1474,40 +1478,6 @@
         "type": "github"
       }
     },
-    "nixos-stable": {
-      "locked": {
-        "lastModified": 1746957726,
-        "narHash": "sha256-k9ut1LSfHCr0AW82ttEQzXVCqmyWVA5+SHJkS5ID/Jo=",
-        "ref": "nixos-24.11",
-        "rev": "a39ed32a651fdee6842ec930761e31d1f242cb94",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      },
-      "original": {
-        "ref": "nixos-24.11",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      }
-    },
-    "nixos-unstable": {
-      "locked": {
-        "lastModified": 1747060738,
-        "narHash": "sha256-ByfPRQuqj+nhtVV0koinEpmJw0KLzNbgcgi9EF+NVow=",
-        "ref": "nixpkgs-unstable",
-        "rev": "eaeed9530c76ce5f1d2d8232e08bec5e26f18ec1",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      },
-      "original": {
-        "ref": "nixpkgs-unstable",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      }
-    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat_5",
@@ -1547,11 +1517,11 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1771449080,
-        "narHash": "sha256-gMHK6Mt1TgU1WoRSbEH8I6xQYi5GcYf6Dx4Ft91sohw=",
+        "lastModified": 1771455027,
+        "narHash": "sha256-cTx+FXH4iq6nil753azcwgs7H6F16CLz26RPIRKuGCM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ff37ee0d7279ca4ce555ee5bc94fcb0f58b60b1d",
+        "rev": "1720090b48306293c69ec01af7ee7f416a81d534",
         "type": "github"
       },
       "original": {
@@ -1563,11 +1533,11 @@
     },
     "nixpkgs-latest-minecraft": {
       "locked": {
-        "lastModified": 1771449080,
-        "narHash": "sha256-gMHK6Mt1TgU1WoRSbEH8I6xQYi5GcYf6Dx4Ft91sohw=",
+        "lastModified": 1771455027,
+        "narHash": "sha256-cTx+FXH4iq6nil753azcwgs7H6F16CLz26RPIRKuGCM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ff37ee0d7279ca4ce555ee5bc94fcb0f58b60b1d",
+        "rev": "1720090b48306293c69ec01af7ee7f416a81d534",
         "type": "github"
       },
       "original": {
@@ -1609,16 +1579,32 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1771449080,
-        "narHash": "sha256-gMHK6Mt1TgU1WoRSbEH8I6xQYi5GcYf6Dx4Ft91sohw=",
+        "lastModified": 1771455027,
+        "narHash": "sha256-cTx+FXH4iq6nil753azcwgs7H6F16CLz26RPIRKuGCM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ff37ee0d7279ca4ce555ee5bc94fcb0f58b60b1d",
+        "rev": "1720090b48306293c69ec01af7ee7f416a81d534",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-rpi": {
+      "locked": {
+        "lastModified": 1770234462,
+        "narHash": "sha256-Ab6VqbckLApCrZlj8+HXJkPhMiquUP84osaSOZzA3HI=",
+        "owner": "nvmd",
+        "repo": "nixpkgs",
+        "rev": "071e76e7df3520f30f8a213b37f2f3f4cd96e937",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvmd",
+        "ref": "modules-with-keys-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1875,6 +1861,7 @@
         "nixpkgs-latest-factorio": "nixpkgs-latest-factorio",
         "nixpkgs-latest-minecraft": "nixpkgs-latest-minecraft",
         "nixpkgs-master": "nixpkgs-master",
+        "nixpkgs-rpi": "nixpkgs-rpi",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "simple-nixos-mailserver": "simple-nixos-mailserver",

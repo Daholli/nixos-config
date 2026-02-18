@@ -34,8 +34,24 @@
         clean.extraArgs = "--keep-since 7d --keep 5";
       };
 
+      sops = {
+        secrets."github/pat" = {
+          sopsFile = ../../../secrets/secrets.yaml;
+        };
+        templates."access_tokens.conf" = {
+          content = ''
+            access-tokens = github.com=${config.sops.placeholder."github/pat"}
+          '';
+          owner = "root";
+          group = "secrets-access";
+          mode = "0440";
+        };
+      };
+
       nix = {
         package = pkgs.lix;
+
+        extraOptions = "!include ${config.sops.templates."access_tokens.conf".path}";
 
         settings =
           let
@@ -47,6 +63,7 @@
             ++ lib.optional config.services.hydra.enable "hydra hydra-www hydra-evaluator";
           in
           {
+
             nix-path = "nixpkgs=flake:nixpkgs";
             experimental-features = "nix-command flakes";
             http-connections = 50;

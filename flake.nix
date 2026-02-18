@@ -6,6 +6,8 @@
   inputs = rec {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
+
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
@@ -45,8 +47,8 @@
     };
 
     nixos-raspberrypi = {
-      url = "github:Daholli/nixos-raspberrypi/develop";
-      inputs.nixpkgs.follows = "nixpkgs-rpi";
+      url = "github:Daholli/nixos-raspberrypi/f93cb0e2ac1ec3a78f3544d2f3bd18b6b5d3b8a8";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.11";
 

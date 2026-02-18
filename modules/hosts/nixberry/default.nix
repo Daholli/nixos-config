@@ -25,7 +25,7 @@ topLevel: {
         ];
       };
 
-      boot.loader.raspberryPi.bootloader = "kernel";
+      boot.loader.raspberry-pi.bootloader = "kernel";
 
       # hack, homemanager needs it
       programs.dconf.enable = true;

@@ -31,7 +31,12 @@ topLevel: {
         ffmpeg
 
         inputs.hytale-launcher.packages.x86_64-linux.default
+        osu-lazer-bin
+
+        piper
       ];
+
+      services.ratbagd.enable = true;
 
       services.teamviewer.enable = true;
       environment.pathsToLink = [ "/libexec" ];

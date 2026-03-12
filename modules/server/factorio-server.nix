@@ -32,7 +32,7 @@
         templates."extraSettingsFile.json" = {
           content = ''
             {
-              "name": "Pyanodons Holli",
+              "name": "Planetary Pioneers Holli",
               "description": "Trying to run a factorio-headless-server on my nix system",
               "tags": ["vanilla"],
               "max_players": 10,
@@ -62,7 +62,7 @@
         lan = true;
         nonBlockingSaving = true;
         autosave-interval = 5;
-        saveName = "Pyanodons";
+        saveName = "PlanetaryPioneers";
         loadLatestSave = true;
         admins = [
           "daholli"

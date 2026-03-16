@@ -21,6 +21,7 @@
           "Pictures/firewatch_background.jpg".source = ../../../../assets/firewatch_background.jpg;
           # https://wallpaperaccess.com/galaxy-nebula
           "Pictures/nebula_background.jpg".source = ../../../../assets/nebula_background.jpg;
+          "Pictures/horizon-zero-dawn-aloy.jpg".source = ../../../../assets/horizon-zero-dawn-aloy.jpg;
         };
 
         programs.dank-material-shell = {

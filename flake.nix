@@ -20,6 +20,7 @@
 
     nixpkgs-latest-factorio = nixpkgs-master;
     nixpkgs-latest-minecraft = nixpkgs-master;
+    nixpkgs-temp.url = "github:Daholli/nixpkgs/4e67af585996176d4d24640b12b744f06df871cc";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";

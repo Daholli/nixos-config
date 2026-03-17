@@ -53,6 +53,7 @@
               ls = "eza -lah --icons --git";
               lss = "ls --total-size";
               lt = "ls -T --git-ignore";
+              bs = "but status";
             };
             functions = {
               checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
@@ -64,12 +65,6 @@
 
               syncfactoriomodstoserver = ''rsync -aP ~/.factorio/mods/ root@loptland:/var/lib/factorio/mods/ --delete && ssh root@loptland "systemctl restart systemd-tmpfiles-resetup.service && systemctl restart factorio.service"'';
             };
-            plugins = with pkgs.fishPlugins; [
-              {
-                name = "forgit";
-                src = forgit.src;
-              }
-            ];
           };
 
           yazi = {

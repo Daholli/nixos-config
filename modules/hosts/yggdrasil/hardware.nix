@@ -30,8 +30,10 @@
         kernelParams = [ "split_lock_detect=off" ];
 
         loader = {
-          systemd-boot.enable = true;
           efi.canTouchEfiVariables = true;
+          limine = {
+            enable = true;
+          };
         };
 
         initrd.availableKernelModules = [

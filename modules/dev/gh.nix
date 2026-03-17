@@ -3,7 +3,11 @@
     homeManager.dev =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.github-copilot-cli ];
+        home.packages = [
+          (pkgs.github-copilot-cli.overrideAttrs (oldAttrs: {
+            postInstall = "";
+          }))
+        ];
 
         programs = {
           gh-dash = {

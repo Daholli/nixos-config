@@ -34,6 +34,7 @@ topLevel: {
         osu-lazer-bin
 
         piper
+        ghc # for maths
       ];
 
       services.ratbagd.enable = true;

@@ -11,6 +11,7 @@ topLevel: {
     homeManager.cholli =
       {
         config,
+        inputs,
         lib,
         osConfig,
         pkgs,
@@ -18,11 +19,18 @@ topLevel: {
       }:
       let
         username = topLevel.config.flake.meta.users.cholli.username;
+
+        temp = import inputs.nixpkgs-temp {
+          system = pkgs.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
       in
       {
         home.packages = [
           pkgs.git-credential-manager
-        ];
+          temp.gitbutler-cli
+        ]
+        ++ lib.optional (osConfig.networking.hostName == "yggdrasil") pkgs.gitbutler;
 
         programs.git = {
           enable = true;

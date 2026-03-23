@@ -13,6 +13,8 @@
         };
       };
 
+      users.groups.secrets-access.members = [ "gitea-runner" ];
+
       services.gitea-actions-runner = {
         package = pkgs.forgejo-runner;
         instances = {

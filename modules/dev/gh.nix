@@ -4,9 +4,7 @@
       { pkgs, ... }:
       {
         home.packages = [
-          (pkgs.github-copilot-cli.overrideAttrs (oldAttrs: {
-            postInstall = "";
-          }))
+          pkgs.github-copilot-cli
         ];
 
         programs = {

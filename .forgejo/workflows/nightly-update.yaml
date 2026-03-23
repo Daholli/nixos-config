@@ -11,6 +11,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: develop
+          # PUSH_TOKEN must be a PAT with write access to the repo.
+          # It bypasses branch protection rules that block the default GITHUB_TOKEN.
+          token: ${{ secrets.PUSH_TOKEN }}
       - name: Update flake
         if: ${{ github.event_name == 'schedule' }}
         run: |
@@ -19,8 +22,8 @@ jobs:
       - name: Commit new Flake.lock
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          git config --local user.email "christoph.hollizeck@hey.com"
-          git config --local user.name "forgjo-actions[bot]"
+          git config --local user.email "forgejo-actions[bot]@christophhollizeck.dev"
+          git config --local user.name "forgejo-actions[bot]"
           git commit -a -m "chore: update flake"
       - name: Push changes
         if: ${{ github.event_name == 'schedule' }}

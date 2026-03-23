@@ -3,6 +3,7 @@ on:
   #   branches: [main]
   schedule:
     - cron: 0 */6 * * *
+  workflow_dispatch:
 jobs:
   update:
     runs-on: native
@@ -11,19 +12,22 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: develop
+          # PUSH_TOKEN must be a PAT with write access to the repo.
+          # It bypasses branch protection rules that block the default GITHUB_TOKEN.
+          token: ${{ secrets.PUSH_TOKEN }}
       - name: Update flake
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |
           cd ${{ env.FORGEJO_WORKSPACE }}
           nix flake update
       - name: Commit new Flake.lock
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |
-          git config --local user.email "christoph.hollizeck@hey.com"
-          git config --local user.name "forgjo-actions[bot]"
+          git config --local user.email "forgejo-actions[bot]@christophhollizeck.dev"
+          git config --local user.name "forgejo-actions[bot]"
           git commit -a -m "chore: update flake"
       - name: Push changes
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: git push
 
       # - name: Build Loptland

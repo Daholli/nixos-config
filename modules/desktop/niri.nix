@@ -264,6 +264,9 @@
               {
                 matches = [
                   {
+                    app-id = "Element";
+                  }
+                  {
                     app-id = "discord";
                   }
                   {
@@ -294,6 +297,9 @@
                   }
                   {
                     app-id = "discord";
+                  }
+                  {
+                    app-id = "Element";
                   }
                   {
                     app-id = "steam";

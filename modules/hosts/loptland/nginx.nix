@@ -50,6 +50,39 @@
             };
           };
 
+          "matrix.alwayssleepy.online" = lib.mkIf config.services.matrix-synapse.enable {
+            forceSSL = true;
+            useACMEHost = "alwayssleepy.online";
+
+            locations."/" = {
+              proxyPass = "http://localhost:${toString 8008}";
+              extraConfig = ''
+                client_max_body_size 50M;
+              '';
+            };
+          };
+
+          # .well-known Matrix delegation so Matrix IDs are @user:alwayssleepy.online
+          "alwayssleepy.online" = {
+            forceSSL = true;
+            useACMEHost = "alwayssleepy.online";
+
+            locations."/.well-known/matrix/server" = {
+              extraConfig = ''
+                default_type application/json;
+                return 200 '{"m.server":"matrix.alwayssleepy.online:443"}';
+              '';
+            };
+
+            locations."/.well-known/matrix/client" = {
+              extraConfig = ''
+                default_type application/json;
+                add_header 'Access-Control-Allow-Origin' '*';
+                return 200 '{"m.homeserver":{"base_url":"https://matrix.alwayssleepy.online"}}';
+              '';
+            };
+          };
+
           "nixcache.${domainName}" = lib.mkIf config.services.nix-serve.enable {
             forceSSL = true;
             useACMEHost = domainName;

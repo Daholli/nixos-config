@@ -54,6 +54,11 @@ topLevel: {
           dnsResolver = "1.1.1.1:53";
           extraDomainNames = [ "*.${domainname}" ];
         };
+
+        certs."alwayssleepy.online" = {
+          dnsResolver = "1.1.1.1:53";
+          extraDomainNames = [ "*.alwayssleepy.online" ];
+        };
       };
 
     };

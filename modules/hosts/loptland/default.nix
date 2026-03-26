@@ -30,6 +30,9 @@ topLevel: {
         forgejo
         forgejo-runner
 
+        # services
+        matrix-synapse
+
         # game server
         minecraft-server
         factorio-server

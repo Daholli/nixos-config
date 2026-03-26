@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.matrix-synapse =
-    { config, ... }:
+    { config, pkgs, lib, ... }:
     let
       domainName = "alwayssleepy.online";
       matrixPort = 8008;
@@ -40,13 +40,15 @@
           User = "postgres";
           RemainAfterExit = true;
         };
-        script = ''
-          COLLATION=$(psql -tAc "SELECT datcollate FROM pg_database WHERE datname = 'matrix-synapse'")
-          if [ "$COLLATION" != "C" ]; then
-            psql -c "DROP DATABASE \"matrix-synapse\""
-            psql -c "CREATE DATABASE \"matrix-synapse\" ENCODING 'UTF8' LC_COLLATE='C' LC_CTYPE='C' TEMPLATE=template0 OWNER \"matrix-synapse\""
-          fi
-        '';
+        script =
+          let psql = lib.getExe' pkgs.postgresql "psql"; in
+          ''
+            COLLATION=$(${psql} -tAc "SELECT datcollate FROM pg_database WHERE datname = 'matrix-synapse'")
+            if [ "$COLLATION" != "C" ]; then
+              ${psql} -c "DROP DATABASE \"matrix-synapse\""
+              ${psql} -c "CREATE DATABASE \"matrix-synapse\" ENCODING 'UTF8' LC_COLLATE='C' LC_CTYPE='C' TEMPLATE=template0 OWNER \"matrix-synapse\""
+            fi
+          '';
       };
 
       services.matrix-synapse = {

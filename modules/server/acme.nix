@@ -44,7 +44,7 @@ topLevel: {
           inherit (topLevel.config.flake.meta.users.cholli) email;
 
           group = lib.mkIf config.services.nginx.enable "nginx";
-          reloadServices = lib.mkIf config.services.nginx.enable "nginx.service";
+          reloadServices = lib.mkIf config.services.nginx.enable [ "nginx.service" ];
 
           dnsProvider = "netcup";
           environmentFile = config.sops.templates."netcup.env".path;

@@ -32,6 +32,7 @@ topLevel: {
 
         # services
         matrix-synapse
+        mautrix-discord
 
         # game server
         minecraft-server

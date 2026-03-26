@@ -59,6 +59,22 @@
             };
           };
 
+          "cholli.de" = {
+            forceSSL = true;
+            useACMEHost = "cholli.de";
+            globalRedirect = domainName;
+          };
+
+          "~^(?<subdomain>.+)\\.cholli\\.de$" = {
+            forceSSL = true;
+            useACMEHost = "cholli.de";
+            locations."/" = {
+              extraConfig = ''
+                return 301 https://$subdomain.${domainName}$request_uri;
+              '';
+            };
+          };
+
           "_" = {
             forceSSL = true;
             useACMEHost = domainName;

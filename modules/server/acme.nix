@@ -54,6 +54,11 @@ topLevel: {
           dnsResolver = "1.1.1.1:53";
           extraDomainNames = [ "*.${domainname}" ];
         };
+
+        certs."cholli.de" = {
+          dnsResolver = "1.1.1.1:53";
+          extraDomainNames = [ "*.cholli.de" ];
+        };
       };
 
     };

@@ -31,7 +31,7 @@ topLevel: {
         forgejo-runner
 
         # game server
-        minecraft-server
+        # minecraft-server
         factorio-server
 
         # apps

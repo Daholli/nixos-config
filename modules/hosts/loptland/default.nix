@@ -33,6 +33,7 @@ topLevel: {
         # services
         matrix-synapse
         mautrix-discord
+        mautrix-signal
         element-call
 
         # game server

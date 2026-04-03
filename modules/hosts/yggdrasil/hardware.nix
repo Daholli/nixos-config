@@ -44,7 +44,10 @@
           "usb_storage"
           "sd_mod"
         ];
-        kernelModules = [ "kvm-amd" ];
+        kernelModules = [
+          "kvm-amd"
+          "ntsync"
+        ];
 
       };
 

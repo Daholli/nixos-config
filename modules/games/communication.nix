@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
-        discord
+        vesktop
         teamspeak6-client
         element-desktop
       ];

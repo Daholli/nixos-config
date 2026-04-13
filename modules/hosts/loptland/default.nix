@@ -35,6 +35,7 @@ topLevel: {
         mautrix-discord
         mautrix-signal
         element-call
+        element-web
 
         # game server
         minecraft-server

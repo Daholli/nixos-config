@@ -57,6 +57,20 @@
             forceSSL = true;
             useACMEHost = matrixDomain;
 
+            # MSC4143: advertise LiveKit as the RTC transport since Synapse doesn't implement this yet
+            locations."= /_matrix/client/unstable/org.matrix.msc4143/rtc/transports" = {
+              extraConfig = ''
+                default_type application/json;
+                add_header 'Access-Control-Allow-Origin' '*' always;
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+                add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
+                if ($request_method = OPTIONS) {
+                  return 204;
+                }
+                return 200 '{"rtc_transports":[{"type":"livekit","livekit_service_url":"https://call.${matrixDomain}/livekit/jwt"}]}';
+              '';
+            };
+
             locations."/" = {
               proxyPass = "http://localhost:${toString 8008}";
               extraConfig = ''
@@ -91,6 +105,7 @@
               tryFiles = "$uri /index.html";
               extraConfig = ''
                 add_header Cache-Control "no-cache" always;
+                add_header Content-Security-Policy "frame-ancestors 'self' https://chat.${matrixDomain}" always;
               '';
             };
 

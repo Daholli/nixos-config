@@ -214,7 +214,7 @@
   "greeterRememberLastUser": true,
   "greeterEnableFprint": false,
   "greeterEnableU2f": false,
-  "greeterWallpaperPath": "",
+  "greeterWallpaperPath": "/home/cholli/Pictures/horizon-zero-dawn-aloy.jpg",
   "greeterUse24HourClock": true,
   "greeterShowSeconds": false,
   "greeterPadHours12Hour": false,

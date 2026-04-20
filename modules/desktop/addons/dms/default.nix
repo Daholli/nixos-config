@@ -11,6 +11,7 @@
       imports = [
         inputs.dankMaterialShell.homeModules.dank-material-shell
         inputs.dankMaterialShell.homeModules.niri
+        inputs.danksearch.homeModules.dsearch
       ];
 
       config = lib.mkIf osConfig.programs.niri.enable {
@@ -40,6 +41,8 @@
           enableAudioWavelength = false;
           enableCalendarEvents = false;
         };
+
+        programs.dsearch.enable = true;
       };
     };
 }

@@ -3,10 +3,31 @@
     nixos.niri =
       { inputs, pkgs, ... }:
       {
+        imports = [
+          inputs.dankMaterialShell.nixosModules.greeter
+        ];
+
         programs.niri = {
           enable = true;
           package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         };
+
+        programs.dank-material-shell = {
+          greeter = {
+            enable = true;
+            compositor.name = "niri";
+
+            configHome = "/home/cholli";
+          };
+        };
+
+        security = {
+          pam = {
+            services.greetd.enableGnomeKeyring = true;
+          };
+        };
+
+        services.accounts-daemon.enable = true;
 
         environment.systemPackages = with pkgs; [
           kitty

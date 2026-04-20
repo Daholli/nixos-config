@@ -68,6 +68,14 @@ topLevel: {
 
           nix.settings.trusted-users = [ topLevel.config.flake.meta.users.cholli.username ];
 
+          systemd.tmpfiles.rules =
+            let
+              username = "cholli";
+            in
+            [
+              "f+ /var/lib/AccountsService/users/${username}  0600 root root - [User]\\nIcon=/var/lib/AccountsService/icons/${username}\\n" # notice the "\\n" we don't want nix to insert a new line in our string, just pass it as \n to systemd
+              "L+ /var/lib/AccountsService/icons/${username}  - - - - ${./profile.png}"
+            ];
         };
 
       homeManager.cholli =

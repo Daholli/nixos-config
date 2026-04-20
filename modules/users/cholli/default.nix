@@ -58,6 +58,8 @@ topLevel: {
               "networkmanager"
               "sound"
               "tty"
+              "usb"
+              "systemd-journal"
               "wheel"
             ];
             shell = pkgs.fish;

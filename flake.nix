@@ -65,6 +65,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    titrack = {
+      url = "github:Daholli/TiTrack";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     ###
     # hyprland stuff
     hyprland = {

@@ -268,6 +268,11 @@
                     at-startup = true;
                   }
                   {
+                    app-id = "obsidian";
+                    title = "Obsidian";
+                    at-startup = true;
+                  }
+                  {
                     app-id = "teams-for-linux";
                   }
                 ];
@@ -337,6 +342,10 @@
                   }
                   {
                     app-id = "teams-for-linux";
+                  }
+                  {
+                    title = "Microsoft Teams";
+                    app-id = "electron";
                   }
                 ];
 

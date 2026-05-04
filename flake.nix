@@ -153,15 +153,15 @@
     };
 
     # Zig
-    zig-overlay = {
-      url = "github:mitchellh/zig-overlay";
+    zig-flake = {
+      url = "github:silversquirl/zig-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zls = {
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.zig-overlay.follows = "zig-overlay";
+      inputs.zig-flake.follows = "zig-flake";
     };
   };
 }

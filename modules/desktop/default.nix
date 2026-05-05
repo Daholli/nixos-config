@@ -13,22 +13,25 @@
       in
 
       {
-        security.pam.services.gdm.enableGnomeKeyring = true;
-        services.displayManager.gdm = {
-          enable = true;
-          wayland = true;
-        };
-
         environment = {
           systemPackages = with pkgs; [
             zenbrowser
 
             sourcegit
+
+            (pkgs.catppuccin-kvantum.override {
+              accent = "lavender";
+              variant = "mocha";
+            })
+            pkgs.adwaita-icon-theme
           ];
 
           sessionVariables = {
             DEFAULT_BROWSER = "${zenbrowser}/bin/zen-beta";
             BROWSER = "zen-beta";
+
+            QT_QPA_PLATFORMTHEME = "kvantum";
+            QS_ICON_THEME = "adwaita";
           };
 
           etc = lib.mkIf config.programs._1password.enable {
@@ -57,11 +60,19 @@
         #   };
         # };
 
-        # qt = {
-        #   enable = true;
-        #   platformTheme.name = "gnome";
-        #   style.name = "adwaita-dark";
-        # };
+        qt = {
+          enable = true;
+          platformTheme.name = "qtct";
+          style = {
+            package = (
+              pkgs.catppuccin-kvantum.override {
+                accent = "lavender";
+                variant = "mocha";
+              }
+            );
+            name = "kvantum";
+          };
+        };
 
         systemd.user.sessionVariables = osConfig.home-manager.users.cholli.home.sessionVariables;
 

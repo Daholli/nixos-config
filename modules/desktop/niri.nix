@@ -3,10 +3,31 @@
     nixos.niri =
       { inputs, pkgs, ... }:
       {
+        imports = [
+          inputs.dankMaterialShell.nixosModules.greeter
+        ];
+
         programs.niri = {
           enable = true;
           package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         };
+
+        programs.dank-material-shell = {
+          greeter = {
+            enable = true;
+            compositor.name = "niri";
+
+            configHome = "/home/cholli";
+          };
+        };
+
+        security = {
+          pam = {
+            services.greetd.enableGnomeKeyring = true;
+          };
+        };
+
+        services.accounts-daemon.enable = true;
 
         environment.systemPackages = with pkgs; [
           kitty
@@ -223,6 +244,15 @@
               {
                 matches = [
                   {
+                    app-id = "zen-beta";
+                  }
+                ];
+
+                open-on-workspace = "01-zen";
+              }
+              {
+                matches = [
+                  {
                     app-id = "steam";
                     title = "Steam";
                   }
@@ -233,7 +263,14 @@
               {
                 matches = [
                   {
+                    app-id = "electron";
+                    title = "Obsidian";
+                    at-startup = true;
+                  }
+                  {
                     app-id = "obsidian";
+                    title = "Obsidian";
+                    at-startup = true;
                   }
                   {
                     app-id = "teams-for-linux";
@@ -258,13 +295,14 @@
                 open-on-workspace = "02-games";
                 default-column-width.proportion = 1.0;
                 default-window-height.proportion = 1.0;
-                min-width = 3440;
-                min-height = 1440;
               }
               {
                 matches = [
                   {
-                    app-id = "discord";
+                    app-id = "Element";
+                  }
+                  {
+                    app-id = "vesktop";
                   }
                   {
                     app-id = "steam";
@@ -293,7 +331,10 @@
                     app-id = "1Password";
                   }
                   {
-                    app-id = "discord";
+                    app-id = "vesktop";
+                  }
+                  {
+                    app-id = "Element";
                   }
                   {
                     app-id = "steam";
@@ -301,6 +342,10 @@
                   }
                   {
                     app-id = "teams-for-linux";
+                  }
+                  {
+                    title = "Microsoft Teams";
+                    app-id = "electron";
                   }
                 ];
 
@@ -415,6 +460,7 @@
                   "Mod+R".action = actions.switch-preset-column-width;
                   "Mod+Shift+R".action = actions.switch-preset-window-height;
                   "Mod+Ctrl+R".action = actions.reset-window-height;
+                  "Mod+G".action = actions.toggle-window-floating;
                   "Mod+F".action = actions.maximize-column;
                   "Mod+Shift+F".action = actions.fullscreen-window;
                   "Mod+Ctrl+F".action = actions.expand-column-to-available-width;
@@ -436,7 +482,8 @@
             spawn-at-startup = [
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
-              { argv = [ "discord" ]; }
+              { argv = [ "element-desktop" ]; }
+              { argv = [ "vesktop" ]; }
               { argv = [ "1password" ]; }
               { sh = "sleep 1 && steam"; }
             ];

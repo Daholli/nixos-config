@@ -23,7 +23,7 @@ in
 
       zig = pkgs.mkShell {
         packages = [
-          inputs.zig-overlay.packages.${system}.master
+          inputs.zig-flake.packages.${system}.nightly
           inputs.zls.packages.${system}.zls
         ];
       };

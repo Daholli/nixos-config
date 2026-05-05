@@ -65,6 +65,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    titrack = {
+      url = "github:Daholli/TiTrack/improvements";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     ###
     # hyprland stuff
     hyprland = {
@@ -95,10 +100,15 @@
     };
 
     dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell/v1.2.3";
+      url = "github:AvengeMedia/DankMaterialShell";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
       };
+    };
+
+    danksearch = {
+      url = "github:AvengeMedia/danksearch";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     dgop = {
@@ -143,15 +153,15 @@
     };
 
     # Zig
-    zig-overlay = {
-      url = "github:mitchellh/zig-overlay";
+    zig-flake = {
+      url = "github:silversquirl/zig-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zls = {
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.zig-overlay.follows = "zig-overlay";
+      inputs.zig-flake.follows = "zig-flake";
     };
   };
 }

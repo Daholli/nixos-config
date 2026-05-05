@@ -30,8 +30,15 @@ topLevel: {
         forgejo
         forgejo-runner
 
+        # services
+        matrix-synapse
+        mautrix-discord
+        mautrix-signal
+        element-call
+        element-web
+
         # game server
-        minecraft-server
+        # minecraft-server
         factorio-server
 
         # apps

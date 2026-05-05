@@ -66,7 +66,7 @@
     };
 
     titrack = {
-      url = "github:Daholli/TiTrack";
+      url = "github:Daholli/TiTrack/improvements";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

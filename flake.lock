@@ -2088,11 +2088,11 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1777981923,
-        "narHash": "sha256-nhLPsHJnsvUwpMmRbEqgrIgiAIsZzmQtRMKEg6yamlQ=",
+        "lastModified": 1777983031,
+        "narHash": "sha256-vmhC9xelEeYwg2IQJ3DzBv6u7NKuSZgBXpKqInP528U=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b32d125658d4b145229075d85462bd0fe0afa2d0",
+        "rev": "cadd3b008c77da2d2e4d1c40c4e49dccc8706318",
         "type": "github"
       },
       "original": {
@@ -2104,11 +2104,11 @@
     },
     "nixpkgs-latest-minecraft": {
       "locked": {
-        "lastModified": 1777981923,
-        "narHash": "sha256-nhLPsHJnsvUwpMmRbEqgrIgiAIsZzmQtRMKEg6yamlQ=",
+        "lastModified": 1777983031,
+        "narHash": "sha256-vmhC9xelEeYwg2IQJ3DzBv6u7NKuSZgBXpKqInP528U=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b32d125658d4b145229075d85462bd0fe0afa2d0",
+        "rev": "cadd3b008c77da2d2e4d1c40c4e49dccc8706318",
         "type": "github"
       },
       "original": {
@@ -2150,11 +2150,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1777981923,
-        "narHash": "sha256-nhLPsHJnsvUwpMmRbEqgrIgiAIsZzmQtRMKEg6yamlQ=",
+        "lastModified": 1777983031,
+        "narHash": "sha256-vmhC9xelEeYwg2IQJ3DzBv6u7NKuSZgBXpKqInP528U=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b32d125658d4b145229075d85462bd0fe0afa2d0",
+        "rev": "cadd3b008c77da2d2e4d1c40c4e49dccc8706318",
         "type": "github"
       },
       "original": {
@@ -2780,15 +2780,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1777982246,
-        "narHash": "sha256-+mwLQjVI6pDsqpFaDMaabQCXM2rqhWDD1k3+9aJWY6g=",
+        "lastModified": 1777983573,
+        "narHash": "sha256-/geCrq/MRhcxV5+oXuETS1jBgqjTMFt2FK1p2IJ1S/w=",
         "owner": "Daholli",
         "repo": "TiTrack",
-        "rev": "74a420d0cde138cc58e18c08d7185d7e3a624a43",
+        "rev": "aecf58d58ce2c1a3aa8ac790d5b172743132fd30",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
+        "ref": "improvements",
         "repo": "TiTrack",
         "type": "github"
       }

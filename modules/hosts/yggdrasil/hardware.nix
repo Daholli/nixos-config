@@ -22,7 +22,10 @@
     {
 
       boot = {
-        zfs.package = pkgs.zfs_2_4;
+        zfs = {
+          package = pkgs.zfs;
+          forceImportRoot = false;
+        };
         kernelPackages = latestKernelPackage;
         extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
         blacklistedKernelModules = [ "r8169" ];

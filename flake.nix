@@ -37,7 +37,7 @@
     };
 
     nh-flake = {
-      url = "github:nix-community/nh/f1d08030e1ca3829fa26f9bc720119b62f5b09f0";
+      url = "github:nix-community/nh";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

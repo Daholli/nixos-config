@@ -60,6 +60,7 @@ topLevel: {
               "tty"
               "usb"
               "systemd-journal"
+              "greeter"
               "wheel"
             ];
             shell = pkgs.fish;

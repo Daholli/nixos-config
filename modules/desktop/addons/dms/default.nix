@@ -23,6 +23,7 @@
           # https://wallpaperaccess.com/galaxy-nebula
           "Pictures/nebula_background.jpg".source = ../../../../assets/nebula_background.jpg;
           "Pictures/horizon-zero-dawn-aloy.jpg".source = ../../../../assets/horizon-zero-dawn-aloy.jpg;
+          "Pictures/scifi_planet.jpg".source = ../../../../assets/scifi_planet.jpg;
         };
 
         programs.dank-material-shell = {

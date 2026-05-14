@@ -15,7 +15,23 @@
         programs.dank-material-shell = {
           greeter = {
             enable = true;
-            compositor.name = "niri";
+            compositor = {
+              name = "niri";
+              customConfig = ''
+                hotkey-overlay {
+                    skip-at-startup
+                }
+
+                environment {
+                    DMS_RUN_GREETER "1"
+                }
+
+                output "DP-1" {
+                  transform "normal"
+                  mode "3440x1440"
+                }
+              '';
+            };
 
             configHome = "/home/cholli";
           };
@@ -300,6 +316,10 @@
                 matches = [
                   {
                     app-id = "Element";
+                  }
+                  {
+                    app-id = "electron";
+                    title = "Element";
                   }
                   {
                     app-id = "vesktop";

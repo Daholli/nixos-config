@@ -2,6 +2,7 @@
   flake.modules.nixos."hosts/yggdrasil" =
     {
       config,
+      inputs,
       lib,
       pkgs,
       ...
@@ -52,6 +53,24 @@
           "ntsync"
         ];
 
+      };
+
+      imports = [
+        inputs.nix-gaming-edge.nixosModules.mesa-git
+      ];
+
+      nixpkgs.overlays = [ inputs.nix-gaming-edge.overlays.mesa-git ];
+
+      drivers.mesa-git = {
+        enable = true;
+        cacheCleanup = {
+          enable = true;
+          protonPackage = pkgs.proton-ge-bin;
+
+        };
+        steamOrphanCleanup = {
+          enable = true;
+        };
       };
 
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

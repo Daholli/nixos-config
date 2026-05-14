@@ -17,7 +17,6 @@ topLevel: {
       # ];
 
       environment.systemPackages = with pkgs; [
-        teamviewer
         teams-for-linux
 
         obsidian
@@ -30,8 +29,7 @@ topLevel: {
         vlc
         ffmpeg
 
-        inputs.hytale-launcher.packages.x86_64-linux.default
-        osu-lazer-bin
+        # osu-lazer-bin
 
         piper
         ghc # for maths
@@ -39,7 +37,6 @@ topLevel: {
 
       services.ratbagd.enable = true;
 
-      services.teamviewer.enable = true;
       environment.pathsToLink = [ "/libexec" ];
 
       programs.ssh.extraConfig = ''

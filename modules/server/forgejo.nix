@@ -63,7 +63,7 @@
         fqdn = "mail.${domainName}";
         domains = [ domainName ];
 
-        loginAccounts = {
+        accounts = {
           "forgejo@${domainName}" = {
             hashedPasswordFile = config.sops.secrets."forgejo/mail/passwordHash".path;
             aliases = [ "no-reply@${domainName}" ];

@@ -23,6 +23,8 @@
         nix-du
         nix-weather
         nix-index
+
+        inputs.nix-auth.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
       programs.nh = {

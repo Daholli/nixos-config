@@ -31,6 +31,15 @@
 
     hydra-ci.url = "github:NixOS/hydra";
 
+    nix-auth = {
+      url = "github:numtide/nix-auth";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -64,6 +73,10 @@
       url = "github:powerofthe69/nix-gaming-edge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Temporary pin: last nixpkgs commit with mesa 26.0.6, before the 26.1.0 bump.
+    # Remove once nix-gaming-edge mesa-git is stable again.
+    nixpkgs-mesa-26_0_6.url = "github:nixos/nixpkgs/882a7e9c12aaa86e8e0a414ba0147d628e2c561d";
 
     titrack = {
       url = "github:Daholli/TiTrack/improvements";

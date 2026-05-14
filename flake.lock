@@ -1787,6 +1787,32 @@
         "type": "github"
       }
     },
+    "nix-auth": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778728751,
+        "narHash": "sha256-J8VySL959EhtwSGgxmIjdW3bbLln4HTjHMyZxRTqqGM=",
+        "owner": "numtide",
+        "repo": "nix-auth",
+        "rev": "7af96c1b01444146ef89844fdca93acbafe7e066",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "nix-auth",
+        "type": "github"
+      }
+    },
     "nix-eval-jobs": {
       "flake": false,
       "locked": {
@@ -2082,6 +2108,22 @@
         "owner": "nixos",
         "ref": "master",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-mesa-26_0_6": {
+      "locked": {
+        "lastModified": 1777725764,
+        "narHash": "sha256-tAnQz785CCGeSxu+aAdWqIE04BfTw7+GK0XkC1+/EdI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "882a7e9c12aaa86e8e0a414ba0147d628e2c561d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "882a7e9c12aaa86e8e0a414ba0147d628e2c561d",
         "type": "github"
       }
     },
@@ -2513,6 +2555,7 @@
         "nh-flake": "nh-flake",
         "niri": "niri",
         "niri-flake": "niri-flake",
+        "nix-auth": "nix-auth",
         "nix-gaming-edge": "nix-gaming-edge",
         "nixos-hardware": "nixos-hardware",
         "nixos-images": "nixos-images",
@@ -2522,6 +2565,7 @@
         "nixpkgs-latest-factorio": "nixpkgs-latest-factorio",
         "nixpkgs-latest-minecraft": "nixpkgs-latest-minecraft",
         "nixpkgs-master": "nixpkgs-master",
+        "nixpkgs-mesa-26_0_6": "nixpkgs-mesa-26_0_6",
         "nixpkgs-rpi": "nixpkgs-rpi",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-temp": "nixpkgs-temp",

@@ -1,6 +1,6 @@
-topLevel: {
+_topLevel: {
   flake.modules.nixos.element-call =
-    { config, lib, pkgs, ... }:
+    { config, ... }:
     let
       matrixDomain = "alwayssleepy.online";
       livekitPort = 7880;

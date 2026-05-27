@@ -33,6 +33,8 @@ topLevel: {
 
         piper
         ghc # for maths
+
+        inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
       services.ratbagd.enable = true;

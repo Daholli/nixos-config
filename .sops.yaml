@@ -6,22 +6,20 @@ keys:
   - &wsl1 age1hlkhat4mg02k54mqc7g6t5396sxrfy5lz5fh8f6rx28l4qzpeycsd644k5
 creation_rules:
   - path_regex: secrets/secrets.yaml$
-    key_groups: 
-    - age:
-      - *primary
-      - *yggdrasil
-      - *loptland
-      - *nixberry
-      - *wsl1
-
+    key_groups:
+      - age:
+          - *primary
+          - *yggdrasil
+          - *loptland
+          - *nixberry
+          - *wsl1
   - path_regex: secrets/secrets-loptland.yaml$
-    key_groups: 
-    - age:
-      - *primary
-      - *loptland
-      
+    key_groups:
+      - age:
+          - *primary
+          - *loptland
   - path_regex: secrets/secrets-nixberry.yaml$
-    key_groups: 
-    - age:
-      - *primary
-      - *nixberry
+    key_groups:
+      - age:
+          - *primary
+          - *nixberry

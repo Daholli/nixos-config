@@ -1,6 +1,11 @@
 {
   flake.modules.nixos.matrix-synapse =
-    { config, pkgs, lib, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     let
       domainName = "alwayssleepy.online";
       matrixPort = 8008;
@@ -41,7 +46,9 @@
           RemainAfterExit = true;
         };
         script =
-          let psql = lib.getExe' pkgs.postgresql "psql"; in
+          let
+            psql = lib.getExe' pkgs.postgresql "psql";
+          in
           ''
             COLLATION=$(${psql} -tAc "SELECT datcollate FROM pg_database WHERE datname = 'matrix-synapse'")
             if [ "$COLLATION" != "C" ]; then

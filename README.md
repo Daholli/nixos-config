@@ -9,27 +9,33 @@
 </a>
 
 # Welcome to my infrastructure configuration
+
 My configuration is based on [Dendritic Nix](https://dendrix.oeiuwq.com/Dendritic.html#dendritic-nix)
 and was heavily inspired by [github:drupol/infra](https://github.com/drupol/infra) including taking some parts ad-verbatim.
 
-> [!WARNING] 
+> [!WARNING]
 > Do not just use this repo out of the box since it will not work for your setup (you will not be able to use my secrets)
 > Feel free to copy any parts you find interesting or useful, but I would recommend building your flake up from scratch as it will allow for easier bughunting.
 
 ![hyprlock_screenshot](./assets/hyprlock_preview.png)
 
 ## How does it work?
+
 The two main aspects that define this approach are [github:vic/import-tree](https://github.com/vic/import-tree) and [flake-parts](https://flake.parts/)
+
 ```nix
 outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 ```
+
 This lets us define our starting point in another file (or across multiple). In my case this would be the [host-machines](./modules/flake-parts/host-machines.nix) file.
 
 There are many different approaches to this, but I found the approach drupol used, parsing the module name, interesting so I wanted to use it as well.
 I extended mine by filtering my raspberry-pi configurations to be a bit different.
 
 ### defining hosts
+
 Now to define the host machine, you will want to import other flake-part modules and maybe set some settings unique to this machine
+
 ```nix
     flake.modules.nixos."hosts/yggdrasil" = { inputs, ... }: {
       ...
@@ -46,8 +52,10 @@ Now to define the host machine, you will want to import other flake-part modules
 ```
 
 ### defining modules
+
 What I quite like is that there is no needed structure in your modules folder. You can reorganize all you want,
 all that matters is that your modules are name exactly how you import them.
+
 ```nix
   # There are two types of modules you probably want to choose from
   flake.modules.nixos."<your name here>" # nixos base configuration
@@ -59,5 +67,6 @@ all that matters is that your modules are name exactly how you import them.
 ```
 
 ## Window Manager of choice
+
 A friend of mine introduced me to Niri and I really like it configuration of that can be found under [niri.nix](./modules/desktop/niri.nix).
 I also use [DankMaterialShell](https://danklinux.com/docs/) configurations for that can be found in [dms](./modules/desktop/addons/dms).

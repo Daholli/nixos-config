@@ -86,17 +86,19 @@
             locations."= /config.json" = {
               extraConfig = ''
                 default_type application/json;
-                return 200 '${builtins.toJSON {
-                  default_server_config = {
-                    "m.homeserver" = {
-                      base_url = "https://matrix.${matrixDomain}";
-                      server_name = matrixDomain;
+                return 200 '${
+                  builtins.toJSON {
+                    default_server_config = {
+                      "m.homeserver" = {
+                        base_url = "https://matrix.${matrixDomain}";
+                        server_name = matrixDomain;
+                      };
                     };
-                  };
-                  livekit = {
-                    livekit_service_url = "https://call.${matrixDomain}/livekit/jwt";
-                  };
-                }}';
+                    livekit = {
+                      livekit_service_url = "https://call.${matrixDomain}/livekit/jwt";
+                    };
+                  }
+                }';
               '';
             };
 

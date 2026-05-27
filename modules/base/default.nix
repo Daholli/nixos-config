@@ -6,7 +6,6 @@
     {
       homeManager.base =
         {
-          config,
           inputs,
           ...
         }:

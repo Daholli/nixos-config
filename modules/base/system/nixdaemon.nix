@@ -75,7 +75,7 @@
             auto-optimise-store = true;
             trusted-users = users;
             allowed-users = users;
-            allowed-uris = "github: https://github.com/ git+https://github.com/ gitlab: https://gitlab.com/ git+https://gitlab.com/ git+https://codeberg.org/";
+            allowed-uris = "github: https://github.com/ git+https://github.com/ gitlab: https://gitlab.com/ git+https://gitlab.com/ git+https://codeberg.org/ git+https://git.christophhollizeck.dev/";
             substituters = [
               "https://cache.lix.systems"
               "https://nix-community.cachix.org"

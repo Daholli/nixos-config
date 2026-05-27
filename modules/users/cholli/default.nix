@@ -83,7 +83,6 @@ topLevel: {
 
       homeManager.cholli =
         {
-          config,
           lib,
           osConfig,
           pkgs,

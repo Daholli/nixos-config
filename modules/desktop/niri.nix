@@ -98,10 +98,8 @@
     homeManager.cholli =
       {
         config,
-        inputs,
         lib,
         osConfig,
-        pkgs,
         ...
       }:
       {

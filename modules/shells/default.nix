@@ -8,7 +8,7 @@ let
     "aarch64-linux"
   ];
 
-  forAllSystems = f: inputs.nixpkgs.lib.genAttrs supportedSystems (system: f system);
+  forAllSystems = f: inputs.nixpkgs.lib.genAttrs supportedSystems f;
 in
 {
   flake.devShells = forAllSystems (

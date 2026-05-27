@@ -1,7 +1,6 @@
 {
   flake.modules.nixos.mautrix-signal =
     {
-      config,
       pkgs,
       lib,
       ...
@@ -9,7 +8,6 @@
     let
       matrixDomain = "alwayssleepy.online";
       bridgePort = 29335;
-      sopsFile = ../../secrets/secrets-loptland.yaml;
     in
     {
       services.postgresql = {

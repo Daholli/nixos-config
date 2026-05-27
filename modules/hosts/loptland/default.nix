@@ -2,14 +2,11 @@ topLevel: {
   flake.modules.nixos."hosts/loptland" =
     {
       config,
-      inputs,
-      lib,
       pkgs,
       modulesPath,
       ...
     }:
     let
-      domainName = "christophhollizeck.dev";
       sopsFile = ../../../secrets/secrets-loptland.yaml;
     in
     {

@@ -10,13 +10,11 @@
           nix-direnv.enable = true;
         };
       };
-    homeManager.dev =
-      { ... }:
-      {
-        programs.direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-        };
+    homeManager.dev = _: {
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
       };
+    };
   };
 }

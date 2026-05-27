@@ -32,11 +32,14 @@
             "*.face"
             "*.fish"
             "*.png"
+            "*.jpg"
+            "*.jpeg"
             "*.toml"
             "*.svg"
             "*.xml"
             "*/.gitignore"
             "_to_migrate/*"
+            "secrets/*"
             "LICENSE"
           ];
         };
@@ -44,7 +47,8 @@
 
       pre-commit.settings.hooks.nix-fmt = {
         enable = true;
-        entry = lib.getExe self'.formatter;
+        entry = "${lib.getExe self'.formatter} --no-cache";
+        pass_filenames = false;
       };
     };
 }

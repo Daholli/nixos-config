@@ -18,7 +18,7 @@ topLevel: {
           lib.systems.elaborate "aarch64-linux"
         );
         overlays = [
-          (final: prev: {
+          (_final: _prev: {
             homeassistant =
               inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.homeassistant;
           })
@@ -147,7 +147,7 @@ topLevel: {
             map
               (url: {
                 enabled = true;
-                url = url;
+                inherit url;
               })
               [
                 "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt" # AdGuard Dns filter

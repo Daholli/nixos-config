@@ -430,12 +430,7 @@
   "osdAudioOutputEnabled": true,
   "powerActionConfirm": true,
   "powerActionHoldDuration": 0.5,
-  "powerMenuActions": [
-    "reboot",
-    "logout",
-    "poweroff",
-    "lock"
-  ],
+  "powerMenuActions": ["reboot", "logout", "poweroff", "lock"],
   "powerMenuDefaultAction": "logout",
   "powerMenuGridLayout": true,
   "customPowerActionLock": "",
@@ -513,10 +508,7 @@
         }
       ],
       "showOnLastDisplay": false,
-      "leftWidgets": [
-        "launcherButton",
-        "workspaceSwitcher"
-      ],
+      "leftWidgets": ["launcherButton", "workspaceSwitcher"],
       "centerWidgets": [
         {
           "id": "clock",
@@ -612,9 +604,7 @@
   "desktopClockY": -1,
   "desktopClockWidth": 280,
   "desktopClockHeight": 180,
-  "desktopClockDisplayPreferences": [
-    "all"
-  ],
+  "desktopClockDisplayPreferences": ["all"],
   "systemMonitorEnabled": false,
   "systemMonitorShowHeader": true,
   "systemMonitorTransparency": 0.8,
@@ -651,9 +641,7 @@
   "systemMonitorY": -1,
   "systemMonitorWidth": 320,
   "systemMonitorHeight": 480,
-  "systemMonitorDisplayPreferences": [
-    "all"
-  ],
+  "systemMonitorDisplayPreferences": ["all"],
   "systemMonitorVariants": [],
   "desktopWidgetPositions": {},
   "desktopWidgetGridSettings": {},

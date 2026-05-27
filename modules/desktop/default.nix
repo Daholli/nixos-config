@@ -64,12 +64,10 @@
           enable = true;
           platformTheme.name = "qtct";
           style = {
-            package = (
-              pkgs.catppuccin-kvantum.override {
-                accent = "lavender";
-                variant = "mocha";
-              }
-            );
+            package = pkgs.catppuccin-kvantum.override {
+              accent = "lavender";
+              variant = "mocha";
+            };
             name = "kvantum";
           };
         };

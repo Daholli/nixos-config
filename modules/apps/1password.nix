@@ -1,16 +1,14 @@
 topLevel: {
   flake.modules = {
-    nixos._1password =
-      { ... }:
-      {
-        programs = {
-          _1password.enable = true;
-          _1password-gui = {
-            enable = true;
-            polkitPolicyOwners = [ topLevel.config.flake.meta.users.cholli.username ];
-          };
+    nixos._1password = _: {
+      programs = {
+        _1password.enable = true;
+        _1password-gui = {
+          enable = true;
+          polkitPolicyOwners = [ topLevel.config.flake.meta.users.cholli.username ];
         };
       };
+    };
 
     homeManager.cholli =
       { lib, osConfig, ... }:

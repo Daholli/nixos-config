@@ -74,10 +74,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Temporary pin: last nixpkgs commit with mesa 26.0.6, before the 26.1.0 bump.
-    # Remove once nix-gaming-edge mesa-git is stable again.
-    nixpkgs-mesa-26_0_6.url = "github:nixos/nixpkgs/882a7e9c12aaa86e8e0a414ba0147d628e2c561d";
-
     titrack = {
       url = "github:Daholli/TiTrack/improvements";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

@@ -31,6 +31,13 @@
 
     hydra-ci.url = "github:NixOS/hydra";
 
+    omnix = {
+      url = "github:Daholli/omnix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     nix-auth = {
       url = "github:numtide/nix-auth";
       inputs = {

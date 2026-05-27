@@ -62,6 +62,13 @@ topLevel: {
         443
       ];
 
+      local.forgejoRunner = {
+        sopsFile = ../../../secrets/secrets-loptland.yaml;
+        name = "monolith";
+        # default labels = [ "native:host" ]
+        maxJobs = 1;
+      };
+
       sops.secrets = {
         "hydra/remotebuild/private-key" = {
           inherit sopsFile;

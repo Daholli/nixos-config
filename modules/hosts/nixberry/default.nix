@@ -34,6 +34,12 @@ topLevel: {
         inherit sopsFile;
       };
 
+      local.forgejoRunner = {
+        sopsFile = ../../../secrets/secrets-nixberry.yaml;
+        name = "nixberry";
+        labels = [ "aarch64-linux:host" ];
+      };
+
       imports =
         with topLevel.config.flake.modules.nixos;
         with inputs.nixos-raspberrypi.nixosModules;
@@ -46,6 +52,7 @@ topLevel: {
           base
           server
           bluetooth
+          forgejo-runner
 
           cholli
           root

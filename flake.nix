@@ -29,8 +29,6 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    hydra-ci.url = "github:NixOS/hydra";
-
     omnix = {
       url = "github:Daholli/omnix";
       inputs = {

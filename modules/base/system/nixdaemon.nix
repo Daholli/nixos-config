@@ -61,8 +61,7 @@
               "root"
               username
             ]
-            ++ lib.optional (builtins.hasAttr "native" config.services.gitea-actions-runner.instances) "gitea-runner"
-            ++ lib.optional config.services.hydra.enable "hydra hydra-www hydra-evaluator";
+            ++ lib.optional (builtins.hasAttr "native" config.services.gitea-actions-runner.instances) "gitea-runner";
           in
           {
 

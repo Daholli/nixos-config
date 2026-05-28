@@ -2,31 +2,22 @@
   inputs,
   ...
 }:
-let
-  supportedSystems = [
-    "x86_64-linux"
-    "aarch64-linux"
-  ];
-
-  forAllSystems = f: inputs.nixpkgs.lib.genAttrs supportedSystems f;
-in
 {
-  flake.devShells = forAllSystems (
-    system:
-    let
-      pkgs = import inputs.nixpkgs { inherit system; };
-    in
+  perSystem =
+    { config, pkgs, ... }:
     {
-      default = pkgs.mkShell {
-        packages = with pkgs; [ atool ];
-      };
+      devShells = {
+        default = pkgs.mkShell {
+          packages = with pkgs; [ atool ];
+          shellHook = config.pre-commit.installationScript;
+        };
 
-      zig = pkgs.mkShell {
-        packages = [
-          inputs.zig-flake.packages.${system}.nightly
-          inputs.zls.packages.${system}.zls
-        ];
+        zig = pkgs.mkShell {
+          packages = [
+            inputs.zig-flake.packages.${pkgs.stdenv.hostPlatform.system}.nightly
+            inputs.zls.packages.${pkgs.stdenv.hostPlatform.system}.zls
+          ];
+        };
       };
-    }
-  );
+    };
 }

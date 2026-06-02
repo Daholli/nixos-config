@@ -313,7 +313,7 @@
               {
                 matches = [
                   {
-                    app-id = "Element";
+                    app-id = "element";
                   }
                   {
                     app-id = "electron";

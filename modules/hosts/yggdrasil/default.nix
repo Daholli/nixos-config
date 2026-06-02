@@ -28,6 +28,7 @@ topLevel: {
         postman
         vlc
         ffmpeg
+        onlyoffice-desktopeditors
 
         # osu-lazer-bin
 

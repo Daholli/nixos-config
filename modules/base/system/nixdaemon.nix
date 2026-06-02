@@ -11,8 +11,6 @@
       username = "cholli";
     in
     {
-      # imports = [ inputs.nix-ld.nixosModules.nix-ld ];
-
       environment.systemPackages = with pkgs; [
         nixfmt
         nix-prefetch-git
@@ -24,6 +22,7 @@
         nix-weather
         nix-index
 
+        nix-update
         inputs.nix-auth.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 

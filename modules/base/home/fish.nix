@@ -31,8 +31,6 @@
         ...
       }:
       {
-        catppuccin.fish.enable = true;
-
         programs = {
           fish = {
             enable = true;
@@ -57,7 +55,7 @@
             };
             functions = {
               checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
-              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --target-host nixberry -H nixberry";
+              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --build-host nixberry --target-host nixberry -H nixberry";
               deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --target-host christophhollizeck.dev -H loptland";
               exportMachineSSHkey = "export SOPS_AGE_KEY=$(sudo ssh-to-age -i /etc/ssh/ssh_host_ed25519_key -private-key)
 ";

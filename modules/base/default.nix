@@ -19,6 +19,8 @@
           };
 
           catppuccin = {
+            enable = true;
+            autoEnable = true;
             flavor = "mocha";
             accent = "lavender";
           };
@@ -40,6 +42,8 @@
           ];
 
           catppuccin = {
+            enable = true;
+            autoEnable = true;
             flavor = "mocha";
             accent = "lavender";
           };

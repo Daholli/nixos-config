@@ -9,8 +9,6 @@
           userSettings = {
             auto_install_extensions = {
               nix = true;
-              catppuccin = true;
-              catppuccin-icons = true;
             };
 
             auto_update = false;
@@ -25,12 +23,6 @@
             buffer_font_size = 16;
 
             autosave = "on_focus_change";
-
-            theme = {
-              mode = "system";
-              light = "Catppuccin Latte";
-              dark = "Catppuccin Macchiato";
-            };
 
             load_direnv = "shell_hook";
             terminal = {

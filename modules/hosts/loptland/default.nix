@@ -1,14 +1,10 @@
 topLevel: {
   flake.modules.nixos."hosts/loptland" =
     {
-      config,
       pkgs,
       modulesPath,
       ...
     }:
-    let
-      sopsFile = ../../../secrets/secrets-loptland.yaml;
-    in
     {
       nixpkgs.config.allowUnfree = true;
       services.qemuGuest.enable = true;
@@ -23,9 +19,9 @@ topLevel: {
         base
         server
         loptland-acme
-        hydra
         forgejo
         forgejo-runner
+        nix-serve
 
         # services
         matrix-synapse
@@ -62,49 +58,11 @@ topLevel: {
         443
       ];
 
-      sops.secrets = {
-        "hydra/remotebuild/private-key" = {
-          inherit sopsFile;
-          owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
-          mode = "0400";
-        };
+      local.forgejoRunner = {
+        sopsFile = ../../../secrets/secrets-loptland.yaml;
+        name = "monolith";
+        # default labels = [ "native:host" ]
+        maxJobs = 1;
       };
-
-      nix = {
-        distributedBuilds = true;
-
-        extraOptions = ''
-          builders-use-substitutes = true
-        '';
-
-        buildMachines = [
-          {
-            hostName = "localhost";
-            protocol = null;
-            system = "x86_64-linux";
-
-            supportedFeatures = [
-              "kvm"
-              "nixos-test"
-              "big-parallel"
-              "benchmark"
-            ];
-          }
-          {
-            hostName = "nixberry";
-            sshUser = "remotebuild";
-            sshKey = config.sops.secrets."hydra/remotebuild/private-key".path;
-            systems = [ "aarch64-linux" ];
-            protocol = "ssh";
-
-            supportedFeatures = [
-              "nixos-test"
-              "big-parallel"
-              "kvm"
-            ];
-          }
-        ];
-      };
-
     };
 }

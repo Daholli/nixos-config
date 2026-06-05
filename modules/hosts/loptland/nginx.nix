@@ -30,15 +30,6 @@
             };
           };
 
-          "hydra.${domainName}" = lib.mkIf config.services.hydra.enable {
-            forceSSL = true;
-            useACMEHost = domainName;
-
-            locations."/" = {
-              proxyPass = "http://localhost:${toString config.services.hydra.port}/";
-            };
-          };
-
           "ha.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;

@@ -29,7 +29,12 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    hydra-ci.url = "github:NixOS/hydra";
+    omnix = {
+      url = "github:Daholli/omnix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
     nix-auth = {
       url = "github:numtide/nix-auth";
@@ -57,7 +62,7 @@
     };
 
     nixos-raspberrypi = {
-      url = "github:Daholli/nixos-raspberrypi/6cc7de7109a7d68b5cebd0ffc490345f7fde1753";
+      url = "github:Daholli/nixos-raspberrypi/develop";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

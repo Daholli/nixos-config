@@ -35,6 +35,8 @@
           fish = {
             enable = true;
             shellInit = ''
+              devenv hook fish | source
+
               # Auto-start Tmux on SSH login  
               if test -n "$SSH_TTY" && test -z "$TMUX"  
                 if command -v tmux > /dev/null 2>&1  
@@ -72,7 +74,8 @@
 
           zoxide = {
             enable = true;
-            options = [ "--cmd cd" ];
+            enableFishIntegration = true;
+            options = [ "--cmd=cd" ];
           };
 
         };

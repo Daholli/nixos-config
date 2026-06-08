@@ -1,9 +1,9 @@
 {
   flake.modules = {
     nixos.dev =
-      { pkgs, ... }:
+      { inputs, pkgs, ... }:
       {
-        environment.systemPackages = [ pkgs.devenv ];
+        environment.systemPackages = [ inputs.devenv.packages.${pkgs.stdenv.hostPlatform.system}.devenv ];
 
         programs.direnv = {
           enable = true;

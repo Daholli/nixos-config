@@ -83,6 +83,22 @@
         "type": "github"
       }
     },
+    "catppuccin-tide": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772906555,
+        "narHash": "sha256-0ZlGqWJBGs6gtRcZ2U0REgixmeKGnqTq/zZsPB2WO+0=",
+        "owner": "jocelynthode",
+        "repo": "catppuccin-tide",
+        "rev": "8efcd0be55a239f7d185ed2eb3a712a6265a6245",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jocelynthode",
+        "repo": "catppuccin-tide",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1766774972,
@@ -1432,6 +1448,7 @@
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
+        "catppuccin-tide": "catppuccin-tide",
         "dankMaterialShell": "dankMaterialShell",
         "danksearch": "danksearch",
         "devenv": "devenv",

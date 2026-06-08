@@ -130,6 +130,11 @@
       flake = false;
     };
 
+    catppuccin-tide = {
+      url = "github:jocelynthode/catppuccin-tide";
+      flake = false;
+    };
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     hytale-launcher.url = "github:JPyke3/hytale-launcher-nix";
 

@@ -260,6 +260,16 @@
                   {
                     app-id = "zen-beta";
                   }
+                  {
+                    app-id = "electron";
+                    title = "Obsidian";
+                    at-startup = true;
+                  }
+                  {
+                    app-id = "obsidian";
+                    title = "Obsidian";
+                    at-startup = true;
+                  }
                 ];
 
                 open-on-workspace = "01-zen";
@@ -276,16 +286,6 @@
               }
               {
                 matches = [
-                  {
-                    app-id = "electron";
-                    title = "Obsidian";
-                    at-startup = true;
-                  }
-                  {
-                    app-id = "obsidian";
-                    title = "Obsidian";
-                    at-startup = true;
-                  }
                   {
                     app-id = "teams-for-linux";
                   }

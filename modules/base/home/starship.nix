@@ -2,7 +2,7 @@
   flake.modules.homeManager.cholli = _: {
     programs = {
       starship = {
-        enable = true;
+        enable = false;
         enableTransience = true;
         settings = {
           character = {

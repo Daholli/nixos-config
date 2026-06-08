@@ -1,3 +1,6 @@
+<a href="https://git.christophhollizeck.dev/Daholli/nixos-config/actions/workflows/ci.yaml" target="_blank">
+    <img alt="CI" src="https://git.christophhollizeck.dev/Daholli/nixos-config/actions/workflows/ci.yaml/badge.svg?style=for-the-badge">
+</a>
 <a href="https://nixos.wiki/wiki/Flakes" target="_blank">
 	  <img alt="Nix Flakes Ready" src="https://img.shields.io/static/v1?logo=nixos&logoColor=d8dee9&label=Nix%20Flakes&labelColor=663399&message=Ready&color=d8dee9&style=for-the-badge">
 </a>

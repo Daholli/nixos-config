@@ -27,7 +27,6 @@
       }:
       let
         helix-pkg = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        treefmt = inputs.self.formatter.${pkgs.stdenv.hostPlatform.system};
       in
       {
         home.file.".config/helix/ignore".text = ''
@@ -110,11 +109,7 @@
                 name = "nix";
                 auto-format = true;
                 formatter = {
-                  command = "${treefmt}/bin/treefmt";
-                  args = [
-                    "--stdin"
-                    "file.nix"
-                  ];
+                  command = "${pkgs.nixfmt}/bin/nixfmt";
                 };
                 language-servers = [
                   "nixd"
@@ -167,9 +162,7 @@
                   {
                     nixpkgs.expr = "import ${myFlake}.inputs.nixpkgs { }";
                     formatting.command = [
-                      "${treefmt}/bin/treefmt"
-                      "--stdin"
-                      "file.nix"
+                      "${pkgs.nixfmt}/bin/nixfmt"
                     ];
                     options = {
                       nixos.expr = nixosOpts;

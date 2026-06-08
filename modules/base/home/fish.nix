@@ -11,6 +11,7 @@
           ripgrep
           fzf
           eza
+          jq
 
           #optional
           pciutils
@@ -58,17 +59,14 @@
               }
             ];
             shellInit = ''
-              devenv hook fish | source
+              if command -q devenv
+                devenv hook fish | source
+              end
 
-              # Auto-start Tmux on SSH login  
-              if test -n "$SSH_TTY" && test -z "$TMUX"  
-                if command -v tmux > /dev/null 2>&1  
-                  if tmux has-session -t ssh-auto 2>/dev/null  
-                    tmux attach-session -t ssh-auto  
-                  else  
-                    tmux new-session -s ssh-auto  
-                  end  
-                end  
+              # Auto-configure tide on first run
+              if not set -q tide_left_prompt_items
+                tide configure --auto --style=Lean --prompt_colors='True color' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Many icons' --transient=Yes
+                catppuccin_tide mocha lean
               end
             '';
             shellAliases = {

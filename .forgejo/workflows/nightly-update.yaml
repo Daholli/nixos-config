@@ -29,13 +29,3 @@ jobs:
       - name: Push changes
         if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: git push
-
-# - name: Build Loptland
-#   run: |
-#     cd ${{ env.FORGEJO_WORKSPACE }}
-#     nix build .#nixosConfigurations.loptland.config.system.build.toplevel
-
-# - name: Build Yggdrasil
-#   run: |
-#     cd ${{ env.FORGEJO_WORKSPACE }}
-#     nix build .#nixosConfigurations.yggdrasil.config.system.build.toplevel

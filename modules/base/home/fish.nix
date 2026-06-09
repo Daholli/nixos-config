@@ -59,7 +59,7 @@
               }
             ];
             shellInit = ''
-              if command -q devenv
+              if command -q devenv; and not set -q DEVENV_ROOT
                 devenv hook fish | source
               end
 
@@ -67,6 +67,7 @@
               if not set -q tide_left_prompt_items
                 tide configure --auto --style=Lean --prompt_colors='True color' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Many icons' --transient=Yes
                 catppuccin_tide mocha lean
+                set sponge_purge_only_on_exit true
               end
             '';
             shellAliases = {

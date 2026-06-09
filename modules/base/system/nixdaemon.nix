@@ -92,11 +92,7 @@
 
               "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk="
             ];
-          }
-          // (lib.optionalAttrs config.programs.direnv.enable {
-            keep-outputs = true;
-            keep-derivations = true;
-          });
+          };
       };
     };
 }

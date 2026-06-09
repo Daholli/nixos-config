@@ -31,6 +31,7 @@ in
         value =
           if builtins.elem stripped_name raspberrypis then
             inputs.nixos-raspberrypi.lib.nixosSystem {
+              inherit (inputs) nixpkgs;
               inherit specialArgs;
               modules = [
                 module

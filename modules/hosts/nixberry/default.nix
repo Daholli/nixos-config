@@ -13,27 +13,6 @@ topLevel: {
     {
       nixpkgs = {
         config.allowUnfree = true;
-        overlays = [
-          (_final: prev: {
-            # t0050-filesystem.sh TODO tests unexpectedly pass on newer kernels, skip tests
-            git = prev.git.overrideAttrs (_old: {
-              doCheck = false;
-              doInstallCheck = false;
-            });
-            # test_aborted_post_io_error is flaky/broken on aarch64 Linux kernels
-            python3 = prev.python3.override {
-              packageOverrides = _pyFinal: pyPrev: {
-                eventlet = pyPrev.eventlet.overrideAttrs (_old: {
-                  doCheck = false;
-                });
-                mypy = pyPrev.mypy.overrideAttrs (_old: {
-                  doCheck = false;
-                  doInstallCheck = false;
-                });
-              };
-            };
-          })
-        ];
       };
 
       boot.loader.raspberry-pi.bootloader = "kernel";

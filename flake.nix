@@ -93,6 +93,11 @@
       };
     };
 
+    dms-plugin-diskusage = {
+      url = "github:alcxyz/DankDiskUsage";
+      flake = false;
+    };
+
     danksearch = {
       url = "github:AvengeMedia/danksearch";
       inputs.nixpkgs.follows = "nixpkgs";

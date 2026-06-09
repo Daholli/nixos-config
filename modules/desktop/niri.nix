@@ -100,6 +100,7 @@
         config,
         lib,
         osConfig,
+        pkgs,
         ...
       }:
       {
@@ -109,6 +110,8 @@
               enable = true;
             };
           };
+
+          home.packages = [ pkgs.kdePackages.dolphin ];
 
           programs.niri.settings = {
             prefer-no-csd = true;

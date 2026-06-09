@@ -25,9 +25,11 @@
   "hyprlandLayoutGapsOverride": -1,
   "hyprlandLayoutRadiusOverride": -1,
   "hyprlandLayoutBorderSize": -1,
+  "hyprlandResizeOnBorder": false,
   "mangoLayoutGapsOverride": -1,
   "mangoLayoutRadiusOverride": -1,
   "mangoLayoutBorderSize": -1,
+  "mangoTrackpadNaturalScrolling": true,
   "firstDayOfWeek": -1,
   "showWeekNumber": true,
   "use24HourClock": true,
@@ -35,7 +37,13 @@
   "padHours12Hour": false,
   "useFahrenheit": false,
   "windSpeedUnit": "kmh",
-  "nightModeEnabled": false,
+  "nightModeEnabled": true,
+  "nightModeTemperature": 3000,
+  "nightModeHighTemperature": 6500,
+  "nightModeAutoEnabled": true,
+  "nightModeAutoMode": "sun",
+  "nightModeUseIPLocation": true,
+  "nightModeLocationProvider": "",
   "animationSpeed": 1,
   "customAnimationDuration": 500,
   "syncComponentAnimationSpeeds": true,
@@ -44,6 +52,8 @@
   "modalAnimationSpeed": 1,
   "modalCustomAnimationDuration": 150,
   "enableRippleEffects": true,
+  "animationVariant": 0,
+  "motionEffect": 0,
   "m3ElevationEnabled": true,
   "m3ElevationIntensity": 12,
   "m3ElevationOpacity": 30,
@@ -54,6 +64,8 @@
   "popoutElevationEnabled": true,
   "barElevationEnabled": true,
   "blurEnabled": false,
+  "blurForegroundLayers": true,
+  "blurLayerOutlineOpacity": 0.12,
   "blurBorderColor": "outline",
   "blurBorderCustomColor": "#ffffff",
   "blurBorderOpacity": 1,
@@ -73,6 +85,9 @@
   "selectedGpuIndex": 0,
   "enabledGpuPciIds": [],
   "showSystemTray": true,
+  "systemTrayIconTintMode": "none",
+  "systemTrayIconTintSaturation": 50,
+  "systemTrayIconTintStrength": 135,
   "showClock": true,
   "showNotificationButton": true,
   "showBattery": true,
@@ -90,6 +105,8 @@
   "controlCenterShowBatteryIcon": false,
   "controlCenterShowPrinterIcon": false,
   "controlCenterShowScreenSharingIcon": true,
+  "controlCenterShowIdleInhibitorIcon": false,
+  "controlCenterShowDoNotDisturbIcon": false,
   "showPrivacyButton": true,
   "privacyShowMicIcon": false,
   "privacyShowCameraIcon": false,
@@ -145,6 +162,7 @@
   "maxWorkspaceIcons": 3,
   "workspaceAppIconSizeOffset": 0,
   "groupWorkspaceApps": true,
+  "groupActiveWorkspaceApps": false,
   "workspaceFollowFocus": false,
   "showOccupiedWorkspacesOnly": true,
   "reverseScrolling": false,
@@ -166,6 +184,7 @@
   "audioWheelScrollAmount": 5,
   "clockCompactMode": false,
   "focusedWindowCompactMode": false,
+  "focusedWindowSize": 1,
   "runningAppsCompactMode": true,
   "barMaxVisibleApps": 0,
   "barMaxVisibleRunningApps": 0,
@@ -177,6 +196,7 @@
   "appsDockEnlargePercentage": 125,
   "appsDockIconSizePercentage": 100,
   "keyboardLayoutNameCompactMode": false,
+  "keyboardLayoutNameShowIcon": false,
   "runningAppsCurrentWorkspace": true,
   "runningAppsGroupByApp": false,
   "runningAppsCurrentMonitor": false,
@@ -212,6 +232,7 @@
   "lockDateFormat": "",
   "greeterRememberLastSession": true,
   "greeterRememberLastUser": true,
+  "greeterAutoLogin": false,
   "greeterEnableFprint": false,
   "greeterEnableU2f": false,
   "greeterWallpaperPath": "/home/cholli/Pictures/scifi_planet.jpg",
@@ -232,15 +253,21 @@
   "appLauncherGridColumns": 4,
   "spotlightCloseNiriOverview": true,
   "rememberLastQuery": false,
+  "rememberLastMode": true,
   "spotlightSectionViewModes": {},
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
-  "dankLauncherV2Size": "compact",
+  "dankLauncherV2Size": "large",
   "dankLauncherV2BorderEnabled": false,
   "dankLauncherV2BorderThickness": 2,
   "dankLauncherV2BorderColor": "primary",
   "dankLauncherV2ShowFooter": true,
   "dankLauncherV2UnloadOnClose": false,
+  "dankLauncherV2IncludeFilesInAll": false,
+  "dankLauncherV2IncludeFoldersInAll": false,
+  "launcherUseOverlayLayer": false,
+  "launcherStyle": "full",
+  "spotlightBarShowModeChips": false,
   "useAutoLocation": false,
   "weatherEnabled": true,
   "networkPreference": "auto",
@@ -261,7 +288,7 @@
       "cursorHideTimeout": 0
     }
   },
-  "launcherLogoMode": "apps",
+  "launcherLogoMode": "os",
   "launcherLogoCustomPath": "",
   "launcherLogoColorOverride": "",
   "launcherLogoColorInvertOnMode": false,
@@ -272,6 +299,8 @@
   "monoFontFamily": "Fira Code",
   "fontWeight": 400,
   "fontScale": 1.2,
+  "textRenderType": 0,
+  "textRenderQuality": 0,
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
   "notepadFontSize": 14,
@@ -289,11 +318,13 @@
   "acSuspendTimeout": 0,
   "acSuspendBehavior": 0,
   "acProfileName": "",
+  "acPostLockMonitorTimeout": 0,
   "batteryMonitorTimeout": 0,
   "batteryLockTimeout": 0,
   "batterySuspendTimeout": 0,
   "batterySuspendBehavior": 0,
   "batteryProfileName": "",
+  "batteryPostLockMonitorTimeout": 0,
   "batteryChargeLimit": 100,
   "lockBeforeSuspend": false,
   "loginctlLockIntegration": true,
@@ -328,6 +359,7 @@
   "matugenTemplatePywalfox": true,
   "matugenTemplateZenBrowser": true,
   "matugenTemplateVesktop": true,
+  "matugenTemplateVencord": true,
   "matugenTemplateEquibop": true,
   "matugenTemplateGhostty": true,
   "matugenTemplateKitty": true,
@@ -352,8 +384,9 @@
   },
   "matugenTemplateNeovimSetBackground": true,
   "showDock": false,
-  "dockAutoHide": false,
+  "dockAutoHide": true,
   "dockSmartAutoHide": false,
+  "dockUseOverlayLayer": false,
   "dockGroupByApp": false,
   "dockRestoreSpecialWorkspaceOnClick": false,
   "dockOpenOnOverview": false,
@@ -367,7 +400,7 @@
   "dockBorderColor": "surfaceText",
   "dockBorderOpacity": 1,
   "dockBorderThickness": 1,
-  "dockIsolateDisplays": false,
+  "dockIsolateDisplays": true,
   "dockLauncherEnabled": false,
   "dockLauncherLogoMode": "apps",
   "dockLauncherLogoCustomPath": "",
@@ -378,6 +411,9 @@
   "dockMaxVisibleApps": 0,
   "dockMaxVisibleRunningApps": 0,
   "dockShowOverflowBadge": true,
+  "dockShowTrash": false,
+  "dockTrashFileManager": "default",
+  "dockTrashCustomCommand": "",
   "notificationOverlayEnabled": true,
   "notificationPopupShadowEnabled": true,
   "notificationPopupPrivacyMode": false,
@@ -406,6 +442,7 @@
   "notificationTimeoutNormal": 5000,
   "notificationTimeoutCritical": 0,
   "notificationCompactMode": false,
+  "notificationDedupeEnabled": true,
   "notificationPopupPosition": 0,
   "notificationAnimationSpeed": 1,
   "notificationCustomAnimationDuration": 400,
@@ -440,9 +477,13 @@
   "customPowerActionReboot": "",
   "customPowerActionPowerOff": "",
   "updaterHideWidget": false,
+  "updaterCheckOnStart": false,
   "updaterUseCustomCommand": false,
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
+  "updaterIntervalSeconds": 1800,
+  "updaterIncludeFlatpak": true,
+  "updaterAllowAUR": true,
   "displayNameMode": "system",
   "screenPreferences": {
     "wallpaper": [
@@ -495,6 +536,7 @@
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
   "displaySnapToEdge": true,
+  "connectedFrameBarStyleBackups": {},
   "barConfigs": [
     {
       "id": "default",
@@ -524,11 +566,13 @@
         {
           "id": "memUsage",
           "enabled": true,
-          "showSwap": false
+          "showSwap": false,
+          "showInGb": false
         },
         {
           "id": "cpuTemp",
-          "enabled": true
+          "enabled": true,
+          "minimumWidth": true
         },
         {
           "id": "gpuTemp",
@@ -537,11 +581,24 @@
           "pciId": "1002:7550"
         },
         {
-          "id": "controlCenterButton",
+          "id": "dankDiskUsage",
           "enabled": true
         },
         {
+          "id": "controlCenterButton",
+          "enabled": true,
+          "showAudioPercent": true,
+          "showBrightnessIcon": false,
+          "showBrightnessPercent": false,
+          "showIdleInhibitorIcon": true
+        },
+        {
           "id": "systemTray",
+          "enabled": true,
+          "trayUseInlineExpansion": true
+        },
+        {
+          "id": "dankKDEConnect",
           "enabled": true
         },
         {
@@ -569,7 +626,7 @@
       "widgetOutlineThickness": 1,
       "fontScale": 1,
       "autoHide": false,
-      "autoHideDelay": 250,
+      "autoHideDelay": 1000,
       "openOnOverview": false,
       "visible": true,
       "popupGapsAuto": true,
@@ -577,7 +634,9 @@
       "maximizeDetection": true,
       "scrollEnabled": true,
       "scrollXBehavior": "column",
-      "scrollYBehavior": "workspace"
+      "scrollYBehavior": "workspace",
+      "shadowIntensity": 0,
+      "showOnWindowsOpen": true
     }
   ],
   "desktopClockEnabled": false,
@@ -650,10 +709,26 @@
   "builtInPluginSettings": {
     "dms_settings_search": {
       "trigger": "?"
+    },
+    "dms_clipboard_search": {
+      "trigger": "cb"
     }
   },
   "clipboardEnterToPaste": false,
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "configVersion": 5
+  "frameEnabled": false,
+  "frameThickness": 16,
+  "frameRounding": 23,
+  "frameColor": "",
+  "frameOpacity": 1,
+  "frameScreenPreferences": ["all"],
+  "frameBarSize": 40,
+  "frameShowOnOverview": false,
+  "frameBlurEnabled": true,
+  "frameCloseGaps": true,
+  "frameLauncherEmergeSide": "bottom",
+  "frameLauncherArcExtender": false,
+  "frameMode": "connected",
+  "configVersion": 11
 }

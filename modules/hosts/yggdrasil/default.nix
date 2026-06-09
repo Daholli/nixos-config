@@ -68,6 +68,7 @@ topLevel: {
 
         # apps
         _1password
+        kdeconnect
 
         # Users
         cholli

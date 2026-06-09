@@ -37,6 +37,11 @@
 
           dgop.package = inputs.dgop.packages.${pkgs.stdenv.system}.default;
 
+          plugins.dankDiskUsage = {
+            enable = true;
+            src = inputs.dms-plugin-diskusage;
+          };
+
           enableVPN = false;
           enableDynamicTheming = false;
           enableAudioWavelength = false;

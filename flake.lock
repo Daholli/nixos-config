@@ -255,6 +255,22 @@
         "type": "github"
       }
     },
+    "dms-plugin-diskusage": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780582629,
+        "narHash": "sha256-ffW7BIF1SvAqNUbbYLKMpzPYP0kQp4vSA3oO0tpq1oY=",
+        "owner": "alcxyz",
+        "repo": "DankDiskUsage",
+        "rev": "31c4ca9aee14e45792dc31968f7064fe6a4bab35",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alcxyz",
+        "repo": "DankDiskUsage",
+        "type": "github"
+      }
+    },
     "ec": {
       "inputs": {
         "nixpkgs": [
@@ -1434,6 +1450,7 @@
         "devenv": "devenv",
         "dgop": "dgop",
         "disko": "disko",
+        "dms-plugin-diskusage": "dms-plugin-diskusage",
         "ec": "ec",
         "flake-parts": "flake-parts_2",
         "git-hooks": "git-hooks_2",

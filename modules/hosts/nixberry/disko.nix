@@ -3,6 +3,7 @@
     {
       inputs,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -56,7 +57,13 @@
     {
       imports = [ inputs.disko.nixosModules.disko ];
 
-      boot.supportedFilesystems = [ "zfs" ];
+      boot = {
+        supportedFilesystems = [ "zfs" ];
+        zfs = {
+          package = pkgs.zfs;
+          forceImportRoot = false;
+        };
+      };
       networking.hostId = "8425e349";
 
       services.zfs = {

@@ -50,12 +50,12 @@
                 src = pkgs.fishPlugins.done.src;
               }
               {
-                name = "fifc";
-                src = pkgs.fishPlugins.fifc.src;
-              }
-              {
                 name = "sponge";
                 src = pkgs.fishPlugins.sponge.src;
+              }
+              {
+                name = "fzf-fish";
+                src = pkgs.fishPlugins.fzf-fish.src;
               }
             ];
             shellInit = ''
@@ -78,8 +78,8 @@
             };
             functions = {
               checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
-              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --build-host nixberry --target-host nixberry -H nixberry";
-              deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --target-host christophhollizeck.dev -H loptland";
+              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --build-host nixberry --target-host nixberry -H nixberry $argv";
+              deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --target-host christophhollizeck.dev -H loptland $argv";
               exportMachineSSHkey = "export SOPS_AGE_KEY=$(sudo ssh-to-age -i /etc/ssh/ssh_host_ed25519_key -private-key)";
               checkPR = ''cd /home/cholli/projects/NixOS/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
 

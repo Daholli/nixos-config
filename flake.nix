@@ -66,14 +66,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixpkgs-rpi.url = "github:nvmd/nixpkgs/modules-with-keys-25.11";
-
-    nixos-images = {
-      url = "github:nvmd/nixos-images/sdimage-installer";
-      inputs.nixos-stable.follows = "nixpkgs-rpi";
-      inputs.nixos-unstable.follows = "nixpkgs-rpi";
-    };
-
     nix-gaming-edge = {
       url = "github:powerofthe69/nix-gaming-edge";
       inputs.nixpkgs.follows = "nixpkgs";

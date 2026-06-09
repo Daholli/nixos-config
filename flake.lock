@@ -638,11 +638,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1780929515,
-        "narHash": "sha256-isEGDqIbWakWaJgr9L7D68V+CkTzX+tJvtpesCKATs0=",
+        "lastModified": 1780988279,
+        "narHash": "sha256-BXX/2lfOLSDFQQUnCM76Bw+ERbaZ+US3pGPOb36QkE4=",
         "owner": "helix-editor",
         "repo": "helix",
-        "rev": "3d3aa794fd62c6355feb9c97499b67b0c8729f83",
+        "rev": "659398dfe8d0fd0821600c8167db111e1474dba1",
         "type": "github"
       },
       "original": {
@@ -1020,30 +1020,6 @@
     "nixos-images": {
       "inputs": {
         "nixos-stable": [
-          "nixpkgs-rpi"
-        ],
-        "nixos-unstable": [
-          "nixpkgs-rpi"
-        ]
-      },
-      "locked": {
-        "lastModified": 1747747741,
-        "narHash": "sha256-LUOH27unNWbGTvZFitHonraNx0JF/55h30r9WxqrznM=",
-        "owner": "nvmd",
-        "repo": "nixos-images",
-        "rev": "cbbd6db325775096680b65e2a32fb6187c09bbb4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvmd",
-        "ref": "sdimage-installer",
-        "repo": "nixos-images",
-        "type": "github"
-      }
-    },
-    "nixos-images_2": {
-      "inputs": {
-        "nixos-stable": [
           "nixos-raspberrypi",
           "nixpkgs"
         ],
@@ -1071,7 +1047,7 @@
       "inputs": {
         "argononed": "argononed",
         "flake-compat": "flake-compat_4",
-        "nixos-images": "nixos-images_2",
+        "nixos-images": "nixos-images",
         "nixpkgs": [
           "nixpkgs-unstable"
         ]
@@ -1127,11 +1103,11 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1780984346,
-        "narHash": "sha256-VjAHbW6UJ6qX8EZ3AvYg+mu1ZefbTwQ/tZXWZSduTAo=",
+        "lastModified": 1780987878,
+        "narHash": "sha256-PF1Knxjn6VuM6I7WsWKhsGhNdagrO2ZyQ7HleJCHFaQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "78a9069bf10898653df41d79e4719437580e576f",
+        "rev": "3a9d046b5027d3f9f3823fcce77ef06342e75675",
         "type": "github"
       },
       "original": {
@@ -1143,11 +1119,11 @@
     },
     "nixpkgs-latest-minecraft": {
       "locked": {
-        "lastModified": 1780984346,
-        "narHash": "sha256-VjAHbW6UJ6qX8EZ3AvYg+mu1ZefbTwQ/tZXWZSduTAo=",
+        "lastModified": 1780987878,
+        "narHash": "sha256-PF1Knxjn6VuM6I7WsWKhsGhNdagrO2ZyQ7HleJCHFaQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "78a9069bf10898653df41d79e4719437580e576f",
+        "rev": "3a9d046b5027d3f9f3823fcce77ef06342e75675",
         "type": "github"
       },
       "original": {
@@ -1174,32 +1150,16 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1780984346,
-        "narHash": "sha256-VjAHbW6UJ6qX8EZ3AvYg+mu1ZefbTwQ/tZXWZSduTAo=",
+        "lastModified": 1780987878,
+        "narHash": "sha256-PF1Knxjn6VuM6I7WsWKhsGhNdagrO2ZyQ7HleJCHFaQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "78a9069bf10898653df41d79e4719437580e576f",
+        "rev": "3a9d046b5027d3f9f3823fcce77ef06342e75675",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-rpi": {
-      "locked": {
-        "lastModified": 1771867432,
-        "narHash": "sha256-KOb/xJgNRoUDD7y42/lh2a1+akUQ7OYuBdwX/CZevFY=",
-        "owner": "nvmd",
-        "repo": "nixpkgs",
-        "rev": "2597cb7e564b9004c9d3182afb29b37ae842411a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvmd",
-        "ref": "modules-with-keys-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1467,14 +1427,12 @@
         "nix-auth": "nix-auth",
         "nix-gaming-edge": "nix-gaming-edge",
         "nixos-hardware": "nixos-hardware",
-        "nixos-images": "nixos-images",
         "nixos-raspberrypi": "nixos-raspberrypi",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_5",
         "nixpkgs-latest-factorio": "nixpkgs-latest-factorio",
         "nixpkgs-latest-minecraft": "nixpkgs-latest-minecraft",
         "nixpkgs-master": "nixpkgs-master",
-        "nixpkgs-rpi": "nixpkgs-rpi",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-temp": "nixpkgs-temp",
         "nixpkgs-unstable": "nixpkgs-unstable",

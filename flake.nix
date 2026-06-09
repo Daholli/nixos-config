@@ -103,6 +103,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    ec = {
+      url = "github:chojs23/ec";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri-flake = {
       url = "github:sodiboo/niri-flake";
       # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7"; # for debugging

@@ -29,6 +29,7 @@ topLevel: {
         home.packages = [
           pkgs.git-credential-manager
           temp.gitbutler-cli
+          inputs.ec.packages.${pkgs.stdenv.hostPlatform.system}.default
         ]
         ++ lib.optional (osConfig.networking.hostName == "yggdrasil") pkgs.gitbutler;
 
@@ -71,7 +72,14 @@ topLevel: {
               autoStash = true;
               autoSquash = true;
             };
-            merge.conflictstyle = "zdiff3";
+            merge = {
+              conflictstyle = "zdiff3";
+              tool = "ec";
+            };
+            mergetool.ec = {
+              cmd = ''ec "$BASE" "$LOCAL" "$REMOTE" "$MERGED"'';
+              trustExitCode = true;
+            };
             safe.directory = "/home/${username}/projects/config";
             submodules.recurse = true;
             help.autocorrect = "prompt";

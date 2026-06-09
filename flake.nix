@@ -16,7 +16,10 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
     catppuccin.url = "github:catppuccin/nix";
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs-latest-factorio = nixpkgs-master;
     nixpkgs-latest-minecraft = nixpkgs-master;
@@ -27,7 +30,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     omnix = {
       url = "github:Daholli/omnix";
@@ -63,7 +69,6 @@
 
     nixos-raspberrypi = {
       url = "github:Daholli/nixos-raspberrypi/develop";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-gaming-edge = {
@@ -137,10 +142,19 @@
       flake = false;
     };
 
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    hytale-launcher.url = "github:JPyke3/hytale-launcher-nix";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hytale-launcher = {
+      url = "github:JPyke3/hytale-launcher-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     ###
     # inputs for dev shells

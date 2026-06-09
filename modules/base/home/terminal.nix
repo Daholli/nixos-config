@@ -2,7 +2,10 @@
   flake.modules = {
     homeManager.cholli = _: {
       catppuccin.kitty.enable = true;
-      home.sessionVariables.TERMINAL = "kitty";
+      home.sessionVariables = {
+        TERMINAL = "kitty";
+        PRE_COMMIT_COLOR = "never";
+      };
       programs.kitty = {
         enable = true;
         font = {
@@ -11,7 +14,6 @@
         };
         shellIntegration.enableFishIntegration = true;
         settings = {
-          background_opacity = 0.9;
           shell = "fish";
           confirm_os_window_close = 0;
           auto_reload_config = -1;

@@ -1,27 +1,9 @@
-{ inputs, ... }:
-{
-  imports = [ inputs.devenv.flakeModule ];
-
+_: {
   perSystem =
+    { config, pkgs, ... }:
     {
-      config,
-      pkgs,
-      system,
-      ...
-    }:
-    {
-      devenv.shells = {
-        default = {
-          packages = with pkgs; [ atool ];
-          enterShell = config.pre-commit.installationScript;
-        };
-
-        zig = {
-          packages = [
-            inputs.zig-flake.packages.${system}.nightly
-            inputs.zls.packages.${system}.zls
-          ];
-        };
+      devShells.default = pkgs.mkShell {
+        shellHook = config.pre-commit.installationScript;
       };
     };
 }

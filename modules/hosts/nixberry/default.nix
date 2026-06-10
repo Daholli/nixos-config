@@ -27,8 +27,8 @@ topLevel: {
       local.forgejoRunner = {
         sopsFile = ../../../secrets/secrets-nixberry.yaml;
         name = "nixberry";
-        labels = [ "aarch64-linux:host" ];
-        maxJobs = 2;
+        uuid = "ff308046-bd13-47e6-82c5-953d8cee9e41";
+        maxJobs = 1;
       };
 
       imports =
@@ -36,7 +36,6 @@ topLevel: {
         with inputs.nixos-raspberrypi.nixosModules;
         [
           raspberry-pi-5.base
-          raspberry-pi-5.page-size-16k
           raspberry-pi-5.display-vc4
 
           # System modules

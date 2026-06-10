@@ -60,8 +60,8 @@ topLevel: {
 
       local.forgejoRunner = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;
-        name = "monolith";
-        # default labels = [ "native:host" ]
+        name = "Loptland";
+        uuid = "dace2c49-4ed9-4d8f-9afa-7e75afa0fe01";
         maxJobs = 1;
       };
     };

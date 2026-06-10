@@ -146,10 +146,6 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hytale-launcher = {
-      url = "github:JPyke3/hytale-launcher-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
 
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
@@ -166,18 +162,6 @@
     devenv = {
       url = "github:cachix/devenv";
       # inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Zig
-    zig-flake = {
-      url = "github:silversquirl/zig-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    zls = {
-      url = "github:zigtools/zls";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.zig-flake.follows = "zig-flake";
     };
   };
 }

@@ -729,26 +729,6 @@
         "type": "github"
       }
     },
-    "hytale-launcher": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780961114,
-        "narHash": "sha256-I9plxL6cdLmscm+GMBe+ns9bMFez77ZoGTqG/eyB8gE=",
-        "owner": "JPyke3",
-        "repo": "hytale-launcher-nix",
-        "rev": "19b7298722c89448033095858bf97e568a8522f7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "JPyke3",
-        "repo": "hytale-launcher-nix",
-        "type": "github"
-      }
-    },
     "import-tree": {
       "locked": {
         "lastModified": 1778781969,
@@ -1398,7 +1378,6 @@
         "gpg-base-conf": "gpg-base-conf",
         "helix": "helix",
         "home-manager": "home-manager",
-        "hytale-launcher": "hytale-launcher",
         "import-tree": "import-tree",
         "nh-flake": "nh-flake",
         "niri": "niri",
@@ -1421,9 +1400,7 @@
         "systems": "systems_2",
         "titrack": "titrack",
         "treefmt-nix": "treefmt-nix_2",
-        "zen-browser": "zen-browser",
-        "zig-flake": "zig-flake",
-        "zls": "zls"
+        "zen-browser": "zen-browser"
       }
     },
     "rust-flake": {
@@ -1729,49 +1706,6 @@
       "original": {
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "type": "github"
-      }
-    },
-    "zig-flake": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780942553,
-        "narHash": "sha256-UcgOn/UltTXewaD1jafUP5R3ck3YgTLJegac7w1Qqyw=",
-        "owner": "silversquirl",
-        "repo": "zig-flake",
-        "rev": "ad1b13d48d4f976e5faf68fc31639e34e5071ca4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "silversquirl",
-        "repo": "zig-flake",
-        "type": "github"
-      }
-    },
-    "zls": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "zig-flake": [
-          "zig-flake"
-        ]
-      },
-      "locked": {
-        "lastModified": 1779828480,
-        "narHash": "sha256-iWKBeY8I10sHZBgFdA12pvOBxTR6c28GKEmDx/YIQik=",
-        "owner": "zigtools",
-        "repo": "zls",
-        "rev": "8da87d4f3305a550e7b739bad764e34bf1e46a08",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zigtools",
-        "repo": "zls",
         "type": "github"
       }
     }

@@ -54,7 +54,7 @@
                 level: info
               runner:
                 capacity: 1
-                timeout: 3h
+                timeout: 24h
                 shutdown_timeout: 5s
                 fetch_timeout: 10s
                 fetch_interval: 5s

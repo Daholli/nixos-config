@@ -59,29 +59,6 @@
 
           sensor = [
             {
-              platform = "template";
-              sensors = {
-                holli_monitors_power_fixed = {
-                  friendly_name = "Holli Monitors Power fixed";
-                  unit_of_measurement = "W";
-                  value_template = "{{ (states('sensor.holli_monitors_power') | float / 10) | round(1) }}";
-                  device_class = "energy";
-                };
-                holli_pc_power_fixed = {
-                  friendly_name = "Holli PC Power fixed";
-                  unit_of_measurement = "W";
-                  value_template = "{{ (states('sensor.holli_pc_power') | float / 10) | round(1) }}";
-                  device_class = "energy";
-                };
-                holli_desk_power_combined = {
-                  friendly_name = "Holli Desk Power Combined";
-                  unit_of_measurement = "W";
-                  value_template = "{{ states('sensor.holli_pc_power_fixed') | float + states('sensor.holli_monitors_power_fixed') | float }}";
-                  device_class = "energy";
-                };
-              };
-            }
-            {
               name = "Holli PC Total Energy";
               platform = "integration";
               source = "sensor.holli_pc_power_fixed";
@@ -98,6 +75,31 @@
               unit_prefix = "k";
               unit_time = "h";
               method = "left";
+            }
+          ];
+
+          template = [
+            {
+              sensor = [
+                {
+                  name = "Holli Monitors Power fixed";
+                  unit_of_measurement = "W";
+                  state = "{{ (states('sensor.holli_monitors_power') | float / 10) | round(1) }}";
+                  device_class = "power";
+                }
+                {
+                  name = "Holli PC Power fixed";
+                  unit_of_measurement = "W";
+                  state = "{{ (states('sensor.holli_pc_power') | float / 10) | round(1) }}";
+                  device_class = "power";
+                }
+                {
+                  name = "Holli Desk Power Combined";
+                  unit_of_measurement = "W";
+                  state = "{{ states('sensor.holli_pc_power_fixed') | float + states('sensor.holli_monitors_power_fixed') | float }}";
+                  device_class = "power";
+                }
+              ];
             }
           ];
         };

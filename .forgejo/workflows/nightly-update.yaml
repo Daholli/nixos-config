@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   update:
-    runs-on: native
+    runs-on: x86_64-linux
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -25,7 +25,10 @@ jobs:
         run: |
           git config --local user.email "forgejo-actions[bot]@christophhollizeck.dev"
           git config --local user.name "forgejo-actions[bot]"
+          git diff --quiet && echo "No changes, skipping commit" && exit 0
           git commit -a -m "chore: update flake"
       - name: Push changes
         if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
-        run: git push
+        run: |
+          git diff HEAD origin/develop --quiet && echo "No changes to push" && exit 0
+          git push

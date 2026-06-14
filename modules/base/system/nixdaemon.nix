@@ -81,7 +81,7 @@
               "https://nixos-raspberrypi.cachix.org"
               "https://nixcache.christophhollizeck.dev"
 
-              "https://nix-cache.tokidoki.dev/tokidoki"
+              # "https://nix-cache.tokidoki.dev/tokidoki"
             ];
             trusted-public-keys = [
               "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
@@ -90,8 +90,9 @@
               "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
               "christophhollizeck.dev:7pPAvm9xqFQB8FDApVNL6Tii1Jsv+Sj/LjEIkdeGhbA="
 
-              "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk="
+              # "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk="
             ];
+            fallback = true;
           };
       };
     };

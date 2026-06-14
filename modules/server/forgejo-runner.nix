@@ -101,6 +101,7 @@
                 config.sops.templates."forgejo-runner.yaml".path
               }";
               ExecStartPre = lib.mkForce "";
+              PrivateTmp = false;
             };
           };
         };

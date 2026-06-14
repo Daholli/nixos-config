@@ -1231,22 +1231,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-temp": {
-      "locked": {
-        "lastModified": 1773742739,
-        "narHash": "sha256-aWFbxP2i0bfbPicu+ymfY4vS5+r8QINuN7ry7HDiF4Q=",
-        "owner": "Daholli",
-        "repo": "nixpkgs",
-        "rev": "4e67af585996176d4d24640b12b744f06df871cc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Daholli",
-        "repo": "nixpkgs",
-        "rev": "4e67af585996176d4d24640b12b744f06df871cc",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1781074563,
@@ -1392,7 +1376,6 @@
         "nixpkgs-latest-minecraft": "nixpkgs-latest-minecraft",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable_2",
-        "nixpkgs-temp": "nixpkgs-temp",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "omnix": "omnix",
         "simple-nixos-mailserver": "simple-nixos-mailserver",

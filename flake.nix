@@ -67,7 +67,8 @@
     };
 
     nixos-raspberrypi = {
-      url = "github:Daholli/nixos-raspberrypi/develop";
+      url = "github:Daholli/nixos-raspberrypi/fix-builddtbs-with-user-config";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-gaming-edge = {

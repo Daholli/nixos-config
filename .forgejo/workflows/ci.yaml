@@ -22,15 +22,19 @@ jobs:
     runs-on: x86_64-linux
     steps:
       - uses: actions/checkout@v4
-      - name: Build x86_64 outputs
-        run: om ci run .#default.x86_64
+      - name: Build and push x86_64 outputs
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: om ci run .#default.x86_64 | xargs cachix push cholli
   build-aarch64:
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_aarch64 }}
     runs-on: aarch64-linux
     steps:
       - uses: actions/checkout@v4
-      - name: Build aarch64 outputs
-        run: om ci run .#default.aarch64
+      - name: Build and push aarch64 outputs
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: om ci run .#default.aarch64 | xargs cachix push cholli
   promote:
     needs: [build-x86_64, build-aarch64]
     if: github.ref == 'refs/heads/develop' && github.event_name == 'push'

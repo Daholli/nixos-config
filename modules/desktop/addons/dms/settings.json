@@ -32,6 +32,7 @@
   "mangoTrackpadNaturalScrolling": true,
   "firstDayOfWeek": -1,
   "showWeekNumber": true,
+  "calendarBackend": "auto",
   "use24HourClock": true,
   "showSeconds": false,
   "padHours12Hour": false,
@@ -182,6 +183,7 @@
   "audioVisualizerEnabled": true,
   "audioScrollMode": "volume",
   "audioWheelScrollAmount": 5,
+  "audioDeviceScrollVolumeEnabled": false,
   "clockCompactMode": false,
   "focusedWindowCompactMode": false,
   "focusedWindowSize": 1,
@@ -189,6 +191,9 @@
   "barMaxVisibleApps": 0,
   "barMaxVisibleRunningApps": 0,
   "barShowOverflowBadge": true,
+  "trayAutoOverflow": true,
+  "trayPopupSingleLine": true,
+  "trayMaxVisibleItems": 0,
   "appsDockHideIndicators": false,
   "appsDockColorizeActive": false,
   "appsDockActiveColorMode": "primary",
@@ -304,15 +309,23 @@
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
   "notepadFontSize": 14,
+  "notificationSummaryFontSize": 0,
+  "notificationBodyFontSize": 0,
   "notepadShowLineNumbers": false,
+  "notepadAutoSave": false,
+  "notepadSlideoutSide": "right",
+  "notepadDefaultMode": "slideout",
   "notepadTransparencyOverride": -1,
   "notepadLastCustomTransparency": 0.7,
+  "notepadUseCompositorGap": false,
+  "notepadEdgeGap": 0,
   "soundsEnabled": true,
   "useSystemSoundTheme": false,
-  "soundLogin": false,
-  "soundNewNotification": false,
+  "soundLogin": true,
+  "soundNewNotification": true,
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
+  "muteSoundsWhenMediaPlaying": true,
   "acMonitorTimeout": 3600,
   "acLockTimeout": 900,
   "acSuspendTimeout": 0,
@@ -442,6 +455,7 @@
   "notificationTimeoutNormal": 5000,
   "notificationTimeoutCritical": 0,
   "notificationCompactMode": false,
+  "notificationShowTimeoutBar": false,
   "notificationDedupeEnabled": true,
   "notificationPopupPosition": 0,
   "notificationAnimationSpeed": 1,
@@ -560,6 +574,11 @@
       ],
       "rightWidgets": [
         {
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
           "id": "cpuUsage",
           "enabled": true
         },
@@ -568,17 +587,6 @@
           "enabled": true,
           "showSwap": false,
           "showInGb": false
-        },
-        {
-          "id": "cpuTemp",
-          "enabled": true,
-          "minimumWidth": true
-        },
-        {
-          "id": "gpuTemp",
-          "enabled": true,
-          "selectedGpuIndex": 0,
-          "pciId": "1002:7550"
         },
         {
           "id": "dankDiskUsage",
@@ -715,6 +723,7 @@
     }
   },
   "clipboardEnterToPaste": false,
+  "clipboardVisibleEntryActions": ["pin", "edit", "delete"],
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
   "frameEnabled": false,

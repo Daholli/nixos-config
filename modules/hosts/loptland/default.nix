@@ -21,7 +21,6 @@ topLevel: {
         loptland-acme
         forgejo
         forgejo-runner
-        nix-serve
 
         # services
         matrix-synapse

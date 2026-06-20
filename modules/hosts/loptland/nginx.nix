@@ -139,15 +139,6 @@
             };
           };
 
-          "nixcache.${domainName}" = lib.mkIf config.services.nix-serve.enable {
-            forceSSL = true;
-            useACMEHost = domainName;
-
-            locations."/" = {
-              proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
-            };
-          };
-
           "cholli.de" = {
             forceSSL = true;
             useACMEHost = "cholli.de";

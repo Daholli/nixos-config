@@ -24,6 +24,8 @@
         extraPackages =
           python3Packages: with python3Packages; [
             ical
+            soco
+            ibeacon-ble
           ];
 
         customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
@@ -104,266 +106,273 @@
           ];
         };
 
-        lovelaceConfigWritable = true;
-        lovelaceConfig = [
-          {
-            tile = "main-dashboard";
-            views = [
-              {
-                title = "Home";
-                sections = [
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "map";
-                        entities = [
-                          { entity = "person.christoph_hollizeck"; }
-                          { entity = "person.kuralay_aman"; }
-                          { entity = "zone.home_2"; }
-                        ];
-                        theme_mode = "auto";
-                        grid_options = {
-                          columns = "full";
-                          rows = 6;
-                        };
-                      }
-                      {
-                        type = "custom:clock-weather-card";
-                        entity = "weather.forecast_home";
-                        forecast_rows = 6;
-                        date_pattern = "DDDD";
-                        time_pattern = "HH:mm";
-                      }
-                      {
-                        display_order = "duedate_asc";
-                        type = "todo-list";
-                        entity = "todo.shopping_list";
-                        title = "Shopping List";
-                        hide_completed = true;
-                      }
-                    ];
-                  }
-                ];
-                badges = [
-                  {
+        # lovelaceConfigWritable = true;
+        lovelaceConfig = {
+          title = "main-dashboard";
+          views = [
+            {
+              title = "Home";
+              sections = [
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "map";
+                      entities = [
+                        { entity = "person.christoph_hollizeck"; }
+                        { entity = "person.kuralay_aman"; }
+                        { entity = "zone.home_2"; }
+                      ];
+                      theme_mode = "auto";
+                      grid_options = {
+                        columns = "full";
+                        rows = 6;
+                      };
+                    }
+                    {
+                      type = "custom:clock-weather-card";
+                      entity = "weather.forecast_home";
+                      forecast_rows = 6;
+                      date_pattern = "DDDD";
+                      time_pattern = "HH:mm";
+                    }
+                    {
+                      display_order = "duedate_asc";
+                      type = "todo-list";
+                      entity = "todo.shopping_list";
+                      title = "Shopping List";
+                      hide_completed = true;
+                    }
+                  ];
+                }
+              ];
+              badges = [
+                {
+                  type = "entity";
+                  show_name = true;
+                  show_state = true;
+                  show_icon = true;
+                  entity = "person.christoph_hollizeck";
+                  name = {
                     type = "entity";
-                    show_name = true;
-                    show_state = true;
-                    show_icon = true;
-                    entity = "person.christoph_hollizeck";
-                    name = {
-                      type = "entity";
-                    };
-                    show_entity_picture = true;
-                  }
-                  {
-                    type = "entity";
-                    show_name = true;
-                    show_state = true;
-                    show_icon = true;
-                    entity = "person.kuralay_aman";
-                    show_entity_picture = true;
-                  }
-                ];
-                header = {
-                  layout = "center";
-                  badges_position = "bottom";
-                  badges_wrap = "scroll";
-                  card = {
-                    type = "markdown";
-                    text_only = true;
-                    content = "# Hello {{ user }}\n";
                   };
+                  show_entity_picture = true;
+                }
+                {
+                  type = "entity";
+                  show_name = true;
+                  show_state = true;
+                  show_icon = true;
+                  entity = "person.kuralay_aman";
+                  show_entity_picture = true;
+                }
+              ];
+              header = {
+                layout = "center";
+                badges_position = "bottom";
+                badges_wrap = "scroll";
+                card = {
+                  type = "markdown";
+                  text_only = true;
+                  content = "# Hello {{ user }}\n";
                 };
-                type = "sections";
-                max_columns = 1;
-                cards = [ ];
-              }
-              {
-                type = "sections";
-                max_columns = 2;
-                title = "living-room";
-                path = "living-room";
-                sections = [
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "history-graph";
-                        entities = [ { entity = "sensor.living_room_temperature"; } ];
-                        title = "Temperature";
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "history-graph";
-                        entities = [ { entity = "sensor.living_room_humidity"; } ];
-                        title = "Humidity";
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "custom:mushroom-media-player-card";
-                        entity = "media_player.bedroom";
-                        media_controls = [
-                          "previous"
-                          "play_pause_stop"
-                          "next"
-                          "repeat"
-                          "shuffle"
-                        ];
-                        use_media_info = true;
-                        show_volume_level = true;
-                        fill_container = false;
-                        grid_options = {
-                          columns = "full";
-                          rows = 2;
-                        };
-                        volume_controls = [
-                          "volume_set"
-                          "volume_mute"
-                        ];
-                        collapsible_controls = true;
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "history-graph";
-                        entities = [
-                          {
-                            entity = "sensor.holli_monitors_power_fixed";
-                            name = "Monitors + Misc";
-                          }
-                          {
-                            entity = "sensor.holli_pc_power_fixed";
-                            name = "PC";
-                          }
-                          {
-                            entity = "sensor.holli_desk_power_combined";
-                            name = "Combined";
-                          }
-                        ];
-                        hours_to_show = 0.25;
-                        title = "Desk - Holli";
-                      }
-                    ];
-                  }
-                ];
-                cards = [ ];
-              }
-              {
-                type = "sections";
-                max_columns = 3;
-                title = "kitchen";
-                path = "kitchen";
-                sections = [
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "thermostat";
-                        entity = "climate.kueche_radiator";
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "custom:vacuum-card";
-                        entity = "vacuum.sl60d";
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "glance";
-                        entities = [
-                          {
-                            entity = "switch.kettle_socket_1";
-                            name = {
-                              type = "device";
-                            };
-                            show_last_changed = true;
-                          }
-                          { entity = "sensor.kettle_total_energy"; }
-                        ];
-                      }
-                      {
-                        show_name = true;
-                        show_icon = true;
-                        show_state = true;
-                        type = "glance";
-                        entities = [
-                          {
-                            entity = "switch.shelf_socket_1";
-                            show_last_changed = true;
-                            name = {
-                              type = "device";
-                            };
-                          }
-                          { entity = "sensor.shelf_total_energy"; }
-                        ];
-                        state_color = true;
-                      }
-                    ];
-                  }
-                ];
-              }
-              {
-                type = "sections";
-                max_columns = 3;
-                title = "bedroom";
-                path = "bedroom";
-                sections = [
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "thermostat";
-                        entity = "climate.bedroom_radiator";
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "history-graph";
-                        entities = [ { entity = "sensor.bedroom_temperature"; } ];
-                        title = "Temperature";
-                      }
-                    ];
-                  }
-                  {
-                    type = "grid";
-                    cards = [
-                      {
-                        type = "history-graph";
-                        entities = [ { entity = "sensor.bedroom_humidity"; } ];
-                        title = "Humidity";
-                      }
-                    ];
-                  }
-                ];
-              }
-            ];
+              };
+              type = "sections";
+              max_columns = 1;
+              cards = [ ];
+            }
+            {
+              type = "sections";
+              max_columns = 2;
+              title = "living-room";
+              path = "living-room";
+              sections = [
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "history-graph";
+                      entities = [ { entity = "sensor.living_room_temperature"; } ];
+                      title = "Temperature";
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "history-graph";
+                      entities = [ { entity = "sensor.living_room_humidity"; } ];
+                      title = "Humidity";
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "custom:mushroom-media-player-card";
+                      entity = "media_player.bedroom";
+                      media_controls = [
+                        "previous"
+                        "play_pause_stop"
+                        "next"
+                        "repeat"
+                        "shuffle"
+                      ];
+                      use_media_info = true;
+                      show_volume_level = true;
+                      fill_container = false;
+                      grid_options = {
+                        columns = "full";
+                        rows = 2;
+                      };
+                      volume_controls = [
+                        "volume_set"
+                        "volume_mute"
+                      ];
+                      collapsible_controls = true;
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "history-graph";
+                      entities = [
+                        {
+                          entity = "sensor.holli_monitors_power_fixed";
+                          name = "Monitors + Misc";
+                        }
+                        {
+                          entity = "sensor.holli_pc_power_fixed";
+                          name = "PC";
+                        }
+                        {
+                          entity = "sensor.holli_desk_power_combined";
+                          name = "Combined";
+                        }
+                      ];
+                      hours_to_show = 0.25;
+                      title = "Desk - Holli";
+                    }
+                  ];
+                }
+              ];
+              cards = [ ];
+            }
+            {
+              type = "sections";
+              max_columns = 3;
+              title = "kitchen";
+              path = "kitchen";
+              sections = [
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "thermostat";
+                      entity = "climate.kueche_radiator";
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "custom:vacuum-card";
+                      entity = "vacuum.sl60d";
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "glance";
+                      entities = [
+                        {
+                          entity = "switch.kettle_socket_1";
+                          name = {
+                            type = "device";
+                          };
+                          show_last_changed = true;
+                        }
+                        { entity = "sensor.kettle_total_energy"; }
+                      ];
+                    }
+                    {
+                      show_name = true;
+                      show_icon = true;
+                      show_state = true;
+                      type = "glance";
+                      entities = [
+                        {
+                          entity = "switch.shelf_socket_1";
+                          show_last_changed = true;
+                          name = {
+                            type = "device";
+                          };
+                        }
+                        { entity = "sensor.shelf_total_energy"; }
+                      ];
+                      state_color = true;
+                    }
+                  ];
+                }
+              ];
+            }
+            {
+              type = "sections";
+              max_columns = 3;
+              title = "bedroom";
+              path = "bedroom";
+              sections = [
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "thermostat";
+                      entity = "climate.bedroom_radiator";
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "history-graph";
+                      entities = [ { entity = "sensor.bedroom_temperature"; } ];
+                      title = "Temperature";
+                    }
+                  ];
+                }
+                {
+                  type = "grid";
+                  cards = [
+                    {
+                      type = "history-graph";
+                      entities = [ { entity = "sensor.bedroom_humidity"; } ];
+                      title = "Humidity";
+                    }
+                  ];
+                }
+              ];
+            }
+          ];
+        };
 
-          }
-        ];
         openFirewall = true;
+      };
+
+      users.users.hass.extraGroups = [ "bluetooth" ];
+
+      systemd.services.home-assistant.serviceConfig = {
+        AmbientCapabilities = [
+          "CAP_NET_ADMIN"
+          "CAP_NET_RAW"
+        ];
       };
     };
 }

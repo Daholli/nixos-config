@@ -27,11 +27,46 @@
                 }
                 {
                   title = "1st contribution";
-                  filters = ''repo:NixOS/nixpkgs is:open draft:false label:"12. first-time contribution"'';
+                  filters = ''repo:NixOS/nixpkgs is:open draft:false label:"12.first-time contribution"'';
                 }
                 {
                   title = "Involved";
                   filters = "is:open involves:@me -author:@me";
+                }
+              ];
+              keybindings.universal = [
+                {
+                  key = "ctrl+j";
+                  builtin = "pageDown";
+                }
+                {
+                  key = "ctrl+k";
+                  builtin = "pageUp";
+                }
+              ];
+              keybindings.prs = [
+                {
+                  key = "ctrl+h";
+                  builtin = "prevSidebarTab";
+                }
+                {
+                  key = "ctrl+l";
+                  builtin = "nextSidebarTab";
+                }
+                {
+                  key = "R";
+                  name = "review (checkPR)";
+                  command = ''kitty --detach fish -C "checkPR {{.PrNumber}}"'';
+                }
+                {
+                  key = "b";
+                  name = "backport";
+                  command = ''
+                    gh pr edit {{.PrNumber}} --repo {{.RepoName}} --add-label "$(
+                      gh label list --repo {{.RepoName}} --search backport --limit 50 \
+                        --json name --jq '.[].name' | fzf --prompt='backport > '
+                    )"
+                  '';
                 }
               ];
               defaults = {
@@ -39,8 +74,9 @@
                 issuesLimit = 10;
                 view = "prs";
                 preview = {
-                  open = false;
-                  width = 100;
+                  open = true;
+                  position = "right";
+                  width = 0.5;
                 };
                 refetchIntervalMinutes = 10;
               };

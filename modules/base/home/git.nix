@@ -38,6 +38,7 @@ topLevel: {
             ".direnv/"
             ".devenv/"
             "result"
+            ".claude/settings.local.json"
           ];
 
           settings = {

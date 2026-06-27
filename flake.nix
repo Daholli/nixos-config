@@ -67,7 +67,7 @@
     };
 
     nixos-raspberrypi = {
-      url = "github:Daholli/nixos-raspberrypi/fix-builddtbs-with-user-config";
+      url = "github:Daholli/nixos-raspberrypi/develop";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

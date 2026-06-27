@@ -1072,16 +1072,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1781901176,
-        "narHash": "sha256-qmKQaiYrtBWRhWEHIr7rHHh4DzlAf/oFM1sBuwTYyag=",
+        "lastModified": 1782577089,
+        "narHash": "sha256-fAiwpXdgvdI3O6SqPS3xGqZQNFnp6N4yz8pFCJril7o=",
         "owner": "Daholli",
         "repo": "nixos-raspberrypi",
-        "rev": "078a9de18f5e5d1158f52b63520c26734f17a336",
+        "rev": "5fb2fb5293ad65965e380c75270c045ea58b5814",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
-        "ref": "fix-builddtbs-with-user-config",
+        "ref": "develop",
         "repo": "nixos-raspberrypi",
         "type": "github"
       }

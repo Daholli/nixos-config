@@ -32,6 +32,7 @@
 
       systemd.services.nix-daemon.serviceConfig = {
         MemoryAccounting = true;
+        MemoryHigh = "70%";
         MemoryMax = "90%";
         OOMScoreAdjust = 500;
         Slice = "-.slice";

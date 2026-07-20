@@ -28,7 +28,10 @@ topLevel: {
         postman
         vlc
         ffmpeg
+        azure-cli
         onlyoffice-desktopeditors
+
+        rocmPackages.amdsmi
 
         # osu-lazer-bin
 

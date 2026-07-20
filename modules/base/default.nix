@@ -7,12 +7,18 @@
       homeManager.base =
         {
           inputs,
+          osConfig,
+          lib,
           ...
         }:
         {
           imports = [
             inputs.sops-nix.homeManagerModules.sops
           ];
+
+          sops.age.keyFile = lib.mkIf (
+            osConfig.networking.hostName == "yggdrasil"
+          ) "/home/cholli/.config/sops/age/keys.txt";
 
           home = {
             inherit stateVersion;

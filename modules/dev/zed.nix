@@ -1,10 +1,15 @@
 {
   flake.modules = {
-    homeManager.cholli =
-      { lib, pkgs, ... }:
+    homeManager.dev =
+      {
+        lib,
+        osConfig,
+        pkgs,
+        ...
+      }:
       {
         programs.zed-editor = {
-          enable = true;
+          enable = osConfig.networking.hostName == "yggdrasil";
 
           userSettings = {
             auto_install_extensions = {
@@ -28,26 +33,6 @@
             terminal = {
               font_family = "FiraCode Nerd Font";
               font_size = 16;
-            };
-
-            agent = {
-              enabled = true;
-
-              default_model = {
-                provider = "copilot_chat";
-                model = "gpt-4o";
-              };
-            };
-
-            agent_servers = {
-              github-copilot = {
-                type = "registry";
-              };
-            };
-
-            edit_predictions.mode = "eager";
-            features = {
-              edit_prediction_provider = "copilot";
             };
 
             inlay_hints.enabled = true;

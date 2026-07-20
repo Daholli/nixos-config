@@ -12,29 +12,27 @@
           package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         };
 
-        programs.dank-material-shell = {
-          greeter = {
-            enable = true;
-            compositor = {
-              name = "niri";
-              customConfig = ''
-                hotkey-overlay {
-                    skip-at-startup
-                }
+        services.displayManager.dms-greeter = {
+          enable = true;
+          compositor = {
+            name = "niri";
+            customConfig = ''
+              hotkey-overlay {
+                  skip-at-startup
+              }
 
-                environment {
-                    DMS_RUN_GREETER "1"
-                }
+              environment {
+                  DMS_RUN_GREETER "1"
+              }
 
-                output "DP-1" {
-                  transform "normal"
-                  mode "3440x1440"
-                }
-              '';
-            };
-
-            configHome = "/home/cholli";
+              output "DP-1" {
+                transform "normal"
+                mode "3440x1440"
+              }
+            '';
           };
+
+          configHome = "/home/cholli";
         };
 
         security = {

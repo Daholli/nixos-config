@@ -5,7 +5,6 @@
       {
         home.packages = [
           pkgs.github-copilot-cli
-          pkgs.claude-code
         ];
 
         programs = {

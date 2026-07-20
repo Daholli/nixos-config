@@ -44,6 +44,20 @@
             };
           };
 
+          "immich.${domainName}" = {
+            forceSSL = true;
+            useACMEHost = domainName;
+
+            locations."/" = {
+              proxyPass = "http://nixberry:2283";
+              extraConfig = ''
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                client_max_body_size 50000M;
+              '';
+            };
+          };
+
           "matrix.${matrixDomain}" = lib.mkIf config.services.matrix-synapse.enable {
             forceSSL = true;
             useACMEHost = matrixDomain;

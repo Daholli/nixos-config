@@ -478,24 +478,6 @@
         "type": "github"
       }
     },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems_3"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "ghostty": {
       "flake": false,
       "locked": {
@@ -1497,22 +1479,20 @@
     },
     "titrack": {
       "inputs": {
-        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs-unstable"
         ]
       },
       "locked": {
-        "lastModified": 1781640065,
-        "narHash": "sha256-WpB8lFqoaBIGVG22FzmJ0IVuMdE8ob+zXxrllJ3r8ic=",
+        "lastModified": 1784467699,
+        "narHash": "sha256-2UKeeCfhIqhKE60DYJsyRpD4Ajc14YCRq46J3H4D4D4=",
         "owner": "Daholli",
         "repo": "TiTrack",
-        "rev": "260ac24aa50b50ecd9fab179e248606f323ac670",
+        "rev": "63833f2a8ea90047c8af64af0dee7e2a8b9db06c",
         "type": "github"
       },
       "original": {
         "owner": "Daholli",
-        "ref": "improvements",
         "repo": "TiTrack",
         "type": "github"
       }

@@ -62,6 +62,7 @@ topLevel: {
               "systemd-journal"
               "greeter"
               "wheel"
+              "podman"
             ];
             shell = pkgs.fish;
             hashedPasswordFile = config.sops.secrets.passwordHash.path;

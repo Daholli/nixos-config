@@ -34,6 +34,9 @@
           !**/appsettings.json
           .direnv/
           .devenv/
+          *.jpg
+          *.png
+          *.svg
         '';
 
         catppuccin.helix.enable = true;

@@ -62,6 +62,13 @@ topLevel: {
         name = "Loptland";
         uuid = "dace2c49-4ed9-4d8f-9afa-7e75afa0fe01";
         maxJobs = 1;
+
+        container = {
+          sopsFile = ../../../secrets/secrets-loptland.yaml;
+          name = "Loptland container";
+          uuid = "389bf7c2-6081-4d95-8f0a-7e0469d9d753";
+          labels = [ "container:docker://node:20-bookworm" ];
+        };
       };
     };
 }

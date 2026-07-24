@@ -50,6 +50,16 @@
       };
     };
 
+    llm-agents-nix = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -161,6 +171,12 @@
     devenv = {
       url = "github:cachix/devenv";
       # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+    jbcontext-src = {
+      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";
+      flake = false;
     };
   };
 }

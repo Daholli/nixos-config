@@ -1,8 +1,12 @@
 {
-  flake.modules.nixos.amdgpu = _: {
+  flake.modules.nixos.amdgpu = { pkgs, ... }: {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
+
+      extraPackages = [
+        pkgs.rocmPackages.clr.icd
+      ];
     };
 
     environment = {

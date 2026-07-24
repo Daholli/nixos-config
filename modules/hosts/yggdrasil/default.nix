@@ -15,33 +15,67 @@ topLevel: {
       # boot.binfmt.emulatedSystems = [
       #   "aarch64-linux"
       # ];
+      #
+      programs.nix-ld.enable = true;
 
-      environment.systemPackages = with pkgs; [
-        teams-for-linux
+      environment.systemPackages =
+        with pkgs;
+        let
+          inherit (pkgs.jetbrains) rust-rover;
+          plugins =
+            inputs.nix-jetbrains-plugins.lib.pluginsForIdeWith
+              {
+                applyPluginOverrides = true;
+              }
+              pkgs
+              rust-rover
+              [
+                "com.intellij.plugins.watcher"
+                "com.github.copilot"
+                "com.intellij.ml.llm"
+                "org.jetbrains.junie"
+              ];
+        in
+        [
+          teams-for-linux
 
-        obsidian
-        diebahn
+          obsidian
+          diebahn
 
-        termscp
-        nixpkgs-review
+          termscp
+          nixpkgs-review
 
-        postman
-        vlc
-        ffmpeg
-        azure-cli
-        onlyoffice-desktopeditors
+          postman
+          vlc
+          ffmpeg
+          azure-cli
+          onlyoffice-desktopeditors
 
-        rocmPackages.amdsmi
+          jetbrains.rust-rover
+          (pkgs.jetbrains.plugins.addPlugins jetbrains.rust-rover (lib.attrValues plugins))
 
-        # osu-lazer-bin
+          rocmPackages.amdsmi
 
-        piper
-        ghc # for maths
+          # osu-lazer-bin
 
-        inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
-      ];
+          piper
+          ghc # for maths
+
+          inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ];
 
       services.ratbagd.enable = true;
+      services.ollama = {
+        enable = false;
+        package = pkgs.ollama-rocm;
+
+        loadModels = [
+        ];
+
+        environmentVariables = {
+          OLLAMA_ORIGINS = "*";
+        };
+      };
 
       environment.pathsToLink = [ "/libexec" ];
 

@@ -174,6 +174,15 @@
     };
 
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+
+    modern-recorder = {
+      url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
+      # url = "git+file:///home/cholli/work/modern-recorder?ref=feat/206-csharp-analytics-pipeline";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rustfs.follows = "modern-recorder/rustfs";
+
     jbcontext-src = {
       url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";
       flake = false;

@@ -25,3 +25,18 @@ creation_rules:
       - age:
           - *primary
           - *nixberry
+  - path_regex: secrets/secrets-recorder.yaml$
+    key_groups:
+      - age:
+          - *primary
+          - *yggdrasil
+  - path_regex: secrets/secrets-recorder-users.yaml$
+    key_groups:
+      - age:
+          - *primary
+          - *yggdrasil
+  - path_regex: secrets/secrets-recorder-mtls.yaml$
+    key_groups:
+      - age:
+          - *primary
+          - *yggdrasil

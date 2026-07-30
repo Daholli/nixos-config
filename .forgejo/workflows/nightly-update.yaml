@@ -15,6 +15,11 @@ jobs:
           # PUSH_TOKEN must be a PAT with write access to the repo.
           # It bypasses branch protection rules that block the default GITHUB_TOKEN.
           token: ${{ secrets.PUSH_TOKEN }}
+      - name: Debug env (temporary)
+        run: |
+          echo "PATH=$PATH"
+          which ssh || echo "ssh NOT FOUND on PATH"
+          echo "GIT_SSH_COMMAND=$GIT_SSH_COMMAND"
       - name: Update flake
         if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |

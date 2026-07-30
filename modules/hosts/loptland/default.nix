@@ -58,19 +58,11 @@ topLevel: {
         443
       ];
 
-      # flake.nix's modern-recorder input is a private repo served by this
-      # same box's own Forgejo, over git+ssh://forgejo@git.christophhollizeck.dev.
-      # root's `system.autoUpgrade` (services/default.nix) fetches it
-      # non-interactively, so it needs its own identity rather than relying on
-      # an interactive ssh-agent. Read-only deploy key registered on
-      # Daholli/Coda-Video-Recorder; rotate with
-      # `sops secrets/secrets-loptland.yaml`. The known-hosts entry pins this
-      # host's own ssh_host_ed25519_key, since git.christophhollizeck.dev
-      # resolves back to loptland itself.
       sops.secrets."modern-recorder/deploy-key" = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;
-        mode = "0400";
+        mode = "0440";
         owner = "root";
+        group = "secrets-access";
       };
 
       programs.ssh = {

@@ -115,6 +115,7 @@
                   gitMinimal
                   gnused
                   nodejs
+                  openssh
                   wget
                   lix
                   inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default

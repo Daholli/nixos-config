@@ -107,6 +107,13 @@
       };
     };
 
+    # The greeter moved out of DankMaterialShell into its own repo -- see the
+    # nixosModules.greeter deprecation warning. Provides programs.dms-greeter.
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     dms-plugin-diskusage = {
       url = "github:alcxyz/DankDiskUsage";
       flake = false;
@@ -179,9 +186,10 @@
       url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
       # url = "git+file:///home/cholli/work/modern-recorder?ref=feat/206-csharp-analytics-pipeline";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rustfs.follows = "rustfs";
     };
 
-    rustfs.follows = "modern-recorder/rustfs";
+    rustfs.url = "github:rustfs/rustfs-flake/09acba99c00cbb564bddb6a3a6ab58cb09a745a2";
 
     jbcontext-src = {
       url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";

@@ -4,7 +4,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = rec {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/41ee31dd17ff14965ed5f1ccf5e17e677fb2f860";
     systems.url = "github:nix-systems/default-linux";
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -188,8 +188,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rustfs.follows = "rustfs";
     };
-
-    rustfs.url = "github:rustfs/rustfs-flake/09acba99c00cbb564bddb6a3a6ab58cb09a745a2";
 
     jbcontext-src = {
       url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";

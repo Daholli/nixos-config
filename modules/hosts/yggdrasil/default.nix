@@ -3,6 +3,7 @@ topLevel: {
     {
       config,
       inputs,
+      lib,
       pkgs,
       ...
     }:
@@ -22,6 +23,29 @@ topLevel: {
         with pkgs;
         let
           inherit (pkgs.jetbrains) rust-rover;
+
+          # nixpkgs' rider indexes the bundled (and later deleted)
+          # plugins/remote-dev-server/selfcontained/lib during autoPatchelf, so
+          # the ReSharperHost binaries end up with a dangling /build/... RUNPATH
+          # instead of one pointing at libstdc++. The backend then dies with
+          # "libstdc++.so.6: cannot open shared object file", which Rider
+          # surfaces as "contact Rider support". Re-add the runpath in a phase
+          # that runs *after* fixupPhase — postFixup runs before autoPatchelf,
+          # which would overwrite it again.
+          rider = pkgs.jetbrains.rider.overrideAttrs (old: {
+            postPhases = (old.postPhases or [ ]) ++ [ "fixReSharperHostRunpath" ];
+
+            fixReSharperHostRunpath = ''
+              for f in $out/rider/lib/ReSharperHost/linux-*/*; do
+                [ -f "$f" ] && [ -x "$f" ] || continue
+                if patchelf --print-needed "$f" 2>/dev/null | grep -q '^libstdc++\.so\.6$'; then
+                  echo "fixing libstdc++ runpath: $f"
+                  patchelf --add-rpath ${lib.getLib pkgs.stdenv.cc.cc}/lib "$f"
+                fi
+              done
+            '';
+          });
+
           plugins =
             inputs.nix-jetbrains-plugins.lib.pluginsForIdeWith
               {
@@ -53,6 +77,7 @@ topLevel: {
 
           jetbrains.rust-rover
           (pkgs.jetbrains.plugins.addPlugins jetbrains.rust-rover (lib.attrValues plugins))
+          rider
 
           rocmPackages.amdsmi
 
@@ -64,6 +89,7 @@ topLevel: {
           inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
 
+      # services.resolved.enable = lib.mkForce false;
       services.ratbagd.enable = true;
       services.ollama = {
         enable = false;

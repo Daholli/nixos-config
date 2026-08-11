@@ -32,7 +32,7 @@ topLevel: {
           lfs.enable = true;
           signing = {
             key = topLevel.config.flake.meta.users.cholli.key;
-            signByDefault = true;
+            signByDefault = osConfig.networking.hostName == "yggdrasil";
           };
           ignores = [
             ".direnv/"

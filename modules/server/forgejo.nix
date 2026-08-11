@@ -80,6 +80,11 @@
             SIGNING_KEY = config.sops.secrets."forgejo/signing/key.pub".path;
             SIGNING_NAME = "Forgejo";
             SIGNING_EMAIL = "no-reply@${domainName}";
+
+            INITIAL_COMMIT = "always";
+            CRUD_ACTIONS = "always";
+            WIKI = "always";
+            MERGES = "always";
           };
         };
 

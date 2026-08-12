@@ -4,7 +4,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = rec {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/41ee31dd17ff14965ed5f1ccf5e17e677fb2f860";
     systems.url = "github:nix-systems/default-linux";
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -48,6 +48,16 @@
         flake-parts.follows = "flake-parts";
         treefmt-nix.follows = "treefmt-nix";
       };
+    };
+
+    llm-agents-nix = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
@@ -95,6 +105,13 @@
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
       };
+    };
+
+    # The greeter moved out of DankMaterialShell into its own repo -- see the
+    # nixosModules.greeter deprecation warning. Provides programs.dms-greeter.
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     dms-plugin-diskusage = {
@@ -161,6 +178,20 @@
     devenv = {
       url = "github:cachix/devenv";
       # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+
+    modern-recorder = {
+      url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
+      # url = "git+file:///home/cholli/work/modern-recorder?ref=feat/206-csharp-analytics-pipeline";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
+    };
+
+    jbcontext-src = {
+      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";
+      flake = false;
     };
   };
 }

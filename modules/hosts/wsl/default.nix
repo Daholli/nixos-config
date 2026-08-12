@@ -18,11 +18,17 @@ topLevel: {
         base
         server
         cholli
+        dev
+
+        niri
       ];
 
       wsl = {
         enable = true;
         defaultUser = topLevel.config.flake.meta.users.cholli.username;
+
+        useWindowsDriver = true;
+        startMenuLaunchers = true;
 
         usbip = {
           enable = true;

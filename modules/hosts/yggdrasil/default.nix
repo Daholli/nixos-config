@@ -3,6 +3,7 @@ topLevel: {
     {
       config,
       inputs,
+      lib,
       pkgs,
       ...
     }:
@@ -15,33 +16,92 @@ topLevel: {
       # boot.binfmt.emulatedSystems = [
       #   "aarch64-linux"
       # ];
+      #
+      programs.nix-ld.enable = true;
 
-      environment.systemPackages = with pkgs; [
-        teams-for-linux
+      environment.systemPackages =
+        with pkgs;
+        let
+          inherit (pkgs.jetbrains) rust-rover;
 
-        obsidian
-        diebahn
+          # nixpkgs' rider indexes the bundled (and later deleted)
+          # plugins/remote-dev-server/selfcontained/lib during autoPatchelf, so
+          # the ReSharperHost binaries end up with a dangling /build/... RUNPATH
+          # instead of one pointing at libstdc++. The backend then dies with
+          # "libstdc++.so.6: cannot open shared object file", which Rider
+          # surfaces as "contact Rider support". Re-add the runpath in a phase
+          # that runs *after* fixupPhase — postFixup runs before autoPatchelf,
+          # which would overwrite it again.
+          rider = pkgs.jetbrains.rider.overrideAttrs (old: {
+            postPhases = (old.postPhases or [ ]) ++ [ "fixReSharperHostRunpath" ];
 
-        termscp
-        nixpkgs-review
+            fixReSharperHostRunpath = ''
+              for f in $out/rider/lib/ReSharperHost/linux-*/*; do
+                [ -f "$f" ] && [ -x "$f" ] || continue
+                if patchelf --print-needed "$f" 2>/dev/null | grep -q '^libstdc++\.so\.6$'; then
+                  echo "fixing libstdc++ runpath: $f"
+                  patchelf --add-rpath ${lib.getLib pkgs.stdenv.cc.cc}/lib "$f"
+                fi
+              done
+            '';
+          });
 
-        postman
-        vlc
-        ffmpeg
-        azure-cli
-        onlyoffice-desktopeditors
+          plugins =
+            inputs.nix-jetbrains-plugins.lib.pluginsForIdeWith
+              {
+                applyPluginOverrides = true;
+              }
+              pkgs
+              rust-rover
+              [
+                "com.intellij.plugins.watcher"
+                "com.github.copilot"
+                "com.intellij.ml.llm"
+                "org.jetbrains.junie"
+              ];
+        in
+        [
+          teams-for-linux
 
-        rocmPackages.amdsmi
+          obsidian
+          diebahn
 
-        # osu-lazer-bin
+          termscp
+          nixpkgs-review
 
-        piper
-        ghc # for maths
+          postman
+          vlc
+          ffmpeg
+          azure-cli
+          onlyoffice-desktopeditors
 
-        inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
-      ];
+          jetbrains.rust-rover
+          (pkgs.jetbrains.plugins.addPlugins jetbrains.rust-rover (lib.attrValues plugins))
+          rider
 
+          rocmPackages.amdsmi
+
+          # osu-lazer-bin
+
+          piper
+          ghc # for maths
+
+          inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ];
+
+      # services.resolved.enable = lib.mkForce false;
       services.ratbagd.enable = true;
+      services.ollama = {
+        enable = false;
+        package = pkgs.ollama-rocm;
+
+        loadModels = [
+        ];
+
+        environmentVariables = {
+          OLLAMA_ORIGINS = "*";
+        };
+      };
 
       environment.pathsToLink = [ "/libexec" ];
 

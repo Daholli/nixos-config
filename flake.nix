@@ -186,6 +186,7 @@
       url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
       # url = "git+file:///home/cholli/work/modern-recorder?ref=feat/206-csharp-analytics-pipeline";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
     };
 
     jbcontext-src = {

@@ -71,7 +71,7 @@
             includes.enable = false;
           };
 
-          dgop.package = inputs.dgop.packages.${pkgs.stdenv.system}.default;
+          # dgop.package = inputs.dgop.packages.${pkgs.stdenv.system}.default;
 
           plugins.dankDiskUsage = {
             enable = true;

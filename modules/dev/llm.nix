@@ -87,12 +87,37 @@
 
       home.packages = [
         claude-work
+        llmPkgs.herdr
       ]
       ++ lib.optionals isYggdrasil [ jbcontext ];
 
+      home.activation.claudeSettingsMutable = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+        let
+          settingsFile = "${config.programs.claude-code.configDir}/settings.json";
+        in
+        ''
+          if [ -L "${settingsFile}" ]; then
+            run cp --remove-destination "$(readlink -f "${settingsFile}")" "${settingsFile}"
+            run chmod u+w "${settingsFile}"
+          fi
+        ''
+      );
+
+      home.activation.claudeWorkConfig =
+        let
+          claudeConfigDir = config.programs.claude-code.configDir;
+          claudeWorkDir = "${config.home.homeDirectory}/.claude-work";
+        in
+        lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          run mkdir -p "${claudeWorkDir}/skills"
+          run ln -sfn "${claudeConfigDir}/settings.json" "${claudeWorkDir}/settings.json"
+          if [ -e "${claudeConfigDir}/skills/claude-code-home-manager" ]; then
+            run ln -sfn "${claudeConfigDir}/skills/claude-code-home-manager" \
+              "${claudeWorkDir}/skills/claude-code-home-manager"
+          fi
+        '';
+
       # ── MCP server registry (mcp-servers-nix) ─────────────────────────────
-      # All servers defined here are automatically wired into any program with
-      # enableMcpIntegration = true (e.g. programs.claude-code below).
       programs.mcp.enable = true;
 
       mcp-servers.settings.servers = {
@@ -117,9 +142,24 @@
         package = llmPkgs.claude-code;
         enableMcpIntegration = true;
 
+        # Deliberately just "rust-analyzer" (not a nix store path): this
+        # picks up whatever rust-analyzer a project's devenv/toolchain puts
+        # on PATH, rather than pinning a specific nixpkgs build.
+        lspServers = {
+          rust = {
+            command = "rust-analyzer";
+            args = [ ];
+            extensionToLanguage = {
+              ".rs" = "rust";
+            };
+          };
+        };
+
         settings = {
           theme = "auto";
           autoCompactEnabled = true;
+          model = "opus";
+          effortLevel = "medium";
         }
         // lib.optionalAttrs isYggdrasil {
           hooks = {

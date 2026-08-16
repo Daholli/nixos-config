@@ -7,8 +7,6 @@
         PRE_COMMIT_COLOR = "never";
       };
 
-      home.packages = with pkgs; [ herdr ];
-
       programs.kitty = {
         enable = true;
         font = {

@@ -11,6 +11,11 @@ topLevel: {
         inputs.modern-recorder.nixosModules.recorderDevHost
       ];
 
+      networking.firewall.trustedInterfaces = [
+        "virbr0"
+        "podman0"
+      ];
+
       nixpkgs.overlays = [ inputs.modern-recorder.inputs.rustfs.overlays.default ];
 
       services.recorderDevHost = {

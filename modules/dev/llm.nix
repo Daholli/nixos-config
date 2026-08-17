@@ -58,6 +58,22 @@
           --replace-fail '"command": "node ' '"command": "${lib.getExe pkgs.nodejs} '
       '';
 
+      # ── Claude Code statusline ────────────────────────────────────────────
+      # writeShellScriptBin rather than writeShellApplication: the script relies
+      # on failing `git` calls being non-fatal (empty branch/remote outside a
+      # repo), which writeShellApplication's `set -e` would abort on.
+      claude-statusline = pkgs.writeShellScriptBin "claude-statusline" ''
+        export PATH=${
+          lib.makeBinPath [
+            pkgs.jq
+            pkgs.git
+            pkgs.gawk
+            pkgs.coreutils
+          ]
+        }:$PATH
+        ${builtins.readFile ./claude-statusline.sh}
+      '';
+
       # ── MCP server wrappers ───────────────────────────────────────────────
       azure-devops-mcp = pkgs.writeShellApplication {
         name = "azure-devops-mcp";
@@ -180,6 +196,10 @@
           autoCompactEnabled = true;
           model = "opus";
           effortLevel = "medium";
+          statusLine = {
+            type = "command";
+            command = lib.getExe claude-statusline;
+          };
         }
         // lib.optionalAttrs isYggdrasil {
           hooks = {

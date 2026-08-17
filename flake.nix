@@ -4,7 +4,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = rec {
-    nixpkgs.url = "github:nixos/nixpkgs/41ee31dd17ff14965ed5f1ccf5e17e677fb2f860";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -135,7 +135,14 @@
     };
 
     niri-flake = {
-      url = "github:sodiboo/niri-flake";
+      # Temporarily on sodiboo/niri-flake#1853 until it lands upstream.
+      # nixpkgs-unstable removed `libdisplay-info_0_2`, and niri-flake's
+      # `libdisplay-info_0_2 ? libdisplay-info` fallback never fires because the
+      # attribute still exists as a removal throw -- so the greeter session
+      # (dms-greeter-session -> programs.niri.package) fails to evaluate. The PR
+      # picks the libdisplay-info matching each niri source's Cargo.lock.
+      url = "github:bugeats/niri-flake/7e196a5ce0bf209d3aca844bb31edce5284d6484";
+      # url = "github:sodiboo/niri-flake";
       # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7"; # for debugging
       inputs = {
         niri-stable.follows = "niri";
@@ -183,14 +190,14 @@
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
 
     modern-recorder = {
-      url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
-      # url = "git+file:///home/cholli/work/modern-recorder?ref=feat/206-csharp-analytics-pipeline";
+      # url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
+      url = "git+file:///home/cholli/work/modern-recorder?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
     };
 
     jbcontext-src = {
-      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";
+      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.9.592/context-native-linux-x64-0.9.9.592";
       flake = false;
     };
 

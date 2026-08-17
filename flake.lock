@@ -1609,6 +1609,23 @@
         "type": "github"
       }
     },
+    "ponytail-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786137205,
+        "narHash": "sha256-8cYggVltBAlZ/Zj4pl1bOu7mQdZFXCmDGW4RSpvRA+w=",
+        "owner": "DietrichGebert",
+        "repo": "ponytail",
+        "rev": "0a4dd63ad4541f4f655c4108a295916f3c1d8fda",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DietrichGebert",
+        "ref": "v4.9.0",
+        "repo": "ponytail",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
@@ -1647,6 +1664,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "omnix": "omnix",
+        "ponytail-src": "ponytail-src",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "systems": "systems_5",

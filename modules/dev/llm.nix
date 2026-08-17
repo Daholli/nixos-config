@@ -43,6 +43,21 @@
 
       jbcontextBin = lib.getExe jbcontext;
 
+      # ── ponytail ──────────────────────────────────────────────────────────
+      # Claude Code plugin ("lazy senior dev" ruleset), pinned via
+      # inputs.ponytail-src. Its SessionStart/SubagentStart/UserPromptSubmit
+      # hooks are node scripts and the shipped manifest invokes a bare `node`.
+      # Rewriting that to an absolute store path keeps node reachable only from
+      # these hooks — it never lands on $PATH or in home.packages.
+      # The whole tree is kept: ponytail-instructions.js reads
+      # ../skills/ponytail/SKILL.md relative to hooks/.
+      ponytail = pkgs.runCommand "ponytail-4.9.0" { } ''
+        cp -r ${inputs.ponytail-src} $out
+        chmod -R u+w $out
+        substituteInPlace $out/hooks/claude-codex-hooks.json \
+          --replace-fail '"command": "node ' '"command": "${lib.getExe pkgs.nodejs} '
+      '';
+
       # ── MCP server wrappers ───────────────────────────────────────────────
       azure-devops-mcp = pkgs.writeShellApplication {
         name = "azure-devops-mcp";
@@ -115,6 +130,7 @@
             run ln -sfn "${claudeConfigDir}/skills/claude-code-home-manager" \
               "${claudeWorkDir}/skills/claude-code-home-manager"
           fi
+          run ln -sfn "${ponytail}" "${claudeWorkDir}/skills/ponytail"
         '';
 
       # ── MCP server registry (mcp-servers-nix) ─────────────────────────────
@@ -141,6 +157,10 @@
         enable = true;
         package = llmPkgs.claude-code;
         enableMcpIntegration = true;
+
+        plugins = {
+          inherit ponytail;
+        };
 
         # Deliberately just "rust-analyzer" (not a nix store path): this
         # picks up whatever rust-analyzer a project's devenv/toolchain puts

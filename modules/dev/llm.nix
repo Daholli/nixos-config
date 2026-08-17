@@ -14,11 +14,9 @@
       llmPkgs = inputs.llm-agents-nix.packages.${system};
 
       # ── jbcontext ─────────────────────────────────────────────────────────
-      # Not yet in llm-agents.nix; built from the upstream prebuilt binary
-      # pinned via flake.lock (inputs.jbcontext-src).
       jbcontext = pkgs.stdenv.mkDerivation {
         pname = "jbcontext";
-        version = "0.9.4.313";
+        version = "0.9.9.592";
 
         src = inputs.jbcontext-src;
 
@@ -44,13 +42,6 @@
       jbcontextBin = lib.getExe jbcontext;
 
       # ── ponytail ──────────────────────────────────────────────────────────
-      # Claude Code plugin ("lazy senior dev" ruleset), pinned via
-      # inputs.ponytail-src. Its SessionStart/SubagentStart/UserPromptSubmit
-      # hooks are node scripts and the shipped manifest invokes a bare `node`.
-      # Rewriting that to an absolute store path keeps node reachable only from
-      # these hooks — it never lands on $PATH or in home.packages.
-      # The whole tree is kept: ponytail-instructions.js reads
-      # ../skills/ponytail/SKILL.md relative to hooks/.
       ponytail = pkgs.runCommand "ponytail-4.9.0" { } ''
         cp -r ${inputs.ponytail-src} $out
         chmod -R u+w $out
@@ -59,9 +50,6 @@
       '';
 
       # ── Claude Code statusline ────────────────────────────────────────────
-      # writeShellScriptBin rather than writeShellApplication: the script relies
-      # on failing `git` calls being non-fatal (empty branch/remote outside a
-      # repo), which writeShellApplication's `set -e` would abort on.
       claude-statusline = pkgs.writeShellScriptBin "claude-statusline" ''
         export PATH=${
           lib.makeBinPath [

@@ -193,5 +193,10 @@
       url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.4.313/context-native-linux-x64-0.9.4.313";
       flake = false;
     };
+
+    ponytail-src = {
+      url = "github:DietrichGebert/ponytail/v4.9.0";
+      flake = false;
+    };
   };
 }

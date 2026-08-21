@@ -3,7 +3,7 @@
 # cost, code velocity, model. Palette: catppuccin mocha (lavender accent).
 # Wired up in llm.nix as programs.claude-code.settings.statusLine.
 
-export LC_ALL=C  # locale uses comma decimals; printf %.2f/%.0f need dots
+export LC_ALL=C # locale uses comma decimals; printf %.2f/%.0f need dots
 
 input=$(cat)
 
@@ -40,11 +40,11 @@ if [ -n "$cwd" ]; then
   # Forge icon from the origin remote (nerd font glyphs).
   remote=$(git -C "$cwd" --no-optional-locks remote get-url origin 2>/dev/null)
   case "$remote" in
-    *github.com*)                 forge=$'' ;;  # github
-    *gitlab*)                     forge=$'' ;;  # gitlab
-    *bitbucket*)                  forge=$'' ;;  # bitbucket
-    *forgejo*|*gitea*|*codeberg*) forge=$'' ;;  # forgejo/gitea
-    ?*)                           forge=$'' ;;  # generic git remote
+  *github.com*) forge=$'' ;;                     # github
+  *gitlab*) forge=$'' ;;                         # gitlab
+  *bitbucket*) forge=$'' ;;                      # bitbucket
+  *forgejo* | *gitea* | *codeberg*) forge=$'' ;; # forgejo/gitea
+  ?*) forge=$'' ;;                               # generic git remote
   esac
 
   # Git status classifier, tide-style: conflicted / staged / dirty / untracked.
@@ -66,13 +66,13 @@ fi
 
 # ── Git status classifier (colors mirror the tide_git_color_* fish vars) ──
 gitstat=""
-[ "${st_conflict:-0}"  -gt 0 ] && gitstat="${gitstat}$(rgb 243 139 168)~${st_conflict}${RESET}"
-[ "${st_staged:-0}"    -gt 0 ] && gitstat="${gitstat}$(rgb 249 226 175)+${st_staged}${RESET}"
-[ "${st_dirty:-0}"     -gt 0 ] && gitstat="${gitstat}$(rgb 249 226 175)!${st_dirty}${RESET}"
+[ "${st_conflict:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 243 139 168)~${st_conflict}${RESET}"
+[ "${st_staged:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 249 226 175)+${st_staged}${RESET}"
+[ "${st_dirty:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 249 226 175)!${st_dirty}${RESET}"
 [ "${st_untracked:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 137 220 235)?${st_untracked}${RESET}"
-[ "${st_stash:-0}"     -gt 0 ] && gitstat="${gitstat}$(rgb 166 227 161)*${st_stash}${RESET}"
-[ "${st_ahead:-0}"     -gt 0 ] && gitstat="${gitstat}$(rgb 137 180 250)⇡${st_ahead}${RESET}"
-[ "${st_behind:-0}"    -gt 0 ] && gitstat="${gitstat}$(rgb 137 180 250)⇣${st_behind}${RESET}"
+[ "${st_stash:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 166 227 161)*${st_stash}${RESET}"
+[ "${st_ahead:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 137 180 250)⇡${st_ahead}${RESET}"
+[ "${st_behind:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 137 180 250)⇣${st_behind}${RESET}"
 
 # ── Context bar: lavender → mauve → red gradient, full blocks only ──
 BAR_WIDTH=20
@@ -81,23 +81,23 @@ if [ -n "$used" ]; then
   used_int=$(printf '%.0f' "$used")
 
   # Round to nearest block
-  filled=$(( (used_int * BAR_WIDTH + 50) / 100 ))
+  filled=$(((used_int * BAR_WIDTH + 50) / 100))
 
   bar=""
-  for (( i=0; i<BAR_WIDTH; i++ )); do
-    pos=$(( i * 100 / (BAR_WIDTH - 1) ))
+  for ((i = 0; i < BAR_WIDTH; i++)); do
+    pos=$((i * 100 / (BAR_WIDTH - 1)))
 
     if [ "$pos" -le 50 ]; then
       # lavender (180,190,254) → mauve (203,166,247)
-      r=$(( 180 + 23 * pos / 50 ))
-      g=$(( 190 - 24 * pos / 50 ))
-      b=$(( 254 - 7 * pos / 50 ))
+      r=$((180 + 23 * pos / 50))
+      g=$((190 - 24 * pos / 50))
+      b=$((254 - 7 * pos / 50))
     else
       # mauve (203,166,247) → red (243,139,168)
-      adj=$(( pos - 50 ))
-      r=$(( 203 + 40 * adj / 50 ))
-      g=$(( 166 - 27 * adj / 50 ))
-      b=$(( 247 - 79 * adj / 50 ))
+      adj=$((pos - 50))
+      r=$((203 + 40 * adj / 50))
+      g=$((166 - 27 * adj / 50))
+      b=$((247 - 79 * adj / 50))
     fi
 
     if [ "$i" -lt "$filled" ]; then
@@ -108,8 +108,10 @@ if [ -n "$used" ]; then
   done
   bar="${bar}${RESET}"
 
-  if [ "$used_int" -ge 90 ]; then pct_color="$RED"
-  elif [ "$used_int" -ge 70 ]; then pct_color="$MAUVE"
+  if [ "$used_int" -ge 90 ]; then
+    pct_color="$RED"
+  elif [ "$used_int" -ge 70 ]; then
+    pct_color="$MAUVE"
   else pct_color="$LAVENDER"; fi
 
   ctx_part="${bar} ${pct_color}${used_int}%${RESET}"

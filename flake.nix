@@ -185,8 +185,8 @@
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
 
     modern-recorder = {
-      # url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
-      url = "git+file:///home/cholli/work/modern-recorder?ref=main";
+      url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
+      # url = "git+file:///home/cholli/work/modern-recorder?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
     };

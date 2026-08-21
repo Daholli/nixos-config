@@ -930,18 +930,18 @@
         "treefmt-nix": "treefmt-nix_3"
       },
       "locked": {
-        "lastModified": 1786992330,
-        "narHash": "sha256-RV8zf6OHaBhDwR5EEgsYGsmFekR9+iWUcuDJxYMJe9Y=",
+        "lastModified": 1787297403,
+        "narHash": "sha256-rYr8uh2qKDWYfshqWFSMJzojCgrZ2oE//Az0menECZ0=",
         "ref": "main",
-        "rev": "0f833ce037350cf4d54d5be47b73631708fa7f21",
-        "revCount": 745,
+        "rev": "3527100aa7b975a705caf440c87a5545141f5eec",
+        "revCount": 784,
         "type": "git",
-        "url": "file:///home/cholli/work/modern-recorder"
+        "url": "ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git"
       },
       "original": {
         "ref": "main",
         "type": "git",
-        "url": "file:///home/cholli/work/modern-recorder"
+        "url": "ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git"
       }
     },
     "nh-flake": {

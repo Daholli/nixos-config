@@ -59,6 +59,8 @@ if [ -n "$cwd" ]; then
       END { printf "st_staged=%d st_dirty=%d st_untracked=%d st_conflict=%d", s, d, u, c }
     ')"
     st_stash=$(git -C "$cwd" --no-optional-locks stash list 2>/dev/null | wc -l)
+    # Commits behind/ahead of upstream; empty when there is no tracking branch.
+    read -r st_behind st_ahead <<<"$(git -C "$cwd" --no-optional-locks rev-list --left-right --count '@{upstream}...HEAD' 2>/dev/null)"
   fi
 fi
 
@@ -69,6 +71,8 @@ gitstat=""
 [ "${st_dirty:-0}"     -gt 0 ] && gitstat="${gitstat}$(rgb 249 226 175)!${st_dirty}${RESET}"
 [ "${st_untracked:-0}" -gt 0 ] && gitstat="${gitstat}$(rgb 137 220 235)?${st_untracked}${RESET}"
 [ "${st_stash:-0}"     -gt 0 ] && gitstat="${gitstat}$(rgb 166 227 161)*${st_stash}${RESET}"
+[ "${st_ahead:-0}"     -gt 0 ] && gitstat="${gitstat}$(rgb 137 180 250)⇡${st_ahead}${RESET}"
+[ "${st_behind:-0}"    -gt 0 ] && gitstat="${gitstat}$(rgb 137 180 250)⇣${st_behind}${RESET}"
 
 # ── Context bar: lavender → mauve → red gradient, full blocks only ──
 BAR_WIDTH=20

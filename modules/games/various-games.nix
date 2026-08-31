@@ -3,7 +3,7 @@
     { inputs, pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
-        prismlauncher
+        # prismlauncher
         starsector
         beyond-all-reason
 

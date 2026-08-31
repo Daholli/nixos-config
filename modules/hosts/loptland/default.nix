@@ -54,7 +54,6 @@ topLevel: {
       };
 
       networking.firewall.allowedTCPPorts = [
-        3000
         80
         443
       ];

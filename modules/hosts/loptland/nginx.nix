@@ -11,16 +11,86 @@
       matrixDomain = "alwayssleepy.online";
       livekitPort = 7880;
       lkJwtPort = 8089;
+
+      allowedCountries = [
+        "AD"
+        "AL"
+        "AT"
+        "BA"
+        "BE"
+        "BG"
+        "CH"
+        "CY"
+        "CZ"
+        "DE"
+        "DK"
+        "EE"
+        "ES"
+        "FI"
+        "FR"
+        "GB"
+        "GI"
+        "GR"
+        "HR"
+        "HU"
+        "IE"
+        "IS"
+        "IT"
+        "LI"
+        "LT"
+        "LU"
+        "LV"
+        "MC"
+        "MD"
+        "ME"
+        "MK"
+        "MT"
+        "NL"
+        "NO"
+        "PL"
+        "PT"
+        "RO"
+        "RS"
+        "SE"
+        "SI"
+        "SK"
+        "SM"
+        "UA"
+        "US"
+        "VA"
+        "XK"
+      ];
+
+      geoFence = ''
+        if ($geo_blocked) {
+          return 403;
+        }
+      '';
     in
     {
       services.nginx = {
         enable = true;
         recommendedProxySettings = true;
+        recommendedTlsSettings = true;
+        additionalModules = [ pkgs.nginxModules.geoip2 ];
+
+        appendHttpConfig = ''
+          geoip2 ${pkgs.dbip-country-lite}/share/dbip/dbip-country-lite.mmdb {
+            $geoip2_country_code source=$remote_addr country iso_code;
+          }
+
+          map $geoip2_country_code $geo_blocked {
+            default 1;
+            "" 0;
+            ${lib.concatMapStringsSep "\n" (country: "${country} 0;") allowedCountries}
+          }
+        '';
 
         virtualHosts = {
           "attic.${domainName}" = lib.mkIf config.services.atticd.enable {
             forceSSL = true;
             useACMEHost = domainName;
+            extraConfig = geoFence;
 
             locations."/" = {
               proxyPass = "http://localhost:8181";
@@ -46,6 +116,7 @@
           "ha.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;
+            extraConfig = geoFence;
 
             locations."/" = {
               # tailscale ip
@@ -60,6 +131,7 @@
           "immich.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;
+            extraConfig = geoFence;
 
             locations."/" = {
               proxyPass = "http://nixberry:2283";

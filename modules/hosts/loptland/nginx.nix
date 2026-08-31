@@ -18,6 +18,19 @@
         recommendedProxySettings = true;
 
         virtualHosts = {
+          "attic.${domainName}" = lib.mkIf config.services.atticd.enable {
+            forceSSL = true;
+            useACMEHost = domainName;
+
+            locations."/" = {
+              proxyPass = "http://localhost:8181";
+              extraConfig = ''
+                client_max_body_size 0;
+                proxy_request_buffering off;
+              '';
+            };
+          };
+
           "git.${domainName}" = lib.mkIf config.services.forgejo.enable {
             forceSSL = true;
             useACMEHost = domainName;

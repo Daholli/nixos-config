@@ -24,6 +24,7 @@ topLevel: {
         forgejo-runner
 
         # services
+        attic
         matrix-synapse
         mautrix-discord
         mautrix-signal

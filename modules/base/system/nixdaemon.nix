@@ -24,6 +24,27 @@
 
         nix-update
         inputs.nix-auth.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+        attic
+      ];
+
+      nixpkgs.overlays = [
+        (_: prev: {
+          attic = prev.writeShellScriptBin "attic" ''
+            export XDG_CONFIG_HOME=${
+              prev.linkFarm "attic-xdg" {
+                "attic/config.toml" = (prev.formats.toml { }).generate "attic-config.toml" {
+                  default-server = "cholli";
+                  servers.cholli = {
+                    endpoint = "https://attic.christophhollizeck.dev/";
+                    token-file = config.sops.secrets."attic/token".path;
+                  };
+                };
+              }
+            }
+            exec ${prev.attic-client}/bin/attic "$@"
+          '';
+        })
       ];
 
       programs.nh = {
@@ -41,6 +62,11 @@
         };
         secrets."nix/signing-key" = {
           sopsFile = ../../../secrets/secrets.yaml;
+        };
+        secrets."attic/token" = {
+          sopsFile = ../../../secrets/secrets.yaml;
+          group = "secrets-access";
+          mode = "0440";
         };
         templates."access_tokens.conf" = {
           content = ''
@@ -83,6 +109,7 @@
               "https://helix.cachix.org"
               "https://nixos-raspberrypi.cachix.org"
               "https://cholli.cachix.org"
+              "https://attic.christophhollizeck.dev/cholli"
             ];
             secret-key-files = [ config.sops.secrets."nix/signing-key".path ];
             trusted-public-keys = [

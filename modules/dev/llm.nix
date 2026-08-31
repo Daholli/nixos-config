@@ -110,6 +110,8 @@
       ]
       ++ lib.optionals isYggdrasil [ jbcontext ];
 
+      home.file."${config.programs.claude-code.configDir}/settings.json".force = true;
+
       home.activation.claudeSettingsMutable = lib.hm.dag.entryAfter [ "linkGeneration" ] (
         let
           settingsFile = "${config.programs.claude-code.configDir}/settings.json";
@@ -183,7 +185,8 @@
           theme = "auto";
           autoCompactEnabled = true;
           model = "opus";
-          effortLevel = "medium";
+          effortLevel = "xhigh";
+          remoteControlAtStartup = false;
           statusLine = {
             type = "command";
             command = lib.getExe claude-statusline;

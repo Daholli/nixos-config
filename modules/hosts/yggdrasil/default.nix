@@ -132,6 +132,7 @@ topLevel: {
         # apps
         _1password
         kdeconnect
+        venoom
 
         # Users
         cholli

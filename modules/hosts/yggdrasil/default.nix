@@ -87,6 +87,7 @@ topLevel: {
           ghc # for maths
 
           inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
+          inputs.hey-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
 
       # services.resolved.enable = lib.mkForce false;

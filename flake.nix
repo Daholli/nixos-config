@@ -91,6 +91,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    hey-cli = {
+      url = "github:basecamp/hey-cli/v1.4.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ###
     # Niri
     niri = {

@@ -780,6 +780,27 @@
         "type": "github"
       }
     },
+    "hey-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788376883,
+        "narHash": "sha256-y86pSryOZZGCQPCiprjENOeqvXejhbB3piRxy/w6WJ4=",
+        "owner": "basecamp",
+        "repo": "hey-cli",
+        "rev": "980cdc2021cbf672d4735ba0243e9a2c0568a465",
+        "type": "github"
+      },
+      "original": {
+        "owner": "basecamp",
+        "ref": "v1.4.0",
+        "repo": "hey-cli",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1626,6 +1647,7 @@
         "flake-parts": "flake-parts_2",
         "gpg-base-conf": "gpg-base-conf",
         "helix": "helix",
+        "hey-cli": "hey-cli",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "jbcontext-src": "jbcontext-src",

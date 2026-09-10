@@ -75,7 +75,7 @@
               configureFlags = (old.configureFlags or [ ]) ++ [ "--disable-werror" ];
             });
           in
-          stdenv.mkDerivation (finalAttrs: {
+          stdenv.mkDerivation {
             pname = "venoom";
             version = "1.1.0+1";
 
@@ -174,7 +174,7 @@
               platforms = [ "x86_64-linux" ];
               mainProgram = "venoommobile";
             };
-          })
+          }
         ) { };
       };
     };

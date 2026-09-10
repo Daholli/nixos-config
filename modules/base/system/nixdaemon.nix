@@ -123,6 +123,8 @@
               "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
               "cholli.cachix.org-1:1nQ9JUO/1sHK7wm5obDgR/DNndPUsApBshQnEPIoMfI="
               "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+              # attic cache signing key, from: attic cache info cholli
+              "cholli:uy8L6bKuXcrm2kIMcjyh/c4QACtfBh5gn2/fvbOBFIE="
               # generated with: nix key generate-secret --key-name cholli-local-1
               "cholli-local-1:v/wzL3lqs/CBDwSohhoRHlTJbqsf67DZDqfRDcp0cdA="
             ];

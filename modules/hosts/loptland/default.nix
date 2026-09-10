@@ -26,6 +26,7 @@ topLevel: {
         # services
         attic
         matrix-synapse
+        matrix-authentication-service
         mautrix-discord
         mautrix-signal
         element-call

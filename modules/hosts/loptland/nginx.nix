@@ -147,6 +147,11 @@
             forceSSL = true;
             useACMEHost = matrixDomain;
 
+            # Regex locations are matched before the "/" prefix below.
+            locations."~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
+              proxyPass = "http://localhost:8080";
+            };
+
             # MSC4143: advertise LiveKit as the RTC transport since Synapse doesn't implement this yet
             locations."= /_matrix/client/unstable/org.matrix.msc4143/rtc/transports" = {
               extraConfig = ''
@@ -169,6 +174,15 @@
             };
           };
 
+          "auth.${matrixDomain}" = lib.mkIf config.services.matrix-authentication-service.enable {
+            forceSSL = true;
+            useACMEHost = matrixDomain;
+
+            locations."/" = {
+              proxyPass = "http://localhost:8080";
+            };
+          };
+
           "call.${matrixDomain}" = lib.mkIf config.services.lk-jwt-service.enable {
             forceSSL = true;
             useACMEHost = matrixDomain;
@@ -176,6 +190,9 @@
             locations."= /config.json" = {
               extraConfig = ''
                 default_type application/json;
+                # Never cache this: a stale copy silently pins clients to old
+                # homeserver discovery settings.
+                add_header Cache-Control "no-store" always;
                 return 200 '${
                   builtins.toJSON {
                     default_server_config = {
@@ -233,7 +250,7 @@
               extraConfig = ''
                 default_type application/json;
                 add_header 'Access-Control-Allow-Origin' '*';
-                return 200 '{"m.homeserver":{"base_url":"https://matrix.${matrixDomain}"},"org.matrix.msc4143.rtc_foci":[{"type":"livekit","livekit_service_url":"https://call.${matrixDomain}/livekit/jwt"}]}';
+                return 200 '{"m.homeserver":{"base_url":"https://matrix.${matrixDomain}"},"org.matrix.msc4143.rtc_foci":[{"type":"livekit","livekit_service_url":"https://call.${matrixDomain}/livekit/jwt"}],"org.matrix.msc2965.authentication":{"issuer":"https://auth.${matrixDomain}/","account":"https://auth.${matrixDomain}/account"}}';
               '';
             };
           };

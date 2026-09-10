@@ -12,14 +12,10 @@
         locations."= /config.json" = {
           extraConfig = ''
             default_type application/json;
+            add_header Cache-Control "no-store" always;
             return 200 '${
               builtins.toJSON {
-                default_server_config = {
-                  "m.homeserver" = {
-                    base_url = "https://matrix.${matrixDomain}";
-                    server_name = matrixDomain;
-                  };
-                };
+                default_server_name = matrixDomain;
                 disable_custom_urls = true;
                 disable_guests = true;
                 features = {

@@ -35,14 +35,6 @@
       '';
 
       # ── MCP server wrappers ───────────────────────────────────────────────
-      azure-devops-mcp = pkgs.writeShellApplication {
-        name = "azure-devops-mcp";
-        runtimeInputs = [ pkgs.nodejs ];
-        text = ''
-          exec npx -y @azure-devops/mcp "$@"
-        '';
-      };
-
       forgejo-mcp = pkgs.writeShellApplication {
         name = "forgejo-mcp";
         runtimeInputs = [ pkgs.forgejo-mcp ];
@@ -113,16 +105,15 @@
       # ── MCP server registry (mcp-servers-nix) ─────────────────────────────
       programs.mcp.enable = true;
 
-      mcp-servers.settings.servers = {
-        azure-devops = {
-          command = lib.getExe azure-devops-mcp;
-          args = [ "Qognify" ];
-        };
-      }
-      // lib.optionalAttrs isYggdrasil {
+      mcp-servers.settings.servers = lib.optionalAttrs isYggdrasil {
         forgejo = {
           command = lib.getExe forgejo-mcp;
         };
+      };
+
+      programs.azure-devops-mcp = {
+        enable = true;
+        organization = "Qognify";
       };
 
       programs.jbcontext = {

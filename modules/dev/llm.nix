@@ -16,7 +16,7 @@
       # ── jbcontext ─────────────────────────────────────────────────────────
       jbcontext = pkgs.stdenv.mkDerivation {
         pname = "jbcontext";
-        version = "0.9.9.592";
+        version = "0.9.12.803";
 
         src = inputs.jbcontext-src;
 

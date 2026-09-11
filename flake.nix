@@ -197,7 +197,7 @@
     };
 
     jbcontext-src = {
-      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.9.592/context-native-linux-x64-0.9.9.592";
+      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.12.803/context-native-linux-x64-0.9.12.803";
       flake = false;
     };
 

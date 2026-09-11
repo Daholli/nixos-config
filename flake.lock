@@ -878,13 +878,13 @@
     "jbcontext-src": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fOOTXJlLaauxnA46pmXRiNXIvozg8UmcqEeX9WflA5s=",
+        "narHash": "sha256-fCKiceCtKM676j+Exs9IQ75oQXDdK2Ge1LMH5DMA9fg=",
         "type": "file",
-        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.9.592/context-native-linux-x64-0.9.9.592"
+        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.12.803/context-native-linux-x64-0.9.12.803"
       },
       "original": {
         "type": "file",
-        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.9.592/context-native-linux-x64-0.9.9.592"
+        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.12.803/context-native-linux-x64-0.9.12.803"
       }
     },
     "lanzaboote": {

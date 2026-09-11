@@ -13,34 +13,6 @@
       system = pkgs.stdenv.hostPlatform.system;
       llmPkgs = inputs.llm-agents-nix.packages.${system};
 
-      # ── jbcontext ─────────────────────────────────────────────────────────
-      jbcontext = pkgs.stdenv.mkDerivation {
-        pname = "jbcontext";
-        version = "0.9.12.803";
-
-        src = inputs.jbcontext-src;
-
-        nativeBuildInputs = [ pkgs.autoPatchelfHook ];
-        buildInputs = [ pkgs.zlib ];
-
-        dontUnpack = true;
-        dontBuild = true;
-
-        installPhase = ''
-          install -Dm755 $src $out/bin/jbcontext
-        '';
-
-        meta = {
-          description = "JetBrains Context CLI — code indexing and semantic search for AI agents";
-          homepage = "https://www.jetbrains.com/ai/";
-          license = lib.licenses.unfree;
-          platforms = [ "x86_64-linux" ];
-          mainProgram = "jbcontext";
-        };
-      };
-
-      jbcontextBin = lib.getExe jbcontext;
-
       # ── ponytail ──────────────────────────────────────────────────────────
       ponytail = pkgs.runCommand "ponytail-4.9.0" { } ''
         cp -r ${inputs.ponytail-src} $out
@@ -107,8 +79,7 @@
       home.packages = [
         claude-work
         llmPkgs.herdr
-      ]
-      ++ lib.optionals isYggdrasil [ jbcontext ];
+      ];
 
       home.file."${config.programs.claude-code.configDir}/settings.json".force = true;
 
@@ -152,10 +123,11 @@
         forgejo = {
           command = lib.getExe forgejo-mcp;
         };
-        jbcontext = {
-          command = jbcontextBin;
-          args = [ "mcp" ];
-        };
+      };
+
+      programs.jbcontext = {
+        enable = isYggdrasil;
+        enableIntellijIntegration = true;
       };
 
       # ── Claude Code ───────────────────────────────────────────────────────
@@ -187,61 +159,35 @@
           model = "opus";
           effortLevel = "xhigh";
           remoteControlAtStartup = false;
+          permissions.defaultMode = "plan";
           statusLine = {
             type = "command";
             command = lib.getExe claude-statusline;
           };
-        }
-        // lib.optionalAttrs isYggdrasil {
-          hooks = {
-            SessionStart = [
-              {
-                matcher = "";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} index --silent";
-                    async = true;
-                  }
-                ];
-              }
-            ];
-            SessionEnd = [
-              {
-                matcher = "";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} index --silent";
-                    async = true;
-                  }
-                ];
-              }
-            ];
-            PreToolUse = [
-              {
-                matcher = "Bash|Grep";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} hook pre-tool-use";
-                  }
-                ];
-              }
-            ];
-            UserPromptSubmit = [
-              {
-                matcher = "";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} hook user-prompt-submit";
-                  }
-                ];
-              }
-            ];
-          };
         };
+
+        # Appended to CLAUDE.md after the instruction block the jbcontext
+        # module puts there.
+        context = lib.mkIf isYggdrasil ''
+          ## Code discovery: Explore agent out, ripgrep still in
+
+          For code discovery in an indexed repo, do NOT use the built-in `Explore`
+          agent. It is the nearest competitor to `context-explorer` and silently
+          displaces it. Use `context-explorer`, or `jbcontext search` directly.
+
+          This excludes the `Explore` agent only — NOT `rg`/`grep`/`glob`. Those stay
+          in normal use, as the second step. Once the semantic pass hands back
+          concrete `file:line` pointers, exact search is how you widen from them:
+          callers, sibling definitions, every occurrence of a symbol. Semantic search
+          finds the entry point; ripgrep confirms and completes it. Skip straight to
+          `rg` when the target is genuinely keyword-shaped — a literal string, an
+          error message, a flag or config key.
+
+          `Explore` stays fine for sweeps that are not indexed project code: logs,
+          build output, nix store sources, or files outside the project. The
+          skip-conditions above still apply — this only settles which tool to reach
+          for when discovery IS warranted.
+        '';
       };
 
       # ── GitHub Copilot CLI ────────────────────────────────────────────────

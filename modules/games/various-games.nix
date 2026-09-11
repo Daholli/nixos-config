@@ -3,8 +3,9 @@
     { inputs, pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
-        prismlauncher
+        # prismlauncher
         starsector
+        beyond-all-reason
 
         inputs.titrack.packages.${pkgs.stdenv.hostPlatform.system}.default
 

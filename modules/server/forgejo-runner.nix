@@ -108,7 +108,7 @@
                 labels = effectiveLabels;
                 hostPackages = with pkgs; [
                   bash
-                  cachix
+                  attic
                   coreutils
                   curl
                   gawk

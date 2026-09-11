@@ -14,11 +14,9 @@
       llmPkgs = inputs.llm-agents-nix.packages.${system};
 
       # ── jbcontext ─────────────────────────────────────────────────────────
-      # Not yet in llm-agents.nix; built from the upstream prebuilt binary
-      # pinned via flake.lock (inputs.jbcontext-src).
       jbcontext = pkgs.stdenv.mkDerivation {
         pname = "jbcontext";
-        version = "0.9.4.313";
+        version = "0.9.12.803";
 
         src = inputs.jbcontext-src;
 
@@ -42,6 +40,27 @@
       };
 
       jbcontextBin = lib.getExe jbcontext;
+
+      # ── ponytail ──────────────────────────────────────────────────────────
+      ponytail = pkgs.runCommand "ponytail-4.9.0" { } ''
+        cp -r ${inputs.ponytail-src} $out
+        chmod -R u+w $out
+        substituteInPlace $out/hooks/claude-codex-hooks.json \
+          --replace-fail '"command": "node ' '"command": "${lib.getExe pkgs.nodejs} '
+      '';
+
+      # ── Claude Code statusline ────────────────────────────────────────────
+      claude-statusline = pkgs.writeShellScriptBin "claude-statusline" ''
+        export PATH=${
+          lib.makeBinPath [
+            pkgs.jq
+            pkgs.git
+            pkgs.gawk
+            pkgs.coreutils
+          ]
+        }:$PATH
+        ${builtins.readFile ./claude-statusline.sh}
+      '';
 
       # ── MCP server wrappers ───────────────────────────────────────────────
       azure-devops-mcp = pkgs.writeShellApplication {
@@ -87,12 +106,40 @@
 
       home.packages = [
         claude-work
+        llmPkgs.herdr
       ]
       ++ lib.optionals isYggdrasil [ jbcontext ];
 
+      home.file."${config.programs.claude-code.configDir}/settings.json".force = true;
+
+      home.activation.claudeSettingsMutable = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+        let
+          settingsFile = "${config.programs.claude-code.configDir}/settings.json";
+        in
+        ''
+          if [ -L "${settingsFile}" ]; then
+            run cp --remove-destination "$(readlink -f "${settingsFile}")" "${settingsFile}"
+            run chmod u+w "${settingsFile}"
+          fi
+        ''
+      );
+
+      home.activation.claudeWorkConfig =
+        let
+          claudeConfigDir = config.programs.claude-code.configDir;
+          claudeWorkDir = "${config.home.homeDirectory}/.claude-work";
+        in
+        lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          run mkdir -p "${claudeWorkDir}/skills"
+          run ln -sfn "${claudeConfigDir}/settings.json" "${claudeWorkDir}/settings.json"
+          if [ -e "${claudeConfigDir}/skills/claude-code-home-manager" ]; then
+            run ln -sfn "${claudeConfigDir}/skills/claude-code-home-manager" \
+              "${claudeWorkDir}/skills/claude-code-home-manager"
+          fi
+          run ln -sfn "${ponytail}" "${claudeWorkDir}/skills/ponytail"
+        '';
+
       # ── MCP server registry (mcp-servers-nix) ─────────────────────────────
-      # All servers defined here are automatically wired into any program with
-      # enableMcpIntegration = true (e.g. programs.claude-code below).
       programs.mcp.enable = true;
 
       mcp-servers.settings.servers = {
@@ -117,9 +164,33 @@
         package = llmPkgs.claude-code;
         enableMcpIntegration = true;
 
+        plugins = {
+          inherit ponytail;
+        };
+
+        # Deliberately just "rust-analyzer" (not a nix store path): this
+        # picks up whatever rust-analyzer a project's devenv/toolchain puts
+        # on PATH, rather than pinning a specific nixpkgs build.
+        lspServers = {
+          rust = {
+            command = "rust-analyzer";
+            args = [ ];
+            extensionToLanguage = {
+              ".rs" = "rust";
+            };
+          };
+        };
+
         settings = {
           theme = "auto";
           autoCompactEnabled = true;
+          model = "opus";
+          effortLevel = "xhigh";
+          remoteControlAtStartup = false;
+          statusLine = {
+            type = "command";
+            command = lib.getExe claude-statusline;
+          };
         }
         // lib.optionalAttrs isYggdrasil {
           hooks = {
@@ -178,64 +249,6 @@
         enable = true;
         package = llmPkgs.copilot-cli;
         enableMcpIntegration = true;
-      };
-
-      # ── Junie ─────────────────────────────────────────────────────────────
-      programs.junie = {
-        enable = true;
-        package = llmPkgs.junie;
-        enableMcpIntegration = true;
-
-        settings = lib.optionalAttrs isYggdrasil {
-          hooks = {
-            SessionStart = [
-              {
-                matcher = "";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} index --silent";
-                    async = true;
-                  }
-                ];
-              }
-            ];
-            SessionEnd = [
-              {
-                matcher = "";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} index --silent";
-                    async = true;
-                  }
-                ];
-              }
-            ];
-            PreToolUse = [
-              {
-                matcher = "Bash|Grep";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} hook pre-tool-use";
-                  }
-                ];
-              }
-            ];
-            UserPromptSubmit = [
-              {
-                matcher = "";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${jbcontextBin} hook user-prompt-submit";
-                  }
-                ];
-              }
-            ];
-          };
-        };
       };
     };
 }

@@ -90,8 +90,16 @@
             }
           ];
 
-          enable_registration = true;
-          registration_requires_token = true;
+          # Synapse refuses to start with registration enabled while auth is delegated.
+          enable_registration = false;
+
+          # Replaces experimental_features.msc3861, which 1.160 rejects outright.
+          # Also flips password_config.enabled and enable_3pid_changes to false.
+          matrix_authentication_service = {
+            enabled = true;
+            endpoint = "http://localhost:8080";
+            secret_path = config.sops.secrets."matrix/mas/synapseSharedSecret".path;
+          };
         };
 
         extraConfigFiles = [ config.sops.templates."matrix-synapse-extra.yaml".path ];

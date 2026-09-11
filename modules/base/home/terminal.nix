@@ -1,13 +1,11 @@
 {
   flake.modules = {
-    homeManager.cholli = { pkgs, ... }: {
+    homeManager.cholli = _: {
       catppuccin.kitty.enable = true;
       home.sessionVariables = {
         TERMINAL = "kitty";
         PRE_COMMIT_COLOR = "never";
       };
-
-      home.packages = with pkgs; [ herdr ];
 
       programs.kitty = {
         enable = true;

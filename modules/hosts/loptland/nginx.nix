@@ -11,13 +11,96 @@
       matrixDomain = "alwayssleepy.online";
       livekitPort = 7880;
       lkJwtPort = 8089;
+
+      allowedCountries = [
+        "AD"
+        "AL"
+        "AT"
+        "BA"
+        "BE"
+        "BG"
+        "CH"
+        "CY"
+        "CZ"
+        "DE"
+        "DK"
+        "EE"
+        "ES"
+        "FI"
+        "FR"
+        "GB"
+        "GI"
+        "GR"
+        "HR"
+        "HU"
+        "IE"
+        "IS"
+        "IT"
+        "LI"
+        "LT"
+        "LU"
+        "LV"
+        "MC"
+        "MD"
+        "ME"
+        "MK"
+        "MT"
+        "NL"
+        "NO"
+        "PL"
+        "PT"
+        "RO"
+        "RS"
+        "SE"
+        "SI"
+        "SK"
+        "SM"
+        "UA"
+        "US"
+        "VA"
+        "XK"
+      ];
+
+      geoFence = ''
+        if ($geo_blocked) {
+          return 403;
+        }
+      '';
     in
     {
       services.nginx = {
         enable = true;
         recommendedProxySettings = true;
+        recommendedTlsSettings = true;
+        additionalModules = [ pkgs.nginxModules.geoip2 ];
+
+        appendHttpConfig = ''
+          geoip2 ${pkgs.dbip-country-lite}/share/dbip/dbip-country-lite.mmdb {
+            $geoip2_country_code source=$remote_addr country iso_code;
+          }
+
+          map $geoip2_country_code $geo_blocked {
+            default 1;
+            "" 0;
+            ${lib.concatMapStringsSep "\n" (country: "${country} 0;") allowedCountries}
+          }
+        '';
 
         virtualHosts = {
+          "attic.${domainName}" = lib.mkIf config.services.atticd.enable {
+            forceSSL = true;
+            useACMEHost = domainName;
+            extraConfig = geoFence;
+
+            locations."/" = {
+              proxyPass = "http://localhost:8181";
+              extraConfig = ''
+                client_max_body_size 0;
+                proxy_request_buffering off;
+              '';
+            };
+          };
+
           "git.${domainName}" = lib.mkIf config.services.forgejo.enable {
             forceSSL = true;
             useACMEHost = domainName;
@@ -33,6 +116,7 @@
           "ha.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;
+            extraConfig = geoFence;
 
             locations."/" = {
               # tailscale ip
@@ -47,6 +131,7 @@
           "immich.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;
+            extraConfig = geoFence;
 
             locations."/" = {
               proxyPass = "http://nixberry:2283";
@@ -61,6 +146,11 @@
           "matrix.${matrixDomain}" = lib.mkIf config.services.matrix-synapse.enable {
             forceSSL = true;
             useACMEHost = matrixDomain;
+
+            # Regex locations are matched before the "/" prefix below.
+            locations."~ ^/_matrix/client/(.*)/(login|logout|refresh)" = {
+              proxyPass = "http://localhost:8080";
+            };
 
             # MSC4143: advertise LiveKit as the RTC transport since Synapse doesn't implement this yet
             locations."= /_matrix/client/unstable/org.matrix.msc4143/rtc/transports" = {
@@ -84,6 +174,15 @@
             };
           };
 
+          "auth.${matrixDomain}" = lib.mkIf config.services.matrix-authentication-service.enable {
+            forceSSL = true;
+            useACMEHost = matrixDomain;
+
+            locations."/" = {
+              proxyPass = "http://localhost:8080";
+            };
+          };
+
           "call.${matrixDomain}" = lib.mkIf config.services.lk-jwt-service.enable {
             forceSSL = true;
             useACMEHost = matrixDomain;
@@ -91,6 +190,9 @@
             locations."= /config.json" = {
               extraConfig = ''
                 default_type application/json;
+                # Never cache this: a stale copy silently pins clients to old
+                # homeserver discovery settings.
+                add_header Cache-Control "no-store" always;
                 return 200 '${
                   builtins.toJSON {
                     default_server_config = {
@@ -148,7 +250,7 @@
               extraConfig = ''
                 default_type application/json;
                 add_header 'Access-Control-Allow-Origin' '*';
-                return 200 '{"m.homeserver":{"base_url":"https://matrix.${matrixDomain}"},"org.matrix.msc4143.rtc_foci":[{"type":"livekit","livekit_service_url":"https://call.${matrixDomain}/livekit/jwt"}]}';
+                return 200 '{"m.homeserver":{"base_url":"https://matrix.${matrixDomain}"},"org.matrix.msc4143.rtc_foci":[{"type":"livekit","livekit_service_url":"https://call.${matrixDomain}/livekit/jwt"}],"org.matrix.msc2965.authentication":{"issuer":"https://auth.${matrixDomain}/","account":"https://auth.${matrixDomain}/account"}}';
               '';
             };
           };

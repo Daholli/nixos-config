@@ -24,7 +24,9 @@ topLevel: {
         forgejo-runner
 
         # services
+        attic
         matrix-synapse
+        matrix-authentication-service
         mautrix-discord
         mautrix-signal
         element-call
@@ -53,7 +55,6 @@ topLevel: {
       };
 
       networking.firewall.allowedTCPPorts = [
-        3000
         80
         443
       ];

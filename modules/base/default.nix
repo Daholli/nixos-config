@@ -64,7 +64,7 @@
 
           services.dbus.packages = [
             pkgs.gnome-keyring
-            pkgs.gcr
+            pkgs.gcr_3
           ];
 
           sops = {

@@ -6,6 +6,8 @@
         environment.systemPackages = with pkgs; [
           pavucontrol
           easyeffects
+          # `pactl` for apps that shell out to it (e.g. Steam); the daemon stays off
+          pulseaudio
         ];
 
         services.pulseaudio.enable = false;

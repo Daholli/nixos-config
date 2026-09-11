@@ -24,6 +24,27 @@
 
         nix-update
         inputs.nix-auth.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+        attic
+      ];
+
+      nixpkgs.overlays = [
+        (_: prev: {
+          attic = prev.writeShellScriptBin "attic" ''
+            export XDG_CONFIG_HOME=${
+              prev.linkFarm "attic-xdg" {
+                "attic/config.toml" = (prev.formats.toml { }).generate "attic-config.toml" {
+                  default-server = "cholli";
+                  servers.cholli = {
+                    endpoint = "https://attic.christophhollizeck.dev/";
+                    token-file = config.sops.secrets."attic/token".path;
+                  };
+                };
+              }
+            }
+            exec ${prev.attic-client}/bin/attic "$@"
+          '';
+        })
       ];
 
       programs.nh = {
@@ -41,6 +62,11 @@
         };
         secrets."nix/signing-key" = {
           sopsFile = ../../../secrets/secrets.yaml;
+        };
+        secrets."attic/token" = {
+          sopsFile = ../../../secrets/secrets.yaml;
+          group = "secrets-access";
+          mode = "0440";
         };
         templates."access_tokens.conf" = {
           content = ''
@@ -68,7 +94,10 @@
           {
 
             nix-path = "nixpkgs=flake:nixpkgs";
-            experimental-features = "nix-command flakes";
+            experimental-features = [
+              "nix-command"
+              "flakes"
+            ];
             http-connections = 50;
             warn-dirty = false;
             log-lines = 50;
@@ -83,6 +112,8 @@
               "https://helix.cachix.org"
               "https://nixos-raspberrypi.cachix.org"
               "https://cholli.cachix.org"
+              "https://devenv.cachix.org"
+              "https://attic.christophhollizeck.dev/cholli"
             ];
             secret-key-files = [ config.sops.secrets."nix/signing-key".path ];
             trusted-public-keys = [
@@ -91,6 +122,9 @@
               "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
               "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
               "cholli.cachix.org-1:1nQ9JUO/1sHK7wm5obDgR/DNndPUsApBshQnEPIoMfI="
+              "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+              # attic cache signing key, from: attic cache info cholli
+              "cholli:uy8L6bKuXcrm2kIMcjyh/c4QACtfBh5gn2/fvbOBFIE="
               # generated with: nix key generate-secret --key-name cholli-local-1
               "cholli-local-1:v/wzL3lqs/CBDwSohhoRHlTJbqsf67DZDqfRDcp0cdA="
             ];

@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.cholli =
     {
+      config,
       inputs,
       lib,
       osConfig,
@@ -9,7 +10,7 @@
     }:
     let
       settingsSrc =
-        if osConfig.networking.hostName == "wsl" then
+        if config.local.dms.wsl.enable then
           pkgs.writeText "dms-settings.json" (
             builtins.toJSON (
               let
@@ -39,6 +40,9 @@
         inputs.dankMaterialShell.homeModules.niri
         inputs.danksearch.homeModules.dsearch
       ];
+
+      options.local.dms.wsl.enable =
+        lib.mkEnableOption "WSLg-friendly DMS settings (bars on all screens, stock theme, no lock timeouts)";
 
       config = lib.mkIf osConfig.programs.niri.enable {
         home.file = {

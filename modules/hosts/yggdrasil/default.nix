@@ -7,6 +7,9 @@ topLevel: {
       pkgs,
       ...
     }:
+    let
+      ageKeyFile = "/home/cholli/.config/sops/age/keys.txt";
+    in
     {
       nixpkgs = {
         config.allowUnfree = true;
@@ -68,6 +71,7 @@ topLevel: {
 
           termscp
           nixpkgs-review
+          gitbutler
 
           postman
           vlc
@@ -140,6 +144,7 @@ topLevel: {
         root
       ];
 
+      sops.age.keyFile = ageKeyFile;
       sops.secrets = {
         "remotebuild/private-key" = {
           sopsFile = ../../../secrets/secrets.yaml;
@@ -188,6 +193,29 @@ topLevel: {
             ];
           }
         ];
+      };
+
+      home-manager.users.cholli = {
+        sops.age.keyFile = ageKeyFile;
+
+        programs = {
+          git.signing.signByDefault = true;
+          jbcontext.enable = true;
+          zed-editor.enable = true;
+        };
+
+        local = {
+          git.maintenance.enable = true;
+          forgejoMcp.enable = true;
+        };
+
+        # Extra project dirs on the main machine
+        home.file = {
+          "projects/NixOS/.keep".text = "";
+          "projects/nix-community/.keep".text = "";
+          "projects/niri/.keep".text = "";
+          "work/.keep".text = "";
+        };
       };
     };
 }

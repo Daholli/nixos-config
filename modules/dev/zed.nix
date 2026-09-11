@@ -1,16 +1,10 @@
 {
   flake.modules = {
     homeManager.dev =
+      { lib, pkgs, ... }:
       {
-        lib,
-        osConfig,
-        pkgs,
-        ...
-      }:
-      {
+        # Enabled per host.
         programs.zed-editor = {
-          enable = osConfig.networking.hostName == "yggdrasil";
-
           userSettings = {
             auto_install_extensions = {
               nix = true;

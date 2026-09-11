@@ -13,136 +13,137 @@ topLevel: {
         config,
         inputs,
         lib,
-        osConfig,
         pkgs,
         ...
       }:
       let
         username = topLevel.config.flake.meta.users.cholli.username;
+        cfg = config.local.git.maintenance;
       in
       {
-        home.packages = [
-          pkgs.git-credential-manager
-          inputs.ec.packages.${pkgs.stdenv.hostPlatform.system}.default
-        ]
-        ++ lib.optional (osConfig.networking.hostName == "yggdrasil") pkgs.gitbutler;
+        options.local.git.maintenance.enable =
+          lib.mkEnableOption "scheduled `git maintenance` runs for the repos in maintenance.repo";
 
-        programs.git = {
-          enable = true;
-          lfs.enable = true;
-          signing = {
-            key = topLevel.config.flake.meta.users.cholli.key;
-            signByDefault = osConfig.networking.hostName == "yggdrasil";
-          };
-          ignores = [
-            ".direnv/"
-            ".devenv/"
-            "result"
-            ".claude/settings.local.json"
+        config = {
+          home.packages = [
+            pkgs.git-credential-manager
+            inputs.ec.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
-          settings = {
-            user = {
-              name = topLevel.config.flake.meta.users.cholli.name;
-              email = topLevel.config.flake.meta.users.cholli.email;
-            };
-            credential = {
-              helper = "manager";
-              credentialStore = "secretservice";
-              "https://dev.azure.com".useHttpPath = true;
-            };
-            core = {
-              fsmonitor = true;
-              editor = "hx";
-            };
-            commit.verbose = true;
-            init.defaultBranch = "main";
-            pull.rebase = true;
-            fetch = {
-              prune = true;
-              pruneTags = true;
-            };
-            push.autoSetupRemote = true;
-            rebase = {
-              autoStash = true;
-              autoSquash = true;
-            };
-            merge = {
-              conflictstyle = "zdiff3";
-              tool = "ec";
-            };
-            mergetool.ec = {
-              cmd = ''ec "$BASE" "$LOCAL" "$REMOTE" "$MERGED"'';
-              trustExitCode = true;
-            };
-            safe.directory = "/home/${username}/projects/config";
-            submodules.recurse = true;
-            help.autocorrect = "prompt";
-            maintenance = {
-              repo = [
-                "/home/${username}/projects/NixOS/nixpkgs"
-                "/home/${username}/projects/config"
-              ];
-              strategy = "incremental";
-            };
-            lfs."https://git.christophhollizeck.dev/Daholli/nixos-config.git/info/lfs".locksverify = true;
-          };
-        };
+          programs.git = {
+            enable = true;
+            lfs.enable = true;
+            signing.key = topLevel.config.flake.meta.users.cholli.key;
+            ignores = [
+              ".direnv/"
+              ".devenv/"
+              "result"
+              ".claude/settings.local.json"
+            ];
 
-        systemd.user = lib.mkIf (osConfig.networking.hostName == "yggdrasil") {
-          services."git-maintenance@" = {
-            Unit = {
-              Description = "Optimize Git repositories data";
-            };
-            Service = {
-              Type = "oneshot";
-              ExecStart = ''"${lib.getExe config.programs.git.package}" --exec-path="${lib.getBin config.programs.git.package}/bin" -c credential.interactive=false -c core.askPass=true for-each-repo --config=maintenance.repo maintenance run --schedule=%i'';
-              LockPersonality = "yes";
-              MemoryDenyWriteExecute = "yes";
-              NoNewPrivileges = "yes";
-              RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_VSOCK";
-              RestrictNamespaces = "yes";
-              RestrictRealtime = "yes";
-              RestrictSUIDSGID = "yes";
-              SystemCallArchitectures = "native";
-              SystemCallFilter = "@system-service";
+            settings = {
+              user = {
+                name = topLevel.config.flake.meta.users.cholli.name;
+                email = topLevel.config.flake.meta.users.cholli.email;
+              };
+              credential = {
+                helper = "manager";
+                credentialStore = "secretservice";
+                "https://dev.azure.com".useHttpPath = true;
+              };
+              core = {
+                fsmonitor = true;
+                editor = "hx";
+              };
+              commit.verbose = true;
+              init.defaultBranch = "main";
+              pull.rebase = true;
+              fetch = {
+                prune = true;
+                pruneTags = true;
+              };
+              push.autoSetupRemote = true;
+              rebase = {
+                autoStash = true;
+                autoSquash = true;
+              };
+              merge = {
+                conflictstyle = "zdiff3";
+                tool = "ec";
+              };
+              mergetool.ec = {
+                cmd = ''ec "$BASE" "$LOCAL" "$REMOTE" "$MERGED"'';
+                trustExitCode = true;
+              };
+              safe.directory = "/home/${username}/projects/config";
+              submodules.recurse = true;
+              help.autocorrect = "prompt";
+              maintenance = lib.mkIf cfg.enable {
+                repo = [
+                  "/home/${username}/projects/NixOS/nixpkgs"
+                  "/home/${username}/projects/config"
+                ];
+                strategy = "incremental";
+              };
+              lfs."https://git.christophhollizeck.dev/Daholli/nixos-config.git/info/lfs".locksverify = true;
             };
           };
-          timers = {
-            "git-maintenance@hourly" = {
+
+          systemd.user = lib.mkIf cfg.enable {
+            services."git-maintenance@" = {
               Unit = {
                 Description = "Optimize Git repositories data";
               };
-              Timer = {
-                OnCalendar = "*-*-* *:00:00";
-                Persistent = true;
-              };
-              Install = {
-                WantedBy = [ "timers.target" ];
+              Service = {
+                Type = "oneshot";
+                ExecStart = ''"${lib.getExe config.programs.git.package}" --exec-path="${lib.getBin config.programs.git.package}/bin" -c credential.interactive=false -c core.askPass=true for-each-repo --config=maintenance.repo maintenance run --schedule=%i'';
+                LockPersonality = "yes";
+                MemoryDenyWriteExecute = "yes";
+                NoNewPrivileges = "yes";
+                RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_VSOCK";
+                RestrictNamespaces = "yes";
+                RestrictRealtime = "yes";
+                RestrictSUIDSGID = "yes";
+                SystemCallArchitectures = "native";
+                SystemCallFilter = "@system-service";
               };
             };
-            "git-maintenance@daily" = {
-              Unit = {
-                Description = "Optimize Git repositories data";
+            timers = {
+              "git-maintenance@hourly" = {
+                Unit = {
+                  Description = "Optimize Git repositories data";
+                };
+                Timer = {
+                  OnCalendar = "*-*-* *:00:00";
+                  Persistent = true;
+                };
+                Install = {
+                  WantedBy = [ "timers.target" ];
+                };
               };
-              Timer = {
-                OnCalendar = "*-*-* 20:00:00";
-                Persistent = true;
+              "git-maintenance@daily" = {
+                Unit = {
+                  Description = "Optimize Git repositories data";
+                };
+                Timer = {
+                  OnCalendar = "*-*-* 20:00:00";
+                  Persistent = true;
+                };
+                Install = {
+                  WantedBy = [ "timers.target" ];
+                };
               };
-              Install = {
-                WantedBy = [ "timers.target" ];
-              };
-            };
-            "git-maintenance@weekly" = {
-              Unit = {
-                Description = "Optimize Git repositories data";
-              };
-              Timer = {
-                OnCalendar = "Sun *-*-* 20:00:00";
-                Persistent = true;
-              };
-              Install = {
-                WantedBy = [ "timers.target" ];
+              "git-maintenance@weekly" = {
+                Unit = {
+                  Description = "Optimize Git repositories data";
+                };
+                Timer = {
+                  OnCalendar = "Sun *-*-* 20:00:00";
+                  Persistent = true;
+                };
+                Install = {
+                  WantedBy = [ "timers.target" ];
+                };
               };
             };
           };

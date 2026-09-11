@@ -36,5 +36,6 @@ topLevel: {
         };
       };
 
+      home-manager.users.cholli.local.dms.wsl.enable = true;
     };
 }

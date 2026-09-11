@@ -1,54 +1,50 @@
 {
-  flake.modules = {
-    nixos."hosts/yggdrasil" =
-      { inputs, ... }:
-      {
-        imports = [
-          inputs.dank-greeter.nixosModules.default
-        ];
+  flake.modules.nixos."hosts/yggdrasil" =
+    { inputs, ... }:
+    {
+      imports = [
+        inputs.dank-greeter.nixosModules.default
+      ];
 
-        programs.dms-greeter = {
-          enable = true;
-          compositor = {
-            name = "niri";
-            customConfig = ''
-              hotkey-overlay {
-                  skip-at-startup
-              }
+      programs.dms-greeter = {
+        enable = true;
+        compositor = {
+          name = "niri";
+          customConfig = ''
+            hotkey-overlay {
+                skip-at-startup
+            }
 
-              environment {
-                  DMS_RUN_GREETER "1"
-              }
+            environment {
+                DMS_RUN_GREETER "1"
+            }
 
-              output "DP-1" {
-                transform "normal"
-                mode "3440x1440"
-              }
-            '';
-          };
-
-          configHome = "/home/cholli";
+            output "DP-1" {
+              transform "normal"
+              mode "3440x1440"
+            }
+          '';
         };
 
-        security = {
-          pam = {
-            services.greetd.enableGnomeKeyring = true;
-          };
-        };
-
-        services.accounts-daemon.enable = true;
+        configHome = "/home/cholli";
       };
 
-    homeManager.cholli =
-      {
-        config,
-        lib,
-        osConfig,
-        pkgs,
-        ...
-      }:
-      {
-        config = lib.mkIf (osConfig.networking.hostName == "yggdrasil" && osConfig.programs.niri.enable) {
+      security = {
+        pam = {
+          services.greetd.enableGnomeKeyring = true;
+        };
+      };
+
+      services.accounts-daemon.enable = true;
+
+      home-manager.users.cholli =
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
+        {
           home.packages = [ pkgs.kdePackages.dolphin ];
 
           programs.niri.settings = {
@@ -254,6 +250,5 @@
             ];
           };
         };
-      };
-  };
+    };
 }

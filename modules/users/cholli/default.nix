@@ -33,7 +33,6 @@ topLevel: {
 
                   # components
                   base
-                  dev
 
                   # Activate all user based config
                   cholli
@@ -83,12 +82,7 @@ topLevel: {
         };
 
       homeManager.cholli =
-        {
-          lib,
-          osConfig,
-          pkgs,
-          ...
-        }:
+        { pkgs, ... }:
         let
           defaultIconFileName = "profile.png";
         in
@@ -101,13 +95,6 @@ topLevel: {
               ".face".source = ./${defaultIconFileName};
               "Pictures/${defaultIconFileName}".source = ./${defaultIconFileName};
               "projects/.keep".text = "";
-            }
-            // lib.optionalAttrs (osConfig.networking.hostName == "yggdrasil") {
-              # Some Paths for my main machine
-              "projects/NixOS/.keep".text = "";
-              "projects/nix-community/.keep".text = "";
-              "projects/niri/.keep".text = "";
-              "work/.keep".text = "";
             };
 
             packages = with pkgs; [ graphviz ];

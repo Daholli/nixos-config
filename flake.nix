@@ -105,6 +105,22 @@
       };
     };
 
+    xwayland-satellite = {
+      url = "github:Supreeeme/xwayland-satellite";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    niri-flake = {
+      url = "github:epireyn/niri-flake";
+      inputs = {
+        niri-unstable.follows = "niri";
+        xwayland-satellite-unstable.follows = "xwayland-satellite";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs = {
@@ -112,8 +128,6 @@
       };
     };
 
-    # The greeter moved out of DankMaterialShell into its own repo -- see the
-    # nixosModules.greeter deprecation warning. Provides programs.dms-greeter.
     dank-greeter = {
       url = "github:AvengeMedia/dank-greeter";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -137,22 +151,6 @@
     ec = {
       url = "github:chojs23/ec";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    niri-flake = {
-      # Temporarily on sodiboo/niri-flake#1853 until it lands upstream.
-      # nixpkgs-unstable removed `libdisplay-info_0_2`, and niri-flake's
-      # `libdisplay-info_0_2 ? libdisplay-info` fallback never fires because the
-      # attribute still exists as a removal throw -- so the greeter session
-      # (dms-greeter-session -> programs.niri.package) fails to evaluate. The PR
-      # picks the libdisplay-info matching each niri source's Cargo.lock.
-      url = "github:bugeats/niri-flake/7e196a5ce0bf209d3aca844bb31edce5284d6484";
-      # url = "github:sodiboo/niri-flake";
-      # url = "github:Daholli/niri-flake/1067d35dd18f6a55f79873c944f1427a9eb7caa7"; # for debugging
-      inputs = {
-        niri-stable.follows = "niri";
-        nixpkgs.follows = "nixpkgs";
-      };
     };
 
     helix = {
@@ -184,7 +182,6 @@
     # inputs for dev shells
     devenv = {
       url = "github:cachix/devenv";
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";

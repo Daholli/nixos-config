@@ -34,7 +34,7 @@
             {
               "name": "Planetary Pioneers Holli",
               "description": "Trying to run a factorio-headless-server on my nix system",
-              "tags": ["vanilla"],
+              "tags": ["modded"],
               "max_players": 10,
               "game_password": "${config.sops.placeholder."factorio/game_password"}",
               "allow_commands": "admins-only",
@@ -55,14 +55,14 @@
 
       services.factorio = {
         enable = true;
-        package = latest-factorio.factorio-headless;
+        package = latest-factorio.factorio-headless-experimental;
 
         openFirewall = true;
         public = true;
         lan = true;
         nonBlockingSaving = true;
         autosave-interval = 5;
-        saveName = "PlanetaryPioneers";
+        saveName = "Deathworld";
         loadLatestSave = true;
         admins = [
           "daholli"

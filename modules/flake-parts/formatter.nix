@@ -15,6 +15,7 @@
         jsonfmt.enable = true;
         nixfmt.enable = true;
         prettier.enable = true;
+        rustfmt.enable = true;
         shfmt.enable = true;
         statix.enable = true;
         yamlfmt.enable = true;
@@ -24,6 +25,7 @@
         global.excludes = [
           "*.envrc"
           ".editorconfig"
+          "*.csv"
           "*.directory"
           "*.face"
           "*.fish"

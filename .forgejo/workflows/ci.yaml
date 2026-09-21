@@ -47,3 +47,25 @@ jobs:
           git checkout main
           git merge --ff-only ${{ github.sha }}
           git push origin main
+  audit:
+    needs: [build-x86_64]
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    runs-on: x86_64-linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Vulnerability and version audit
+        env:
+          FORGEJO_TOKEN: ${{ secrets.PUSH_TOKEN }}
+        run: nix run .#nix-audit -- report loptland yggdrasil
+  # audit-aarch64:
+  #   needs: [build-aarch64]
+  #   if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+  #   runs-on: aarch64-linux
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Vulnerability audit of the running system
+  #       env:
+  #         FORGEJO_TOKEN: ${{ secrets.PUSH_TOKEN }}
+  #       run: nix run .#nix-audit -- scan --target /run/current-system

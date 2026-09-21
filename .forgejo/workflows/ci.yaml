@@ -57,7 +57,7 @@ jobs:
           fetch-depth: 2
       - name: Vulnerability and version audit
         env:
-          FORGEJO_TOKEN: ${{ secrets.PUSH_TOKEN }}
+          FORGEJO_TOKEN: ${{ secrets.AUDIT_TOKEN }}
         run: nix run .#nix-audit -- report loptland yggdrasil
   # audit-aarch64:
   #   needs: [build-aarch64]

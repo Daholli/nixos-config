@@ -143,15 +143,19 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         findings.len(),
         bumps.map_or(0, |b| b.changes.len())
     );
-    let action = forgejo::upsert(
+    // The report above is the deliverable; posting it is best-effort, so a missing issue
+    // scope on the token must not discard a scan that took half an hour.
+    match forgejo::upsert(
         &forgejo::Config::from_env(),
         &token,
         ISSUE_TITLE,
         &body,
         &fingerprint,
         &comment,
-    )?;
-    eprintln!("forgejo: {action}");
+    ) {
+        Ok(action) => eprintln!("forgejo: {action}"),
+        Err(error) => eprintln!("warning: tracking issue not updated: {error:#}"),
+    }
     Ok(())
 }
 

@@ -224,7 +224,12 @@ fn toplevel(root: &Path, flake_ref: &str, host: &str) -> Result<String> {
 
 fn flake_ref(root: &Path, rev: &str) -> Result<String> {
     let resolved = git(root, &["rev-parse", rev])?;
-    Ok(format!("git+file://{}?rev={}", root.display(), resolved))
+    // CI checks out shallow, and nix refuses to fetch from a shallow repository unless asked.
+    Ok(format!(
+        "git+file://{}?rev={}&shallow=1",
+        root.display(),
+        resolved
+    ))
 }
 
 fn is_major(from: &str, to: &str) -> bool {

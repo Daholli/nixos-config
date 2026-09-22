@@ -179,6 +179,7 @@ pub fn markdown(findings: &[HostFindings]) -> String {
                         field(r, "version_nixpkgs").to_string(),
                         field(r, "classify").to_string(),
                         field(r, "sum").to_string(),
+                        field(r, "whitelist_comment").to_string(),
                     ]
                 })
                 .collect();
@@ -191,6 +192,7 @@ pub fn markdown(findings: &[HostFindings]) -> String {
                     "In nixpkgs",
                     "Triage",
                     "Scanners",
+                    "Note",
                 ],
                 &rows,
             ));

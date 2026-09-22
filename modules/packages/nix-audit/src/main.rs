@@ -78,6 +78,9 @@ pub struct ReportArgs {
     /// Host whose package set the version comparison evaluates
     #[arg(long, default_value = "loptland")]
     pub host: String,
+    /// Scan this store path instead of host toplevels, skipping the version comparison
+    #[arg(long)]
+    pub target: Option<String>,
 }
 
 fn main() -> Result<()> {
@@ -105,31 +108,38 @@ fn main() -> Result<()> {
 }
 
 fn report(root: &Path, args: &ReportArgs) -> Result<()> {
-    let bumps = bumps::run(
-        root,
-        &BumpsArgs {
-            from: args.from.clone(),
-            to: None,
-            host: args.host.clone(),
-            all: false,
-        },
-    )
-    .inspect_err(|e| eprintln!("warning: version comparison skipped: {e:#}"))
-    .ok();
+    // A bare store path has no host config behind it, so there is nothing to diff.
+    let bumps = args.target.is_none().then(|| {
+        bumps::run(
+            root,
+            &BumpsArgs {
+                from: args.from.clone(),
+                to: None,
+                host: args.host.clone(),
+                all: false,
+            },
+        )
+        .inspect_err(|e| eprintln!("warning: version comparison skipped: {e:#}"))
+        .ok()
+    });
+    let bumps = bumps.flatten();
     let findings = scan::run(
         root,
         &ScanArgs {
             hosts: args.hosts.clone(),
+            target: args.target.clone(),
             ..Default::default()
         },
     )?;
 
+    // Each scope needs its own issue; two jobs sharing one would overwrite each other.
+    let title = std::env::var("NIX_AUDIT_ISSUE").unwrap_or_else(|_| ISSUE_TITLE.to_string());
     let reported: usize = findings.iter().map(|f| f.rows.len()).sum();
     let bumped = bumps.as_ref().map_or(0, |b| b.changes.len());
     let fingerprint = fingerprint(&findings);
     let body = format!(
         "{}\n{}{}\n<!-- fingerprint: {} -->\n",
-        preamble(root)?,
+        preamble(root, &title)?,
         scan::markdown(&findings),
         bumps.as_ref().map(bumps::markdown).unwrap_or_default(),
         fingerprint
@@ -149,7 +159,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
     match forgejo::upsert(
         &forgejo::Config::from_env(),
         &token,
-        ISSUE_TITLE,
+        &title,
         &body,
         &fingerprint,
         &comment,
@@ -161,9 +171,9 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
     Ok(())
 }
 
-fn preamble(root: &Path) -> Result<String> {
+fn preamble(root: &Path, title: &str) -> Result<String> {
     let commit = git(root, &["log", "-1", "--format=%h %cs"])?;
-    Ok(format!("# {ISSUE_TITLE}\n\nAs of commit {commit}.\n"))
+    Ok(format!("# {title}\n\nAs of commit {commit}.\n"))
 }
 
 fn fingerprint(findings: &[scan::HostFindings]) -> String {

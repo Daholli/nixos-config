@@ -59,13 +59,13 @@ jobs:
         env:
           FORGEJO_TOKEN: ${{ secrets.AUDIT_TOKEN }}
         run: nix run .#nix-audit -- report loptland yggdrasil
-  # audit-aarch64:
-  #   needs: [build-aarch64]
-  #   if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-  #   runs-on: aarch64-linux
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Vulnerability audit of the running system
-  #       env:
-  #         FORGEJO_TOKEN: ${{ secrets.PUSH_TOKEN }}
-  #       run: nix run .#nix-audit -- scan --target /run/current-system
+  audit-aarch64:
+    if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: aarch64-linux
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vulnerability audit of the running system
+        env:
+          FORGEJO_TOKEN: ${{ secrets.AUDIT_TOKEN }}
+          NIX_AUDIT_ISSUE: "nix-audit: open vulnerabilities (nixberry)"
+        run: nix run .#nix-audit -- report --target /run/current-system

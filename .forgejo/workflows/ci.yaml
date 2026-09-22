@@ -50,7 +50,7 @@ jobs:
           git push origin main
   audit-x86_64:
     needs: [promote]
-    if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    if: always() && github.ref == 'refs/heads/develop' && (needs.promote.result == 'success' || github.event_name == 'workflow_dispatch')
     runs-on: x86_64-linux
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
         run: nix run .#nix-audit -- report loptland yggdrasil
   audit-aarch64:
     needs: [promote]
-    if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    if: always() && github.ref == 'refs/heads/develop' && (needs.promote.result == 'success' || github.event_name == 'workflow_dispatch')
     runs-on: aarch64-linux
     steps:
       - uses: actions/checkout@v4

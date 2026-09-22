@@ -1,1 +1,31 @@
 vuln_id,package,version_local,comment,whitelist
+CVE-2022-30947,git,,"Jenkins Git Plugin CVE; nothing to do with git itself",True
+CVE-2022-36882,git,,"Jenkins Git Plugin CSRF (plugin 4.11.3 and earlier); nothing to do with git itself",True
+CVE-2022-36883,git,,"Jenkins Git Plugin CVE; nothing to do with git itself",True
+CVE-2026-27820,zlib,,"The Ruby zlib gem (Zlib::GzipReader), not C zlib",True
+CVE-2026-3497,openssh,,"NVD: affects distro GSSAPI patches, not upstream OpenSSH; we ship plain openssh, not openssh_gssapi",True
+CVE-2026-8376,perl,,"Heap overflow on 32-bit builds only, and fixed in 5.42.3-RC1; hosts are x86_64 on 5.42.3",True
+CVE-2025-6021,libxml2,,"NVD range is < 2.14.4; deployed 2.15.x is outside it",True
+CVE-2014-9826,imagemagick,,"2014 CVE matched against 7.1.2-31; stale NVD range",True
+CVE-2026-20911,libraw,,"Reachable only via fastfetch -> imagemagick -> libraw; nothing here parses RAW files",True
+CVE-2026-21413,libraw,,"Reachable only via fastfetch -> imagemagick -> libraw; nothing here parses RAW files",True
+CVE-2026-20884,libraw,,"Reachable only via fastfetch -> imagemagick -> libraw; nothing here parses RAW files",True
+CVE-2026-24450,libraw,,"Reachable only via fastfetch -> imagemagick -> libraw; nothing here parses RAW files",True
+CVE-2010-4226,cpio,,"Affects openSUSE's build package use of cpio (2007/2010 builds), not cpio itself",True
+CVE-2018-6553,cups,,"The CUPS AppArmor profile on Ubuntu/Debian; NixOS ships no such profile",True
+CVE-2017-5436,graphite2,,"2017 Firefox-era CVE; NVD lists only distro CPEs and 1.3.15 postdates the fix",True
+CVE-2024-23749,kitty,,"KiTTY the Windows PuTTY fork (<= 0.76.1.13), not kitty the terminal emulator",True
+CVE-2024-25003,kitty,,"KiTTY the Windows PuTTY fork (<= 0.76.1.13), not kitty the terminal emulator",True
+CVE-2024-25004,kitty,,"KiTTY the Windows PuTTY fork (<= 0.76.1.13), not kitty the terminal emulator",True
+CVE-2021-26720,avahi,,"Debian's avahi-daemon-check-dns.sh run from /etc/network/if-up.d, which NixOS does not have",True
+CVE-2022-2989,podman,,"NVD CPE is unbounded so it matches every podman; 2022 bug against 5.8.6",True
+CVE-2020-10800,lix,,"A different project called lix (affected through 15.8.7), not the Nix fork at 2.95.2",True
+CVE-2025-47436,orc,,"Apache ORC C++ LZO decompression, not GStreamer's orc (Oil Runtime Compiler)",True
+CVE-201[67]-\d+,mujs,,"2016-17 MuJS CVEs with unbounded NVD CPEs; deployed 1.3.6 postdates them all",True
+CVE-2026-85091,zlib,1.3.2,"Real C zlib bug and the version is in range, but it needs gzprintf after a non-blocking write stall; nginx links zlib-ng, not this zlib",False
+CVE-2021-4048,lapack,3,"Undetermined: nixpkgs' lapack wrapper reports its version as literally 3, so the 'through 3.10.0' range matches a placeholder, not the real implementation",False
+CVE-2018-7263,libmad,,"Real and in range (through 0.15.1b), but libmad is EOL upstream since 2004 so no fix exists",False
+.*,libpng,1.2.59,"Real and in range; libpng 1.2.x is EOL. Reaches the system only through Beyond All Reason's FHS sandbox rootfs",False
+CVE-2023-51767,openssh,,"Row hammer attack against OpenSSH through 10.0; deployed 10.5p1 is outside that range and NVD's openssh CPE is unbounded",True
+CVE-2026-13221,perl,,"Fixed in 5.42.3-RC1 and we run 5.42.3; matches only because NVD's CPE end=5.43.9 does not encode the per-branch fix",True
+CVE-2026-57432,perl,,"Fixed in 5.42.3-RC1 and we run 5.42.3; matches only because NVD's CPE end=5.43.10 does not encode the per-branch fix",True

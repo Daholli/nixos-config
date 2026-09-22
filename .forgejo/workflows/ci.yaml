@@ -47,7 +47,7 @@ jobs:
           git checkout main
           git merge --ff-only ${{ github.sha }}
           git push origin main
-  audit:
+  audit-x86_64:
     needs: [build-x86_64]
     if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: x86_64-linux

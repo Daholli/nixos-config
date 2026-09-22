@@ -193,7 +193,6 @@ pub fn markdown(findings: &[HostFindings]) -> String {
                         format!("[{}]({})", field(r, "vuln_id"), field(r, "url")),
                         field(r, "package").to_string(),
                         version(r).to_string(),
-                        field(r, "version_nixpkgs").to_string(),
                         field(r, "classify").to_string(),
                         field(r, "via").to_string(),
                         field(r, "whitelist_comment").to_string(),
@@ -202,14 +201,7 @@ pub fn markdown(findings: &[HostFindings]) -> String {
                 .collect();
             out.push_str(&table(
                 &[
-                    "Severity",
-                    "ID",
-                    "Package",
-                    "Version",
-                    "In nixpkgs",
-                    "Triage",
-                    "Via",
-                    "Note",
+                    "Severity", "ID", "Package", "Version", "Triage", "Via", "Note",
                 ],
                 &rows,
             ));

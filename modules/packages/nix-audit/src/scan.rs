@@ -48,7 +48,8 @@ pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
         if !ok {
             bail!("vulnxscan failed for {name}");
         }
-        findings.push(collect(name, &csv)?);
+        let graph = realized(&errors, args).and_then(|p| crate::deps::Graph::load(&p).ok());
+        findings.push(collect(name, &csv, graph.as_ref())?);
     }
     Ok(findings)
 }
@@ -118,7 +119,17 @@ fn targets(root: &Path, args: &ScanArgs) -> Result<Vec<(String, String)>> {
         .collect())
 }
 
-fn collect(host: String, csv: &Path) -> Result<HostFindings> {
+fn realized(errors: &str, args: &ScanArgs) -> Option<String> {
+    if let Some(path) = &args.target {
+        return Some(path.clone());
+    }
+    let marker = "Generating SBOM for target '";
+    let start = errors.find(marker)? + marker.len();
+    let rest = &errors[start..];
+    Some(rest[..rest.find('\'')?].to_string())
+}
+
+fn collect(host: String, csv: &Path, graph: Option<&crate::deps::Graph>) -> Result<HostFindings> {
     let mut reader = csv::ReaderBuilder::new().flexible(true).from_path(csv)?;
     let headers = reader.headers()?.clone();
     for column in EXPECTED {
@@ -132,11 +143,17 @@ fn collect(host: String, csv: &Path) -> Result<HostFindings> {
     let mut suppressed = 0;
     for record in reader.records() {
         let record = record?;
-        let row: Row = headers
+        let mut row: Row = headers
             .iter()
             .map(String::from)
             .zip(record.iter().map(String::from))
             .collect();
+        if let Some(graph) = graph {
+            let key = format!("{}-{}", field(&row, "package"), version(&row));
+            if let Some(via) = graph.introducer(&key) {
+                row.insert(String::from("via"), via);
+            }
+        }
         if truthy(field(&row, "whitelist")) {
             suppressed += 1;
         } else if rank(field(&row, "severity")) >= rank(FLOOR) {
@@ -178,7 +195,7 @@ pub fn markdown(findings: &[HostFindings]) -> String {
                         version(r).to_string(),
                         field(r, "version_nixpkgs").to_string(),
                         field(r, "classify").to_string(),
-                        field(r, "sum").to_string(),
+                        field(r, "via").to_string(),
                         field(r, "whitelist_comment").to_string(),
                     ]
                 })
@@ -191,7 +208,7 @@ pub fn markdown(findings: &[HostFindings]) -> String {
                     "Version",
                     "In nixpkgs",
                     "Triage",
-                    "Scanners",
+                    "Via",
                     "Note",
                 ],
                 &rows,

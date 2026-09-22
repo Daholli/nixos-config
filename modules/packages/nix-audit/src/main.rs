@@ -1,4 +1,5 @@
 mod bumps;
+mod deps;
 mod forgejo;
 mod scan;
 

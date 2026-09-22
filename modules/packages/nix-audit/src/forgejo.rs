@@ -23,6 +23,7 @@ impl Config {
 pub enum Action {
     Created(u64),
     Updated(u64),
+    Refreshed(u64),
     Unchanged(u64),
 }
 
@@ -30,7 +31,8 @@ impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Action::Created(n) => write!(f, "created issue #{n}"),
-            Action::Updated(n) => write!(f, "updated issue #{n}"),
+            Action::Updated(n) => write!(f, "updated issue #{n} and commented"),
+            Action::Refreshed(n) => write!(f, "refreshed issue #{n} without commenting"),
             Action::Unchanged(n) => write!(f, "issue #{n} unchanged"),
         }
     }
@@ -43,6 +45,7 @@ pub fn upsert(
     body: &str,
     fingerprint: &str,
     comment: &str,
+    notify: bool,
 ) -> Result<Action> {
     let auth = format!("token {token}");
     let base = format!(
@@ -70,18 +73,34 @@ pub fn upsert(
     };
 
     let number = number(&issue)?;
-    if fingerprint_of(issue["body"].as_str().unwrap_or_default()).as_deref() == Some(fingerprint) {
+    let current = issue["body"].as_str().unwrap_or_default();
+    // A body edit notifies nobody, so the issue can always carry the latest report; only a
+    // changed finding set or a watchlist bump is worth a comment.
+    let notify = notify || fingerprint_of(current).as_deref() != Some(fingerprint);
+    let stale = normalized(current) != normalized(body);
+
+    if !stale && !notify {
         return Ok(Action::Unchanged(number));
     }
-    ureq::request("PATCH", &format!("{base}/issues/{number}"))
-        .set("Authorization", &auth)
-        .send_json(json!({ "body": body }))
-        .context("updating the issue body")?;
+    if stale {
+        ureq::request("PATCH", &format!("{base}/issues/{number}"))
+            .set("Authorization", &auth)
+            .send_json(json!({ "body": body }))
+            .context("updating the issue body")?;
+    }
+    if !notify {
+        return Ok(Action::Refreshed(number));
+    }
     ureq::post(&format!("{base}/issues/{number}/comments"))
         .set("Authorization", &auth)
         .send_json(json!({ "body": comment }))
         .context("commenting on the issue")?;
     Ok(Action::Updated(number))
+}
+
+// Forgejo hands bodies back with CRLF line endings.
+fn normalized(body: &str) -> String {
+    body.replace("\r\n", "\n").trim_end().to_string()
 }
 
 fn number(issue: &Value) -> Result<u64> {
@@ -106,5 +125,10 @@ mod tests {
         let body = "# report\n\nstuff\n<!-- fingerprint: abc123 -->\n";
         assert_eq!(fingerprint_of(body).as_deref(), Some("abc123"));
         assert_eq!(fingerprint_of("no marker here"), None);
+    }
+
+    #[test]
+    fn normalizes_line_endings_and_trailing_space() {
+        assert_eq!(normalized("a\r\nb\n\n"), normalized("a\nb"));
     }
 }

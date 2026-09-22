@@ -124,6 +124,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
     )?;
 
     let reported: usize = findings.iter().map(|f| f.rows.len()).sum();
+    let bumped = bumps.as_ref().map_or(0, |b| b.changes.len());
     let fingerprint = fingerprint(&findings);
     let body = format!(
         "{}\n{}{}\n<!-- fingerprint: {} -->\n",
@@ -139,9 +140,8 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         return Ok(());
     }
     let comment = format!(
-        "Report updated: {reported} high or critical findings across {} host(s), {} watchlist bump(s).",
-        findings.len(),
-        bumps.map_or(0, |b| b.changes.len())
+        "Report updated: {reported} high or critical findings across {} host(s), {bumped} watchlist bump(s).",
+        findings.len()
     );
     // The report above is the deliverable; posting it is best-effort, so a missing issue
     // scope on the token must not discard a scan that took half an hour.
@@ -152,6 +152,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         &body,
         &fingerprint,
         &comment,
+        bumped > 0,
     ) {
         Ok(action) => eprintln!("forgejo: {action}"),
         Err(error) => eprintln!("warning: tracking issue not updated: {error:#}"),

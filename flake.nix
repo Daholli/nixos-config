@@ -187,13 +187,6 @@
 
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
 
-    modern-recorder = {
-      url = "git+ssh://forgejo@git.christophhollizeck.dev/Daholli/Coda-Video-Recorder.git?ref=main";
-      # url = "git+file:///home/cholli/work/modern-recorder?ref=main";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.sops-nix.follows = "sops-nix";
-    };
-
     jbcontext-src = {
       url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.12.803/context-native-linux-x64-0.9.12.803";
       flake = false;

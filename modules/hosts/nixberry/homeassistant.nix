@@ -362,8 +362,7 @@
             }
           ];
         };
-
-        openFirewall = true;
+        openFirewallForComponents = true;
       };
 
       users.users.hass.extraGroups = [ "bluetooth" ];

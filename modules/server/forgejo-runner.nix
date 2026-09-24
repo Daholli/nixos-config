@@ -124,24 +124,15 @@
             };
 
             systemd.services."gitea-runner-native" = {
-              environment = {
-                NIX_CONFIG = "max-jobs = ${toString config.local.forgejoRunner.maxJobs}";
-                TMPDIR = "/var/lib/gitea-runner/native/tmp";
-              };
+              environment.NIX_CONFIG = "max-jobs = ${toString config.local.forgejoRunner.maxJobs}";
               serviceConfig = {
                 MemoryHigh = "70%";
                 OOMScoreAdjust = 500;
                 SupplementaryGroups = [ "secrets-access" ];
-                StateDirectory = lib.mkForce [
-                  "gitea-runner"
-                  "gitea-runner/native/tmp"
-                ];
                 ExecStart = lib.mkForce "${pkgs.forgejo-runner}/bin/forgejo-runner daemon --config ${
                   config.sops.templates."forgejo-runner.yaml".path
                 }";
                 ExecStartPre = lib.mkForce "";
-                # Must stay true: DynamicUser turns `false` into a tmpfs /tmp,
-                # which nix fills when unpacking flake inputs.
                 PrivateTmp = true;
               };
             };
@@ -184,20 +175,14 @@
             };
 
             systemd.services."gitea-runner-container" = {
-              environment.TMPDIR = "/var/lib/gitea-runner/container/tmp";
               serviceConfig = {
                 MemoryHigh = "70%";
                 OOMScoreAdjust = 500;
                 SupplementaryGroups = [ "secrets-access" ];
-                StateDirectory = lib.mkForce [
-                  "gitea-runner"
-                  "gitea-runner/container/tmp"
-                ];
                 ExecStart = lib.mkForce "${pkgs.forgejo-runner}/bin/forgejo-runner daemon --config ${
                   config.sops.templates."forgejo-runner-container.yaml".path
                 }";
                 ExecStartPre = lib.mkForce "";
-                # Must stay true: DynamicUser turns `false` into a tmpfs /tmp.
                 PrivateTmp = true;
               };
             };

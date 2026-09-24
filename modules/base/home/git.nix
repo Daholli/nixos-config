@@ -54,6 +54,7 @@ topLevel: {
               core = {
                 fsmonitor = true;
                 editor = "hx";
+                commentChar = "//";
               };
               commit.verbose = true;
               init.defaultBranch = "main";

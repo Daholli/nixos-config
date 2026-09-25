@@ -11,6 +11,7 @@
       matrixDomain = "alwayssleepy.online";
       livekitPort = 7880;
       lkJwtPort = 8089;
+      nixberry = "100.90.93.35"; # tailscale ip
 
       allowedCountries = [
         "AD"
@@ -119,12 +120,11 @@
             extraConfig = geoFence;
 
             locations."/" = {
-              # tailscale ip
               extraConfig = ''
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
               '';
-              proxyPass = "http://nixberry:8123";
+              proxyPass = "http://${nixberry}:8123";
             };
           };
 
@@ -134,7 +134,7 @@
             extraConfig = geoFence;
 
             locations."/" = {
-              proxyPass = "http://nixberry:2283";
+              proxyPass = "http://${nixberry}:2283";
               extraConfig = ''
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";

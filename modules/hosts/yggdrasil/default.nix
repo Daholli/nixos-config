@@ -139,6 +139,7 @@ topLevel: {
         _1password
         kdeconnect
         venoom
+        yubikey
 
         # Users
         cholli

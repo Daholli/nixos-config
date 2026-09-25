@@ -1,9 +1,27 @@
 {
   flake.modules = {
     nixos.base =
+      { lib, pkgs, ... }:
+      {
+        environment.systemPackages = with pkgs; [
+          gnupg
+        ];
+
+        programs = {
+          ssh.startAgent = false;
+
+          gnupg.agent = {
+            enable = true;
+            enableSSHSupport = true;
+            enableExtraSocket = true;
+            pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
+          };
+        };
+      };
+
+    nixos.yubikey =
       { pkgs, ... }:
       let
-
         reload-yubikey = pkgs.writeShellScriptBin "reload-yubikey" ''
           ${pkgs.gnupg}/bin/gpg-connect-agent "scd serialno" "learn --force" /bye
         '';
@@ -15,29 +33,23 @@
         environment.systemPackages = with pkgs; [
           cryptsetup
           paperkey
-          gnupg
           pinentry-curses
-          pinentry-qt
 
           yubikey-manager
           yubioath-flutter
           reload-yubikey
         ];
 
-        programs = {
-          ssh.startAgent = false;
-
-          gnupg.agent = {
-            enable = true;
-            enableSSHSupport = true;
-            enableExtraSocket = true;
-          };
-        };
-
+        programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
       };
 
     homeManager.base =
-      { inputs, pkgs, ... }:
+      {
+        inputs,
+        lib,
+        osConfig,
+        ...
+      }:
       let
         gpgConf = "${inputs.gpg-base-conf}/gpg.conf";
 
@@ -45,7 +57,7 @@
           enable-ssh-support
           default-cache-ttl 60
           max-cache-ttl 120
-          pinentry-program ${pkgs.pinentry-qt}/bin/pinentry-qt
+          pinentry-program ${lib.getExe osConfig.programs.gnupg.agent.pinentryPackage}
         '';
       in
       {

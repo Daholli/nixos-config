@@ -12,9 +12,6 @@ topLevel: {
       };
       programs.dconf.enable = true;
 
-      # WSL has no WiFi; NetworkManager's default backend would otherwise pull in wpa_supplicant.
-      networking.wireless.enable = lib.mkForce false;
-
       imports = with topLevel.config.flake.modules.nixos; [
         inputs.nixos-wsl.nixosModules.default
 
@@ -22,6 +19,7 @@ topLevel: {
         server
         cholli
         dev
+        yubikey
 
         niri
       ];

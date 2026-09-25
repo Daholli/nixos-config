@@ -54,10 +54,24 @@ topLevel: {
         settings.Resolve.Domains = [ "~." ];
       };
 
-      networking.firewall.allowedTCPPorts = [
-        80
-        443
-      ];
+      networking = {
+        firewall.allowedTCPPorts = [
+          80
+          443
+        ];
+
+        interfaces.ens3.ipv6.addresses = [
+          {
+            address = "2a03:4000:15:115:b849:e2ff:fe9a:60d1";
+            prefixLength = 64;
+          }
+        ];
+        defaultGateway6 = {
+          address = "fe80::1";
+          interface = "ens3";
+        };
+        dhcpcd.extraConfig = "noipv4ll";
+      };
 
       sops.secrets."modern-recorder/deploy-key" = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;

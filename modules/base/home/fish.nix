@@ -4,8 +4,6 @@
       { pkgs, ... }:
       {
         environment.systemPackages = with pkgs; [
-          fastfetch
-
           fd
           tree
           ripgrep

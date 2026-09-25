@@ -68,6 +68,7 @@ topLevel: {
 
           obsidian
           diebahn
+          croc
 
           termscp
           nixpkgs-review

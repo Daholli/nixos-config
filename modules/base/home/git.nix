@@ -39,6 +39,7 @@ topLevel: {
               ".devenv/"
               "result"
               ".claude/settings.local.json"
+              ".claude/worktrees/"
             ];
 
             settings = {

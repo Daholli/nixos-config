@@ -272,12 +272,11 @@
           };
 
           "_" = {
+            default = true;
             forceSSL = true;
             useACMEHost = domainName;
 
-            locations."/" = {
-              proxyPass = "https://${domainName}";
-            };
+            locations."/".return = "404";
           };
         };
       };

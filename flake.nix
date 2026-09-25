@@ -21,8 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nixpkgs-latest-factorio = nixpkgs-master;
-    nixpkgs-latest-factorio.url = "github:nixos/nixpkgs/63bf2dea77586b637756b5a6b1a41888eefbded0";
+    nixpkgs-latest-factorio = nixpkgs-master;
+    # nixpkgs-latest-factorio.url = "github:nixos/nixpkgs/63bf2dea77586b637756b5a6b1a41888eefbded0";
     nixpkgs-latest-minecraft = nixpkgs-master;
 
     home-manager = {

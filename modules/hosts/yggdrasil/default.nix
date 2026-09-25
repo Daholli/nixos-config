@@ -77,7 +77,7 @@ topLevel: {
           postman
           vlc
           ffmpeg
-          azure-cli
+          (azure-cli.withExtensions [ azure-cli-extensions.azure-devops ])
           onlyoffice-desktopeditors
 
           jetbrains.rust-rover

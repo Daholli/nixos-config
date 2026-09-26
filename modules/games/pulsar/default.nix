@@ -1,4 +1,29 @@
+topLevel:
+let
+  pulsarBattery = pkgs: pkgs.writers.writePython3Bin "pulsar-battery" { } ./battery.py;
+in
 {
+  flake.modules.homeManager.pulsar =
+    {
+      lib,
+      osConfig,
+      pkgs,
+      ...
+    }:
+    {
+      config = lib.mkIf osConfig.programs.niri.enable {
+        programs.dank-material-shell.plugins.mouseBattery = {
+          enable = true;
+          src = pkgs.runCommand "dms-mouse-battery" { } ''
+            mkdir $out
+            cp ${./dms-plugin/plugin.json} $out/plugin.json
+            substitute ${./dms-plugin/MouseBatteryWidget.qml} $out/MouseBatteryWidget.qml \
+              --replace-fail @pulsarBattery@ ${lib.getExe (pulsarBattery pkgs)}
+          '';
+        };
+      };
+    };
+
   flake.modules.nixos.games =
     { lib, pkgs, ... }:
     let
@@ -42,6 +67,8 @@
           '';
     in
     {
+      home-manager.users.cholli.imports = [ topLevel.config.flake.modules.homeManager.pulsar ];
+
       services.udev.packages = [
         (pkgs.writeTextDir "lib/udev/rules.d/70-pulsar.rules" ''
           KERNEL=="hidraw*", ATTRS{idVendor}=="3710", TAG+="uaccess"
@@ -58,6 +85,7 @@
       };
 
       environment.systemPackages = [
+        (pulsarBattery pkgs)
         (pkgs.makeDesktopItem {
           name = "pulsar-configurator";
           desktopName = "Pulsar Configurator";

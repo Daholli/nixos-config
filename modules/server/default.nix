@@ -1,5 +1,7 @@
 {
-  flake.modules.nixos.server = _: {
+  flake.modules.nixos.server = { pkgs, ... }: {
+    environment.systemPackages = [ pkgs.kitty.terminfo ];
+
     system.autoUpgrade = {
       enable = true;
       flake = "git+https://git.christophhollizeck.dev/Daholli/nixos-config";

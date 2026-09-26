@@ -1,0 +1,12 @@
+{
+  "id": "mouseBattery",
+  "name": "Mouse Battery",
+  "description": "Pulsar mouse battery level",
+  "version": "1.0.0",
+  "author": "cholli",
+  "type": "widget",
+  "capabilities": ["dankbar-widget"],
+  "component": "./MouseBatteryWidget.qml",
+  "icon": "mouse",
+  "permissions": ["settings_read", "process"]
+}

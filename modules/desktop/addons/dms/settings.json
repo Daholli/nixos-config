@@ -692,6 +692,10 @@
           "enabled": true
         },
         {
+          "id": "mouseBattery",
+          "enabled": true
+        },
+        {
           "id": "controlCenterButton",
           "enabled": true,
           "showAudioPercent": true,

@@ -33,7 +33,8 @@ PluginComponent {
         running: true
         repeat: true
         triggeredOnStart: true
-        onTriggered: if (!proc.running) proc.running = true
+        onTriggered: if (!proc.running)
+            proc.running = true
     }
 
     horizontalBarPill: Component {

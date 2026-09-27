@@ -15,6 +15,8 @@
         jsonfmt.enable = true;
         nixfmt.enable = true;
         prettier.enable = true;
+        qmlformat.enable = true;
+        ruff-format.enable = true;
         rustfmt.enable = true;
         shfmt.enable = true;
         statix.enable = true;

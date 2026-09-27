@@ -1,20 +1,31 @@
 _: {
   perSystem =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          cargo
-          clippy
-          rust-analyzer
-          rustc
-          rustfmt
+      devShells = {
+        default = pkgs.mkShell {
+          packages = [
+            config.pre-commit.settings.package
+            config.treefmt.build.wrapper
+          ];
+          shellHook = config.pre-commit.installationScript;
+        };
 
-          nvd
-          sbomnix
-        ];
+        nix-audit = pkgs.mkShell {
+          packages = with pkgs; [
+            cargo
+            clippy
+            rust-analyzer
+            rustc
+            rustfmt
 
-        RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
+            nvd
+            sbomnix
+          ];
+
+          RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
+          shellHook = config.pre-commit.installationScript;
+        };
       };
     };
 }

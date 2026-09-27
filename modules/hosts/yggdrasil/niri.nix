@@ -97,6 +97,12 @@
                 matches = [
                   {
                     # This matches any subwindow of 1password e.g. the confirmation window for ssh keys
+                    app-id = "com.onepassword.OnePassword";
+                    title = "1Password";
+                    is-floating = true;
+                  }
+                  {
+                    # This matches any subwindow of 1password e.g. the confirmation window for ssh keys
                     app-id = "1Password";
                     title = "1Password";
                     is-floating = true;
@@ -128,6 +134,11 @@
                   }
                   {
                     app-id = "obsidian";
+                    title = "Obsidian";
+                    at-startup = true;
+                  }
+                  {
+                    app-id = "md.obsidian.Obsidian";
                     title = "Obsidian";
                     at-startup = true;
                   }

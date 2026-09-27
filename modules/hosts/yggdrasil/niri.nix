@@ -44,6 +44,11 @@
           pkgs,
           ...
         }:
+        let
+          afterTray = cmd: {
+            sh = "${pkgs.glib}/bin/gdbus wait --session --timeout 30 org.kde.StatusNotifierWatcher; exec ${cmd}";
+          };
+        in
         {
           home.packages = [ pkgs.kdePackages.dolphin ];
 
@@ -254,10 +259,10 @@
             spawn-at-startup = [
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
-              { argv = [ "element-desktop" ]; }
-              { argv = [ "vesktop" ]; }
-              { argv = [ "1password" ]; }
-              { sh = "sleep 1 && steam"; }
+              (afterTray "element-desktop")
+              (afterTray "vesktop")
+              (afterTray "1password")
+              (afterTray "steam")
             ];
           };
         };

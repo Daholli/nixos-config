@@ -214,6 +214,10 @@
                     app-id = "1password";
                     at-startup = true;
                   }
+                  {
+                    app-id = "com.onepassword.OnePassword";
+                    at-startup = true;
+                  }
                 ];
 
                 open-on-workspace = "02-1password";
@@ -224,6 +228,9 @@
                 matches = [
                   {
                     app-id = "1Password";
+                  }
+                  {
+                    app-id = "com.onepassword.OnePassword";
                   }
                   {
                     app-id = "vesktop";

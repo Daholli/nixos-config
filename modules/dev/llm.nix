@@ -147,7 +147,7 @@
             theme = "auto";
             autoCompactEnabled = true;
             model = "opus";
-            effortLevel = "xhigh";
+            effortLevel = "medium";
             remoteControlAtStartup = false;
             permissions.defaultMode = "plan";
             statusLine = {

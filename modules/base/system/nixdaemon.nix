@@ -93,7 +93,7 @@
           in
           {
 
-            nix-path = "nixpkgs=flake:nixpkgs";
+            nix-path = [ "nixpkgs=flake:nixpkgs" ];
             experimental-features = [
               "nix-command"
               "flakes"

@@ -15,7 +15,6 @@
             stdenv,
             fetchurl,
             autoPatchelfHook,
-            glibc,
             makeWrapper,
             wrapGAppsHook3,
             adwaita-icon-theme,
@@ -47,34 +46,6 @@
             zlib,
           }:
 
-          let
-            # glibc 2.43 for the vendored livekit plugin, which needs sqrtf/log10f@GLIBC_2.43.
-            # nixpkgs is on 2.42 (master and staging, 2026-09; upstream is at 2.44).
-            # Not nixpkgs' tested glibc: no upstream patch stack, -Werror off.
-            # Only the Venoom binary uses it; everything else stays on 2.42.
-            glibc243 = glibc.overrideAttrs (old: {
-              version = "2.43";
-
-              src = fetchurl {
-                url = "mirror://gnu/glibc/glibc-2.43.tar.xz";
-                hash = "sha256-2chsa12920Oj4IJwxYRPxRd9GUQs9bjfS+fAfNX6ODE=";
-              };
-
-              patches = builtins.filter (
-                p:
-                !(
-                  # Post-2.42 backport; cannot apply to 2.43.
-                  lib.hasInfix "2.42-master" (toString p)
-                  # No longer applies to 2.43's shell scripts.
-                  || lib.hasInfix "Remove-all-usage-of-BASH" (toString p)
-                )
-              ) old.patches;
-
-              # glibc 2.43 and linux-headers 7.1 both define OPEN_TREE_CLONE. Same value,
-              # different token list (kernel uses `#define X X`), so -Werror rejects it.
-              configureFlags = (old.configureFlags or [ ]) ++ [ "--disable-werror" ];
-            });
-          in
           stdenv.mkDerivation {
             pname = "venoom";
             version = "1.1.0+1";
@@ -153,17 +124,6 @@
 
               substituteInPlace $out/share/applications/net.venoom.app.desktop \
                 --replace-fail "Exec=venoommobile" "Exec=$out/bin/venoommobile"
-            '';
-
-            # Must run after autoPatchelfHook, which resets the interpreter; postFixup
-            # runs before it. ld.so resolves libc/libm once by soname from this RPATH,
-            # so 2.43 first here covers the whole process.
-            postPhases = [ "useGlibc243Phase" ];
-            useGlibc243Phase = ''
-              patchelf \
-                --set-interpreter ${glibc243}/lib/ld-linux-x86-64.so.2 \
-                --set-rpath "${glibc243}/lib:$(patchelf --print-rpath $out/share/venoom/venoommobile)" \
-                $out/share/venoom/venoommobile
             '';
 
             meta = {

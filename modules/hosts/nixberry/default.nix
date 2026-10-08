@@ -17,6 +17,8 @@ topLevel: {
 
       boot.loader.raspberry-pi.bootloader = "kernel";
 
+      zramSwap.enable = true;
+
       # hack, homemanager needs it
       programs.dconf.enable = true;
 

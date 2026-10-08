@@ -114,15 +114,6 @@
                     resumeDevice = true;
                   };
                 };
-
-                zfs = {
-                  size = "100%";
-                  content = {
-                    type = "zfs";
-                    pool = "rpool"; # zroot
-                  };
-                };
-
               };
             };
           };

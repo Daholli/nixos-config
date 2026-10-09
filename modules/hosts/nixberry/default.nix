@@ -68,18 +68,9 @@ topLevel: {
           ];
           useDHCP = true;
         };
-        interfaces.wlan0 = {
-          ipv4.addresses = [
-            {
-              address = "192.168.178.3";
-              prefixLength = 24;
-            }
-          ];
-          useDHCP = true;
-        };
         defaultGateway = {
           address = "192.168.178.1";
-          interface = "wlan0";
+          interface = "end0";
         };
 
         firewall = {

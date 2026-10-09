@@ -8,6 +8,7 @@ topLevel: {
       dnsDomain = "dns.christophhollizeck.dev";
       certDir = config.security.acme.certs.${dnsDomain}.directory;
       unbound = "127.0.0.1:5335";
+      loptlandUnbound = "100.86.250.97:53";
     in
     {
       sops = {
@@ -53,49 +54,10 @@ topLevel: {
         allowedUDPPorts = [ 53 ];
       };
 
-      services.unbound = {
-        enable = true;
-        resolveLocalQueries = false;
-        localControlSocketPath = "/run/unbound/unbound.ctl";
-        settings.server = {
-          interface = [ "127.0.0.1" ];
-          port = 5335;
-          do-ip4 = true;
-          do-ip6 = true;
-          do-udp = true;
-          do-tcp = true;
-          access-control = [
-            "127.0.0.0/8 allow"
-            "0.0.0.0/0 refuse"
-            "::0/0 refuse"
-          ];
-          hide-identity = true;
-          hide-version = true;
-          harden-glue = true;
-          harden-dnssec-stripped = true;
-          harden-below-nxdomain = true;
-          harden-referral-path = true;
-          qname-minimisation = true;
-          private-address = [
-            "10.0.0.0/8"
-            "172.16.0.0/12"
-            "192.168.0.0/16"
-            "169.254.0.0/16"
-            "fd00::/8"
-            "fe80::/10"
-          ];
-          msg-cache-size = "64m";
-          rrset-cache-size = "128m";
-          msg-cache-slabs = 4;
-          rrset-cache-slabs = 4;
-          infra-cache-slabs = 4;
-          key-cache-slabs = 4;
-          prefetch = true;
-          prefetch-key = true;
-          num-threads = 4;
-          so-rcvbuf = "1m";
-          edns-buffer-size = 1232;
-        };
+      local.unbound = {
+        interfaces = [ "127.0.0.1" ];
+        port = 5335;
+        ipv6 = true;
       };
 
       systemd.services.adguardhome = {
@@ -118,9 +80,10 @@ topLevel: {
             ratelimit = 0;
             bind_hosts = [ "0.0.0.0" ];
             upstream_dns = [
-              unbound
+              loptlandUnbound
               "[/fritz.box/]${fritzbox}"
             ];
+            fallback_dns = [ unbound ];
             bootstrap_dns = [ unbound ];
             local_ptr_upstreams = [ fritzbox ];
             use_private_ptr_resolvers = true;

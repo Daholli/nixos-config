@@ -65,6 +65,8 @@
             HTTP_PORT = forgejoPort;
           };
 
+          metrics.ENABLED = true;
+
           mailer = {
             ENABLED = true;
             PROTOCOL = "smtps";

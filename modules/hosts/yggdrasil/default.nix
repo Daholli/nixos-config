@@ -123,6 +123,7 @@ topLevel: {
         # System modules
         base
         dev
+        prometheus-exporters
         desktop
         games
 

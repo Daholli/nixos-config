@@ -43,6 +43,8 @@ topLevel: {
           # System modules
           base
           server
+          prometheus-exporters
+          unbound-resolver
           bluetooth
           forgejo-runner
 
@@ -56,6 +58,7 @@ topLevel: {
         useRoutingFeatures = "server";
         authKeyFile = config.sops.secrets.tailscale_key.path;
         extraUpFlags = [ "--advertise-exit-node" ];
+        extraSetFlags = [ "--accept-dns=false" ];
       };
 
       networking = {

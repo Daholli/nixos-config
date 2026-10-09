@@ -19,6 +19,8 @@ topLevel: {
         # System modules
         base
         server
+        prometheus-exporters
+        unbound-resolver
         loptland-acme
         forgejo
         forgejo-runner
@@ -46,6 +48,7 @@ topLevel: {
       services.tailscale = {
         enable = true;
         useRoutingFeatures = "client";
+        extraSetFlags = [ "--accept-dns=false" ];
       };
 
       services.resolved = {

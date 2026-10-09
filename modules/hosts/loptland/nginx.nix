@@ -112,6 +112,7 @@
               '';
               proxyPass = "http://localhost:${toString 3000}/";
             };
+            locations."/metrics".return = "404";
           };
 
           "ha.${domainName}" = {

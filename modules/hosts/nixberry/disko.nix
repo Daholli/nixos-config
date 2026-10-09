@@ -43,11 +43,9 @@
           type = "filesystem";
           format = "vfat";
           # mountpoint = "/boot";
+          # no automount: an idle-unmounted /boot stops the nested /boot/firmware automount
           mountOptions = [
             "noatime"
-            "noauto"
-            "x-systemd.automount"
-            "x-systemd.idle-timeout=1min"
             "umask=0077"
           ];
         };

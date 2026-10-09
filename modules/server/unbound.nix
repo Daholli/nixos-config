@@ -67,6 +67,7 @@
               num-threads = 4;
               so-rcvbuf = "1m";
               edns-buffer-size = 1232;
+              extended-statistics = true;
             }
             // lib.optionalAttrs cfg.threatFeed {
               module-config = ''"respip validator iterator"'';

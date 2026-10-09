@@ -10,6 +10,7 @@
     let
       nixberry = "100.90.93.35";
       loptland = "100.86.250.97";
+      scrapeInterval = "1m";
 
       job =
         name: targets: extra:
@@ -75,6 +76,7 @@
         enable = true;
         listenAddress = "127.0.0.1";
         retentionTime = "90d";
+        globalConfig.scrape_interval = scrapeInterval;
 
         scrapeConfigs = [
           (job "node" [
@@ -163,6 +165,7 @@
               uid = "prometheus";
               url = "http://127.0.0.1:${toString config.services.prometheus.port}";
               isDefault = true;
+              jsonData.timeInterval = scrapeInterval;
             }
           ];
           dashboards.settings.providers = [

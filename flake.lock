@@ -1262,17 +1262,17 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1791597287,
-        "narHash": "sha256-OKTKxi1CbxyyCAbEwmv5JOA0pR3GPGy8qcHDoBmftl8=",
+        "lastModified": 1791524203,
+        "narHash": "sha256-JbQDkkzADsS15yacJWVvJ1N8rrV7YFAP+zBrZzyWMw8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fb258d3d7f7d902b8969d2e6380cc0c505ec4dcd",
+        "rev": "0ba99b34c63d9ca9cf2668bf801d742b04b05908",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "master",
         "repo": "nixpkgs",
+        "rev": "0ba99b34c63d9ca9cf2668bf801d742b04b05908",
         "type": "github"
       }
     },

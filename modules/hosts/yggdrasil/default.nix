@@ -123,6 +123,7 @@ topLevel: {
         # System modules
         base
         dev
+        factorio-prefetch
         prometheus-exporters
         desktop
         games

@@ -60,6 +60,9 @@ topLevel: {
         ipv6 = true;
       };
 
+      networking.nameservers = [ "127.0.0.1" ];
+      networking.dhcpcd.extraConfig = "nooption domain_name_servers";
+
       systemd.services.adguardhome = {
         after = [ "unbound.service" ];
         wants = [ "unbound.service" ];
@@ -173,6 +176,7 @@ topLevel: {
               {
                 name = "nixberry";
                 ids = [
+                  "127.0.0.1"
                   "192.168.178.2"
                   "100.90.93.35"
                   "fd7a:115c:a1e0::dd01:5d34"

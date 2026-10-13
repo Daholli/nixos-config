@@ -22,7 +22,6 @@ const WATCHLIST: &[&str] = &[
     "lk-jwt-service",
     "matrix-authentication-service",
     "matrix-synapse",
-    "mautrix-discord",
     "mautrix-signal",
     "minecraft-server",
     "nginx",

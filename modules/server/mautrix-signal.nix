@@ -48,6 +48,9 @@
           '';
       };
 
+      # mautrix-signal depends on libolm which is deprecated/insecure upstream.
+      nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
+
       services.mautrix-signal = {
         enable = true;
 

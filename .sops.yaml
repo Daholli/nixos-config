@@ -3,8 +3,8 @@ keys:
   - &yggdrasil age1gtu702a6crx4e450ny25acvsjffvt7kljhhadwhydlreew7z8gvs28d9st
   - &loptland age13xshg5e6ucvnu3vqgn344mxpk5kcqutv2lf4gdffvwadq0ku5ewqy4cck6
   - &nixberry age1mje6kvzzxl6slgpj4rtvmzz3dej3kdq9v85uu69xjcqy6947de6sue05z9
-  - &wsl1 age1hlkhat4mg02k54mqc7g6t5396sxrfy5lz5fh8f6rx28l4qzpeycsd644k5
-  - &wsl2 age1kl92eqzced3qjxs895jdqjs0we3m754qfcwda32g8uqz7ddt3fzsj6p2ly
+  - &worklaptop age14ssut9qnuuf4mhyz2aszntxa74n4tuaswvu0x6zgfpnfxtx9ks8sh4qemw
+  - &workpc age1kl92eqzced3qjxs895jdqjs0we3m754qfcwda32g8uqz7ddt3fzsj6p2ly
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
@@ -13,8 +13,8 @@ creation_rules:
           - *yggdrasil
           - *loptland
           - *nixberry
-          - *wsl1
-          - *wsl2
+          - *worklaptop
+          - *workpc
   - path_regex: secrets/secrets-loptland.yaml$
     key_groups:
       - age:

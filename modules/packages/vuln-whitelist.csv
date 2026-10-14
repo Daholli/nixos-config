@@ -29,3 +29,7 @@ CVE-2018-7263,libmad,,"Real and in range (through 0.15.1b), but libmad is EOL up
 CVE-2023-51767,openssh,,"Row hammer attack against OpenSSH through 10.0; deployed 10.5p1 is outside that range and NVD's openssh CPE is unbounded",True
 CVE-2026-13221,perl,,"Fixed in 5.42.3-RC1 and we run 5.42.3; matches only because NVD's CPE end=5.43.9 does not encode the per-branch fix",True
 CVE-2026-57432,perl,,"Fixed in 5.42.3-RC1 and we run 5.42.3; matches only because NVD's CPE end=5.43.10 does not encode the per-branch fix",True
+CVE-(2016|2017|2018|2019|2020|2021|2022|2023)-\d+,linux,,"Pre-2024 kernel CVEs matched against 7.x by a single scanner via unbounded NVD ranges; all fixed upstream long before 7.x",True
+CVE-2022-0543,redis,,"Debian/Ubuntu Lua packaging sandbox escape; upstream redis is unaffected, and ours listens on a unix socket only",True
+CVE-2022-3734,redis,,"Affects the unofficial Windows port of redis only",True
+CVE-2021-4048,lapack,,"Matched against the lapack wrapper's version '3'; the provider is openblas 0.3.33, fixed since 0.3.19",True

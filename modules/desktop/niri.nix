@@ -8,6 +8,13 @@
           package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         };
 
+        services.gnome.gnome-keyring.enable = true;
+
+        services.dbus.packages = [
+          pkgs.gnome-keyring
+          pkgs.gcr_3
+        ];
+
         environment.systemPackages = [
           pkgs.kitty
 

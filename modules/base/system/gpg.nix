@@ -1,24 +1,5 @@
 {
   flake.modules = {
-    nixos.base =
-      { lib, pkgs, ... }:
-      {
-        environment.systemPackages = with pkgs; [
-          gnupg
-        ];
-
-        programs = {
-          ssh.startAgent = false;
-
-          gnupg.agent = {
-            enable = true;
-            enableSSHSupport = true;
-            enableExtraSocket = true;
-            pinentryPackage = lib.mkDefault pkgs.pinentry-curses;
-          };
-        };
-      };
-
     nixos.yubikey =
       { pkgs, ... }:
       let
@@ -31,6 +12,7 @@
         services.udev.packages = with pkgs; [ yubikey-personalization ];
 
         environment.systemPackages = with pkgs; [
+          gnupg
           cryptsetup
           paperkey
           pinentry-curses
@@ -40,7 +22,16 @@
           reload-yubikey
         ];
 
-        programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
+        programs = {
+          ssh.startAgent = false;
+
+          gnupg.agent = {
+            enable = true;
+            enableSSHSupport = true;
+            enableExtraSocket = true;
+            pinentryPackage = pkgs.pinentry-qt;
+          };
+        };
       };
 
     homeManager.base =
@@ -61,7 +52,7 @@
         '';
       in
       {
-        home.file = {
+        home.file = lib.mkIf osConfig.programs.gnupg.agent.enable {
           ".gnupg/.keep".text = "";
 
           ".gnupg/gpg.conf".source = gpgConf;

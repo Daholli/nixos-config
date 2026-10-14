@@ -23,9 +23,6 @@
     {
       # Steam Frame adapter needs WPA3 on 6 GHz, which only works with iwd here
       networking.networkmanager.wifi.backend = "iwd";
-      # NM tears down the Frame link, so iwd owns the adapter (custom mode on the headset)
-      networking.networkmanager.unmanaged = [ "mac:9c:04:b6:41:09:79" ];
-      networking.wireless.iwd.settings.General.EnableNetworkConfiguration = true;
       # 6 GHz stays disabled under the default world regdomain
       hardware.wirelessRegulatoryDatabase = true;
       boot.extraModprobeConfig = ''

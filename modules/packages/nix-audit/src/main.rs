@@ -1,4 +1,5 @@
 mod bumps;
+mod cdx;
 mod deps;
 mod forgejo;
 mod scan;
@@ -53,6 +54,9 @@ pub struct ScanArgs {
     /// Exit non-zero when a finding of this severity remains
     #[arg(long, value_name = "SEVERITY")]
     pub fail_on: Option<String>,
+    /// Write a CycloneDX SBOM with all findings per host into this directory
+    #[arg(long, value_name = "DIR")]
+    pub cdx: Option<PathBuf>,
 }
 
 #[derive(Args, Clone)]
@@ -81,6 +85,9 @@ pub struct ReportArgs {
     /// Scan this store path instead of host toplevels, skipping the version comparison
     #[arg(long)]
     pub target: Option<String>,
+    /// Write a CycloneDX SBOM with all findings per host into this directory
+    #[arg(long, value_name = "DIR")]
+    pub cdx: Option<PathBuf>,
 }
 
 fn main() -> Result<()> {
@@ -89,7 +96,8 @@ fn main() -> Result<()> {
 
     match cli.command {
         Cmd::Scan(args) => {
-            let findings = scan::run(&root, &args)?;
+            let mut findings = scan::run(&root, &args)?;
+            cdx::write(args.cdx.as_deref(), &mut findings);
             print!("{}", scan::markdown(&findings));
             if let Some(severity) = &args.fail_on {
                 let hits = scan::count_at_least(&findings, severity)?;
@@ -123,7 +131,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         .ok()
     });
     let bumps = bumps.flatten();
-    let findings = scan::run(
+    let mut findings = scan::run(
         root,
         &ScanArgs {
             hosts: args.hosts.clone(),
@@ -131,6 +139,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
             ..Default::default()
         },
     )?;
+    cdx::write(args.cdx.as_deref(), &mut findings);
 
     // Each scope needs its own issue; two jobs sharing one would overwrite each other.
     let title = std::env::var("NIX_AUDIT_ISSUE").unwrap_or_else(|_| ISSUE_TITLE.to_string());
@@ -173,7 +182,18 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
 
 fn preamble(root: &Path, title: &str) -> Result<String> {
     let commit = git(root, &["log", "-1", "--format=%h %cs"])?;
-    Ok(format!("# {title}\n\nAs of commit {commit}.\n"))
+    let mut out = format!("# {title}\n\nAs of commit {commit}.\n");
+    let env = |key| std::env::var(key).ok().filter(|v| !v.is_empty());
+    if let (Some(server), Some(repo), Some(run)) = (
+        env("GITHUB_SERVER_URL"),
+        env("GITHUB_REPOSITORY"),
+        env("GITHUB_RUN_NUMBER"),
+    ) {
+        out.push_str(&format!(
+            "Full closure SBOMs are attached to [run {run}]({server}/{repo}/actions/runs/{run}).\n"
+        ));
+    }
+    Ok(out)
 }
 
 fn fingerprint(findings: &[scan::HostFindings]) -> String {

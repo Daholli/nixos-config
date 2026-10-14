@@ -59,7 +59,12 @@ jobs:
       - name: Vulnerability and version audit
         env:
           FORGEJO_TOKEN: ${{ secrets.AUDIT_TOKEN }}
-        run: nix run .#nix-audit -- report loptland yggdrasil
+        run: nix run .#nix-audit -- report --cdx audit loptland yggdrasil
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        if: always()
+        with:
+          name: sbom-x86_64
+          path: audit/
   audit-aarch64:
     needs: [promote]
     if: always() && github.ref == 'refs/heads/develop' && (needs.promote.result == 'success' || github.event_name == 'workflow_dispatch')
@@ -70,4 +75,9 @@ jobs:
         env:
           FORGEJO_TOKEN: ${{ secrets.AUDIT_TOKEN }}
           NIX_AUDIT_ISSUE: "nix-audit: open vulnerabilities (nixberry)"
-        run: nix run .#nix-audit -- report --target /run/current-system
+        run: nix run .#nix-audit -- report --cdx audit --target /run/current-system
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        if: always()
+        with:
+          name: sbom-nixberry
+          path: audit/

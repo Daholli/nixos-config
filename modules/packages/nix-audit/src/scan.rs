@@ -12,12 +12,15 @@ pub struct HostFindings {
     pub host: String,
     pub rows: Vec<Row>,
     pub below: Vec<Row>,
-    pub suppressed: usize,
+    pub suppressed: Vec<Row>,
+    pub toplevel: Option<String>,
+    pub link: Option<String>,
 }
 
 const EXPECTED: [&str; 5] = ["vuln_id", "url", "package", "severity", "sum"];
-const SEVERITIES: [&str; 5] = ["negligible", "low", "medium", "high", "critical"];
+pub(crate) const SEVERITIES: [&str; 5] = ["negligible", "low", "medium", "high", "critical"];
 const FLOOR: &str = "high";
+const TOP: usize = 10;
 
 pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
     let out = match &args.out {
@@ -48,8 +51,13 @@ pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
         if !ok {
             bail!("vulnxscan failed for {name}");
         }
-        let graph = realized(&errors, args).and_then(|p| crate::deps::Graph::load(&p).ok());
-        findings.push(collect(name, &csv, graph.as_ref())?);
+        let toplevel = realized(&errors, args);
+        let graph = toplevel
+            .as_deref()
+            .and_then(|p| crate::deps::Graph::load(p).ok());
+        let mut host = collect(name, &csv, graph.as_ref())?;
+        host.toplevel = toplevel;
+        findings.push(host);
     }
     Ok(findings)
 }
@@ -140,7 +148,7 @@ fn collect(host: String, csv: &Path, graph: Option<&crate::deps::Graph>) -> Resu
 
     let mut rows = Vec::new();
     let mut below = Vec::new();
-    let mut suppressed = 0;
+    let mut suppressed = Vec::new();
     for record in reader.records() {
         let record = record?;
         let mut row: Row = headers
@@ -155,7 +163,7 @@ fn collect(host: String, csv: &Path, graph: Option<&crate::deps::Graph>) -> Resu
             }
         }
         if truthy(field(&row, "whitelist")) {
-            suppressed += 1;
+            suppressed.push(row);
         } else if rank(field(&row, "severity")) >= rank(FLOOR) {
             rows.push(row);
         } else {
@@ -174,6 +182,8 @@ fn collect(host: String, csv: &Path, graph: Option<&crate::deps::Graph>) -> Resu
         rows,
         below,
         suppressed,
+        toplevel: None,
+        link: None,
     })
 }
 
@@ -181,12 +191,19 @@ pub fn markdown(findings: &[HostFindings]) -> String {
     let mut out = String::new();
     for host in findings {
         out.push_str(&format!("## Vulnerabilities — {}\n\n", host.host));
+        if host.link.is_some() {
+            out.push_str(&format!(
+                "**[Open all findings in Sunshine][sunshine-{}]**\n\n",
+                host.host
+            ));
+        }
         if host.rows.is_empty() {
             out.push_str("No high or critical findings.\n\n");
         } else {
             let rows: Vec<Vec<String>> = host
                 .rows
                 .iter()
+                .take(TOP)
                 .map(|r| {
                     vec![
                         severity_label(r),
@@ -208,11 +225,18 @@ pub fn markdown(findings: &[HostFindings]) -> String {
             out.push('\n');
         }
         out.push_str(&format!(
-            "_{} finding(s) below {}, {} whitelisted._\n\n",
-            host.below.len(),
+            "_{} more at {} or above, {} below, {} whitelisted._\n\n",
+            host.rows.len().saturating_sub(TOP),
             FLOOR,
-            host.suppressed
+            host.below.len(),
+            host.suppressed.len()
         ));
+    }
+    // Reference links keep the long Sunshine URLs out of the readable part of the body.
+    for host in findings {
+        if let Some(link) = &host.link {
+            out.push_str(&format!("[sunshine-{}]: {link}\n", host.host));
+        }
     }
     out
 }
@@ -248,7 +272,7 @@ fn scanners(row: &Row) -> u32 {
 
 // vulnxscan reports severity as a CVSS base score rather than the name its docs suggest,
 // so accept both and band the score the way the CVSS v3 specification does.
-fn rank(severity: &str) -> usize {
+pub(crate) fn rank(severity: &str) -> usize {
     let severity = severity.trim().to_ascii_lowercase();
     if let Ok(score) = severity.parse::<f64>() {
         return match score {

@@ -5,9 +5,11 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1"
+base64 = "0.23"
 clap = { version = "4", features = ["derive"] }
 csv = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
 ureq = { version = "2", features = ["json"] }
+xz2 = { version = "0.1", features = ["static"] }

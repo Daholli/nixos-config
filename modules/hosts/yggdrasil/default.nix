@@ -113,6 +113,17 @@ topLevel: {
 
       programs.ssh.extraConfig = ''
         AddressFamily inet
+
+        Host worklaptop
+          HostName 192.168.178.48
+          Port 2222
+          User cholli
+
+        Host workpc
+          HostName 10.0.8.69
+          Port 2222
+          User cholli
+          ProxyJump worklaptop
       '';
 
       imports = with topLevel.config.flake.modules.nixos; [

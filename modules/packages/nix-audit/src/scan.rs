@@ -293,7 +293,7 @@ fn truthy(value: &str) -> bool {
     matches!(value.trim().to_ascii_lowercase().as_str(), "true" | "1")
 }
 
-fn severity_label(row: &Row) -> String {
+pub(crate) fn severity_label(row: &Row) -> String {
     let raw = field(row, "severity");
     match rank(raw).checked_sub(1).and_then(|i| SEVERITIES.get(i)) {
         Some(name) if *name != raw => format!("{name} ({raw})"),

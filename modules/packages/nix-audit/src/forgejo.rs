@@ -38,9 +38,44 @@ impl fmt::Display for Action {
     }
 }
 
+pub struct Issue {
+    pub number: u64,
+    pub body: String,
+}
+
+fn api(config: &Config) -> String {
+    format!(
+        "{}/api/v1/repos/{}",
+        config.url.trim_end_matches('/'),
+        config.repo
+    )
+}
+
+pub fn find(config: &Config, token: &str, title: &str) -> Result<Option<Issue>> {
+    let open: Vec<Value> = ureq::get(&format!(
+        "{}/issues?state=open&type=issues&limit=50",
+        api(config)
+    ))
+    .set("Authorization", &format!("token {token}"))
+    .call()
+    .context("listing issues")?
+    .into_json()?;
+    open.into_iter()
+        .find(|issue| issue["title"].as_str() == Some(title))
+        .map(|issue| {
+            Ok(Issue {
+                number: number(&issue)?,
+                body: normalized(issue["body"].as_str().unwrap_or_default()),
+            })
+        })
+        .transpose()
+}
+
+#[allow(clippy::too_many_arguments)]
 pub fn upsert(
     config: &Config,
     token: &str,
+    existing: Option<Issue>,
     title: &str,
     body: &str,
     fingerprint: &str,
@@ -48,20 +83,7 @@ pub fn upsert(
     notify: bool,
 ) -> Result<Action> {
     let auth = format!("token {token}");
-    let base = format!(
-        "{}/api/v1/repos/{}",
-        config.url.trim_end_matches('/'),
-        config.repo
-    );
-
-    let open: Vec<Value> = ureq::get(&format!("{base}/issues?state=open&type=issues&limit=50"))
-        .set("Authorization", &auth)
-        .call()
-        .context("listing issues")?
-        .into_json()?;
-    let existing = open
-        .into_iter()
-        .find(|issue| issue["title"].as_str() == Some(title));
+    let base = api(config);
 
     let Some(issue) = existing else {
         let created: Value = ureq::post(&format!("{base}/issues"))
@@ -72,12 +94,12 @@ pub fn upsert(
         return Ok(Action::Created(number(&created)?));
     };
 
-    let number = number(&issue)?;
-    let current = issue["body"].as_str().unwrap_or_default();
+    let number = issue.number;
+    let current = issue.body.as_str();
     // A body edit notifies nobody, so the issue can always carry the latest report; only a
     // changed finding set or a watchlist bump is worth a comment.
-    let notify = notify || fingerprint_of(current).as_deref() != Some(fingerprint);
-    let stale = normalized(current) != normalized(body);
+    let notify = notify || marker(current, MARKER).as_deref() != Some(fingerprint);
+    let stale = current != normalized(body);
 
     if !stale && !notify {
         return Ok(Action::Unchanged(number));
@@ -109,9 +131,9 @@ fn number(issue: &Value) -> Result<u64> {
         .context("issue response without a number")
 }
 
-fn fingerprint_of(body: &str) -> Option<String> {
+pub fn marker(body: &str, prefix: &str) -> Option<String> {
     body.lines().find_map(|line| {
-        let rest = line.trim().strip_prefix(MARKER)?.strip_suffix("-->")?;
+        let rest = line.trim().strip_prefix(prefix)?.strip_suffix("-->")?;
         Some(rest.trim().to_string())
     })
 }
@@ -123,8 +145,8 @@ mod tests {
     #[test]
     fn reads_the_fingerprint_marker() {
         let body = "# report\n\nstuff\n<!-- fingerprint: abc123 -->\n";
-        assert_eq!(fingerprint_of(body).as_deref(), Some("abc123"));
-        assert_eq!(fingerprint_of("no marker here"), None);
+        assert_eq!(marker(body, MARKER).as_deref(), Some("abc123"));
+        assert_eq!(marker("no marker here", MARKER), None);
     }
 
     #[test]

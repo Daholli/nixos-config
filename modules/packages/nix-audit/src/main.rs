@@ -3,6 +3,7 @@ mod cdx;
 mod deps;
 mod forgejo;
 mod scan;
+mod trend;
 
 use anyhow::{Context, Result, bail};
 use clap::{Args, Parser, Subcommand};
@@ -143,31 +144,67 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
 
     // Each scope needs its own issue; two jobs sharing one would overwrite each other.
     let title = std::env::var("NIX_AUDIT_ISSUE").unwrap_or_else(|_| ISSUE_TITLE.to_string());
+    let token = std::env::var("FORGEJO_TOKEN").unwrap_or_default();
+    let config = forgejo::Config::from_env();
+    let lookup = (!token.is_empty()).then(|| forgejo::find(&config, &token, &title));
+    let previous = match &lookup {
+        Some(Ok(Some(issue))) => issue.body.as_str(),
+        _ => "",
+    };
+    let mut state = trend::State::from_body(previous);
+
+    let commit = git(root, &["log", "-1", "--format=%H %cs"])?;
+    let (hash, date) = commit.split_once(' ').unwrap_or((&commit, ""));
+    let short = trend::short(hash);
+    let diff = state.advance(hash, date, &findings);
+
     let reported: usize = findings.iter().map(|f| f.rows.len()).sum();
     let bumped = bumps.as_ref().map_or(0, |b| b.changes.len());
     let fingerprint = fingerprint(&findings);
     let body = format!(
-        "{}\n{}{}\n<!-- fingerprint: {} -->\n",
-        preamble(root, &title)?,
+        "{}\n{}{}\n<!-- fingerprint: {} -->\n{}",
+        preamble(&title, &format!("{short} {date}")),
+        state.markdown(&findings),
         scan::markdown(&findings),
-        bumps.as_ref().map(bumps::markdown).unwrap_or_default(),
-        fingerprint
+        fingerprint,
+        state.marker()
     );
-    print!("{body}");
-
-    let token = std::env::var("FORGEJO_TOKEN").unwrap_or_default();
-    if token.is_empty() {
-        return Ok(());
-    }
-    let comment = format!(
-        "Report updated: {reported} high or critical findings across {} host(s), {bumped} watchlist bump(s).",
+    // What changed goes into the comment, which notifies, rather than the standing report.
+    // Linking the compared range makes a new finding traceable to the change that brought it.
+    let web = format!("{}/{}", config.url.trim_end_matches('/'), config.repo);
+    let mut comment = format!(
+        "Report updated for [`{short}`]({web}/commit/{hash}): {reported} high or critical findings across {} host(s), {bumped} watchlist bump(s)",
         findings.len()
     );
+    match &diff {
+        Some(diff) => comment.push_str(&format!(
+            ", {} since [`{}`]({web}/compare/{}...{hash}).\n\n{}",
+            diff.summary(),
+            trend::short(&diff.since),
+            diff.since,
+            diff.markdown(&findings)
+        )),
+        None => comment.push_str(".\n\n"),
+    }
+    if let Some(bumps) = bumps.as_ref().filter(|b| !b.changes.is_empty()) {
+        comment.push_str(&bumps::markdown(bumps));
+    }
+    print!("{body}\n---\n\n{comment}");
+
+    let issue = match lookup {
+        None => return Ok(()),
+        Some(Err(error)) => {
+            eprintln!("warning: tracking issue not updated: {error:#}");
+            return Ok(());
+        }
+        Some(Ok(issue)) => issue,
+    };
     // The report above is the deliverable; posting it is best-effort, so a missing issue
     // scope on the token must not discard a scan that took half an hour.
     match forgejo::upsert(
-        &forgejo::Config::from_env(),
+        &config,
         &token,
+        issue,
         &title,
         &body,
         &fingerprint,
@@ -180,8 +217,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
     Ok(())
 }
 
-fn preamble(root: &Path, title: &str) -> Result<String> {
-    let commit = git(root, &["log", "-1", "--format=%h %cs"])?;
+fn preamble(title: &str, commit: &str) -> String {
     let mut out = format!("# {title}\n\nAs of commit {commit}.\n");
     let env = |key| std::env::var(key).ok().filter(|v| !v.is_empty());
     if let (Some(server), Some(repo), Some(run)) = (
@@ -193,7 +229,7 @@ fn preamble(root: &Path, title: &str) -> Result<String> {
             "Full closure SBOMs are attached to [run {run}]({server}/{repo}/actions/runs/{run}).\n"
         ));
     }
-    Ok(out)
+    out
 }
 
 fn fingerprint(findings: &[scan::HostFindings]) -> String {

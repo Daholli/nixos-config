@@ -72,8 +72,6 @@ topLevel: {
       services.adguardhome = {
         enable = true;
         mutableSettings = false;
-        host = ipAddress;
-        port = 80;
 
         settings = {
           http = {

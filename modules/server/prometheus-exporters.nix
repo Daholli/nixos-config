@@ -56,7 +56,7 @@
         wantedBy = [ "multi-user.target" ];
         after = [ "adguardhome.service" ];
         environment = {
-          ADGUARD_SERVERS = "http://${adguard.host}:${toString adguard.port}";
+          ADGUARD_SERVERS = "http://127.0.0.1:${lib.last (lib.splitString ":" adguard.settings.http.address)}";
           # AdGuard Home has no users configured, but the exporter requires credentials.
           ADGUARD_USERNAMES = "prometheus";
           ADGUARD_PASSWORDS = "unused";

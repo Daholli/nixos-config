@@ -67,8 +67,34 @@
           return 403;
         }
       '';
+
+      anubis = name: "http://unix:${config.services.anubis.instances.${name}.settings.BIND}";
+
+      websocket = ''
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+      '';
     in
     {
+      services.anubis.instances = {
+        forgejo = lib.mkIf config.services.forgejo.enable {
+          settings.TARGET = "http://localhost:3000";
+        };
+        homeassistant = {
+          settings.TARGET = "http://${nixberry}:8123";
+          policy.extraBots = [
+            {
+              name = "home-assistant-app";
+              user_agent_regex = "Home ?Assistant/";
+              action = "ALLOW";
+            }
+          ];
+        };
+        immich.settings.TARGET = "http://${nixberry}:2283";
+      };
+
+      users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
+
       services.nginx = {
         enable = true;
         recommendedProxySettings = true;
@@ -106,13 +132,29 @@
             forceSSL = true;
             useACMEHost = domainName;
 
-            locations."/" = {
-              extraConfig = ''
-                client_max_body_size 200M;
-              '';
-              proxyPass = "http://localhost:${toString 3000}/";
-            };
-            locations."/metrics".return = "404";
+            locations =
+              lib.genAttrs
+                [
+                  "/api/"
+                  "/v2/"
+                  "~ ^/[^/]+/[^/]+\\.git/"
+                  "~ /(info/refs|git-upload-pack|git-receive-pack)$"
+                ]
+                (_: {
+                  proxyPass = "http://localhost:3000";
+                  extraConfig = ''
+                    client_max_body_size 200M;
+                  '';
+                })
+              // {
+                "/" = {
+                  proxyPass = anubis "forgejo";
+                  extraConfig = ''
+                    client_max_body_size 200M;
+                  '';
+                };
+                "/metrics".return = "404";
+              };
           };
 
           "ha.${domainName}" = {
@@ -120,13 +162,14 @@
             useACMEHost = domainName;
             extraConfig = geoFence;
 
-            locations."/" = {
-              extraConfig = ''
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "upgrade";
-              '';
-              proxyPass = "http://${nixberry}:8123";
-            };
+            locations =
+              lib.genAttrs [ "/api/" "/auth/" ] (_: {
+                proxyPass = "http://${nixberry}:8123";
+                extraConfig = websocket;
+              })
+              // {
+                "/".proxyPass = anubis "homeassistant";
+              };
           };
 
           "immich.${domainName}" = {
@@ -134,14 +177,16 @@
             useACMEHost = domainName;
             extraConfig = geoFence;
 
-            locations."/" = {
-              proxyPass = "http://${nixberry}:2283";
-              extraConfig = ''
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "upgrade";
-                client_max_body_size 50000M;
-              '';
-            };
+            locations =
+              lib.genAttrs [ "/api/" "/.well-known/immich" ] (_: {
+                proxyPass = "http://${nixberry}:2283";
+                extraConfig = websocket + ''
+                  client_max_body_size 50000M;
+                '';
+              })
+              // {
+                "/".proxyPass = anubis "immich";
+              };
           };
 
           "matrix.${matrixDomain}" = lib.mkIf config.services.matrix-synapse.enable {

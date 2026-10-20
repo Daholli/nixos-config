@@ -1,6 +1,4 @@
 on:
-  # push:
-  #   branches: [main]
   schedule:
     - cron: 0 2 * * *
   workflow_dispatch:
@@ -16,19 +14,16 @@ jobs:
           # It bypasses branch protection rules that block the default GITHUB_TOKEN.
           token: ${{ secrets.PUSH_TOKEN }}
       - name: Update flake
-        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |
           cd ${{ env.FORGEJO_WORKSPACE }}
           nix flake update
       - name: Commit new Flake.lock
-        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |
           git config --local user.email "forgejo-actions[bot]@christophhollizeck.dev"
           git config --local user.name "forgejo-actions[bot]"
           git diff --quiet && echo "No changes, skipping commit" && exit 0
           git commit -a -m "chore: update flake"
       - name: Push changes
-        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: |
           git diff HEAD origin/develop --quiet && echo "No changes to push" && exit 0
           git push

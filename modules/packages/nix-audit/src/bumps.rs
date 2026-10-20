@@ -15,6 +15,7 @@ const WATCHLIST: &[&str] = &[
     "forgejo",
     "forgejo-lts",
     "forgejo-runner",
+    "glibc",
     "home-assistant",
     "immich",
     "livekit",

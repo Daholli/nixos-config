@@ -57,6 +57,7 @@
 
       boot = {
         supportedFilesystems = [ "zfs" ];
+        kernelParams = [ "zfs.zfs_arc_max=2147483648" ];
         zfs = {
           package = pkgs.zfs;
           forceImportRoot = false;

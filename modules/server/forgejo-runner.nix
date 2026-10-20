@@ -69,6 +69,21 @@
           ]
           ++ config.local.forgejoRunner.labels;
           containerCfg = config.local.forgejoRunner.container;
+          runnerSettings = labels: uuid: {
+            log.level = "info";
+            runner = {
+              capacity = 1;
+              timeout = "24h";
+              shutdown_timeout = "5s";
+              fetch_timeout = "10s";
+              fetch_interval = "5s";
+              inherit labels;
+            };
+            server.connections.forgejo = {
+              url = "https://git.christophhollizeck.dev/";
+              inherit uuid;
+            };
+          };
         in
         lib.mkMerge [
           {
@@ -76,63 +91,33 @@
               sopsFile = config.local.forgejoRunner.sopsFile;
             };
 
-            sops.templates."forgejo-runner.yaml" = {
-              group = "secrets-access";
-              mode = "0440";
-              content = ''
-                log:
-                  level: info
-                runner:
-                  capacity: 1
-                  timeout: 24h
-                  shutdown_timeout: 5s
-                  fetch_timeout: 10s
-                  fetch_interval: 5s
-                  labels: ${builtins.toJSON effectiveLabels}
-                server:
-                  connections:
-                    forgejo:
-                      url: https://git.christophhollizeck.dev/
-                      uuid: ${config.local.forgejoRunner.uuid}
-                      token: ${config.sops.placeholder."forgejo/runner/token"}
-              '';
+            services.forgejo-runner.instances.native = {
+              enable = true;
+              settings = runnerSettings effectiveLabels config.local.forgejoRunner.uuid;
+              secrets.server.connections.forgejo.token_url = config.sops.secrets."forgejo/runner/token".path;
+              hostPackages = with pkgs; [
+                bash
+                attic
+                coreutils
+                curl
+                gawk
+                gitMinimal
+                gnused
+                nodejs
+                openssh
+                wget
+                lix
+                inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
+              ];
             };
 
-            services.gitea-actions-runner = {
-              package = pkgs.forgejo-runner;
-              instances.native = {
-                enable = true;
-                name = config.local.forgejoRunner.name;
-                url = "https://git.christophhollizeck.dev";
-                tokenFile = config.sops.secrets."forgejo/runner/token".path;
-                labels = effectiveLabels;
-                hostPackages = with pkgs; [
-                  bash
-                  attic
-                  coreutils
-                  curl
-                  gawk
-                  gitMinimal
-                  gnused
-                  nodejs
-                  openssh
-                  wget
-                  lix
-                  inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
-                ];
-              };
-            };
-
-            systemd.services."gitea-runner-native" = {
+            systemd.services."forgejo-runner-native" = {
               environment.NIX_CONFIG = "max-jobs = ${toString config.local.forgejoRunner.maxJobs}";
               serviceConfig = {
+                User = "forgejo-runner";
                 MemoryHigh = "70%";
                 OOMScoreAdjust = 500;
                 SupplementaryGroups = [ "secrets-access" ];
-                ExecStart = lib.mkForce "${pkgs.forgejo-runner}/bin/forgejo-runner daemon --config ${
-                  config.sops.templates."forgejo-runner.yaml".path
-                }";
-                ExecStartPre = lib.mkForce "";
                 PrivateTmp = true;
               };
             };
@@ -144,47 +129,17 @@
               inherit (containerCfg) sopsFile;
             };
 
-            sops.templates."forgejo-runner-container.yaml" = {
-              group = "secrets-access";
-              mode = "0440";
-              content = ''
-                log:
-                  level: info
-                runner:
-                  capacity: 1
-                  timeout: 24h
-                  shutdown_timeout: 5s
-                  fetch_timeout: 10s
-                  fetch_interval: 5s
-                  labels: ${builtins.toJSON containerCfg.labels}
-                server:
-                  connections:
-                    forgejo:
-                      url: https://git.christophhollizeck.dev/
-                      uuid: ${containerCfg.uuid}
-                      token: ${config.sops.placeholder."forgejo/runner/container/token"}
-              '';
-            };
-
-            services.gitea-actions-runner.instances.container = {
+            services.forgejo-runner.instances.container = {
               enable = true;
-              inherit (containerCfg) name;
-              url = "https://git.christophhollizeck.dev";
-              tokenFile = config.sops.secrets."forgejo/runner/container/token".path;
-              inherit (containerCfg) labels;
+              settings = runnerSettings containerCfg.labels containerCfg.uuid;
+              secrets.server.connections.forgejo.token_url =
+                config.sops.secrets."forgejo/runner/container/token".path;
             };
 
-            systemd.services."gitea-runner-container" = {
-              serviceConfig = {
-                MemoryHigh = "70%";
-                OOMScoreAdjust = 500;
-                SupplementaryGroups = [ "secrets-access" ];
-                ExecStart = lib.mkForce "${pkgs.forgejo-runner}/bin/forgejo-runner daemon --config ${
-                  config.sops.templates."forgejo-runner-container.yaml".path
-                }";
-                ExecStartPre = lib.mkForce "";
-                PrivateTmp = true;
-              };
+            systemd.services."forgejo-runner-container".serviceConfig = {
+              MemoryHigh = "70%";
+              OOMScoreAdjust = 500;
+              PrivateTmp = true;
             };
           })
         ];

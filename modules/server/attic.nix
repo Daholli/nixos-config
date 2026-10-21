@@ -46,13 +46,26 @@
         settings = {
           listen = "127.0.0.1:${toString port}";
           api-endpoint = "https://attic.christophhollizeck.dev/";
+          database.url = "postgresql:///atticd?host=/run/postgresql";
         };
+      };
+
+      services.postgresql = {
+        enable = true;
+        ensureDatabases = [ "atticd" ];
+        ensureUsers = [
+          {
+            name = "atticd";
+            ensureDBOwnership = true;
+          }
+        ];
       };
 
       systemd.services.atticd-cache = {
         wantedBy = [ "multi-user.target" ];
         after = [ "atticd.service" ];
         requires = [ "atticd.service" ];
+        partOf = [ "atticd.service" ];
 
         environment.XDG_CONFIG_HOME = configHome;
 

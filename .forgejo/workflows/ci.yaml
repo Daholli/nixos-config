@@ -58,12 +58,12 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.PUSH_TOKEN }}
-      - name: Fast-forward main to last successful commit
+      - name: Merge last successful commit into main
         run: |
           git config user.email "forgejo-actions[bot]@christophhollizeck.dev"
           git config user.name "forgejo-actions[bot]"
           git checkout main
-          git merge --ff-only ${{ github.sha }}
+          git merge --no-ff -m "promote ${{ github.sha }}" ${{ github.sha }}
           git push origin main
   audit-x86_64:
     needs: [promote]

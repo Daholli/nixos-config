@@ -39,6 +39,7 @@
         inputs.dankMaterialShell.homeModules.dank-material-shell
         inputs.dankMaterialShell.homeModules.niri
         inputs.danksearch.homeModules.dsearch
+        inputs.dankcalendar.homeModules.dank-calendar
       ];
 
       options.local.dms.wsl.enable =
@@ -56,7 +57,7 @@
 
         home.activation.dmsWritableConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           seed() {
-            target="$HOME/.config/DankMaterialShell/$1"
+            target="$HOME/.config/dms/$1"
             if [ -L "$target" ] || [ ! -e "$target" ]; then
               $DRY_RUN_CMD rm -f "$target"
               $DRY_RUN_CMD install -Dm0644 "$2" "$target"
@@ -88,21 +89,9 @@
 
         programs.dsearch.enable = true;
 
-        home.packages = [ pkgs.dankcalendar ];
-
-        systemd.user.services.dcal = {
-          Unit = {
-            Description = "Dank Calendar";
-            After = [ "graphical-session.target" ];
-            PartOf = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${lib.getExe' pkgs.dankcalendar "dcal"} run --session --hidden";
-            Restart = "on-failure";
-            RestartSec = 2;
-            Slice = "app.slice";
-          };
-          Install.WantedBy = [ "graphical-session.target" ];
+        programs.dank-calendar = {
+          enable = true;
+          systemd.enable = true;
         };
       };
     };

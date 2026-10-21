@@ -123,14 +123,14 @@
     };
 
     dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
+      url = "github:duxlabs-dev/dux-shell";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
       };
     };
 
     dank-greeter = {
-      url = "github:AvengeMedia/dank-greeter";
+      url = "github:duxlabs-dev/dux-greeter";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -140,12 +140,17 @@
     };
 
     danksearch = {
-      url = "github:AvengeMedia/danksearch";
+      url = "github:duxlabs-dev/dux-search";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     dgop = {
-      url = "github:AvengeMedia/dgop";
+      url = "github:duxlabs-dev/dux-gop";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    dankcalendar = {
+      url = "github:duxlabs-dev/dux-calendar";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

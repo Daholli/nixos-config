@@ -46,7 +46,7 @@
         settings = {
           listen = "127.0.0.1:${toString port}";
           api-endpoint = "https://attic.christophhollizeck.dev/";
-          database.url = "postgresql:///atticd?host=/run/postgresql";
+          database.url = "postgresql:///atticd?host=/run/postgresql&user=atticd";
         };
       };
 

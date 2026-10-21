@@ -1,7 +1,7 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "registry",
-  "customThemeFile": "/home/cholli/.config/DankMaterialShell/themes/catppuccin/theme.json",
+  "customThemeFile": "/home/cholli/.config/dms/themes/catppuccin/theme.json",
   "registryThemeVariants": {
     "catppuccin": {
       "flavor": "mocha",

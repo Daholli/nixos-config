@@ -198,7 +198,7 @@
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
 
     jbcontext-src = {
-      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.12.803/context-native-linux-x64-0.9.12.803";
+      url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.17.1213/context-native-linux-x64-0.9.17.1213";
       flake = false;
     };
 

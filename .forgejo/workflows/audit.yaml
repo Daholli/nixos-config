@@ -1,6 +1,7 @@
 on:
-  schedule:
-    - cron: 0 6 * * *
+  push:
+    branches:
+      - main
   workflow_dispatch:
 env:
   NIX_AUDIT_SMTP_URL: smtps://forgejo%40christophhollizeck.dev@mail.christophhollizeck.dev:465
@@ -11,7 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
       - name: Vulnerability and version audit
         env:
@@ -23,7 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
       - name: Vulnerability and version audit
         env:

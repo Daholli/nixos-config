@@ -4,6 +4,8 @@ use lettre::message::{Attachment, MultiPart, SinglePart};
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
 
+const STYLE: &str = "table{border-collapse:collapse}th,td{border:1px solid #d4d3cf;padding:2px 8px;text-align:left}";
+
 pub struct Config {
     url: String,
     password: Option<String>,
@@ -19,19 +21,14 @@ impl Config {
             url: env("NIX_AUDIT_SMTP_URL")?,
             password: env("NIX_AUDIT_SMTP_PASSWORD"),
             from: env("NIX_AUDIT_MAIL_FROM")
-                .unwrap_or_else(|| String::from("nix-audit <no-reply@christophhollizeck.dev>")),
+                .unwrap_or_else(|| String::from("nix-audit <auditreports@christophhollizeck.dev>")),
             to: env("NIX_AUDIT_MAIL_TO")
                 .unwrap_or_else(|| String::from("christoph.hollizeck@hey.com")),
         })
     }
 }
 
-pub fn send(
-    config: &Config,
-    subject: &str,
-    body: &str,
-    attachments: &[(String, String)],
-) -> Result<()> {
+pub fn send(config: &Config, subject: &str, body: &str, graphs: &[(String, String)]) -> Result<()> {
     let mut html = String::new();
     pulldown_cmark::html::push_html(
         &mut html,
@@ -39,16 +36,13 @@ pub fn send(
     );
     let mut parts = MultiPart::mixed().multipart(MultiPart::alternative_plain_html(
         body.to_string(),
-        format!("<!doctype html><html><body>{html}</body></html>"),
+        format!(
+            "<!doctype html><html><head><style>{STYLE}</style></head><body>{html}</body></html>"
+        ),
     ));
-    for (name, content) in attachments {
-        let kind = if name.ends_with(".svg") {
-            "image/svg+xml"
-        } else {
-            "text/markdown; charset=utf-8"
-        };
+    for (name, svg) in graphs {
         let part: SinglePart =
-            Attachment::new(name.clone()).body(content.clone(), ContentType::parse(kind)?);
+            Attachment::new(name.clone()).body(svg.clone(), ContentType::parse("image/svg+xml")?);
         parts = parts.singlepart(part);
     }
     let message = Message::builder()

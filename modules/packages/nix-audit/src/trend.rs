@@ -12,9 +12,14 @@ const KEEP: usize = 30;
 pub struct State {
     history: Vec<Point>,
     findings: BTreeSet<String>,
-    // The finding set of the day before the latest run, so a rerun on the same day still
-    // diffs against the previous day.
-    base: BTreeSet<String>,
+    #[serde(default)]
+    last: Option<Run>,
+}
+
+#[derive(Serialize, Deserialize)]
+struct Run {
+    commit: String,
+    date: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -72,16 +77,13 @@ impl State {
         std::fs::rename(&tmp, path).with_context(|| format!("writing {}", path.display()))
     }
 
-    /// The commit audited on the last day before `date`.
-    pub fn since(&self, date: &str) -> Option<&str> {
-        self.history
-            .iter()
-            .rev()
-            .find(|p| p.date != date)
-            .map(|p| p.commit.as_str())
+    /// The commit of the previous run.
+    pub fn since(&self) -> Option<&str> {
+        self.last.as_ref().map(|r| r.commit.as_str())
     }
 
-    /// Records this run and returns what changed since the previous day, if there was one.
+    /// Records this run and returns what changed since the previous run, if there was one.
+    /// The trend keeps one point per day, the day's latest run.
     pub fn advance(&mut self, commit: &str, date: &str, findings: &[HostFindings]) -> Option<Diff> {
         let current: BTreeSet<String> = findings
             .iter()
@@ -97,21 +99,21 @@ impl State {
         };
         if self.history.last().is_some_and(|p| p.date == date) {
             self.history.pop();
-        } else {
-            self.base = std::mem::take(&mut self.findings);
         }
         self.history.push(point);
         if self.history.len() > KEEP {
             self.history.drain(..self.history.len() - KEEP);
         }
-        self.findings = current;
-
-        let previous = self.history.iter().rev().nth(1)?;
+        let base = std::mem::replace(&mut self.findings, current);
+        let previous = self.last.replace(Run {
+            commit: commit.to_string(),
+            date: date.to_string(),
+        })?;
         Some(Diff {
-            since: previous.commit.clone(),
-            since_date: previous.date.clone(),
-            new: self.findings.difference(&self.base).cloned().collect(),
-            resolved: self.base.difference(&self.findings).cloned().collect(),
+            since: previous.commit,
+            since_date: previous.date,
+            new: self.findings.difference(&base).cloned().collect(),
+            resolved: base.difference(&self.findings).cloned().collect(),
         })
     }
 
@@ -295,6 +297,7 @@ mod tests {
             suppressed: Vec::new(),
             toplevel: None,
             link: None,
+            incomplete: false,
         }
     }
 
@@ -346,15 +349,19 @@ mod tests {
     }
 
     #[test]
-    fn rerun_on_the_same_day_replaces_its_point_and_keeps_the_base() {
+    fn second_run_on_a_day_diffs_against_the_first_and_replaces_its_point() {
         let mut state = State::default();
         state.advance("a", "2026-01-01", &[host("h", &[("CVE-1", "p", "9.8")])]);
         state.advance("b", "2026-01-02", &[host("h", &[])]);
-        assert_eq!(state.since("2026-01-02"), Some("a"));
-        let diff = state.advance("c", "2026-01-02", &[host("h", &[])]).unwrap();
+        assert_eq!(state.since(), Some("b"));
+        let diff = state
+            .advance("c", "2026-01-02", &[host("h", &[("CVE-2", "q", "7.5")])])
+            .unwrap();
         assert_eq!(state.history.len(), 2);
-        assert_eq!(diff.since, "a");
-        assert_eq!(diff.resolved.len(), 1);
+        assert_eq!(state.history[1].commit, "c");
+        assert_eq!(diff.since, "b");
+        assert_eq!(diff.new.len(), 1);
+        assert!(diff.resolved.is_empty());
     }
 
     #[test]

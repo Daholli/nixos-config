@@ -116,9 +116,6 @@ in
               lib.filter lib.isString (builtins.split ''--set-rpath "[^"]*"'' old.installPhase)
             );
           });
-
-          # vendored libghostty-vt requires zig 0.16; nixpkgs default is 0.17
-          herdr = llmPkgs.herdr.override { zig = pkgs.zig_0_16; };
         }
       );
     };

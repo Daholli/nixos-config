@@ -1552,6 +1552,7 @@
         "systems": "systems_4",
         "titrack": "titrack",
         "treefmt-nix": "treefmt-nix_3",
+        "website": "website",
         "xwayland-satellite": "xwayland-satellite",
         "zen-browser": "zen-browser"
       }
@@ -1861,6 +1862,26 @@
         "owner": "boolean-option",
         "repo": "true",
         "type": "github"
+      }
+    },
+    "website": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792665514,
+        "narHash": "sha256-DeU8QYSkMP/DRBgowNIPAOeJV521iGPIPGl1JQBkJrw=",
+        "ref": "refs/heads/main",
+        "rev": "06082e88387995175683b10fb58f70ab0432abd6",
+        "revCount": 4,
+        "type": "git",
+        "url": "https://git.christophhollizeck.dev/cholli/website.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.christophhollizeck.dev/cholli/website.git"
       }
     },
     "xwayland-satellite": {

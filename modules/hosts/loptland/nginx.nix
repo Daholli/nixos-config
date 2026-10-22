@@ -95,6 +95,13 @@
 
       users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
 
+      # Access logs contain visitor IPs; keep 14 days instead of the 26-week
+      # NixOS default, matching the website's Datenschutzerklärung.
+      services.logrotate.settings.nginx = {
+        frequency = "daily";
+        rotate = 14;
+      };
+
       services.nginx = {
         enable = true;
         recommendedProxySettings = true;

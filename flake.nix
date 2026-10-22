@@ -92,6 +92,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    website = {
+      url = "git+https://git.christophhollizeck.dev/cholli/website.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hey-cli = {
       url = "github:basecamp/hey-cli/v1.4.0";
       inputs.nixpkgs.follows = "nixpkgs";

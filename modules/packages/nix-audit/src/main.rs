@@ -174,51 +174,55 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         .map_or_else(|| String::from("first run"), trend::Diff::summary);
     let subject = format!("nix-audit {}: {change}, {open} open", args.scope);
 
+    let web = web_url();
     let mut body = format!(
-        "# {subject}\n\nAudit of `{short}` on {today}: {open} high or critical findings across {} host(s), {bumped} watchlist bump(s).\n\n",
+        "# {subject}\n\nAudit of [`{short}`]({web}/commit/{hash}) on {today}: {open} high or critical findings across {} host(s), {bumped} watchlist bump(s).\n\n",
         findings.len()
     );
     if let Some(diff) = &diff {
+        let since = &diff.since;
+        let compare = if since == &hash {
+            String::new()
+        } else {
+            format!(", [compare]({web}/compare/{since}...{hash})")
+        };
         body.push_str(&format!(
-            "## Since {} (`{}`)\n\n{}",
+            "## Since {} ([`{}`]({web}/commit/{since}){compare})\n\n{}",
             diff.since_date,
-            trend::short(&diff.since),
+            trend::short(since),
             diff.markdown(&findings)
         ));
     }
     if let Some(bumps) = bumps.as_ref().filter(|b| !b.changes.is_empty()) {
         body.push_str(&bumps::markdown(bumps));
     }
-    body.push_str("The full report is attached as report.md.\n");
+    body.push_str(&format!("---\n\n{}", scan::markdown(&findings)));
 
-    let mut attachments: Vec<(String, String)> = findings
+    let graphs: Vec<(String, String)> = findings
         .iter()
         .filter_map(|f| Some((format!("trend-{}.svg", f.host), state.svg(&f.host)?)))
         .collect();
-    attachments.push((
-        String::from("report.md"),
-        format!(
-            "# nix-audit {}: open vulnerabilities\n\nAs of commit {short} on {today}.\n\n{}",
-            args.scope,
-            scan::markdown(&findings)
-        ),
-    ));
 
     match &mail {
         Some(config) => {
-            mail::send(config, &subject, &body, &attachments)?;
+            mail::send(config, &subject, &body, &graphs)?;
             println!(
                 "mailed {} report to {}: {change}, {open} open",
                 args.scope, config.to
             );
         }
-        None => print!(
-            "{body}\n---\n\n{}",
-            attachments.last().map_or("", |(_, r)| r)
-        ),
+        None => print!("{body}"),
     }
     // Saved only once the mail is out, so a failed send widens the next delta instead of losing it.
     state.save(&path)
+}
+
+fn web_url() -> String {
+    let env = |key| std::env::var(key).ok().filter(|v: &String| !v.is_empty());
+    match (env("GITHUB_SERVER_URL"), env("GITHUB_REPOSITORY")) {
+        (Some(server), Some(repo)) => format!("{}/{repo}", server.trim_end_matches('/')),
+        _ => String::from("https://git.christophhollizeck.dev/Daholli/nixos-config"),
+    }
 }
 
 fn today() -> Result<String> {

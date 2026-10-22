@@ -49,6 +49,10 @@ pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
             ok = vulnxscan(&out, args, &whitelist, &csv, &target, false)?.0;
         }
         if !ok {
+            if args.quiet {
+                let lines: Vec<&str> = errors.lines().collect();
+                eprintln!("{}", lines[lines.len().saturating_sub(30)..].join("\n"));
+            }
             bail!("vulnxscan failed for {name}");
         }
         let toplevel = realized(&errors, args);
@@ -96,7 +100,9 @@ fn vulnxscan(
     if let Some(pipe) = child.stderr.take() {
         for line in BufReader::new(pipe).lines() {
             let line = line?;
-            eprintln!("{line}");
+            if !args.quiet {
+                eprintln!("{line}");
+            }
             errors.push_str(&line);
             errors.push('\n');
         }

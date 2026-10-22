@@ -42,6 +42,7 @@
         unbound = grafanaDashboard 21006 4 "sha256-Z+y+8MCIpjgPW12Q2jcbNhaL/WA00SL2uPT/7KKsOVw=";
         adguard = "${adguardExporter}/share/grafana/dashboard.json";
         synapse = "${pkgs.matrix-synapse-unwrapped.src}/contrib/grafana/synapse.json";
+        immich = ./dashboards/immich.json;
       };
 
       dashboardDir = pkgs.runCommand "grafana-dashboards" { } (
@@ -135,6 +136,16 @@
             {
               target = "${loptland}:3000";
               instance = "loptland";
+            }
+          ] { })
+          (job "immich" [
+            {
+              target = "${nixberry}:8081";
+              instance = "nixberry-api";
+            }
+            {
+              target = "${nixberry}:8082";
+              instance = "nixberry-microservices";
             }
           ] { })
         ];

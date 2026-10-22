@@ -5,11 +5,10 @@
       pkgs,
       lib,
       inputs,
+      llmPkgs,
       ...
     }:
     let
-      system = pkgs.stdenv.hostPlatform.system;
-      llmPkgs = inputs.llm-agents-nix.packages.${system};
 
       # ── ponytail ──────────────────────────────────────────────────────────
       ponytail = pkgs.runCommand "ponytail-4.9.0" { } ''
@@ -63,6 +62,11 @@
       options.local.forgejoMcp.enable = lib.mkEnableOption "the Forgejo MCP server (needs the forgejo/mcp/token sops secret)";
 
       config = {
+        # An argument so modules/temporary-fixes.nix can patch packages.
+        _module.args.llmPkgs =
+          lib.mkDefault
+            inputs.llm-agents-nix.packages.${pkgs.stdenv.hostPlatform.system};
+
         sops.secrets = lib.mkIf config.local.forgejoMcp.enable {
           "forgejo/mcp/token" = {
             sopsFile = ../../secrets/secrets.yaml;

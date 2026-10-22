@@ -13,18 +13,23 @@
 
       jbcontext = pkgs.stdenv.mkDerivation {
         pname = "jbcontext";
-        version = "0.9.12.803";
+        version = "0.9.17.1213";
 
         src = inputs.jbcontext-src;
 
-        nativeBuildInputs = [ pkgs.autoPatchelfHook ];
-        buildInputs = [ pkgs.zlib ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
 
         dontUnpack = true;
         dontBuild = true;
+        dontPatchELF = true;
 
+        # GraalVM native image: patchelf rewriting the rpath corrupts it, so only
+        # set the interpreter and provide libz via the wrapper.
         installPhase = ''
-          install -Dm755 $src $out/bin/jbcontext
+          install -Dm755 $src $out/libexec/jbcontext
+          patchelf --set-interpreter ${pkgs.stdenv.cc.bintools.dynamicLinker} $out/libexec/jbcontext
+          makeWrapper $out/libexec/jbcontext $out/bin/jbcontext \
+            --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.zlib ]}
         '';
 
         meta = {

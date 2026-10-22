@@ -100,7 +100,7 @@
       systemd.services.forgejo.path = [ pkgs.openssh ];
 
       mailserver = {
-        enable = false;
+        enable = true;
         fqdn = "mail.${domainName}";
         domains = [ domainName ];
 

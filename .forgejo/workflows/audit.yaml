@@ -1,0 +1,32 @@
+on:
+  schedule:
+    - cron: 0 6 * * *
+  workflow_dispatch:
+env:
+  NIX_AUDIT_SMTP_URL: smtps://forgejo%40christophhollizeck.dev@mail.christophhollizeck.dev:465
+  NIX_AUDIT_SMTP_PASSWORD: ${{ secrets.AUDIT_SMTP_PASSWORD }}
+jobs:
+  audit-x86_64:
+    runs-on: x86_64-linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Vulnerability and version audit
+        env:
+          NIX_AUDIT_SCOPE: hosts
+          NIX_AUDIT_STATE: /var/lib/forgejo-runner/native/nix-audit/hosts.json
+        run: nix run .#nix-audit -- report loptland yggdrasil
+  audit-aarch64:
+    runs-on: aarch64-linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Vulnerability and version audit
+        env:
+          NIX_AUDIT_SCOPE: nixberry
+          NIX_AUDIT_STATE: /var/lib/forgejo-runner/native/nix-audit/nixberry.json
+        run: nix run .#nix-audit -- report --host nixberry nixberry

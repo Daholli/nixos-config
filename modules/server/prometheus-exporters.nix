@@ -12,6 +12,10 @@
       adguard = config.services.adguardhome;
       adguardExporterPort = 9618;
       synapseMetricsPort = 9009;
+      immichMetricsPorts = [
+        8081
+        8082
+      ];
     in
     {
       services.prometheus.exporters = {
@@ -51,6 +55,10 @@
         ];
       };
 
+      services.immich.environment = lib.mkIf config.services.immich.enable {
+        IMMICH_TELEMETRY_INCLUDE = "all";
+      };
+
       systemd.services.prometheus-adguard-exporter = lib.mkIf adguard.enable {
         description = "Prometheus exporter for AdGuard Home";
         wantedBy = [ "multi-user.target" ];
@@ -78,6 +86,7 @@
         (lib.optional exporters.postgres.enable exporters.postgres.port)
         (lib.optional config.services.matrix-synapse.enable synapseMetricsPort)
         (lib.optional adguard.enable adguardExporterPort)
+        (lib.optionals config.services.immich.enable immichMetricsPorts)
         (lib.optional config.services.forgejo.enable config.services.forgejo.settings.server.HTTP_PORT)
       ];
     };

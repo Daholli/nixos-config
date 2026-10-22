@@ -2,8 +2,6 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: 0 6 * * *
   workflow_dispatch:
 env:
   NIX_AUDIT_SMTP_URL: smtps://forgejo%40christophhollizeck.dev@mail.christophhollizeck.dev:465

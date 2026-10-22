@@ -77,8 +77,8 @@
             };
             functions = {
               checkHash = "nix hash to-sri --type sha256 $(nix-prefetch-url --unpack $argv)";
-              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --build-host nixberry --target-host nixberry -H nixberry $argv";
-              deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --target-host christophhollizeck.dev -H loptland $argv";
+              deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --build-host nixberry --target-host nixberry --use-substitutes -H nixberry $argv";
+              deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --build-host christophhollizeck.dev --target-host christophhollizeck.dev --use-substitutes -H loptland $argv";
               exportMachineSSHkey = "export SOPS_AGE_KEY=$(sudo ssh-to-age -i /etc/ssh/ssh_host_ed25519_key -private-key)";
               checkPR = ''cd /home/cholli/projects/NixOS/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
 

@@ -19,7 +19,7 @@ impl Config {
             url: env("NIX_AUDIT_SMTP_URL")?,
             password: env("NIX_AUDIT_SMTP_PASSWORD"),
             from: env("NIX_AUDIT_MAIL_FROM")
-                .unwrap_or_else(|| String::from("nix-audit <no-reply@christophhollizeck.dev>")),
+                .unwrap_or_else(|| String::from("nix-audit <auditreports@christophhollizeck.dev>")),
             to: env("NIX_AUDIT_MAIL_TO")
                 .unwrap_or_else(|| String::from("christoph.hollizeck@hey.com")),
         })

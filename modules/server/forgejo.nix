@@ -109,7 +109,10 @@
         accounts = {
           "forgejo@${domainName}" = {
             hashedPasswordFile = config.sops.secrets."forgejo/mail/passwordHash".path;
-            aliases = [ "no-reply@${domainName}" ];
+            aliases = [
+              "no-reply@${domainName}"
+              "auditreports@${domainName}"
+            ];
           };
         };
 

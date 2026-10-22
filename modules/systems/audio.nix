@@ -15,6 +15,8 @@
 
         services.pipewire = {
           enable = true;
+          # ROC pulls in sox -> libmad (CVE-2018-7263); the daemon never needs it
+          package = pkgs.pipewire.override { rocSupport = false; };
           alsa.enable = true;
           alsa.support32Bit = true;
           pulse.enable = true;

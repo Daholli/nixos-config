@@ -1871,11 +1871,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792666001,
-        "narHash": "sha256-ZO73gyCQjefUC1fkCQ6LAIkGqohdTwrhLN8z1PO8+70=",
+        "lastModified": 1792666591,
+        "narHash": "sha256-VS3Fepu5UMsHTt6fEX+i9tn6z+QFQNVfJ/NejMNmCqA=",
         "ref": "refs/heads/main",
-        "rev": "66006ecfb8776f2b7d3c2b51bd3a60468d80fdd6",
-        "revCount": 6,
+        "rev": "e223f11562b83c98b178ffc6ef6328024bea8a07",
+        "revCount": 9,
         "type": "git",
         "url": "https://git.christophhollizeck.dev/cholli/website.git"
       },

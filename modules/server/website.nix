@@ -5,10 +5,17 @@
       domainName = "christophhollizeck.dev";
     in
     {
+      # Exposed as pkgs.website so nix-audit's bump report can watch it.
+      nixpkgs.overlays = [
+        (_: prev: {
+          website = inputs.website.packages.${prev.stdenv.hostPlatform.system}.default;
+        })
+      ];
+
       services.nginx.virtualHosts.${domainName} = {
         forceSSL = true;
         useACMEHost = domainName;
-        root = "${inputs.website.packages.${pkgs.stdenv.hostPlatform.system}.default}";
+        root = "${pkgs.website}";
 
         # Astro emits content-hashed assets here
         locations."/_astro/".extraConfig = ''

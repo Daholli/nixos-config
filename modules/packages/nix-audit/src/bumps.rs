@@ -31,6 +31,7 @@ const WATCHLIST: &[&str] = &[
     "postgresql_16",
     "samba",
     "tailscale",
+    "website",
 ];
 
 const APPLY: &str = r#"p: builtins.listToAttrs (map (n:

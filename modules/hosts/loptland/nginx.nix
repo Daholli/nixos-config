@@ -146,6 +146,7 @@
                   "/v2/"
                   "~ ^/[^/]+/[^/]+\\.git/"
                   "~ /(info/refs|git-upload-pack|git-receive-pack)$"
+                  "~ ^/[^/]+/[^/]+/badges/"
                 ]
                 (_: {
                   proxyPass = "http://localhost:3000";

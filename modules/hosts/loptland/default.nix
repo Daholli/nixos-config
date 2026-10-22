@@ -32,6 +32,7 @@ topLevel: {
         mautrix-signal
         element-call
         element-web
+        website
 
         # game server
         # minecraft-server

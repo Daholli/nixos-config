@@ -290,6 +290,7 @@ mod tests {
             suppressed: vec![row("CVE-3", "bash", "5.2", "7.5")],
             toplevel: None,
             link: None,
+            incomplete: false,
         };
         (bom, host)
     }

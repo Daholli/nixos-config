@@ -297,6 +297,7 @@ mod tests {
             suppressed: Vec::new(),
             toplevel: None,
             link: None,
+            incomplete: false,
         }
     }
 

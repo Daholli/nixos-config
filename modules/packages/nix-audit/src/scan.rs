@@ -15,6 +15,7 @@ pub struct HostFindings {
     pub suppressed: Vec<Row>,
     pub toplevel: Option<String>,
     pub link: Option<String>,
+    pub incomplete: bool,
 }
 
 const EXPECTED: [&str; 5] = ["vuln_id", "url", "package", "severity", "sum"];
@@ -38,7 +39,7 @@ pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
     let mut triage = !args.no_triage;
     for (name, target) in targets(root, args)? {
         let csv = out.join(format!("{name}.csv"));
-        let (mut ok, errors) = vulnxscan(&out, args, &whitelist, &csv, &target, triage)?;
+        let (mut ok, mut errors) = vulnxscan(&out, args, &whitelist, &csv, &target, triage)?;
         // --triage resolves upstream versions through repology.org, so an outage there fails
         // a scan whose findings do not need it. Each retry costs a second closure evaluation,
         // so only a repology failure earns one, and only for the first host: the rest of the
@@ -55,12 +56,24 @@ pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
             }
             bail!("vulnxscan failed for {name}");
         }
+        // vulnxscan only warns when one of its scanners fails, typically vulnix timing out on
+        // the NVD feeds. Feeds fetched before the timeout stay cached, so one retry tends to
+        // complete the download.
+        if scanner_failed(&errors) {
+            eprintln!("warning: a scanner failed for {name}, rescanning");
+            (ok, errors) = vulnxscan(&out, args, &whitelist, &csv, &target, triage)?;
+            if !ok {
+                bail!("vulnxscan failed for {name}");
+            }
+        }
+        let incomplete = scanner_failed(&errors);
         let toplevel = realized(&errors, args);
         let graph = toplevel
             .as_deref()
             .and_then(|p| crate::deps::Graph::load(p).ok());
         let mut host = collect(name, &csv, graph.as_ref())?;
         host.toplevel = toplevel;
+        host.incomplete = incomplete;
         findings.push(host);
     }
     Ok(findings)
@@ -195,13 +208,25 @@ fn collect(host: String, csv: &Path, graph: Option<&crate::deps::Graph>) -> Resu
         suppressed,
         toplevel: None,
         link: None,
+        incomplete: false,
     })
+}
+
+fn scanner_failed(errors: &str) -> bool {
+    errors
+        .lines()
+        .any(|l| l.contains("Command '[") && l.contains("returned non-zero exit status"))
 }
 
 pub fn markdown(findings: &[HostFindings]) -> String {
     let mut out = String::new();
     for host in findings {
         out.push_str(&format!("## Vulnerabilities — {}\n\n", host.host));
+        if host.incomplete {
+            out.push_str(
+                "**Incomplete: a scanner failed twice, so some findings are missing.**\n\n",
+            );
+        }
         if host.link.is_some() {
             out.push_str(&format!(
                 "**[Open all findings in Sunshine][sunshine-{}]**\n\n",
@@ -315,6 +340,13 @@ pub(crate) fn severity_label(row: &Row) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn notices_a_failed_scanner() {
+        let log = "INFO     Generating SBOM\nWARNING  Command '['vulnix', '/nix/store/x', '-C', '--json']' returned non-zero exit status 1.\n";
+        assert!(scanner_failed(log));
+        assert!(!scanner_failed("INFO     Wrote: sbom.csv\n"));
+    }
 
     #[test]
     fn ranks_cvss_scores_and_names() {

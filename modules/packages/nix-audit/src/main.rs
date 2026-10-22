@@ -172,7 +172,12 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
     let change = diff
         .as_ref()
         .map_or_else(|| String::from("first run"), trend::Diff::summary);
-    let subject = format!("nix-audit {}: {change}, {open} open", args.scope);
+    let incomplete = findings.iter().any(|f| f.incomplete);
+    let subject = format!(
+        "nix-audit {}: {change}, {open} open{}",
+        args.scope,
+        if incomplete { " (incomplete)" } else { "" }
+    );
 
     let web = web_url();
     let mut body = format!(
@@ -214,6 +219,11 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         None => print!("{body}"),
     }
     // Saved only once the mail is out, so a failed send widens the next delta instead of losing it.
+    // An incomplete scan is not saved either; its missing findings would come back as new.
+    if incomplete {
+        eprintln!("warning: incomplete scan, keeping the previous state");
+        return Ok(());
+    }
     state.save(&path)
 }
 

@@ -135,7 +135,7 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
     let from = args
         .from
         .clone()
-        .or_else(|| state.since(&today).map(String::from))
+        .or_else(|| state.since().map(String::from))
         .unwrap_or_else(|| String::from("HEAD~1"));
     // A bare store path has no host config behind it, so there is nothing to diff.
     let bumps = args.target.is_none().then(|| {

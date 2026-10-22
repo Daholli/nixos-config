@@ -103,6 +103,8 @@
         enable = true;
         fqdn = "mail.${domainName}";
         domains = [ domainName ];
+        # unbound already serves 127.0.0.1:53 and [::1]:53, where kresd would collide.
+        localDnsResolver = false;
 
         accounts = {
           "forgejo@${domainName}" = {

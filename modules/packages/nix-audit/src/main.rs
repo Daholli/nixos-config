@@ -1,17 +1,14 @@
 mod bumps;
 mod cdx;
 mod deps;
-mod forgejo;
+mod mail;
 mod scan;
 mod trend;
 
 use anyhow::{Context, Result, bail};
 use clap::{Args, Parser, Subcommand};
-use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
 use std::process::Command;
-
-const ISSUE_TITLE: &str = "nix-audit: open vulnerabilities";
 
 #[derive(Parser)]
 #[command(
@@ -29,7 +26,7 @@ enum Cmd {
     Scan(ScanArgs),
     /// Compare watchlist package versions between two revisions
     Bumps(BumpsArgs),
-    /// Run both and upsert the Forgejo tracking issue
+    /// Run both and mail the daily delta, or print it without SMTP configured
     Report(ReportArgs),
 }
 
@@ -58,6 +55,8 @@ pub struct ScanArgs {
     /// Write a CycloneDX SBOM with all findings per host into this directory
     #[arg(long, value_name = "DIR")]
     pub cdx: Option<PathBuf>,
+    #[arg(skip)]
+    pub quiet: bool,
 }
 
 #[derive(Args, Clone)]
@@ -78,8 +77,9 @@ pub struct BumpsArgs {
 pub struct ReportArgs {
     /// Hosts to scan (default: this machine's hostname)
     pub hosts: Vec<String>,
-    #[arg(long, default_value = "HEAD~1")]
-    pub from: String,
+    /// Revision to compare against (default: the commit of the last audit, else HEAD~1)
+    #[arg(long)]
+    pub from: Option<String>,
     /// Host whose package set the version comparison evaluates
     #[arg(long, default_value = "loptland")]
     pub host: String,
@@ -89,6 +89,12 @@ pub struct ReportArgs {
     /// Write a CycloneDX SBOM with all findings per host into this directory
     #[arg(long, value_name = "DIR")]
     pub cdx: Option<PathBuf>,
+    /// Name of this audit, keeping its state and mail apart from other audits
+    #[arg(long, env = "NIX_AUDIT_SCOPE", default_value = "hosts")]
+    pub scope: String,
+    /// Trend state file (default: $XDG_STATE_HOME/nix-audit/<scope>.json)
+    #[arg(long, env = "NIX_AUDIT_STATE")]
+    pub state: Option<PathBuf>,
 }
 
 fn main() -> Result<()> {
@@ -117,12 +123,26 @@ fn main() -> Result<()> {
 }
 
 fn report(root: &Path, args: &ReportArgs) -> Result<()> {
+    let path = match &args.state {
+        Some(path) => path.clone(),
+        None => trend::default_path(&args.scope)?,
+    };
+    let mut state = trend::State::load(&path)?;
+    let mail = mail::Config::from_env();
+    let today = today()?;
+
+    // Comparing from the last audited commit covers everything merged since the previous mail.
+    let from = args
+        .from
+        .clone()
+        .or_else(|| state.since(&today).map(String::from))
+        .unwrap_or_else(|| String::from("HEAD~1"));
     // A bare store path has no host config behind it, so there is nothing to diff.
     let bumps = args.target.is_none().then(|| {
         bumps::run(
             root,
             &BumpsArgs {
-                from: args.from.clone(),
+                from,
                 to: None,
                 host: args.host.clone(),
                 all: false,
@@ -137,120 +157,76 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         &ScanArgs {
             hosts: args.hosts.clone(),
             target: args.target.clone(),
+            quiet: mail.is_some(),
             ..Default::default()
         },
     )?;
     cdx::write(args.cdx.as_deref(), &mut findings);
 
-    // Each scope needs its own issue; two jobs sharing one would overwrite each other.
-    let title = std::env::var("NIX_AUDIT_ISSUE").unwrap_or_else(|_| ISSUE_TITLE.to_string());
-    let token = std::env::var("FORGEJO_TOKEN").unwrap_or_default();
-    let config = forgejo::Config::from_env();
-    let lookup = (!token.is_empty()).then(|| forgejo::find(&config, &token, &title));
-    let previous = match &lookup {
-        Some(Ok(Some(issue))) => issue.body.as_str(),
-        _ => "",
-    };
-    let mut state = trend::State::from_body(previous);
+    let hash = git(root, &["rev-parse", "HEAD"])?;
+    let short = trend::short(&hash);
+    let diff = state.advance(&hash, &today, &findings);
 
-    let commit = git(root, &["log", "-1", "--format=%H %cs"])?;
-    let (hash, date) = commit.split_once(' ').unwrap_or((&commit, ""));
-    let short = trend::short(hash);
-    let diff = state.advance(hash, date, &findings);
-
-    let reported: usize = findings.iter().map(|f| f.rows.len()).sum();
+    let open: usize = findings.iter().map(|f| f.rows.len()).sum();
     let bumped = bumps.as_ref().map_or(0, |b| b.changes.len());
-    let fingerprint = fingerprint(&findings);
-    let body = format!(
-        "{}\n{}{}\n<!-- fingerprint: {} -->\n{}",
-        preamble(&title, &format!("{short} {date}")),
-        state.markdown(&findings),
-        scan::markdown(&findings),
-        fingerprint,
-        state.marker()
-    );
-    // What changed goes into the comment, which notifies, rather than the standing report.
-    // Linking the compared range makes a new finding traceable to the change that brought it.
-    let web = format!("{}/{}", config.url.trim_end_matches('/'), config.repo);
-    let mut comment = format!(
-        "Report updated for [`{short}`]({web}/commit/{hash}): {reported} high or critical findings across {} host(s), {bumped} watchlist bump(s)",
+    let change = diff
+        .as_ref()
+        .map_or_else(|| String::from("first run"), trend::Diff::summary);
+    let subject = format!("nix-audit {}: {change}, {open} open", args.scope);
+
+    let mut body = format!(
+        "# {subject}\n\nAudit of `{short}` on {today}: {open} high or critical findings across {} host(s), {bumped} watchlist bump(s).\n\n",
         findings.len()
     );
-    match &diff {
-        Some(diff) => comment.push_str(&format!(
-            ", {} since [`{}`]({web}/compare/{}...{hash}).\n\n{}",
-            diff.summary(),
+    if let Some(diff) = &diff {
+        body.push_str(&format!(
+            "## Since {} (`{}`)\n\n{}",
+            diff.since_date,
             trend::short(&diff.since),
-            diff.since,
             diff.markdown(&findings)
-        )),
-        None => comment.push_str(".\n\n"),
-    }
-    if let Some(bumps) = bumps.as_ref().filter(|b| !b.changes.is_empty()) {
-        comment.push_str(&bumps::markdown(bumps));
-    }
-    print!("{body}\n---\n\n{comment}");
-
-    let issue = match lookup {
-        None => return Ok(()),
-        Some(Err(error)) => {
-            eprintln!("warning: tracking issue not updated: {error:#}");
-            return Ok(());
-        }
-        Some(Ok(issue)) => issue,
-    };
-    // The report above is the deliverable; posting it is best-effort, so a missing issue
-    // scope on the token must not discard a scan that took half an hour.
-    match forgejo::upsert(
-        &config,
-        &token,
-        issue,
-        &title,
-        &body,
-        &fingerprint,
-        &comment,
-        bumped > 0,
-    ) {
-        Ok(action) => eprintln!("forgejo: {action}"),
-        Err(error) => eprintln!("warning: tracking issue not updated: {error:#}"),
-    }
-    Ok(())
-}
-
-fn preamble(title: &str, commit: &str) -> String {
-    let mut out = format!("# {title}\n\nAs of commit {commit}.\n");
-    let env = |key| std::env::var(key).ok().filter(|v| !v.is_empty());
-    if let (Some(server), Some(repo), Some(run)) = (
-        env("GITHUB_SERVER_URL"),
-        env("GITHUB_REPOSITORY"),
-        env("GITHUB_RUN_NUMBER"),
-    ) {
-        out.push_str(&format!(
-            "Full closure SBOMs are attached to [run {run}]({server}/{repo}/actions/runs/{run}).\n"
         ));
     }
-    out
+    if let Some(bumps) = bumps.as_ref().filter(|b| !b.changes.is_empty()) {
+        body.push_str(&bumps::markdown(bumps));
+    }
+    body.push_str("The full report is attached as report.md.\n");
+
+    let mut attachments: Vec<(String, String)> = findings
+        .iter()
+        .filter_map(|f| Some((format!("trend-{}.svg", f.host), state.svg(&f.host)?)))
+        .collect();
+    attachments.push((
+        String::from("report.md"),
+        format!(
+            "# nix-audit {}: open vulnerabilities\n\nAs of commit {short} on {today}.\n\n{}",
+            args.scope,
+            scan::markdown(&findings)
+        ),
+    ));
+
+    match &mail {
+        Some(config) => {
+            mail::send(config, &subject, &body, &attachments)?;
+            println!(
+                "mailed {} report to {}: {change}, {open} open",
+                args.scope, config.to
+            );
+        }
+        None => print!(
+            "{body}\n---\n\n{}",
+            attachments.last().map_or("", |(_, r)| r)
+        ),
+    }
+    // Saved only once the mail is out, so a failed send widens the next delta instead of losing it.
+    state.save(&path)
 }
 
-fn fingerprint(findings: &[scan::HostFindings]) -> String {
-    let mut lines: Vec<String> = findings
-        .iter()
-        .flat_map(|f| {
-            f.rows.iter().map(move |r| {
-                format!(
-                    "{},{},{},{}",
-                    f.host,
-                    scan::field(r, "vuln_id"),
-                    scan::field(r, "package"),
-                    scan::version(r)
-                )
-            })
-        })
-        .collect();
-    lines.sort();
-    let mut hasher = Sha256::new();
-    hasher.update(lines.join("\n"));
-    format!("{:x}", hasher.finalize())
+fn today() -> Result<String> {
+    let out = Command::new("date")
+        .arg("+%F")
+        .output()
+        .context("running date")?;
+    Ok(String::from_utf8(out.stdout)?.trim().to_string())
 }
 
 pub fn git(root: &Path, args: &[&str]) -> Result<String> {

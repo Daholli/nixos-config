@@ -1,18 +1,19 @@
 use crate::scan::{self, HostFindings, field};
 use crate::table;
+use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
+use std::path::{Path, PathBuf};
 
-const MARKER: &str = "<!-- nix-audit-state:";
-const KEEP: usize = 20;
+const KEEP: usize = 30;
 
-/// Carried between runs in a hidden marker of the tracking issue body.
+/// Carried between runs in a state file on the machine that runs the audit.
 #[derive(Default, Serialize, Deserialize)]
 pub struct State {
     history: Vec<Point>,
     findings: BTreeSet<String>,
-    // The finding set of the run before the latest commit, so a rerun of the same commit
-    // still diffs against the change before it.
+    // The finding set of the day before the latest run, so a rerun on the same day still
+    // diffs against the previous day.
     base: BTreeSet<String>,
 }
 
@@ -31,6 +32,7 @@ struct Counts {
 
 pub struct Diff {
     pub since: String,
+    pub since_date: String,
     new: BTreeSet<String>,
     resolved: BTreeSet<String>,
 }
@@ -41,21 +43,45 @@ impl Diff {
     }
 }
 
+pub fn default_path(scope: &str) -> Result<PathBuf> {
+    let base = match std::env::var_os("XDG_STATE_HOME").filter(|v| !v.is_empty()) {
+        Some(dir) => PathBuf::from(dir),
+        None => {
+            PathBuf::from(std::env::var_os("HOME").context("HOME is not set")?).join(".local/state")
+        }
+    };
+    Ok(base.join("nix-audit").join(format!("{scope}.json")))
+}
+
 impl State {
-    pub fn from_body(body: &str) -> Self {
-        crate::forgejo::marker(body, MARKER)
-            .and_then(|json| serde_json::from_str(&json).ok())
-            .unwrap_or_default()
+    pub fn load(path: &Path) -> Result<Self> {
+        match std::fs::read(path) {
+            Ok(bytes) => serde_json::from_slice(&bytes)
+                .with_context(|| format!("parsing {}", path.display())),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(Self::default()),
+            Err(error) => Err(error).with_context(|| format!("reading {}", path.display())),
+        }
     }
 
-    pub fn marker(&self) -> String {
-        format!(
-            "{MARKER} {} -->\n",
-            serde_json::to_string(self).unwrap_or_default()
-        )
+    pub fn save(&self, path: &Path) -> Result<()> {
+        if let Some(dir) = path.parent() {
+            std::fs::create_dir_all(dir)?;
+        }
+        let tmp = path.with_extension("json.tmp");
+        std::fs::write(&tmp, serde_json::to_vec(self)?)?;
+        std::fs::rename(&tmp, path).with_context(|| format!("writing {}", path.display()))
     }
 
-    /// Records this run and returns what changed since the previous commit, if there was one.
+    /// The commit audited on the last day before `date`.
+    pub fn since(&self, date: &str) -> Option<&str> {
+        self.history
+            .iter()
+            .rev()
+            .find(|p| p.date != date)
+            .map(|p| p.commit.as_str())
+    }
+
+    /// Records this run and returns what changed since the previous day, if there was one.
     pub fn advance(&mut self, commit: &str, date: &str, findings: &[HostFindings]) -> Option<Diff> {
         let current: BTreeSet<String> = findings
             .iter()
@@ -69,7 +95,7 @@ impl State {
                 .map(|f| (f.host.clone(), counts(f)))
                 .collect(),
         };
-        if self.history.last().is_some_and(|p| p.commit == commit) {
+        if self.history.last().is_some_and(|p| p.date == date) {
             self.history.pop();
         } else {
             self.base = std::mem::take(&mut self.findings);
@@ -83,42 +109,98 @@ impl State {
         let previous = self.history.iter().rev().nth(1)?;
         Some(Diff {
             since: previous.commit.clone(),
+            since_date: previous.date.clone(),
             new: self.findings.difference(&self.base).cloned().collect(),
             resolved: self.base.difference(&self.findings).cloned().collect(),
         })
     }
 
-    pub fn markdown(&self, findings: &[HostFindings]) -> String {
-        if self.history.len() < 2 {
-            return String::new();
+    /// A line chart of the daily counts for one host, once there are two days to connect.
+    pub fn svg(&self, host: &str) -> Option<String> {
+        let points: Vec<(&str, Counts)> = self
+            .history
+            .iter()
+            .filter_map(|p| Some((p.date.as_str(), *p.hosts.get(host)?)))
+            .collect();
+        if points.len() < 2 {
+            return None;
         }
-        let mut out = String::from("## Trend\n\n");
-        for host in findings {
-            let points: Vec<(&str, Counts)> = self
-                .history
-                .iter()
-                .filter_map(|p| Some((p.commit.as_str(), *p.hosts.get(&host.host)?)))
-                .collect();
-            if points.len() < 2 {
-                continue;
+        let (width, height) = (640.0, 260.0);
+        let (left, right, top, bottom) = (44.0, 136.0, 48.0, 36.0);
+        let max = points
+            .iter()
+            .map(|(_, c)| c.critical + c.high)
+            .max()
+            .unwrap_or(0)
+            .max(1);
+        let step = (width - left - right) / (points.len() - 1) as f64;
+        let x = |i: usize| left + step * i as f64;
+        let y = |v: usize| top + (height - top - bottom) * (1.0 - v as f64 / max as f64);
+        let baseline = y(0);
+
+        let mut out = format!(
+            r##"<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" font-family="system-ui, sans-serif" font-size="11" fill="#52514e">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="{left}" y="20" font-size="14" font-weight="600" fill="#1a1a19">{host}: open high and critical findings</text>
+<line x1="{left}" y1="{top}" x2="{}" y2="{top}" stroke="#e4e3df"/>
+<line x1="{left}" y1="{baseline}" x2="{}" y2="{baseline}" stroke="#a3a29b"/>
+<text x="{}" y="{}" text-anchor="end">{max}</text>
+<text x="{}" y="{}" text-anchor="end">0</text>
+"##,
+            width - right,
+            width - right,
+            left - 6.0,
+            top + 4.0,
+            left - 6.0,
+            baseline + 4.0,
+        );
+        let every = points.len().div_ceil(8);
+        for (i, (date, _)) in points.iter().enumerate() {
+            let last = points.len() - 1;
+            if i == last || (i % every == 0 && last - i >= every) {
+                out.push_str(&format!(
+                    "<text x=\"{:.1}\" y=\"{}\" text-anchor=\"middle\">{}</text>\n",
+                    x(i),
+                    baseline + 18.0,
+                    date.get(5..).unwrap_or(date)
+                ));
             }
-            let labels: Vec<String> = points
+        }
+        let series = [
+            ("high + critical", "#2a78d6", false),
+            ("critical", "#eb6834", true),
+        ];
+        let value = |c: &Counts, critical_only: bool| {
+            if critical_only {
+                c.critical
+            } else {
+                c.critical + c.high
+            }
+        };
+        for (n, (label, color, critical_only)) in series.iter().enumerate() {
+            let line: Vec<String> = points
                 .iter()
-                .map(|(c, _)| format!("\"{}\"", short(c)))
+                .enumerate()
+                .map(|(i, (_, c))| format!("{:.1},{:.1}", x(i), y(value(c, *critical_only))))
                 .collect();
-            let total: Vec<usize> = points.iter().map(|(_, c)| c.critical + c.high).collect();
-            let critical: Vec<usize> = points.iter().map(|(_, c)| c.critical).collect();
-            let max = total.iter().copied().max().unwrap_or(0).max(1);
+            let last = value(&points[points.len() - 1].1, *critical_only);
             out.push_str(&format!(
-                "```mermaid\nxychart-beta\n  title \"{}\"\n  x-axis [{}]\n  y-axis \"findings\" 0 --> {max}\n  line {:?}\n  line {:?}\n```\n\n",
-                host.host,
-                labels.join(", "),
-                total,
-                critical
+                "<polyline fill=\"none\" stroke=\"{color}\" stroke-width=\"2\" stroke-linejoin=\"round\" points=\"{}\"/>\n\
+                 <circle cx=\"{:.1}\" cy=\"{:.1}\" r=\"4\" fill=\"{color}\" stroke=\"#ffffff\" stroke-width=\"2\"/>\n\
+                 <text x=\"{:.1}\" y=\"{:.1}\" fill=\"#1a1a19\">{last} {label}</text>\n\
+                 <rect x=\"{}\" y=\"30\" width=\"10\" height=\"10\" rx=\"2\" fill=\"{color}\"/>\n\
+                 <text x=\"{}\" y=\"39\">{label}</text>\n",
+                line.join(" "),
+                x(points.len() - 1),
+                y(last),
+                x(points.len() - 1) + 10.0,
+                y(last) + 4.0 + 12.0 * n as f64,
+                left + 130.0 * n as f64,
+                left + 14.0 + 130.0 * n as f64,
             ));
         }
-        out.push_str("_Upper line: high and critical, lower line: critical only._\n\n");
-        out
+        out.push_str("</svg>\n");
+        Some(out)
     }
 }
 
@@ -221,42 +303,55 @@ mod tests {
         let mut state = State::default();
         assert!(
             state
-                .advance("a", "d", &[host("h", &[("CVE-1", "p", "9.8")])])
+                .advance("a", "2026-01-01", &[host("h", &[("CVE-1", "p", "9.8")])])
                 .is_none()
         );
-        assert!(state.markdown(&[]).is_empty());
+        assert!(state.svg("h").is_none());
     }
 
     #[test]
-    fn diffs_against_the_previous_commit() {
+    fn diffs_against_the_previous_day() {
         let mut state = State::default();
         state.advance(
             "a",
-            "d",
+            "2026-01-01",
             &[host("h", &[("CVE-1", "p", "9.8"), ("CVE-2", "q", "7.5")])],
         );
         let findings = [host("h", &[("CVE-2", "q", "7.5"), ("CVE-3", "r", "8.0")])];
-        let diff = state.advance("b", "d", &findings).unwrap();
+        let diff = state.advance("b", "2026-01-02", &findings).unwrap();
         assert_eq!(diff.since, "a");
+        assert_eq!(diff.since_date, "2026-01-01");
         assert_eq!(diff.new, BTreeSet::from(["h,CVE-3,r".to_string()]));
         assert_eq!(diff.resolved, BTreeSet::from(["h,CVE-1,p".to_string()]));
 
         assert_eq!(diff.summary(), "+1 new, −1 resolved");
         assert!(diff.markdown(&findings).contains("~~CVE-1~~ p (h)"));
         assert!(diff.markdown(&findings).contains("[CVE-3]"));
-        assert!(
-            state
-                .markdown(&findings)
-                .contains("line [2, 2]\n  line [1, 0]")
-        );
+
+        let svg = state.svg("h").unwrap();
+        assert!(svg.contains(">01-02<"));
+        assert!(svg.contains(">2 high + critical<"));
+        assert!(svg.contains(">0 critical<"));
     }
 
     #[test]
-    fn rerun_of_a_commit_replaces_its_point_and_keeps_the_base() {
+    fn same_commit_on_a_new_day_still_diffs() {
         let mut state = State::default();
-        state.advance("a", "d", &[host("h", &[("CVE-1", "p", "9.8")])]);
-        state.advance("b", "d", &[host("h", &[])]);
-        let diff = state.advance("b", "d", &[host("h", &[])]).unwrap();
+        state.advance("a", "2026-01-01", &[host("h", &[])]);
+        let diff = state
+            .advance("a", "2026-01-02", &[host("h", &[("CVE-1", "p", "9.8")])])
+            .unwrap();
+        assert_eq!(diff.new.len(), 1);
+        assert_eq!(state.history.len(), 2);
+    }
+
+    #[test]
+    fn rerun_on_the_same_day_replaces_its_point_and_keeps_the_base() {
+        let mut state = State::default();
+        state.advance("a", "2026-01-01", &[host("h", &[("CVE-1", "p", "9.8")])]);
+        state.advance("b", "2026-01-02", &[host("h", &[])]);
+        assert_eq!(state.since("2026-01-02"), Some("a"));
+        let diff = state.advance("c", "2026-01-02", &[host("h", &[])]).unwrap();
         assert_eq!(state.history.len(), 2);
         assert_eq!(diff.since, "a");
         assert_eq!(diff.resolved.len(), 1);
@@ -266,24 +361,24 @@ mod tests {
     fn keeps_a_bounded_history() {
         let mut state = State::default();
         for i in 0..KEEP + 5 {
-            state.advance(&i.to_string(), "d", &[host("h", &[])]);
+            state.advance(&i.to_string(), &i.to_string(), &[host("h", &[])]);
         }
         assert_eq!(state.history.len(), KEEP);
         assert_eq!(state.history[0].commit, "5");
     }
 
     #[test]
-    fn round_trips_through_the_issue_body() {
+    fn round_trips_through_the_state_file() {
+        let dir = std::env::temp_dir().join(format!("nix-audit-test-{}", std::process::id()));
+        let path = dir.join("scope.json");
+        assert!(State::load(&path).unwrap().history.is_empty());
+
         let mut state = State::default();
-        state.advance("a", "d", &[host("h", &[("CVE-1", "p", "9.8")])]);
-        let body = format!("# report\n{}", state.marker());
-        let parsed = State::from_body(&body);
-        assert_eq!(parsed.history.len(), 1);
-        assert_eq!(parsed.findings, state.findings);
-        assert!(
-            State::from_body("<!-- nix-audit-state: garbage -->")
-                .history
-                .is_empty()
-        );
+        state.advance("a", "2026-01-01", &[host("h", &[("CVE-1", "p", "9.8")])]);
+        state.save(&path).unwrap();
+        let loaded = State::load(&path).unwrap();
+        assert_eq!(loaded.history.len(), 1);
+        assert_eq!(loaded.findings, state.findings);
+        std::fs::remove_dir_all(dir).unwrap();
     }
 }

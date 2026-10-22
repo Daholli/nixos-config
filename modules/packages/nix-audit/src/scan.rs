@@ -82,8 +82,13 @@ fn vulnxscan(
         cmd.arg("--whitelist").arg(path);
     }
     cmd.arg(target);
-    // vulnxscan writes its own report to stdout; ours has to stay pure markdown.
-    cmd.stdout(Stdio::from(stderr().as_fd().try_clone_to_owned()?));
+    // vulnxscan writes its own report to stdout; ours has to stay pure markdown, and a mailed
+    // report should not reappear in the CI log.
+    if args.quiet {
+        cmd.stdout(Stdio::null());
+    } else {
+        cmd.stdout(Stdio::from(stderr().as_fd().try_clone_to_owned()?));
+    }
     cmd.stderr(Stdio::piped());
 
     let mut child = cmd.spawn().context("running vulnxscan")?;

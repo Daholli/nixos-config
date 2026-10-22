@@ -42,7 +42,10 @@ _topLevel: {
         port = lkJwtPort;
       };
 
-      # Allow lk-jwt-service (DynamicUser) to read the secrets file
-      systemd.services.lk-jwt-service.serviceConfig.SupplementaryGroups = [ "livekit-secrets" ];
+      systemd.services.lk-jwt-service = {
+        environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = matrixDomain;
+        # Allow lk-jwt-service (DynamicUser) to read the secrets file
+        serviceConfig.SupplementaryGroups = [ "livekit-secrets" ];
+      };
     };
 }

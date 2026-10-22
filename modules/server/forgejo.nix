@@ -67,6 +67,11 @@
 
           metrics.ENABLED = true;
 
+          actions = {
+            LOG_RETENTION_DAYS = 7;
+            ARTIFACT_RETENTION_DAYS = 7;
+          };
+
           mailer = {
             ENABLED = true;
             PROTOCOL = "smtps";

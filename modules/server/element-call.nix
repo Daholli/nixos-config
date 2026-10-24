@@ -22,7 +22,6 @@ _topLevel: {
       # LiveKit SFU media server
       services.livekit = {
         enable = true;
-        openFirewall = true;
         keyFile = config.sops.secrets."matrix/livekit/keyFile".path;
 
         settings = {
@@ -33,6 +32,13 @@ _topLevel: {
           };
         };
       };
+
+      networking.firewall.allowedUDPPortRanges = [
+        {
+          from = livekitRtcPortStart;
+          to = livekitRtcPortEnd;
+        }
+      ];
 
       # lk-jwt-service: bridges Matrix OpenID tokens to LiveKit JWTs
       services.lk-jwt-service = {

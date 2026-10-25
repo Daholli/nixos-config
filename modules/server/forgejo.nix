@@ -70,6 +70,7 @@
           actions = {
             LOG_RETENTION_DAYS = 7;
             ARTIFACT_RETENTION_DAYS = 7;
+            ENDLESS_TASK_TIMEOUT = "8h";
           };
 
           mailer = {

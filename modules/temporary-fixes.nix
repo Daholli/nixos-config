@@ -55,40 +55,6 @@ let
         makeWrapperArgs = lib.concatMap (lib.splitString " ") old.makeWrapperArgs;
       });
     })
-
-    # NixOS/nixpkgs#576564: aggregateModules needs r8125.ko.cer from modules_install
-    (_: prev: {
-      linuxKernel = prev.linuxKernel // {
-        packages = lib.mapAttrs (
-          _: kp:
-          if (builtins.tryEval (kp ? extend)).value or false then
-            kp.extend (
-              kfinal: kprev: {
-                r8125 = kprev.r8125.overrideAttrs (old: {
-                  preBuild = ''
-                    substituteInPlace src/Makefile --replace-fail "BASEDIR :=" "BASEDIR ?="
-                  '';
-                  makeFlags = old.makeFlags ++ [
-                    "INSTALL_MOD_PATH=${placeholder "out"}"
-                    "INSTALL_MOD_DIR=kernel/drivers/net/ethernet/realtek"
-                    "INSTALL_MOD_STRIP=1"
-                    "DEPMOD=true"
-                  ];
-                  installPhase = null;
-                  installTargets = [ "modules_install" ];
-                  installFlags = [
-                    "-C"
-                    "${kfinal.kernel.dev}/lib/modules/${kfinal.kernel.modDirVersion}/build"
-                    "M=$(PWD)/src"
-                  ];
-                });
-              }
-            )
-          else
-            kp
-        ) prev.linuxKernel.packages;
-      };
-    })
   ];
 in
 {

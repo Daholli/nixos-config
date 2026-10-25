@@ -59,7 +59,8 @@
         supportedFilesystems = [ "zfs" ];
         kernelParams = [ "zfs.zfs_arc_max=2147483648" ];
         zfs = {
-          package = pkgs.zfs;
+          # same nixpkgs as the kernel, so userland matches the zfs kernel module
+          package = inputs.nixpkgs-rpi-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}.zfs;
           forceImportRoot = false;
         };
       };

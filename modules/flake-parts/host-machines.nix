@@ -56,5 +56,5 @@ in
     ))
   ];
 
-  flake.installerImages = inputs.nixos-raspberrypi.installerImages;
+  flake.installerImages = inputs.nixos-raspberrypi-installer.installerImages;
 }

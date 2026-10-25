@@ -74,11 +74,13 @@
           RemainAfterExit = true;
           Restart = "on-failure";
           RestartSec = 5;
+          TimeoutStartSec = 120;
           DynamicUser = true;
           SupplementaryGroups = [ "secrets-access" ];
         };
 
         script = ''
+          until (exec 3<>/dev/tcp/127.0.0.1/${toString port}) 2>/dev/null; do sleep 1; done
           ${attic} cache create ${cacheName} || true
           ${attic} cache configure ${cacheName} --public \
             ${lib.concatMapStringsSep " " (k: "--upstream-cache-key-name ${k}") upstreamCacheKeyNames}

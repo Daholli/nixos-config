@@ -77,10 +77,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # pinned by rev so nightly updates don't rebuild the Pi kernel natively; bump by hand
+    nixpkgs-rpi-kernel.url = "github:nixos/nixpkgs/3ec636362e1816bc2f0888fa0fa2c69f1bc9e504";
     nixos-raspberrypi = {
-      url = "github:Daholli/nixos-raspberrypi/develop";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nvmd/nixos-raspberrypi/develop";
+      inputs.nixpkgs.follows = "nixpkgs-rpi-kernel";
     };
+    nixos-raspberrypi-installer.url = "github:Daholli/nixos-raspberrypi/develop";
 
     nix-gaming-edge = {
       url = "github:powerofthe69/nix-gaming-edge";

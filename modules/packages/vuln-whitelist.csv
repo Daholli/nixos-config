@@ -17,6 +17,7 @@ CVE-2022-3734,redis,,"Affects the unofficial Windows port of redis only",True
 CVE-2022-30947,git,,"Jenkins Git Plugin CVE; nothing to do with git itself",True
 CVE-2022-36882,git,,"Jenkins Git Plugin CSRF (plugin 4.11.3 and earlier); nothing to do with git itself",True
 CVE-2022-36883,git,,"Jenkins Git Plugin CVE; nothing to do with git itself",True
+CVE-2023-41330,snappy,,"KnpLabs Snappy, the PHP wkhtmltopdf wrapper (fixed in its 1.4.3), not Google's snappy compression library at 1.2.x",True
 CVE-2023-51767,openssh,,"Row hammer attack against OpenSSH through 10.0; deployed 10.5p1 is outside that range and NVD's openssh CPE is unbounded",True
 CVE-2024-23749,kitty,,"KiTTY the Windows PuTTY fork (<= 0.76.1.13), not kitty the terminal emulator",True
 CVE-2024-25003,kitty,,"KiTTY the Windows PuTTY fork (<= 0.76.1.13), not kitty the terminal emulator",True

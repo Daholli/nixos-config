@@ -166,10 +166,14 @@ fn severity(raw: &str) -> &'static str {
 }
 
 // The link sits in the issue body, which must stay unchanged while the findings do.
+// Sunshine ignores VEX analysis, so whitelisted findings stay in the file but not the link.
 fn stable(bom: &Value) -> Value {
     let mut out = bom.clone();
     if let Some(top) = out.as_object_mut() {
         top.remove("serialNumber");
+    }
+    if let Some(vulns) = out["vulnerabilities"].as_array_mut() {
+        vulns.retain(|v| v["analysis"]["state"] != "not_affected");
     }
     if let Some(metadata) = out["metadata"].as_object_mut() {
         metadata.remove("timestamp");
@@ -311,11 +315,11 @@ mod tests {
     }
 
     #[test]
-    fn link_keeps_findings_and_their_paths_only() {
+    fn link_keeps_open_findings_and_their_paths_only() {
         let (mut bom, host) = fixture();
         annotate(&mut bom, &host);
-        let small = paths_only(&bom);
-        assert_eq!(small["vulnerabilities"].as_array().unwrap().len(), 3);
+        let small = paths_only(&stable(&bom));
+        assert_eq!(small["vulnerabilities"].as_array().unwrap().len(), 2);
         let mut kept: Vec<&str> = small["components"]
             .as_array()
             .unwrap()
@@ -323,7 +327,7 @@ mod tests {
             .map(|c| c["bom-ref"].as_str().unwrap())
             .collect();
         kept.sort();
-        assert_eq!(kept, ["/bash", "/curl", "/path", "pkg:nix/gone@1.0"]);
+        assert_eq!(kept, ["/curl", "/path", "pkg:nix/gone@1.0"]);
     }
 
     #[test]

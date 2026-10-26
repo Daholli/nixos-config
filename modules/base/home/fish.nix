@@ -16,8 +16,7 @@
           usbutils
           btop
 
-          zip
-          unzip
+          ouch
           nettools
         ];
       };

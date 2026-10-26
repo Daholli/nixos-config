@@ -5,7 +5,7 @@
       environment.systemPackages = with pkgs; [
         # prismlauncher
         starsector
-        beyond-all-reason
+        # beyond-all-reason
 
         inputs.titrack.packages.${pkgs.stdenv.hostPlatform.system}.default
 

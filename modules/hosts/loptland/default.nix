@@ -62,6 +62,8 @@ topLevel: {
           80
           443
         ];
+        # SMTPS for the nixberry CI runner's audit mails.
+        firewall.interfaces.tailscale0.allowedTCPPorts = [ 465 ];
 
         interfaces.ens3.ipv6.addresses = [
           {

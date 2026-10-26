@@ -216,7 +216,6 @@ topLevel: {
         programs = {
           git.signing.signByDefault = true;
           jbcontext.enable = true;
-          zed-editor.enable = true;
         };
 
         local = {

@@ -81,6 +81,9 @@ topLevel: {
           1400
           1443
         ];
+
+        # loptland only exposes SMTPS over tailscale.
+        hosts."100.86.250.97" = [ "mail.christophhollizeck.dev" ];
       };
     };
 }

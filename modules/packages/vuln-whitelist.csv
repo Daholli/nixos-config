@@ -7,8 +7,11 @@ CVE-(2016|2017|2018|2019|2020|2021|2022|2023)-\d+,linux,,"Pre-2024 kernel CVEs m
 CVE-201[67]-\d+,mujs,,"2016-17 MuJS CVEs with unbounded NVD CPEs; deployed 1.3.6 postdates them all",True
 CVE-2017-5436,graphite2,,"2017 Firefox-era CVE; NVD lists only distro CPEs and 1.3.15 postdates the fix",True
 CVE-2017-5506,imagemagick,,"2017 CVE fixed upstream in Jan 2017 (9a069e0f); matched against 7.1.2-34 via an unbounded NVD range",True
+CVE-2017-17969,p7zip,,"Shrink decoder overflow fixed in the p7zip-project fork's 17.01 (ChangeLog); deployed 17.06",True
+CVE-2018-5996,p7zip,,"RAR3 decoder bug fixed in p7zip-project 17.01, and nixpkgs strips the unRAR code from the free build anyway",True
 CVE-2018-6553,cups,,"The CUPS AppArmor profile on Ubuntu/Debian; NixOS ships no such profile",True
 CVE-2018-7263,libmad,,"libmad EOL, no fix. Only reached via sox<-roc-toolkit<-pipewire client libs (desktops; immich via jellyfin-ffmpeg<-openal-soft on nixberry). ROC is a daemon module: desktops build the daemon with rocSupport=false, nixberry runs no pipewire, and ffmpeg has its own MP3 decoder",True
+CVE-2018-10893,spice,,"spice-gtk client LZ decoder bug fixed in spice-gtk 0.35 (we ship 0.43); matched against the spice 0.16.0 server via NVD's unversioned spice:- CPE",True
 CVE-2018-13730,hey,,"mintToken integer overflow in the HEY Ethereum token smart contract, not basecamp's hey-cli",True
 CVE-2019-1010022,glibc,,"Disputed by upstream glibc: the stack guard bypass needs an existing stack overflow to exploit, so it is hardening, not a vulnerability",True
 CVE-2019-1010023,glibc,,"Disputed by upstream glibc: ldd on a malicious ELF can map attacker code, but ldd was never safe to run on untrusted binaries",True
@@ -23,7 +26,9 @@ CVE-2022-30947,git,,"Jenkins Git Plugin CVE; nothing to do with git itself",True
 CVE-2022-33065,libsndfile,,"Real and unfixed in 1.2.2, but only pulled in via ffmpeg -> libopenmpt -> mpg123 -> libpulseaudio; nothing here feeds AU/MAT4 files to libsndfile",True
 CVE-2022-36882,git,,"Jenkins Git Plugin CSRF (plugin 4.11.3 and earlier); nothing to do with git itself",True
 CVE-2022-36883,git,,"Jenkins Git Plugin CVE; nothing to do with git itself",True
+CVE-2023-5366,openvswitch,,"ICMPv6 ND OpenFlow bypass fixed in OVS 3.2.1 (Oct 2023); deployed 4.0.0, and libvirt has no OVS bridges configured",True
 CVE-2023-28115,snappy,,"KnpLabs Snappy, the PHP wkhtmltopdf wrapper (fixed in its 1.4.2), not Google's snappy compression library at 1.2.x",True
+CVE-2023-34111,grafana,,"Command injection in the GitHub workflow of taosdata/grafanaplugin, not Grafana itself",True
 CVE-2023-41330,snappy,,"KnpLabs Snappy, the PHP wkhtmltopdf wrapper (fixed in its 1.4.3), not Google's snappy compression library at 1.2.x",True
 CVE-2023-51767,openssh,,"Row hammer attack against OpenSSH through 10.0; deployed 10.5p1 is outside that range and NVD's openssh CPE is unbounded",True
 CVE-2024-23749,kitty,,"KiTTY the Windows PuTTY fork (<= 0.76.1.13), not kitty the terminal emulator",True
@@ -35,14 +40,20 @@ CVE-2025-32990,gnutls,,"certtool template parsing overflow fixed in 3.8.10 (GNUT
 CVE-2025-47436,orc,,"Apache ORC C++ LZO decompression, not GStreamer's orc (Oil Runtime Compiler)",True
 CVE-2025-52194,libsndfile,,"Unreproducible IRCAM report (upstream #1082, Debian: not reproducible); libsndfile only arrives via libpulseaudio",True
 CVE-2025-59032,dovecot,,"ManageSieve crash fixed in Dovecot CE 2.4.3 per OX advisory 2026-0001; we run 2.4.5 with ManageSieve disabled",True
+CVE-2025-69649,binutils,,"readelf null deref on a crafted ELF; binutils only arrives as ghc's linker and nothing here runs readelf on untrusted files",True
+CVE-2025-69650,binutils,,"readelf double free on a crafted ELF (disputed); binutils only arrives as ghc's linker and nothing here runs readelf on untrusted files",True
 CVE-2026-0861,glibc,,"memalign alignment overflow affects glibc 2.30-2.42 and is fixed in 2.43; hosts run 2.44",True
 CVE-2026-1584,gnutls,,"TLS 1.3 PSK binder server crash, only 3.8.11 affected, fixed in 3.8.12 (GNUTLS-SA-2026-02-09-1)",True
 CVE-2026-2100,p11-kit,,"RPC C_DeriveKey uninitialized value (0.25.6-0.26.1) fixed in 0.26.2; NVD CPE is unversioned",True
+CVE-2026-3441,binutils,,"XCOFF backend bug; nixpkgs binutils is built for x86 ELF/PE only (objdump lists no xcoff target)",True
+CVE-2026-3442,binutils,,"XCOFF backend bug; nixpkgs binutils is built for x86 ELF/PE only (objdump lists no xcoff target)",True
 CVE-2026-3497,openssh,,"NVD: affects distro GSSAPI patches, not upstream OpenSSH; we ship plain openssh, not openssh_gssapi",True
 CVE-2026-3833,gnutls,,"Case-sensitive nameConstraints comparison fixed in 3.8.13 (GNUTLS-SA-2026-04-29-5); NVD CPE is unversioned",True
 CVE-2026-4775,libtiff,,"Fixed upstream in 4.7.2 (782a11d6); NVD CPE is unversioned",True
 CVE-2026-5201,gdk-pixbuf,,"Fixed upstream in 2.44.6 (6cce9311); deployed 2.44.8 includes it, NVD CPE is unversioned",True
 CVE-2026-5435,glibc,,"ns_sprintrrf TSIG overflow fixed upstream in 2.44 (commit ca44a660); NVD's open-ended range is stale",True
+CVE-2026-6507,dnsmasq,,"Needs --dhcp-split-relay; dnsmasq here is NetworkManager's shared-connection helper, which never sets it",True
+CVE-2026-6846,binutils,,"XCOFF backend bug; nixpkgs binutils is built for x86 ELF/PE only (objdump lists no xcoff target)",True
 CVE-2026-8376,perl,,"Heap overflow on 32-bit builds only, and fixed in 5.42.3-RC1; hosts are x86_64 on 5.42.3",True
 CVE-2026-13221,perl,,"Fixed in 5.42.3-RC1 and we run 5.42.3; matches only because NVD's CPE end=5.43.9 does not encode the per-branch fix",True
 CVE-2026-16554,cjson,,"Overflow needs a 32-bit size_t; both hosts are 64-bit, and cjson only arrives via librist, which prints its own stats",True
@@ -59,10 +70,12 @@ CVE-2026-37555,libsndfile,,"Real and unfixed in 1.2.2, but only pulled in via li
 CVE-2026-40018,dovecot,,"MySQL escaping bug fixed in Dovecot CE 2.4.5 per OX advisory 2026-0003; we run 2.4.5 with no SQL passdb",True
 CVE-2026-42009,gnutls,,"DTLS sequence-number comparator UB fixed in 3.8.13 (GNUTLS-SA-2026-04-29-2); NVD CPE is unversioned",True
 CVE-2026-42010,gnutls,,"RSA-PSK username auth bypass fixed in 3.8.13 (GNUTLS-SA-2026-04-29-4); NVD CPE is unversioned",True
+CVE-2026-55893,capstone,,"SH-architecture disassembler bug; capstone only arrives via qemu-host-cpu-only, which disassembles x86 guests only",True
 CVE-2026-57432,perl,,"Fixed in 5.42.3-RC1 and we run 5.42.3; matches only because NVD's CPE end=5.43.10 does not encode the per-branch fix",True
 CVE-2026-59850,libssh,,"Closed-channel callback UAF fixed in 0.12.1/0.11.5; NVD CPE is unversioned",True
 CVE-2026-59851,libssh,,"gssapi-keyex authorization bypass (0.12.0 only) fixed in 0.12.1; NVD CPE is unversioned",True
 CVE-2026-67215,cjson,,"Only cJSONUtils JSON Patch application is affected; the sole consumer, librist (via ffmpeg), never uses cJSON_Utils",True
 CVE-2026-85091,zlib,1.3.2,"Real C zlib bug and the version is in range, but it needs gzprintf after a non-blocking write stall; nginx links zlib-ng, not this zlib",False
+CVE-2026-92392,curl,8.22.0,"Real; fixed in 8.23.0 (nixpkgs #574057, merged 2026-10-15), not yet on nixos-unstable. Reached via systemd, which does no HTTP/2 uploads here",False
 CVE-2026-111497,brotli,1.2.0,"Real and in range; fixed in 1.2.1 (nixpkgs #577208), not yet on nixos-unstable. HA/immich request bodies with Content-Encoding br are rejected with 415 at loptland nginx meanwhile",False
 .*,libpng,1.2.59,"Real and in range; libpng 1.2.x is EOL. Reaches the system only through Beyond All Reason's FHS sandbox rootfs",False

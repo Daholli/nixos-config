@@ -1617,6 +1617,26 @@
         "type": "github"
       }
     },
+    "rom": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793083619,
+        "narHash": "sha256-MXq7iTd3u11Q/CKbR/waEw1J6ArK0AN5NJuG42/vVw0=",
+        "owner": "manic-systems",
+        "repo": "rom",
+        "rev": "34f49ce128b8be653ca708437779e90fdabfb4d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "manic-systems",
+        "repo": "rom",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
@@ -1659,6 +1679,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "omnix": "omnix",
         "ponytail-src": "ponytail-src",
+        "rom": "rom",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "systems": "systems_4",

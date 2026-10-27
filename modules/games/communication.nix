@@ -4,7 +4,7 @@
     {
       environment.systemPackages = with pkgs; [
         vesktop
-        teamspeak6-client
+        # teamspeak6-client
         element-desktop
       ];
 

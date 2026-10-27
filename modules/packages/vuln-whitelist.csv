@@ -1,12 +1,15 @@
 vuln_id,package,version_local,comment,whitelist
 CVE-2010-4226,cpio,,"Affects openSUSE's build package use of cpio (2007/2010 builds), not cpio itself",True
 CVE-2014-9826,imagemagick,,"2014 CVE matched against 7.1.2-31; stale NVD range",True
+CVE-2016-0749,spice,,"Smartcard heap overflow fixed upstream in spice 0.12.8 (2016); deployed 0.16.0, NVD CPE is unversioned",True
+CVE-2016-2150,spice,,"Guest primary-surface host memory access fixed upstream in spice 0.12.8 (2016); deployed 0.16.0, NVD CPE is unversioned",True
 CVE-(2016|2017|2018|2019|2020|2021|2022|2023)-\d+,linux,,"Pre-2024 kernel CVEs matched against 7.x by a single scanner via unbounded NVD ranges; all fixed upstream long before 7.x",True
 CVE-201[67]-\d+,mujs,,"2016-17 MuJS CVEs with unbounded NVD CPEs; deployed 1.3.6 postdates them all",True
 CVE-2017-5436,graphite2,,"2017 Firefox-era CVE; NVD lists only distro CPEs and 1.3.15 postdates the fix",True
 CVE-2017-5506,imagemagick,,"2017 CVE fixed upstream in Jan 2017 (9a069e0f); matched against 7.1.2-34 via an unbounded NVD range",True
 CVE-2018-6553,cups,,"The CUPS AppArmor profile on Ubuntu/Debian; NixOS ships no such profile",True
 CVE-2018-7263,libmad,,"libmad EOL, no fix. Only reached via sox<-roc-toolkit<-pipewire client libs (desktops; immich via jellyfin-ffmpeg<-openal-soft on nixberry). ROC is a daemon module: desktops build the daemon with rocSupport=false, nixberry runs no pipewire, and ffmpeg has its own MP3 decoder",True
+CVE-2018-13730,hey,,"mintToken integer overflow in the HEY Ethereum token smart contract, not basecamp's hey-cli",True
 CVE-2019-1010022,glibc,,"Disputed by upstream glibc: the stack guard bypass needs an existing stack overflow to exploit, so it is hardening, not a vulnerability",True
 CVE-2019-1010023,glibc,,"Disputed by upstream glibc: ldd on a malicious ELF can map attacker code, but ldd was never safe to run on untrusted binaries",True
 CVE-2020-10800,lix,,"A different project called lix (affected through 15.8.7), not the Nix fork at 2.95.2",True

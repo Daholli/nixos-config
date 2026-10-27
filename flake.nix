@@ -71,6 +71,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    rom = {
+      url = "github:manic-systems/rom";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Support for special cases
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";

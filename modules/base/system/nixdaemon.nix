@@ -16,7 +16,7 @@
         nix-prefetch-git
         nix-index
 
-        nix-output-monitor
+        inputs.rom.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         nix-du
         nix-weather

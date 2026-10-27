@@ -29,6 +29,17 @@
         pkgs,
         ...
       }:
+      let
+        # nixpkgs-review only knows nom, so hand its `nom build` calls to rom
+        romAsNom = pkgs.writeShellScriptBin "nom" ''
+          [ "$1" = build ] && shift
+          exec 3>&1
+          nix build -v --log-format internal-json "$@" 2>&1 >&3 3>&- | ${
+            inputs.rom.packages.${pkgs.stdenv.hostPlatform.system}.default
+          }/bin/rom 3>&-
+          exit "''${PIPESTATUS[0]}"
+        '';
+      in
       {
         programs = {
           fish = {
@@ -79,9 +90,17 @@
               deployNixberry = "${lib.getExe osConfig.programs.nh.package} os switch --build-host nixberry --target-host nixberry --use-substitutes -H nixberry $argv";
               deployLoptland = "${lib.getExe osConfig.programs.nh.package} os switch --build-host christophhollizeck.dev --target-host christophhollizeck.dev --use-substitutes -H loptland $argv";
               exportMachineSSHkey = "export SOPS_AGE_KEY=$(sudo ssh-to-age -i /etc/ssh/ssh_host_ed25519_key -private-key)";
-              checkPR = ''cd /home/cholli/projects/NixOS/nixpkgs && ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
+              checkPR = ''cd /home/cholli/projects/NixOS/nixpkgs && PATH="${romAsNom}/bin:$PATH" ${lib.getExe pkgs.nixpkgs-review} pr $argv --post-result --systems "x86_64-linux aarch64-linux"'';
 
-              pushYggdrasil = "attic push cholli (nom build --no-link --print-out-paths .#nixosConfigurations.yggdrasil.config.system.build.toplevel)";
+              nix = ''
+                if isatty stderr; and test "$argv[1]" = build
+                  command nix build -v --log-format internal-json $argv[2..] 2>| rom
+                  return $pipestatus[1]
+                end
+                command nix $argv
+              '';
+
+              pushYggdrasil = "attic push cholli (rom build .#nixosConfigurations.yggdrasil.config.system.build.toplevel -- --no-link --print-out-paths)";
 
               syncfactoriomodstoserver = ''rsync -aP ~/.factorio/mods/ root@loptland:/var/lib/private/factorio/mods/ --delete && ssh root@loptland "systemctl restart systemd-tmpfiles-resetup.service && systemctl restart factorio.service"'';
             };

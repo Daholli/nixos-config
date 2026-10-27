@@ -7,7 +7,11 @@
       ...
     }:
     let
-      cacheName = "cholli";
+      # name -> public
+      caches = {
+        cholli = true;
+        work = false;
+      };
       port = 8181;
 
       upstreamCacheKeyNames = [
@@ -47,6 +51,7 @@
           listen = "127.0.0.1:${toString port}";
           api-endpoint = "https://attic.christophhollizeck.dev/";
           database.url = "postgresql:///atticd?host=/run/postgresql&user=atticd";
+          garbage-collection.default-retention-period = "30 days";
         };
       };
 
@@ -81,9 +86,11 @@
 
         script = ''
           until (exec 3<>/dev/tcp/127.0.0.1/${toString port}) 2>/dev/null; do sleep 1; done
-          ${attic} cache create ${cacheName} || true
-          ${attic} cache configure ${cacheName} --public \
-            ${lib.concatMapStringsSep " " (k: "--upstream-cache-key-name ${k}") upstreamCacheKeyNames}
+          ${lib.concatMapAttrsStringSep "\n" (name: public: ''
+            ${attic} cache create ${name} || true
+            ${attic} cache configure ${name} ${if public then "--public" else "--private"} \
+              ${lib.concatMapStringsSep " " (k: "--upstream-cache-key-name ${k}") upstreamCacheKeyNames}
+          '') caches}
         '';
       };
     };

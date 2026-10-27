@@ -37,6 +37,8 @@ topLevel: {
         };
       };
 
+      local.attic.work.enable = true;
+
       home-manager.users.cholli.local.dms.wsl.enable = true;
     };
 }

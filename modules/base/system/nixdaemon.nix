@@ -11,125 +11,156 @@
       username = "cholli";
     in
     {
-      environment.systemPackages = with pkgs; [
-        nixfmt
-        nix-prefetch-git
-        nix-index
+      options.local.attic.work.enable =
+        lib.mkEnableOption "the private work attic cache (pull via netrc, push via `attic push work:work`)";
 
-        inputs.rom.packages.${pkgs.stdenv.hostPlatform.system}.default
+      config = lib.mkMerge [
+        {
+          environment.systemPackages = with pkgs; [
+            nixfmt
+            nix-prefetch-git
+            nix-index
 
-        nix-du
-        nix-weather
-        nix-index
+            inputs.rom.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-        nix-update
-        inputs.nix-auth.packages.${pkgs.stdenv.hostPlatform.system}.default
+            nix-du
+            nix-weather
+            nix-index
 
-        attic
-      ];
+            nix-update
+            inputs.nix-auth.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-      nixpkgs.overlays = [
-        (_: prev: {
-          attic = prev.writeShellScriptBin "attic" ''
-            export XDG_CONFIG_HOME=${
-              prev.linkFarm "attic-xdg" {
-                "attic/config.toml" = (prev.formats.toml { }).generate "attic-config.toml" {
-                  default-server = "cholli";
-                  servers.cholli = {
-                    endpoint = "https://attic.christophhollizeck.dev/";
-                    token-file = config.sops.secrets."attic/token".path;
-                  };
-                };
-              }
-            }
-            exec ${prev.attic-client}/bin/attic "$@"
-          '';
+            attic
+          ];
+
+          nixpkgs.overlays = [
+            (_: prev: {
+              attic = prev.writeShellScriptBin "attic" ''
+                export XDG_CONFIG_HOME=${
+                  prev.linkFarm "attic-xdg" {
+                    "attic/config.toml" = (prev.formats.toml { }).generate "attic-config.toml" {
+                      default-server = "cholli";
+                      servers = {
+                        cholli = {
+                          endpoint = "https://attic.christophhollizeck.dev/";
+                          token-file = config.sops.secrets."attic/token".path;
+                        };
+                      }
+                      // lib.optionalAttrs config.local.attic.work.enable {
+                        work = {
+                          endpoint = "https://attic.christophhollizeck.dev/";
+                          token-file = config.sops.secrets."attic/work/push-token".path;
+                        };
+                      };
+                    };
+                  }
+                }
+                exec ${prev.attic-client}/bin/attic "$@"
+              '';
+            })
+          ];
+
+          programs.nh = {
+            enable = true;
+            package = inputs.nh-flake.packages.${pkgs.stdenv.hostPlatform.system}.nh;
+            flake = "/home/${username}/projects/config";
+
+            clean.enable = true;
+            clean.extraArgs = "--keep-since 7d --keep 5";
+          };
+
+          sops = {
+            secrets."github/pat" = {
+              sopsFile = ../../../secrets/secrets.yaml;
+            };
+            secrets."nix/signing-key" = {
+              sopsFile = ../../../secrets/secrets.yaml;
+            };
+            secrets."attic/token" = {
+              sopsFile = ../../../secrets/secrets.yaml;
+              group = "secrets-access";
+              mode = "0440";
+            };
+            templates."access_tokens.conf" = {
+              content = ''
+                access-tokens = github.com=${config.sops.placeholder."github/pat"}
+              '';
+              owner = "root";
+              group = "secrets-access";
+              mode = "0440";
+            };
+          };
+
+          nix = {
+            package = pkgs.lix;
+
+            extraOptions = "!include ${config.sops.templates."access_tokens.conf".path}";
+
+            settings =
+              let
+                users = [
+                  "root"
+                  username
+                ]
+                ++ lib.optional (config.services.forgejo-runner.instances ? native) "forgejo-runner";
+              in
+              {
+
+                nix-path = [ "nixpkgs=flake:nixpkgs" ];
+                experimental-features = [
+                  "nix-command"
+                  "flakes"
+                ];
+                http-connections = 50;
+                warn-dirty = false;
+                log-lines = 50;
+                sandbox = "relaxed";
+                auto-optimise-store = true;
+                trusted-users = users;
+                allowed-users = users;
+                allowed-uris = "github: https://github.com/ git+https://github.com/ gitlab: https://gitlab.com/ git+https://gitlab.com/ git+https://codeberg.org/ git+https://git.christophhollizeck.dev/";
+                substituters = [
+                  "https://cache.lix.systems"
+                  "https://nix-community.cachix.org"
+                  "https://helix.cachix.org"
+                  "https://nixos-raspberrypi.cachix.org"
+                  "https://cholli.cachix.org"
+                  "https://devenv.cachix.org"
+                  "https://attic.christophhollizeck.dev/cholli"
+                ];
+                secret-key-files = [ config.sops.secrets."nix/signing-key".path ];
+                trusted-public-keys = [
+                  "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+                  "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+                  "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
+                  "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+                  "cholli.cachix.org-1:1nQ9JUO/1sHK7wm5obDgR/DNndPUsApBshQnEPIoMfI="
+                  "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+                  # attic cache signing key, from: attic cache info cholli
+                  "cholli:uy8L6bKuXcrm2kIMcjyh/c4QACtfBh5gn2/fvbOBFIE="
+                  # generated with: nix key generate-secret --key-name cholli-local-1
+                  "cholli-local-1:v/wzL3lqs/CBDwSohhoRHlTJbqsf67DZDqfRDcp0cdA="
+                ];
+                fallback = true;
+              };
+          };
+        }
+        (lib.mkIf config.local.attic.work.enable {
+          sops = {
+            secrets."attic/work/pull-token".sopsFile = ../../../secrets/secrets-work.yaml;
+            secrets."attic/work/push-token" = {
+              sopsFile = ../../../secrets/secrets-work.yaml;
+              group = "secrets-access";
+              mode = "0440";
+            };
+            templates."attic-netrc".content = ''
+              machine attic.christophhollizeck.dev
+              password ${config.sops.placeholder."attic/work/pull-token"}
+            '';
+          };
+
+          nix.settings.netrc-file = config.sops.templates."attic-netrc".path;
         })
       ];
-
-      programs.nh = {
-        enable = true;
-        package = inputs.nh-flake.packages.${pkgs.stdenv.hostPlatform.system}.nh;
-        flake = "/home/${username}/projects/config";
-
-        clean.enable = true;
-        clean.extraArgs = "--keep-since 7d --keep 5";
-      };
-
-      sops = {
-        secrets."github/pat" = {
-          sopsFile = ../../../secrets/secrets.yaml;
-        };
-        secrets."nix/signing-key" = {
-          sopsFile = ../../../secrets/secrets.yaml;
-        };
-        secrets."attic/token" = {
-          sopsFile = ../../../secrets/secrets.yaml;
-          group = "secrets-access";
-          mode = "0440";
-        };
-        templates."access_tokens.conf" = {
-          content = ''
-            access-tokens = github.com=${config.sops.placeholder."github/pat"}
-          '';
-          owner = "root";
-          group = "secrets-access";
-          mode = "0440";
-        };
-      };
-
-      nix = {
-        package = pkgs.lix;
-
-        extraOptions = "!include ${config.sops.templates."access_tokens.conf".path}";
-
-        settings =
-          let
-            users = [
-              "root"
-              username
-            ]
-            ++ lib.optional (config.services.forgejo-runner.instances ? native) "forgejo-runner";
-          in
-          {
-
-            nix-path = [ "nixpkgs=flake:nixpkgs" ];
-            experimental-features = [
-              "nix-command"
-              "flakes"
-            ];
-            http-connections = 50;
-            warn-dirty = false;
-            log-lines = 50;
-            sandbox = "relaxed";
-            auto-optimise-store = true;
-            trusted-users = users;
-            allowed-users = users;
-            allowed-uris = "github: https://github.com/ git+https://github.com/ gitlab: https://gitlab.com/ git+https://gitlab.com/ git+https://codeberg.org/ git+https://git.christophhollizeck.dev/";
-            substituters = [
-              "https://cache.lix.systems"
-              "https://nix-community.cachix.org"
-              "https://helix.cachix.org"
-              "https://nixos-raspberrypi.cachix.org"
-              "https://cholli.cachix.org"
-              "https://devenv.cachix.org"
-              "https://attic.christophhollizeck.dev/cholli"
-            ];
-            secret-key-files = [ config.sops.secrets."nix/signing-key".path ];
-            trusted-public-keys = [
-              "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
-              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-              "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
-              "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
-              "cholli.cachix.org-1:1nQ9JUO/1sHK7wm5obDgR/DNndPUsApBshQnEPIoMfI="
-              "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-              # attic cache signing key, from: attic cache info cholli
-              "cholli:uy8L6bKuXcrm2kIMcjyh/c4QACtfBh5gn2/fvbOBFIE="
-              # generated with: nix key generate-secret --key-name cholli-local-1
-              "cholli-local-1:v/wzL3lqs/CBDwSohhoRHlTJbqsf67DZDqfRDcp0cdA="
-            ];
-            fallback = true;
-          };
-      };
     };
 }

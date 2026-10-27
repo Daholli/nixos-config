@@ -7,7 +7,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
@@ -101,7 +101,7 @@
     };
 
     hey-cli = {
-      url = "github:basecamp/hey-cli/v1.4.0";
+      url = "github:basecamp/hey-cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

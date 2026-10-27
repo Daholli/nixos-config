@@ -22,6 +22,8 @@ topLevel: {
       #
       programs.nix-ld.enable = true;
 
+      local.attic.work.enable = true;
+
       environment.systemPackages =
         with pkgs;
         let

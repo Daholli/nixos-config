@@ -5,6 +5,7 @@
       mediaLocation = "/storage/immich";
       host = "0.0.0.0";
       openFirewall = true;
+      machine-learning.enable = false;
     };
 
     systemd.tmpfiles.rules = [

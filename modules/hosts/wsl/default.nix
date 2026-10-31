@@ -39,6 +39,9 @@ topLevel: {
 
       local.attic.work.enable = true;
 
+      # a reboot stops the WSL instance until Windows starts it again
+      system.autoUpgrade.allowReboot = false;
+
       home-manager.users.cholli.local.dms.wsl.enable = true;
     };
 }

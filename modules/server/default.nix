@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.server = { pkgs, ... }: {
+  flake.modules.nixos.server = { lib, pkgs, ... }: {
     environment.systemPackages = [ pkgs.kitty.terminfo ];
 
     system.autoUpgrade = {
@@ -8,7 +8,11 @@
       dates = "06:30";
       randomizedDelaySec = "30m";
       fixedRandomDelay = true;
-      allowReboot = false;
+      allowReboot = lib.mkDefault true;
+      rebootWindow = {
+        lower = "06:30";
+        upper = "08:30";
+      };
     };
 
   };

@@ -56,8 +56,7 @@ let
       });
     })
 
-    # vlc still pins ffmpeg_7 (CVEs) although 3.0.24 upstream ships ffmpeg 8; libvlc inherits this
-    (final: prev: { vlc = prev.vlc.override { ffmpeg_7 = final.ffmpeg; }; })
+    (final: prev: { vlc = prev.vlc.override { ffmpeg_8 = final.ffmpeg; }; })
   ];
 in
 {

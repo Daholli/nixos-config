@@ -20,7 +20,7 @@ let
       }
     ))
 
-    # NixOS/nixpkgs#576742: azure-cli needs fabric, which is broken with invoke 3.
+    # NixOS/nixpkgs#576874: azure-cli needs fabric, which is broken with invoke 3.
     # Pin invoke inside azure-cli's own python set only; globally it rebuilds aiohttp and up.
     (
       _: prev:
@@ -37,15 +37,22 @@ let
         };
       in
       {
-        azure-cli = prev.azure-cli.override {
-          python3 = prev.python3 // {
-            override =
-              args:
-              prev.python3.override (
-                args // { packageOverrides = lib.composeExtensions args.packageOverrides pinInvoke; }
-              );
-          };
-        };
+        azure-cli =
+          if !(prev.python3Packages.fabric.meta.broken or false) then
+            prev.azure-cli
+          else
+            prev.azure-cli.override {
+              python3 = prev.python3 // {
+                override =
+                  args:
+                  prev.python3.override (
+                    args
+                    // {
+                      packageOverrides = lib.composeExtensions (args.packageOverrides or (_: _: { })) pinInvoke;
+                    }
+                  );
+              };
+            };
       }
     )
 
@@ -56,7 +63,13 @@ let
       });
     })
 
-    (final: prev: { vlc = prev.vlc.override { ffmpeg_8 = final.ffmpeg; }; })
+    (final: prev: {
+      vlc =
+        if lib.functionArgs prev.vlc.override ? ffmpeg_8 then
+          prev.vlc.override { ffmpeg_8 = final.ffmpeg; }
+        else
+          prev.vlc;
+    })
   ];
 in
 {
@@ -68,23 +81,4 @@ in
 
   flake.modules.nixos.base.nixpkgs.overlays = overlays;
 
-  flake.modules.homeManager.dev =
-    { pkgs, ... }:
-    let
-      llmPkgs = inputs.llm-agents-nix.packages.${pkgs.stdenv.hostPlatform.system};
-    in
-    {
-      _module.args.llmPkgs = lib.mkForce (
-        llmPkgs
-        // {
-          # patchelf 0.19 corrupts the Node SEA when setting the rpath; the
-          # wrapper already sets LD_LIBRARY_PATH (no upstream fix yet)
-          copilot-cli = llmPkgs.copilot-cli.overrideAttrs (old: {
-            installPhase = lib.concatStrings (
-              lib.filter lib.isString (builtins.split ''--set-rpath "[^"]*"'' old.installPhase)
-            );
-          });
-        }
-      );
-    };
 }

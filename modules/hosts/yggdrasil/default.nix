@@ -80,7 +80,7 @@ topLevel: {
           vlc
           ffmpeg
           (azure-cli.withExtensions [ azure-cli-extensions.azure-devops ])
-          onlyoffice-desktopeditors
+          # onlyoffice-desktopeditors
 
           jetbrains.rust-rover
           (pkgs.jetbrains.plugins.addPlugins jetbrains.rust-rover (lib.attrValues plugins))

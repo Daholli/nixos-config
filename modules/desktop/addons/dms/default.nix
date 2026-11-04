@@ -90,7 +90,7 @@
         programs.dsearch.enable = true;
 
         programs.dank-calendar = {
-          enable = true;
+          enable = false;
           systemd.enable = true;
         };
       };

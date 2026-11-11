@@ -74,7 +74,7 @@ topLevel: {
 
           termscp
           nixpkgs-review
-          gitbutler
+          # gitbutler
 
           postman
           vlc

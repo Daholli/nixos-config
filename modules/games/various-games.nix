@@ -10,7 +10,7 @@
         inputs.titrack.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         # gaming tools
-        pyfa
+        # pyfa
         inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.rusty-path-of-building
       ];
     };

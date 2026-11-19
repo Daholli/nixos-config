@@ -3,6 +3,7 @@
     {
       config,
       lib,
+      inputs,
       pkgs,
       ...
     }:
@@ -110,6 +111,12 @@
         frequency = "daily";
         rotate = 14;
       };
+
+      services.nginx.package =
+        inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nginxStable;
+
+      # block the SCTP root-escalation chain until the kernel is patched
+      boot.extraModprobeConfig = "install sctp /bin/false";
 
       services.nginx = {
         enable = true;

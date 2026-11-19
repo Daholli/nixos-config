@@ -13,7 +13,7 @@
 
       jbcontext = pkgs.stdenv.mkDerivation {
         pname = "jbcontext";
-        version = "0.9.17.1213";
+        version = "0.9.21.1593";
 
         src = inputs.jbcontext-src;
 

@@ -228,11 +228,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795044852,
-        "narHash": "sha256-1Gln7FIofIibx+0zVyLzmxP989uoCEMt4H9wwdeqO2M=",
+        "lastModified": 1795056910,
+        "narHash": "sha256-PCdEoFpddAvGkZpPQnBcX82FJ+2XGBVDmui88T07qH4=",
         "owner": "duxlabs-dev",
         "repo": "dux-shell",
-        "rev": "8bbd77923647102b96cbcc617fc790670a17c35c",
+        "rev": "aa3dc8bbc08707f67ef0e6c4f319c2ff628966d4",
         "type": "github"
       },
       "original": {
@@ -834,11 +834,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795053228,
-        "narHash": "sha256-cPXtoIfNcR6YlqG3KPPxxkZVzuQfHJnAyMPRJU5TFw8=",
+        "lastModified": 1795054420,
+        "narHash": "sha256-SQyuAtIJiB0JICEhWg8Fv0CPyBxOXpZhREuxVIDJ21g=",
         "owner": "basecamp",
         "repo": "hey-cli",
-        "rev": "22653167bf318c57919300928d0bece17a1d3a23",
+        "rev": "5075f8cc5b349155e1186715deeac1e538d84cae",
         "type": "github"
       },
       "original": {
@@ -924,13 +924,13 @@
     "jbcontext-src": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-H5eufeEphMj8oXGjKkMa62N/JnTF2TYJn5ajaEl/T5c=",
+        "narHash": "sha256-ZaCYWoZ86pXfIbtQbR6h64KOdxp7knZf/9C3Pdzna0w=",
         "type": "file",
-        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.17.1213/context-native-linux-x64-0.9.17.1213"
+        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.21.1593/context-native-linux-x64-0.9.21.1593"
       },
       "original": {
         "type": "file",
-        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.17.1213/context-native-linux-x64-0.9.17.1213"
+        "url": "https://download.jetbrains.com/jetbrains-context/builds/v0.9.21.1593/context-native-linux-x64-0.9.21.1593"
       }
     },
     "llm-agents-nix": {
@@ -944,11 +944,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1795049667,
-        "narHash": "sha256-IU2bMCcM8GCidQ2u/B6x6s1oUu09rxrfY5BwHMQj7mQ=",
+        "lastModified": 1795053855,
+        "narHash": "sha256-2M31WhYLweKabSGqGM3GoNAGGsEOsQ7FIuv8d4g2lXc=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "b66644988261fb62742771e9238c3ffb9228eff0",
+        "rev": "7a6051143c31b932c16345d7887aad1672dbefc3",
         "type": "github"
       },
       "original": {
@@ -1409,11 +1409,11 @@
     },
     "nixpkgs-latest-factorio": {
       "locked": {
-        "lastModified": 1795053195,
-        "narHash": "sha256-06uhPJ5jIfk25X7rD1g5L+VaVPjJcYN3SY7k8mTB4BQ=",
+        "lastModified": 1795062605,
+        "narHash": "sha256-AocoyECDeOk/NyDsi7V8zKPMdRI44GbC7DX2105ufIE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c189734a91fb1320be13f93dbc35de76ab0262d5",
+        "rev": "0ecf16430dce8390f59d5dce3b9c670c90f93cca",
         "type": "github"
       },
       "original": {
@@ -1425,11 +1425,11 @@
     },
     "nixpkgs-latest-minecraft": {
       "locked": {
-        "lastModified": 1795053195,
-        "narHash": "sha256-06uhPJ5jIfk25X7rD1g5L+VaVPjJcYN3SY7k8mTB4BQ=",
+        "lastModified": 1795062605,
+        "narHash": "sha256-AocoyECDeOk/NyDsi7V8zKPMdRI44GbC7DX2105ufIE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c189734a91fb1320be13f93dbc35de76ab0262d5",
+        "rev": "0ecf16430dce8390f59d5dce3b9c670c90f93cca",
         "type": "github"
       },
       "original": {
@@ -1456,11 +1456,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1795053195,
-        "narHash": "sha256-06uhPJ5jIfk25X7rD1g5L+VaVPjJcYN3SY7k8mTB4BQ=",
+        "lastModified": 1795062605,
+        "narHash": "sha256-AocoyECDeOk/NyDsi7V8zKPMdRI44GbC7DX2105ufIE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c189734a91fb1320be13f93dbc35de76ab0262d5",
+        "rev": "0ecf16430dce8390f59d5dce3b9c670c90f93cca",
         "type": "github"
       },
       "original": {

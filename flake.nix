@@ -206,6 +206,7 @@
 
     devenv = {
       url = "github:cachix/devenv";
+      inputs.nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
     };
 
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";

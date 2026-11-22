@@ -12,7 +12,6 @@ CVE-2018-5996,p7zip,,"RAR3 decoder bug fixed in p7zip-project 17.01, and nixpkgs
 CVE-2018-6553,cups,,"The CUPS AppArmor profile on Ubuntu/Debian; NixOS ships no such profile",True
 CVE-2018-7263,libmad,,"libmad EOL, no fix. Only reached via sox<-roc-toolkit<-pipewire client libs (desktops; immich via jellyfin-ffmpeg<-openal-soft on nixberry). ROC is a daemon module: desktops build the daemon with rocSupport=false, nixberry runs no pipewire, and ffmpeg has its own MP3 decoder",True
 CVE-2018-10893,spice,,"spice-gtk client LZ decoder bug fixed in spice-gtk 0.35 (we ship 0.43); matched against the spice 0.16.0 server via NVD's unversioned spice:- CPE",True
-CVE-2018-13730,hey,,"mintToken integer overflow in the HEY Ethereum token smart contract, not basecamp's hey-cli",True
 CVE-2019-1010022,glibc,,"Disputed by upstream glibc: the stack guard bypass needs an existing stack overflow to exploit, so it is hardening, not a vulnerability",True
 CVE-2019-1010023,glibc,,"Disputed by upstream glibc: ldd on a malicious ELF can map attacker code, but ldd was never safe to run on untrusted binaries",True
 CVE-2020-10800,lix,,"A different project called lix (affected through 15.8.7), not the Nix fork at 2.95.2",True
@@ -77,5 +76,5 @@ CVE-2026-59851,libssh,,"gssapi-keyex authorization bypass (0.12.0 only) fixed in
 CVE-2026-67215,cjson,,"Only cJSONUtils JSON Patch application is affected; the sole consumer, librist (via ffmpeg), never uses cJSON_Utils",True
 CVE-2026-85091,zlib,1.3.2,"Real C zlib bug and the version is in range, but it needs gzprintf after a non-blocking write stall; nginx links zlib-ng, not this zlib",False
 CVE-2026-92392,curl,8.22.0,"Real; fixed in 8.23.0 (nixpkgs #574057, merged 2026-10-15), not yet on nixos-unstable. Reached via systemd, which does no HTTP/2 uploads here",False
-CVE-2026-111497,brotli,1.2.0,"Real and in range; fixed in 1.2.1 (nixpkgs #577208), not yet on nixos-unstable. HA/immich request bodies with Content-Encoding br are rejected with 415 at loptland nginx meanwhile",False
+CVE-2026-111497,brotli,1.2.1,"Fixed in 1.2.1 (NVD google:brotli range <1.2.1); matched by name via the andybalholm Go brotli CPE (<1.2.7)",True
 .*,libpng,1.2.59,"Real and in range; libpng 1.2.x is EOL. Reaches the system only through Beyond All Reason's FHS sandbox rootfs",False

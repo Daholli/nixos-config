@@ -71,13 +71,6 @@
         }
       '';
 
-      # CVE-2026-111497: brotli <1.2.1 decoder OOB write; drop once nixpkgs ships 1.2.1
-      rejectBrotli = ''
-        if ($http_content_encoding ~* "br") {
-          return 415;
-        }
-      '';
-
       anubis = name: "http://unix:${config.services.anubis.instances.${name}.settings.BIND}";
 
       websocket = ''
@@ -184,7 +177,7 @@
           "ha.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;
-            extraConfig = geoFence + rejectBrotli;
+            extraConfig = geoFence;
 
             locations =
               lib.genAttrs [ "/api/" "/auth/" ] (_: {
@@ -199,7 +192,7 @@
           "immich.${domainName}" = {
             forceSSL = true;
             useACMEHost = domainName;
-            extraConfig = geoFence + rejectBrotli;
+            extraConfig = geoFence;
 
             locations =
               lib.genAttrs [ "/api/" "/.well-known/immich" ] (_: {

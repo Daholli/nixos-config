@@ -1,0 +1,29 @@
+--- a/src/sbomnix/cli_utils.py
++++ b/src/sbomnix/cli_utils.py
+@@ -125,13 +125,15 @@
+     cdx_suffix=".cdx.json",
+     include_csv=False,
+     require_cpe_dictionary=False,
++    flakeref=None,
+ ):
+     """Generate temporary SBOM artifact files for downstream CLI workflows."""
+     LOG.info("Generating SBOM for target '%s'", target_path)
+     sbom = SbomBuilder(
+         target_path,
+         buildtime,
+-        include_meta=False,
++        flakeref=flakeref,
++        include_meta=flakeref is not None,
+         require_cpe_dictionary=require_cpe_dictionary,
+     )
+     cdx_path = None
+--- a/src/vulnxscan/vulnxscan_cli.py
++++ b/src/vulnxscan/vulnxscan_cli.py
+@@ -168,6 +168,7 @@
+             cdx_suffix=".json",
+             include_csv=True,
+             require_cpe_dictionary=args.require_cpe_dictionary,
++            flakeref=target.flakeref,
+         )
+         sbom_cdx_path = sbom_artifact.cdx_path
+         sbom_csv_path = sbom_artifact.csv_path

@@ -69,8 +69,9 @@
 
         programs.dank-material-shell = {
           enable = true;
+          systemd.enable = true;
           niri = {
-            enableSpawn = true;
+            enableSpawn = false;
             enableKeybinds = true;
 
             includes.enable = false;
@@ -90,8 +91,14 @@
         programs.dsearch.enable = true;
 
         programs.dank-calendar = {
-          enable = false;
+          enable = true;
           systemd.enable = true;
+        };
+
+        # DMS gives up discovering the dankcal socket after ~20 polls.
+        systemd.user.services.dms.Unit = lib.mkIf config.programs.dank-calendar.enable {
+          After = [ "dcal.service" ];
+          Wants = [ "dcal.service" ];
         };
       };
     };

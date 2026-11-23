@@ -8,8 +8,6 @@ use std::process::Command;
 const WATCHLIST: &[&str] = &[
     "adguardhome",
     "attic-server",
-    "element-call",
-    "element-web",
     "factorio-headless",
     "fail2ban",
     "forgejo",

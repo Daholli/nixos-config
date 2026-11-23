@@ -190,11 +190,7 @@
               {
                 matches = [
                   {
-                    app-id = "element";
-                  }
-                  {
-                    app-id = "electron";
-                    title = "Element";
+                    app-id = "^moe\\.sable\\.client$";
                   }
                   {
                     app-id = "vesktop";
@@ -236,7 +232,7 @@
                     app-id = "vesktop";
                   }
                   {
-                    app-id = "Element";
+                    app-id = "^moe\\.sable\\.client$";
                   }
                   {
                     app-id = "steam";
@@ -266,7 +262,7 @@
             spawn-at-startup = [
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
-              (afterTray "element-desktop")
+              (afterTray "sable")
               (afterTray "vesktop")
               (afterTray "1password")
               (afterTray "steam")

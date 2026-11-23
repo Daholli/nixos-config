@@ -1,5 +1,4 @@
 mod bumps;
-mod cdx;
 mod deps;
 mod mail;
 mod scan;
@@ -52,9 +51,6 @@ pub struct ScanArgs {
     /// Exit non-zero when a finding of this severity remains
     #[arg(long, value_name = "SEVERITY")]
     pub fail_on: Option<String>,
-    /// Write a CycloneDX SBOM with all findings per host into this directory
-    #[arg(long, value_name = "DIR")]
-    pub cdx: Option<PathBuf>,
     #[arg(skip)]
     pub quiet: bool,
 }
@@ -86,9 +82,6 @@ pub struct ReportArgs {
     /// Scan this store path instead of host toplevels, skipping the version comparison
     #[arg(long)]
     pub target: Option<String>,
-    /// Write a CycloneDX SBOM with all findings per host into this directory
-    #[arg(long, value_name = "DIR")]
-    pub cdx: Option<PathBuf>,
     /// Name of this audit, keeping its state and mail apart from other audits
     #[arg(long, env = "NIX_AUDIT_SCOPE", default_value = "hosts")]
     pub scope: String,
@@ -103,8 +96,7 @@ fn main() -> Result<()> {
 
     match cli.command {
         Cmd::Scan(args) => {
-            let mut findings = scan::run(&root, &args)?;
-            cdx::write(args.cdx.as_deref(), &mut findings);
+            let findings = scan::run(&root, &args)?;
             print!("{}", scan::markdown(&findings));
             if let Some(severity) = &args.fail_on {
                 let hits = scan::count_at_least(&findings, severity)?;
@@ -137,31 +129,36 @@ fn report(root: &Path, args: &ReportArgs) -> Result<()> {
         .clone()
         .or_else(|| state.since().map(String::from))
         .unwrap_or_else(|| String::from("HEAD~1"));
-    // A bare store path has no host config behind it, so there is nothing to diff.
-    let bumps = args.target.is_none().then(|| {
-        bumps::run(
+    let (bumps, findings) = std::thread::scope(|s| {
+        // A bare store path has no host config behind it, so there is nothing to diff.
+        let bumps = args.target.is_none().then(|| {
+            s.spawn(|| {
+                bumps::run(
+                    root,
+                    &BumpsArgs {
+                        from,
+                        to: None,
+                        host: args.host.clone(),
+                        all: false,
+                    },
+                )
+                .inspect_err(|e| eprintln!("warning: version comparison skipped: {e:#}"))
+                .ok()
+            })
+        });
+        let findings = scan::run(
             root,
-            &BumpsArgs {
-                from,
-                to: None,
-                host: args.host.clone(),
-                all: false,
+            &ScanArgs {
+                hosts: args.hosts.clone(),
+                target: args.target.clone(),
+                quiet: mail.is_some(),
+                ..Default::default()
             },
-        )
-        .inspect_err(|e| eprintln!("warning: version comparison skipped: {e:#}"))
-        .ok()
+        );
+        let bumps = bumps.and_then(|h| h.join().expect("version comparison panicked"));
+        (bumps, findings)
     });
-    let bumps = bumps.flatten();
-    let mut findings = scan::run(
-        root,
-        &ScanArgs {
-            hosts: args.hosts.clone(),
-            target: args.target.clone(),
-            quiet: mail.is_some(),
-            ..Default::default()
-        },
-    )?;
-    cdx::write(args.cdx.as_deref(), &mut findings);
+    let findings = findings?;
 
     let hash = git(root, &["rev-parse", "HEAD"])?;
     let short = trend::short(&hash);

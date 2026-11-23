@@ -1,6 +1,9 @@
 {
   flake.modules.nixos.server = { lib, pkgs, ... }: {
-    environment.systemPackages = [ pkgs.kitty.terminfo ];
+    environment.systemPackages = [
+      pkgs.kitty.terminfo
+      pkgs.dix
+    ];
 
     system.autoUpgrade = {
       enable = true;

@@ -1,6 +1,11 @@
 _: {
   perSystem =
     { lib, pkgs, ... }:
+    let
+      sbomnix = pkgs.sbomnix.overridePythonAttrs (old: {
+        patches = (old.patches or [ ]) ++ [ ./nix-audit/sbomnix-vulnxscan-meta.patch ];
+      });
+    in
     {
       packages.nix-audit = pkgs.rustPlatform.buildRustPackage {
         pname = "nix-audit";
@@ -15,14 +20,11 @@ _: {
         postInstall = ''
           wrapProgram $out/bin/nix-audit \
             --prefix PATH : ${
-              lib.makeBinPath (
-                with pkgs;
-                [
-                  git
-                  nvd
-                  sbomnix
-                ]
-              )
+              lib.makeBinPath [
+                pkgs.git
+                pkgs.nvd
+                sbomnix
+              ]
             } \
             --set-default NIX_AUDIT_WHITELIST ${./vuln-whitelist.csv}
         '';

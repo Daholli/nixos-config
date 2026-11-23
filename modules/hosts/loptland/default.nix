@@ -30,8 +30,8 @@ topLevel: {
         matrix-synapse
         matrix-authentication-service
         mautrix-signal
-        element-call
-        element-web
+        matrix-rtc
+        sable-web
         website
 
         # game server
@@ -49,12 +49,6 @@ topLevel: {
         enable = true;
         useRoutingFeatures = "client";
         extraSetFlags = [ "--accept-dns=false" ];
-      };
-
-      services.resolved = {
-        enable = true;
-
-        settings.Resolve.Domains = [ "~." ];
       };
 
       networking = {

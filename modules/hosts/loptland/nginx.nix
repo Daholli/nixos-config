@@ -250,49 +250,19 @@
             forceSSL = true;
             useACMEHost = matrixDomain;
 
-            locations."= /config.json" = {
-              extraConfig = ''
-                default_type application/json;
-                # Never cache this: a stale copy silently pins clients to old
-                # homeserver discovery settings.
-                add_header Cache-Control "no-store" always;
-                return 200 '${
-                  builtins.toJSON {
-                    default_server_config = {
-                      "m.homeserver" = {
-                        base_url = "https://matrix.${matrixDomain}";
-                        server_name = matrixDomain;
-                      };
-                    };
-                    livekit = {
-                      livekit_service_url = "https://call.${matrixDomain}/livekit/jwt";
-                    };
-                  }
-                }';
-              '';
-            };
-
-            locations."/" = {
-              root = "${pkgs.element-call}";
-              tryFiles = "$uri /index.html";
-              extraConfig = ''
-                add_header Cache-Control "no-cache" always;
-                add_header Content-Security-Policy "frame-ancestors 'self' https://chat.${matrixDomain}" always;
-              '';
-            };
-
             # Proxy lk-jwt-service for token generation
-            locations."/livekit/jwt" = {
-              proxyPass = "http://localhost:${toString lkJwtPort}";
+            locations."/livekit/jwt/" = {
+              proxyPass = "http://localhost:${toString lkJwtPort}/";
             };
 
             # Proxy LiveKit SFU websocket
-            locations."/livekit/sfu" = {
-              proxyPass = "http://localhost:${toString livekitPort}";
+            locations."/livekit/sfu/" = {
+              proxyPass = "http://localhost:${toString livekitPort}/";
               extraConfig = ''
                 proxy_http_version 1.1;
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
+                proxy_read_timeout 120s;
               '';
             };
           };

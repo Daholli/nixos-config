@@ -190,7 +190,7 @@
               {
                 matches = [
                   {
-                    app-id = "^chrome-chat\\.alwayssleepy\\.online__";
+                    app-id = "^moe\\.sable\\.client$";
                   }
                   {
                     app-id = "vesktop";
@@ -232,7 +232,7 @@
                     app-id = "vesktop";
                   }
                   {
-                    app-id = "^chrome-chat\\.alwayssleepy\\.online__";
+                    app-id = "^moe\\.sable\\.client$";
                   }
                   {
                     app-id = "steam";
@@ -262,7 +262,7 @@
             spawn-at-startup = [
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
-              { argv = [ "sable-desktop" ]; }
+              (afterTray "sable")
               (afterTray "vesktop")
               (afterTray "1password")
               (afterTray "steam")

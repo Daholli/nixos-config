@@ -76,6 +76,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sable = {
+      url = "git+https://git.sable.moe/SableClient/sable-next?ref=refs/tags/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Support for special cases
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";

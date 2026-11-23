@@ -30,7 +30,7 @@ topLevel: {
         matrix-synapse
         matrix-authentication-service
         mautrix-signal
-        element-call
+        matrix-rtc
         sable-web
         website
 

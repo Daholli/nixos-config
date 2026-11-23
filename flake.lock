@@ -1746,6 +1746,7 @@
         "omnix": "omnix",
         "ponytail-src": "ponytail-src",
         "rom": "rom",
+        "sable": "sable",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "systems": "systems_4",
@@ -1862,6 +1863,27 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
+      }
+    },
+    "sable": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794781020,
+        "narHash": "sha256-3ndyjU2/oBpBWGJPkPoynQm7uCzSmYFGDCvzMUmS7qw=",
+        "ref": "refs/tags/latest",
+        "rev": "19fb8f54c8def174009a1ee20fc2bc78b97cf545",
+        "revCount": 8268,
+        "type": "git",
+        "url": "https://git.sable.moe/SableClient/sable-next"
+      },
+      "original": {
+        "ref": "refs/tags/latest",
+        "type": "git",
+        "url": "https://git.sable.moe/SableClient/sable-next"
       }
     },
     "simple-nixos-mailserver": {

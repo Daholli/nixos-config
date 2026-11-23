@@ -1,4 +1,4 @@
-{ withSystem, ... }:
+{ inputs, ... }:
 {
   flake.modules.nixos.games =
     { pkgs, ... }:
@@ -6,7 +6,7 @@
       environment.systemPackages = with pkgs; [
         vesktop
         # teamspeak6-client
-        (withSystem pkgs.stdenv.hostPlatform.system ({ config, ... }: config.packages.sable-desktop))
+        inputs.sable.packages.${pkgs.stdenv.hostPlatform.system}.sable-desktop
       ];
 
       programs.obs-studio = {

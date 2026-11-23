@@ -1,5 +1,5 @@
 _topLevel: {
-  flake.modules.nixos.element-call =
+  flake.modules.nixos.matrix-rtc =
     { config, ... }:
     let
       matrixDomain = "alwayssleepy.online";

@@ -251,17 +251,18 @@
             useACMEHost = matrixDomain;
 
             # Proxy lk-jwt-service for token generation
-            locations."/livekit/jwt" = {
-              proxyPass = "http://localhost:${toString lkJwtPort}";
+            locations."/livekit/jwt/" = {
+              proxyPass = "http://localhost:${toString lkJwtPort}/";
             };
 
             # Proxy LiveKit SFU websocket
-            locations."/livekit/sfu" = {
-              proxyPass = "http://localhost:${toString livekitPort}";
+            locations."/livekit/sfu/" = {
+              proxyPass = "http://localhost:${toString livekitPort}/";
               extraConfig = ''
                 proxy_http_version 1.1;
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
+                proxy_read_timeout 120s;
               '';
             };
           };

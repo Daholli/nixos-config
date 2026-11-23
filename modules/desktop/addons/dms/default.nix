@@ -69,8 +69,9 @@
 
         programs.dank-material-shell = {
           enable = true;
+          systemd.enable = true;
           niri = {
-            enableSpawn = true;
+            enableSpawn = false;
             enableKeybinds = true;
 
             includes.enable = false;

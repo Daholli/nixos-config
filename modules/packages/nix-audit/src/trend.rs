@@ -295,8 +295,6 @@ mod tests {
                 .collect(),
             below: Vec::new(),
             suppressed: Vec::new(),
-            toplevel: None,
-            link: None,
             incomplete: false,
         }
     }

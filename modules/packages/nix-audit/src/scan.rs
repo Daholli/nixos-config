@@ -13,8 +13,6 @@ pub struct HostFindings {
     pub rows: Vec<Row>,
     pub below: Vec<Row>,
     pub suppressed: Vec<Row>,
-    pub toplevel: Option<String>,
-    pub link: Option<String>,
     pub incomplete: bool,
 }
 
@@ -72,7 +70,6 @@ pub fn run(root: &Path, args: &ScanArgs) -> Result<Vec<HostFindings>> {
             .as_deref()
             .and_then(|p| crate::deps::Graph::load(p).ok());
         let mut host = collect(name, &csv, graph.as_ref())?;
-        host.toplevel = toplevel;
         host.incomplete = incomplete;
         findings.push(host);
     }
@@ -206,8 +203,6 @@ fn collect(host: String, csv: &Path, graph: Option<&crate::deps::Graph>) -> Resu
         rows,
         below,
         suppressed,
-        toplevel: None,
-        link: None,
         incomplete: false,
     })
 }
@@ -226,12 +221,6 @@ pub fn markdown(findings: &[HostFindings]) -> String {
             out.push_str(
                 "**Incomplete: a scanner failed twice, so some findings are missing.**\n\n",
             );
-        }
-        if host.link.is_some() {
-            out.push_str(&format!(
-                "**[Open all findings in Sunshine][sunshine-{}]**\n\n",
-                host.host
-            ));
         }
         if host.rows.is_empty() {
             out.push_str("No high or critical findings.\n\n");
@@ -267,12 +256,6 @@ pub fn markdown(findings: &[HostFindings]) -> String {
             host.below.len(),
             host.suppressed.len()
         ));
-    }
-    // Reference links keep the long Sunshine URLs out of the readable part of the body.
-    for host in findings {
-        if let Some(link) = &host.link {
-            out.push_str(&format!("[sunshine-{}]: {link}\n", host.host));
-        }
     }
     out
 }

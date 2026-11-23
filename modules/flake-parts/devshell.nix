@@ -19,6 +19,7 @@ _: {
             rustc
             rustfmt
 
+            grype
             nvd
             sbomnix
           ];

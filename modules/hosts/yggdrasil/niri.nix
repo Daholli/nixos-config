@@ -193,7 +193,7 @@
                     app-id = "^moe\\.sable\\.client$";
                   }
                   {
-                    app-id = "vesktop";
+                    app-id = "^discord$";
                   }
                   {
                     app-id = "steam";
@@ -229,7 +229,7 @@
                     app-id = "com.onepassword.OnePassword";
                   }
                   {
-                    app-id = "vesktop";
+                    app-id = "^discord$";
                   }
                   {
                     app-id = "^moe\\.sable\\.client$";
@@ -263,7 +263,7 @@
               { argv = [ "zen-beta" ]; }
               { argv = [ "obsidian" ]; }
               (afterTray "sable")
-              (afterTray "vesktop")
+              (afterTray "discord")
               (afterTray "1password")
               (afterTray "steam")
             ];

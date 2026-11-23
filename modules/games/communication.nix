@@ -4,7 +4,7 @@
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
-        vesktop
+        discord
         # teamspeak6-client
         inputs.sable.packages.${pkgs.stdenv.hostPlatform.system}.sable-desktop
       ];

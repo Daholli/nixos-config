@@ -55,7 +55,7 @@
 
       services.factorio = {
         enable = true;
-        package = latest-factorio.factorio-headless-experimental;
+        package = latest-factorio.factorio-headless;
 
         openFirewall = true;
         public = true;

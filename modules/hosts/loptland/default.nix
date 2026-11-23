@@ -31,7 +31,7 @@ topLevel: {
         matrix-authentication-service
         mautrix-signal
         element-call
-        element-web
+        sable-web
         website
 
         # game server

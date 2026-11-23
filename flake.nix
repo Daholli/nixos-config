@@ -7,7 +7,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default-linux";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
@@ -160,11 +159,6 @@
     danksearch = {
       url = "github:duxlabs-dev/dux-search";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    dgop = {
-      url = "github:duxlabs-dev/dux-gop";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     dankcalendar = {

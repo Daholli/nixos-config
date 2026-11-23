@@ -325,26 +325,6 @@
         "type": "github"
       }
     },
-    "dgop": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1794282582,
-        "narHash": "sha256-7bQCy4e5cgj7ToGZmXjI4ksbmjxzK/Vi/ZUUiSuRhT4=",
-        "owner": "duxlabs-dev",
-        "repo": "dux-gop",
-        "rev": "d91b45a6e1ef52ab3e7791286615759306477647",
-        "type": "github"
-      },
-      "original": {
-        "owner": "duxlabs-dev",
-        "repo": "dux-gop",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -1519,22 +1499,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable_2": {
-      "locked": {
-        "lastModified": 1795258312,
-        "narHash": "sha256-IEuDsf80ubivfpidbRsIm30HVo7PZIdZt1stRsbaY4Y=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "94c3211b0ee8ba969a3f12eb4aff8ba0f72971dd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-26.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1795234589,
@@ -1712,7 +1676,6 @@
         "dankcalendar": "dankcalendar",
         "danksearch": "danksearch",
         "devenv": "devenv",
-        "dgop": "dgop",
         "disko": "disko",
         "dms-plugin-diskusage": "dms-plugin-diskusage",
         "ec": "ec",
@@ -1741,7 +1704,6 @@
         "nixpkgs-latest-minecraft": "nixpkgs-latest-minecraft",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-rpi-kernel": "nixpkgs-rpi-kernel",
-        "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "omnix": "omnix",
         "ponytail-src": "ponytail-src",

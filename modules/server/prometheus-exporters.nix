@@ -34,11 +34,18 @@
 
         nginx.enable = config.services.nginx.enable;
 
+        smartctl.enable = true;
+
         postgres = lib.mkIf config.services.postgresql.enable {
           enable = true;
           runAsLocalSuperUser = true;
         };
       };
+
+      environment.systemPackages = [
+        pkgs.smartmontools
+        pkgs.nvme-cli
+      ];
 
       services.nginx.statusPage = lib.mkIf config.services.nginx.enable true;
 
@@ -81,6 +88,7 @@
 
       networking.firewall.interfaces.tailscale0.allowedTCPPorts = lib.flatten [
         exporters.node.port
+        exporters.smartctl.port
         (lib.optional exporters.unbound.enable exporters.unbound.port)
         (lib.optional exporters.nginx.enable exporters.nginx.port)
         (lib.optional exporters.postgres.enable exporters.postgres.port)

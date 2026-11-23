@@ -43,6 +43,11 @@
         adguard = "${adguardExporter}/share/grafana/dashboard.json";
         synapse = "${pkgs.matrix-synapse-unwrapped.src}/contrib/grafana/synapse.json";
         immich = ./dashboards/immich.json;
+        # Upstream takes max over all temperature_types, which always picks the critical limit.
+        smartctl = pkgs.runCommand "grafana-dashboard-smartctl.json" { } ''
+          substitute ${grafanaDashboard 24922 1 "sha256-xYpWbGSc3MAJWEJJBJdyQje0gWBqV2ynXlZKmKm0ClI="} $out \
+            --replace-fail 'smartctl_device_temperature{' 'smartctl_device_temperature{temperature_type=\"current\",'
+        '';
       };
 
       dashboardDir = pkgs.runCommand "grafana-dashboards" { } (
@@ -91,6 +96,20 @@
             }
             {
               target = "${loptland}:9100";
+              instance = "loptland";
+            }
+          ] { })
+          (job "smartctl" [
+            {
+              target = "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}";
+              instance = "yggdrasil";
+            }
+            {
+              target = "${nixberry}:9633";
+              instance = "nixberry";
+            }
+            {
+              target = "${loptland}:9633";
               instance = "loptland";
             }
           ] { })

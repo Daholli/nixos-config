@@ -51,12 +51,6 @@ topLevel: {
         extraSetFlags = [ "--accept-dns=false" ];
       };
 
-      services.resolved = {
-        enable = true;
-
-        settings.Resolve.Domains = [ "~." ];
-      };
-
       networking = {
         firewall.allowedTCPPorts = [
           80

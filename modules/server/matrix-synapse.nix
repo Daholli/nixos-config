@@ -90,6 +90,10 @@
             }
           ];
 
+          # MatrixRTC: MSC4140 delayed events (enabled by setting a max delay) and MSC4354 sticky events.
+          max_event_delay_duration = "24h";
+          experimental_features.msc4354_enabled = true;
+
           # Synapse refuses to start with registration enabled while auth is delegated.
           enable_registration = false;
 

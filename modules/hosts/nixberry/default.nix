@@ -28,13 +28,6 @@ topLevel: {
 
       local.attic.watchStore.enable = true;
 
-      local.forgejoRunner = {
-        sopsFile = ../../../secrets/secrets-nixberry.yaml;
-        name = "nixberry";
-        uuid = "ff308046-bd13-47e6-82c5-953d8cee9e41";
-        maxJobs = 1;
-      };
-
       imports =
         with topLevel.config.flake.modules.nixos;
         with inputs.nixos-raspberrypi.nixosModules;
@@ -48,7 +41,6 @@ topLevel: {
           prometheus-exporters
           unbound-resolver
           bluetooth
-          forgejo-runner
 
           cholli
           root

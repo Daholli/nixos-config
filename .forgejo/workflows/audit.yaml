@@ -18,8 +18,9 @@ jobs:
           NIX_AUDIT_SCOPE: hosts
           NIX_AUDIT_STATE: /var/lib/forgejo-runner/native/nix-audit/hosts.json
         run: nix run .#nix-audit -- report loptland yggdrasil
-  audit-aarch64:
-    runs-on: aarch64-linux
+  audit-nixberry:
+    # builds nothing natively: the aarch64 closure is substituted from attic
+    runs-on: x86_64-linux
     steps:
       - uses: actions/checkout@v4
         with:

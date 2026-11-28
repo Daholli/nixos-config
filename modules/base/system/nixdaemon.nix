@@ -110,7 +110,10 @@
                   "root"
                   username
                 ]
-                ++ lib.optional (config.services.forgejo-runner.instances ? native) "forgejo-runner";
+                ++ lib.optional (config.services.forgejo-runner.instances ? native) "forgejo-runner"
+                # lix ignores extra-trusted-users, which is how the circus modules add these
+                ++ lib.optional (config.services.circus.queueRunner.enable or false) "circus"
+                ++ lib.optional (config.services.circus-agent.enable or false) "circus-agent";
               in
               {
 

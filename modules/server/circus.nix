@@ -45,15 +45,29 @@ topLevel: {
           description = "Agent join token name -> SHA-256 hex digest of the raw token.";
         };
         projects = lib.mkOption {
-          description = "Forgejo repositories to build. Each needs a repo webhook using circus/webhook-secret.";
+          description = "Repositories to build. Forgejo ones need a repo webhook using circus/webhook-secret.";
           default = { };
           type = lib.types.attrsOf (
-            lib.types.submodule {
+            lib.types.submodule (project: {
               options = {
+                forge = lib.mkOption {
+                  type = lib.types.enum [
+                    "forgejo"
+                    "none"
+                  ];
+                  default = "forgejo";
+                  description = "Forge sending push webhooks; `none` relies on polling only.";
+                };
                 repo = lib.mkOption {
-                  type = lib.types.str;
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
                   example = "Daholli/nixos-config";
-                  description = "owner/name on the local Forgejo.";
+                  description = "owner/name on the local Forgejo; derives `url`.";
+                };
+                url = lib.mkOption {
+                  type = lib.types.str;
+                  example = "https://dev.azure.com/org/project/_git/repo";
+                  description = "Git clone URL.";
                 };
                 branch = lib.mkOption {
                   type = lib.types.str;
@@ -68,7 +82,10 @@ topLevel: {
                   description = "Flake output attributes to build, one jobset each.";
                 };
               };
-            }
+              config.url = lib.mkIf (project.config.repo != null) (
+                lib.mkDefault "${config.services.forgejo.settings.server.ROOT_URL}/${project.config.repo}.git"
+              );
+            })
           );
         };
       };
@@ -130,14 +147,12 @@ topLevel: {
             declarative = {
               projects = lib.mapAttrsToList (name: project: {
                 inherit name;
-                repository_url = "${config.services.forgejo.settings.server.ROOT_URL}/${project.repo}.git";
+                repository_url = project.url;
                 cache_enabled = false;
-                webhooks = [
-                  {
-                    forge_type = "forgejo";
-                    secret_file = secret "webhook-secret";
-                  }
-                ];
+                webhooks = lib.optional (project.forge == "forgejo") {
+                  forge_type = "forgejo";
+                  secret_file = secret "webhook-secret";
+                };
                 jobsets = map (expr: {
                   name = expr;
                   nix_expression = expr;

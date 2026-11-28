@@ -44,6 +44,33 @@ topLevel: {
           default = { };
           description = "Agent join token name -> SHA-256 hex digest of the raw token.";
         };
+        projects = lib.mkOption {
+          description = "Forgejo repositories to build. Each needs a repo webhook using circus/webhook-secret.";
+          default = { };
+          type = lib.types.attrsOf (
+            lib.types.submodule {
+              options = {
+                repo = lib.mkOption {
+                  type = lib.types.str;
+                  example = "Daholli/nixos-config";
+                  description = "owner/name on the local Forgejo.";
+                };
+                branch = lib.mkOption {
+                  type = lib.types.str;
+                  default = "main";
+                };
+                jobsets = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                  default = [
+                    "packages"
+                    "checks"
+                  ];
+                  description = "Flake output attributes to build, one jobset each.";
+                };
+              };
+            }
+          );
+        };
       };
 
       config = {
@@ -101,33 +128,23 @@ topLevel: {
             };
 
             declarative = {
-              projects = [
-                {
-                  name = "nixos-config";
-                  repository_url = "${config.services.forgejo.settings.server.ROOT_URL}/Daholli/nixos-config.git";
-                  cache_enabled = false;
-                  webhooks = [
-                    {
-                      forge_type = "forgejo";
-                      secret_file = secret "webhook-secret";
-                    }
-                  ];
-                  jobsets =
-                    map
-                      (expr: {
-                        name = expr;
-                        nix_expression = expr;
-                        branch = "develop";
-                        only_build_latest = true;
-                      })
-                      [
-                        "nixosConfigurations"
-                        "packages"
-                        "devShells"
-                        "checks"
-                      ];
-                }
-              ];
+              projects = lib.mapAttrsToList (name: project: {
+                inherit name;
+                repository_url = "${config.services.forgejo.settings.server.ROOT_URL}/${project.repo}.git";
+                cache_enabled = false;
+                webhooks = [
+                  {
+                    forge_type = "forgejo";
+                    secret_file = secret "webhook-secret";
+                  }
+                ];
+                jobsets = map (expr: {
+                  name = expr;
+                  nix_expression = expr;
+                  inherit (project) branch;
+                  only_build_latest = true;
+                }) project.jobsets;
+              }) cfg.projects;
               users = [
                 {
                   username = "cholli";

@@ -95,6 +95,16 @@ topLevel: {
       local.circus = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;
         domain = "ci.christophhollizeck.dev";
+        projects.nixos-config = {
+          repo = "Daholli/nixos-config";
+          branch = "develop";
+          jobsets = [
+            "nixosConfigurations"
+            "packages"
+            "devShells"
+            "checks"
+          ];
+        };
       };
 
       local.forgejoRunner = {

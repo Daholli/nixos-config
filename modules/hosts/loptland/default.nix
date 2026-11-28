@@ -24,6 +24,7 @@ topLevel: {
         loptland-acme
         forgejo
         forgejo-runner
+        circus
 
         # services
         attic
@@ -90,6 +91,11 @@ topLevel: {
       };
 
       local.attic.watchStore.enable = true;
+
+      local.circus = {
+        sopsFile = ../../../secrets/secrets-loptland.yaml;
+        domain = "ci.christophhollizeck.dev";
+      };
 
       local.forgejoRunner = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;

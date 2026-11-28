@@ -298,3 +298,6 @@ url = "github:0xc000022070/zen-browser-flake"
 
 [inputs.zen-browser.follows]
 nixpkgs = "nixpkgs"
+
+[inputs.circus]
+url = "github:manic-systems/circus"

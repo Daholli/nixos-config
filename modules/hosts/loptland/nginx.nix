@@ -144,6 +144,17 @@
             };
           };
 
+          ${config.local.circus.domain} = lib.mkIf config.services.circus.enable {
+            forceSSL = true;
+            useACMEHost = domainName;
+            extraConfig = geoFence;
+
+            locations."/" = {
+              proxyPass = "http://127.0.0.1:${toString config.local.circus.port}";
+              proxyWebsockets = true;
+            };
+          };
+
           "git.${domainName}" = lib.mkIf config.services.forgejo.enable {
             forceSSL = true;
             useACMEHost = domainName;

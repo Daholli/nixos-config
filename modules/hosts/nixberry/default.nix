@@ -28,6 +28,12 @@ topLevel: {
 
       local.attic.watchStore.enable = true;
 
+      local.circusAgent = {
+        sopsFile = ../../../secrets/secrets-nixberry.yaml;
+        # loptland over tailscale
+        runnerUrl = "circus://100.86.250.97:8443";
+      };
+
       imports =
         with topLevel.config.flake.modules.nixos;
         with inputs.nixos-raspberrypi.nixosModules;
@@ -41,6 +47,7 @@ topLevel: {
           prometheus-exporters
           unbound-resolver
           bluetooth
+          circus-agent
 
           cholli
           root

@@ -135,6 +135,8 @@ topLevel: {
               local_systems = cfg.localSystems;
               rpc = {
                 bind = "0.0.0.0:${toString cfg.rpcPort}";
+                # the port is only reachable over tailscale, which already encrypts
+                allow_plaintext = true;
                 join_tokens = lib.mapAttrsToList (name: token_hash: { inherit name token_hash; }) cfg.joinTokens;
               };
             };

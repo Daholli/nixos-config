@@ -17,13 +17,12 @@ jobs:
         continue-on-error: true
         run: |
           cd ${{ env.FORGEJO_WORKSPACE }}
-          nix shell nixpkgs#bash nixpkgs#curl nixpkgs#gnugrep nixpkgs#gnused --command \
-            bash modules/dev/update-jbcontext.sh
-      - name: Update flake
+          bash modules/dev/update-jbcontext.sh
+      - name: Update pins
         run: |
           cd ${{ env.FORGEJO_WORKSPACE }}
-          nix flake update
-      - name: Commit new Flake.lock
+          tack update
+      - name: Commit new pins
         run: |
           git config --local user.email "forgejo-actions[bot]@christophhollizeck.dev"
           git config --local user.name "forgejo-actions[bot]"

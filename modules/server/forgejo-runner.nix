@@ -102,9 +102,11 @@
                 curl
                 gawk
                 gitMinimal
+                gnugrep
                 gnused
                 nodejs
                 openssh
+                tack
                 wget
                 lix
                 inputs.omnix.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -112,7 +114,10 @@
             };
 
             systemd.services."forgejo-runner-native" = {
-              environment.NIX_CONFIG = "max-jobs = ${toString config.local.forgejoRunner.maxJobs}";
+              environment = {
+                NIX_CONFIG = "max-jobs = ${toString config.local.forgejoRunner.maxJobs}";
+                TACK_NIX_CONF_TOKENS = "1";
+              };
               serviceConfig = {
                 User = "forgejo-runner";
                 MemoryHigh = "70%";

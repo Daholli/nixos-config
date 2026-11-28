@@ -16,6 +16,11 @@
 
       config = lib.mkMerge [
         {
+          programs.tack = {
+            enable = true;
+            nixConfTokens = true;
+          };
+
           environment.systemPackages = with pkgs; [
             nixfmt
             nix-prefetch-git

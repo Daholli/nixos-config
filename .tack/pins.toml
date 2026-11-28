@@ -1,0 +1,300 @@
+# tack pins
+# edit by hand or with tack add / rm / alias
+# nix reads pins.lock.json
+# this file drives tack update
+
+# shorturl schemes
+# scheme rest expands rest into {path}
+[shorturls]
+# gh = "github:{path}"
+
+# all_follow maps input names to the top-level pin they follow
+# opt out per-input with exclude_follow
+[all_follow]
+nixpkgs = "nixpkgs"
+nixpkgs-lib = "nixpkgs"
+flake-parts = "flake-parts"
+git-hooks = "git-hooks"
+home-manager = "home-manager"
+treefmt-nix = "treefmt-nix"
+rust-overlay = "rust-overlay"
+dux-qt-base = "dux-qt-base"
+dank-qml-common = "dux-qml-common"
+systems = "systems-default"
+
+# inputs.<name> fields
+#   url             required, shorturl ok, ?rev=<sha> pins an exact commit
+#   type            flake (default), fetch, or fixed
+#   flake           legacy false means type = "fetch"
+#   follows         { child = "pin" } override map
+#   exclude_follow  all_follow names to skip
+#   dir             subdir holding flake.nix
+#   submodules      fetch git submodules
+#   unpack          fixed-only tarball or file
+[inputs]
+
+[inputs.catppuccin]
+url = "github:catppuccin/nix"
+
+[inputs.catppuccin-tide]
+url = "github:jocelynthode/catppuccin-tide"
+type = "fetch"
+
+[inputs.dank-greeter]
+url = "github:duxlabs-dev/dux-greeter"
+
+[inputs.dank-greeter.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.dankMaterialShell]
+url = "github:duxlabs-dev/dux-shell"
+
+[inputs.dankMaterialShell.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.dux-qml-common]
+url = "github:duxlabs-dev/dux-qml-common"
+type = "fetch"
+
+[inputs.dux-qt-base]
+url = "github:duxlabs-dev/dux-qt-base"
+
+[inputs.dux-qt-base.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.dankcalendar]
+url = "github:duxlabs-dev/dux-calendar"
+
+[inputs.dankcalendar.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.danksearch]
+url = "github:duxlabs-dev/dux-search"
+
+[inputs.danksearch.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.devenv]
+url = "github:cachix/devenv"
+exclude_follow = [
+  "nixpkgs",
+  "nixpkgs-lib",
+  "flake-parts",
+  "git-hooks",
+  "treefmt-nix",
+  "rust-overlay",
+]
+
+[inputs.devenv.follows]
+nixpkgs = "devenv-nixpkgs"
+
+[inputs.devenv-nixpkgs]
+url = "github:cachix/devenv-nixpkgs/rolling"
+
+[inputs.disko]
+url = "github:nix-community/disko"
+
+[inputs.disko.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.dms-plugin-diskusage]
+url = "github:alcxyz/DankDiskUsage"
+type = "fetch"
+
+[inputs.ec]
+url = "github:chojs23/ec"
+
+[inputs.ec.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.flake-parts]
+url = "github:hercules-ci/flake-parts"
+
+[inputs.git-hooks]
+url = "github:cachix/git-hooks.nix"
+
+[inputs.git-hooks.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.gpg-base-conf]
+url = "github:drduh/config"
+type = "fetch"
+
+[inputs.helix]
+url = "github:helix-editor/helix"
+
+[inputs.helix.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.hey-cli]
+url = "github:basecamp/hey-cli"
+
+[inputs.hey-cli.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.home-manager]
+url = "github:nix-community/home-manager/master"
+
+[inputs.home-manager.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.import-tree]
+url = "github:vic/import-tree"
+
+[inputs.jbcontext-src]
+url = "https://download.jetbrains.com/jetbrains-context/builds/v0.9.23.1883/context-native-linux-x64-0.9.23.1883"
+type = "fixed"
+
+[inputs.llm-agents-nix]
+url = "github:numtide/llm-agents.nix"
+
+[inputs.llm-agents-nix.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.mcp-servers-nix]
+url = "github:natsukium/mcp-servers-nix"
+
+[inputs.mcp-servers-nix.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.nh-flake]
+url = "github:nix-community/nh"
+
+[inputs.nh-flake.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.niri]
+url = "github:YaLTeR/niri"
+
+[inputs.niri.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.niri-flake]
+url = "github:epireyn/niri-flake"
+
+[inputs.niri-flake.follows]
+niri-unstable = "niri"
+nixpkgs = "nixpkgs"
+xwayland-satellite-unstable = "xwayland-satellite"
+
+[inputs.nix-auth]
+url = "github:numtide/nix-auth"
+
+[inputs.nix-auth.follows]
+flake-parts = "flake-parts"
+nixpkgs = "nixpkgs"
+treefmt-nix = "treefmt-nix"
+
+[inputs.nix-gaming-edge]
+url = "github:powerofthe69/nix-gaming-edge"
+
+[inputs.nix-gaming-edge.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.nix-jetbrains-plugins]
+url = "github:nix-community/nix-jetbrains-plugins"
+
+[inputs.nixos-hardware]
+url = "github:nixos/nixos-hardware"
+
+[inputs.nixos-hardware.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.nixos-raspberrypi]
+url = "github:nvmd/nixos-raspberrypi/develop"
+
+[inputs.nixos-raspberrypi.follows]
+nixpkgs = "nixpkgs-rpi-kernel"
+
+[inputs.nixos-raspberrypi-installer]
+url = "github:Daholli/nixos-raspberrypi/develop"
+
+[inputs.nixos-wsl]
+url = "github:nix-community/NixOS-WSL"
+
+[inputs.nixos-wsl.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.nixpkgs]
+url = "github:nixos/nixpkgs/nixos-unstable"
+
+[inputs.nixpkgs-master]
+url = "github:nixos/nixpkgs/master"
+
+# pinned by rev so nightly updates don't rebuild the Pi kernel natively; bump by hand
+[inputs.nixpkgs-rpi-kernel]
+url = "github:nixos/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325"
+frozen = true
+
+[inputs.nixpkgs-unstable]
+url = "github:nixos/nixpkgs/nixos-unstable"
+
+[inputs.omnix]
+url = "github:Daholli/omnix"
+
+[inputs.omnix.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.ponytail-src]
+url = "github:DietrichGebert/ponytail/v4.9.0"
+type = "fetch"
+
+[inputs.rom]
+url = "github:manic-systems/rom"
+
+[inputs.rom.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.rust-overlay]
+url = "github:oxalica/rust-overlay"
+
+[inputs.sable]
+url = "git+https://git.sable.moe/SableClient/sable-next?ref=refs/tags/latest"
+
+[inputs.sable.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.simple-nixos-mailserver]
+url = "gitlab:simple-nixos-mailserver/nixos-mailserver"
+
+[inputs.simple-nixos-mailserver.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.sops-nix]
+url = "github:Mic92/sops-nix"
+
+[inputs.sops-nix.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.systems]
+url = "github:nix-systems/default-linux"
+
+[inputs.systems-default]
+url = "github:nix-systems/default"
+
+[inputs.titrack]
+url = "github:Daholli/TiTrack"
+
+[inputs.titrack.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.treefmt-nix]
+url = "github:numtide/treefmt-nix"
+
+[inputs.website]
+url = "git+https://git.christophhollizeck.dev/cholli/website.git"
+
+[inputs.website.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.xwayland-satellite]
+url = "github:Supreeeme/xwayland-satellite"
+
+[inputs.xwayland-satellite.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.zen-browser]
+url = "github:0xc000022070/zen-browser-flake"
+
+[inputs.zen-browser.follows]
+nixpkgs = "nixpkgs"

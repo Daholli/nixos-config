@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bump the jbcontext-src flake input (and the version in jbcontext-module.nix)
+# Bump the jbcontext-src tack pin (and the version in jbcontext-module.nix)
 # to the latest JetBrains Context release. Resolves "latest" like the official
 # installer: https://download.jetbrains.com/jetbrains-context/install.sh
 #
@@ -15,12 +15,12 @@ new=${1:-$(curl -fsSL -H "Cache-Control: no-cache" --max-time 30 \
 	exit 1
 }
 
-old=$(grep -oP 'jetbrains-context/builds/v\K[0-9.]+(?=/)' flake.nix)
+old=$(grep -oP 'jetbrains-context/builds/v\K[0-9.]+(?=/)' .tack/pins.toml)
 [[ $old == "$new" ]] && {
 	echo "jbcontext already at $new"
 	exit 0
 }
 
-sed -i "s/${old//./\\.}/$new/g" flake.nix modules/dev/jbcontext-module.nix
-nix flake update jbcontext-src
+sed -i "s/${old//./\\.}/$new/g" .tack/pins.toml modules/dev/jbcontext-module.nix
+tack update jbcontext-src --accept
 echo "jbcontext: $old -> $new"

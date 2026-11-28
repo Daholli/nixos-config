@@ -101,6 +101,11 @@ topLevel: {
             ]
             (_: {
               inherit (cfg) sopsFile;
+              restartUnits = [
+                "circus-server.service"
+                "circus-evaluator.service"
+                "circus-queue-runner.service"
+              ];
             });
 
         networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ cfg.rpcPort ];

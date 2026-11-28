@@ -26,6 +26,8 @@ topLevel: {
         inherit sopsFile;
       };
 
+      local.attic.watchStore.enable = true;
+
       local.forgejoRunner = {
         sopsFile = ../../../secrets/secrets-nixberry.yaml;
         name = "nixberry";

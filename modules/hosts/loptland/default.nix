@@ -89,6 +89,8 @@ topLevel: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAxMv6Fxv+4Kgf0Uv6qBPqz2DXHt0yE9BE86X3rgubGC";
       };
 
+      local.attic.watchStore.enable = true;
+
       local.forgejoRunner = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;
         name = "Loptland";

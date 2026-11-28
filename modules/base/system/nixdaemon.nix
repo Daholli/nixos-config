@@ -14,6 +14,9 @@
       options.local.attic.work.enable =
         lib.mkEnableOption "the private work attic cache (pull via netrc, push via `attic push work:work`)";
 
+      options.local.attic.watchStore.enable =
+        lib.mkEnableOption "pushing every new store path to the cholli attic cache";
+
       config = lib.mkMerge [
         {
           programs.tack = {
@@ -165,6 +168,20 @@
           };
 
           nix.settings.netrc-file = config.sops.templates."attic-netrc".path;
+        })
+        (lib.mkIf config.local.attic.watchStore.enable {
+          systemd.services.attic-watch-store = {
+            wantedBy = [ "multi-user.target" ];
+            after = [ "network-online.target" ];
+            wants = [ "network-online.target" ];
+            serviceConfig = {
+              ExecStart = "${lib.getExe' pkgs.attic "attic"} watch-store cholli";
+              Restart = "always";
+              RestartSec = 10;
+              DynamicUser = true;
+              SupplementaryGroups = [ "secrets-access" ];
+            };
+          };
         })
       ];
     };

@@ -28,19 +28,3 @@ jobs:
             nix develop ".#$shell" --profile "$tmp/$shell" --command true
             attic push cholli "$(readlink -f "$tmp/$shell")"
           done
-  promote:
-    needs: [build-x86_64]
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-    runs-on: x86_64-linux
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.PUSH_TOKEN }}
-      - name: Merge last successful commit into main
-        run: |
-          git config user.email "forgejo-actions[bot]@christophhollizeck.dev"
-          git config user.name "forgejo-actions[bot]"
-          git checkout main
-          git merge --no-ff -m "promote ${{ github.sha }}" ${{ github.sha }}
-          git push origin main

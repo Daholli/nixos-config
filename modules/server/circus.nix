@@ -175,6 +175,11 @@ topLevel: {
                   inherit (project) branch;
                   only_build_latest = true;
                 }) project.jobsets;
+                # advanced by circus only when an evaluation of the jobset fully succeeds
+                channels = map (expr: {
+                  name = "${name}-${expr}";
+                  jobset_name = expr;
+                }) project.jobsets;
               }) cfg.projects;
               users = [
                 {

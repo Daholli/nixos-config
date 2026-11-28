@@ -1,0 +1,35 @@
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+env:
+  CIRCUS_URL: http://127.0.0.1:3010
+  CHANNELS: nixos-config-nixosConfigurations nixos-config-packages nixos-config-devShells nixos-config-checks
+jobs:
+  promote:
+    # needs circus on localhost, so only loptland's runner
+    runs-on: x86_64-linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.PUSH_TOKEN }}
+      - name: Merge the commit every circus jobset passed into main
+        run: |
+          rev=
+          for channel in $CHANNELS; do
+            r=$(curl -fsS "$CIRCUS_URL/channel/$channel/git-revision") || { echo "$channel has no passing evaluation yet"; exit 0; }
+            if [ -n "$rev" ] && [ "$r" != "$rev" ]; then
+              echo "jobsets disagree ($channel at $r, others at $rev); waiting"
+              exit 0
+            fi
+            rev=$r
+          done
+          git fetch origin develop
+          git merge-base --is-ancestor "$rev" origin/develop || { echo "$rev is not on develop"; exit 0; }
+          git merge-base --is-ancestor "$rev" HEAD && { echo "$rev already promoted"; exit 0; }
+          git config user.email "forgejo-actions[bot]@christophhollizeck.dev"
+          git config user.name "forgejo-actions[bot]"
+          git merge --no-ff -m "promote $rev" "$rev"
+          git push origin main

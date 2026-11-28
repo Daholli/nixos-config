@@ -103,6 +103,7 @@ topLevel: {
         projects.nixos-config = {
           repo = "Daholli/nixos-config";
           branch = "develop";
+          buildBranches = true;
           jobsets = [
             "nixosConfigurations"
             "packages"

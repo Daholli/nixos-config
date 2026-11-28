@@ -89,6 +89,14 @@ topLevel: {
                   ];
                   description = "Flake output attributes to build, one jobset each.";
                 };
+                buildBranches = lib.mkOption {
+                  type = lib.types.bool;
+                  default = false;
+                  description = ''
+                    Also evaluate every pushed branch in `<jobset>-branches` jobsets, so
+                    Forgejo shows circus statuses on PRs. They get no channel.
+                  '';
+                };
               };
               config.url = lib.mkIf (project.config.repo != null) (
                 lib.mkDefault "${config.services.forgejo.settings.server.ROOT_URL}/${project.config.repo}.git"
@@ -169,12 +177,21 @@ topLevel: {
                   forge_type = "forgejo";
                   secret_file = secret "webhook-secret";
                 };
-                jobsets = map (expr: {
-                  name = expr;
-                  nix_expression = expr;
-                  inherit (project) branch;
-                  only_build_latest = true;
-                }) project.jobsets;
+                jobsets =
+                  map (expr: {
+                    name = expr;
+                    nix_expression = expr;
+                    inherit (project) branch;
+                    only_build_latest = true;
+                  }) project.jobsets
+                  ++ lib.optionals project.buildBranches (
+                    map (expr: {
+                      name = "${expr}-branches";
+                      nix_expression = expr;
+                      branch_pattern = "*";
+                      only_build_latest = true;
+                    }) project.jobsets
+                  );
                 # advanced by circus only when an evaluation of the jobset fully succeeds
                 channels = map (expr: {
                   name = "${name}-${expr}";

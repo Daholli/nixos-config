@@ -39,6 +39,14 @@ topLevel: {
           type = lib.types.ints.positive;
           default = 1;
         };
+        allowedUris = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = ''
+            Extra URI prefixes allowed under restricted eval. circus derives
+            `git+https://…` for git inputs, but Lix checks the plain `https://…`.
+          '';
+        };
         joinTokens = lib.mkOption {
           type = lib.types.attrsOf lib.types.str;
           default = { };
@@ -133,6 +141,7 @@ topLevel: {
                 "aarch64-linux"
               ];
               poll_interval = 300;
+              allowed_uris = cfg.allowedUris;
             };
 
             queue_runner = {

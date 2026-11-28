@@ -95,6 +95,10 @@ topLevel: {
       local.circus = {
         sopsFile = ../../../secrets/secrets-loptland.yaml;
         domain = "ci.christophhollizeck.dev";
+        allowedUris = [
+          "https://git.sable.moe/SableClient/sable-next"
+          "https://git.christophhollizeck.dev/cholli/website.git"
+        ];
         joinTokens.nixberry = "2731b449d3bba05def4f5400c2022b44f7f465681fe9369b4600f3fe4bf0ffa7";
         projects.nixos-config = {
           repo = "Daholli/nixos-config";
